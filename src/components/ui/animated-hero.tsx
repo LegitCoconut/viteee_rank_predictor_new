@@ -23,7 +23,7 @@ function Hero() {
 
   return (
     <div className="w-full bg-secondary/50">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <div className="flex gap-4 flex-col items-center">
             <Link href="https://malabarmatrix.site" target="_blank" rel="noopener noreferrer">

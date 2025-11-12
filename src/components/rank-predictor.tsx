@@ -67,7 +67,7 @@ export function RankPredictor() {
 
   return (
     <section id="rank-predictor-section" className="py-12 sm:py-16 lg:py-20">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         <Card className="max-w-4xl mx-auto shadow-lg">
           <CardHeader>
             <CardTitle className="font-headline text-3xl flex items-center gap-3">
