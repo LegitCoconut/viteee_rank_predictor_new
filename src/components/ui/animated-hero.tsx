@@ -48,7 +48,7 @@ function Hero() {
             </h1>
 
             <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center">
-              Enter your VITEEE 2024 rank and instantly see which branches and campuses you are eligible for. Make an informed decision about your future.
+              Enter your VITEEE 2026 rank and instantly see which branches and campuses you are eligible for. Make an informed decision about your future.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
