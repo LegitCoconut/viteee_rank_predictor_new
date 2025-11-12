@@ -61,7 +61,7 @@ function Hero() {
                 Check Your Rank <ArrowDown className="w-4 h-4" />
               </Link>
             </Button>
-            <Button size="lg" className="gap-2 hover:bg-muted" variant="outline">
+            <Button size="lg" className="gap-2 hover:bg-gray-200 hover:text-black" variant="outline">
               Learn More <Info className="w-4 h-4" />
             </Button>
           </div>
