@@ -21,7 +21,7 @@ export function CampusCards() {
             <h2 className="text-4xl md:text-5xl font-headline tracking-tighter font-semibold">Our Campuses</h2>
             <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Explore the vibrant and diverse campuses of Vellore Institute of Technology.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {campuses.map((campus) => {
             const image = PlaceHolderImages.find(img => img.id === campus.imageId);
             return (
@@ -43,13 +43,13 @@ export function CampusCards() {
                   <CardTitle>{campus.name}</CardTitle>
                   <CardDescription className="mt-2">{campus.description}</CardDescription>
                 </CardContent>
-                <CardFooter className="gap-4">
-                  <Button asChild variant="secondary" className="w-full">
+                <CardFooter className="flex-col items-stretch gap-2">
+                  <Button asChild variant="secondary">
                     <Link href={campus.website} target="_blank" rel="noopener noreferrer">
                       Visit Website <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
-                  <Button asChild variant="secondary" className="w-full">
+                  <Button asChild variant="secondary">
                     <Link href={campus.redditUrl} target="_blank" rel="noopener noreferrer">
                       Reddit Community <MessageSquare className="ml-2 h-4 w-4" />
                     </Link>
