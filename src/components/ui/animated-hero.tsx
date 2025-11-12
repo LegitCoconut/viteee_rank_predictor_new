@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, Info, MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
@@ -24,7 +25,10 @@ function Hero() {
     <div className="w-full bg-secondary/50">
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
-          <div className="flex gap-4 flex-col">
+          <div className="flex gap-4 flex-col items-center">
+            <Link href="https://malabarmatrix.site" target="_blank" rel="noopener noreferrer">
+              <Badge variant="outline" className="py-1 px-3 border-primary/50 text-primary hover:bg-primary/10 transition-colors">A Malabar Matrix Project</Badge>
+            </Link>
             <h1 className="text-5xl md:text-7xl max-w-3xl tracking-tighter text-center font-headline">
               <span className="text-muted-foreground">Find Your VIT Branch</span>
               <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1 text-primary">
