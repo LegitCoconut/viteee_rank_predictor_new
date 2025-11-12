@@ -1,6 +1,7 @@
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Hero } from '@/components/ui/animated-hero';
+import { CampusCards } from '@/components/campus-cards';
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <Hero />
+        <CampusCards />
       </main>
       <Footer />
     </div>
