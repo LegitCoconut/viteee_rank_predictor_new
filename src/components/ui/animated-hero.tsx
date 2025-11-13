@@ -27,7 +27,7 @@ function Hero() {
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <div className="flex gap-4 flex-col items-center">
             <Link href="https://malabarmatrix.site" target="_blank" rel="noopener noreferrer">
-              <Badge variant="outline" className="py-1 px-3 border-primary/50 text-primary hover:bg-primary/10 transition-colors">A Malabar Matrix Project</Badge>
+              <Badge variant="outline" className="py-1 px-3 border-primary/50 text-primary hover:bg-primary/10 transition-colors">A Malabar Matrix Initiative</Badge>
             </Link>
             <h1 className="text-5xl md:text-7xl max-w-3xl tracking-tighter text-center font-headline">
               <span className="text-muted-foreground">Find Your VIT Branch</span>
