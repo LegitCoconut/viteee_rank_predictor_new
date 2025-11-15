@@ -131,31 +131,37 @@ export function FeedbackForm() {
           )}
         />
         <div className="flex flex-col items-center gap-4">
-            <Button
-            type="submit"
-            disabled={isSubmitting || !form.watch("token")}
-            >
-            {isSubmitting ? "Submitting..." : "Submit Feedback"}
-            </Button>
-            <FormField
+          <div className="flex flex-row items-center justify-center gap-4">
+              <Button
+              type="submit"
+              disabled={isSubmitting || !form.watch("token")}
+              >
+              {isSubmitting ? "Submitting..." : "Submit Feedback"}
+              </Button>
+              <FormField
+              control={form.control}
+              name="token"
+              render={({ field }) => (
+                  <FormItem>
+                  <FormControl>
+                      <Turnstile
+                      siteKey={
+                          process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
+                      }
+                      onSuccess={(token) => {
+                          field.onChange(token);
+                      }}
+                      />
+                  </FormControl>
+                  </FormItem>
+              )}
+              />
+          </div>
+          <FormField
             control={form.control}
             name="token"
-            render={({ field }) => (
-                <FormItem>
-                <FormControl>
-                    <Turnstile
-                    siteKey={
-                        process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
-                    }
-                    onSuccess={(token) => {
-                        field.onChange(token);
-                    }}
-                    />
-                </FormControl>
-                <FormMessage />
-                </FormItem>
-            )}
-            />
+            render={()=>(<FormMessage />)}
+           />
         </div>
       </form>
     </Form>
