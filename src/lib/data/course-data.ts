@@ -61,3 +61,20 @@ export const apCourses: string[] = [
     "B.Tech. Mechanical Engineering (Automotive Design)",
     "B.Tech. Mechanical Engineering (Robotics)"
 ];
+
+export const bhopalCourses: string[] = [
+    "B.Tech. Aerospace Engineering",
+    "B.Tech. Bioengineering",
+    "B.Tech. Computer Science & Engineering",
+    "B.Tech - Computer Science & Engineering (Artificial Intelligence & Machine Learning)",
+    "B.Tech. Computer Science & Engineering (Cloud Computing & Automation)",
+    "B.Tech. Computer Science & Engineering (Cyber Security & Digital Forensics)",
+    "B.Tech. Computer Science & Engineering (E-Commerce Technology)",
+    "B.Tech. Computer Science & Engineering (Education Technology)",
+    "B.Tech. Computer Science & Engineering (Gaming Technology)",
+    "B.Tech. Computer Science & Engineering (Health Informatics)",
+    "B.Tech. Electronics & Communication Engineering",
+    "B.Tech. Electronics & Communication Engineering (Artificial Intelligence & Cybernetics)",
+    "B.Tech. Mechanical Engineering",
+    "B.Tech. Mechanical Engineering (Artificial Intelligence & Robotics)"
+];

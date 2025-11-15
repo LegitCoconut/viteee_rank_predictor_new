@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { velloreCourses, chennaiCourses, apCourses } from '@/lib/data/course-data';
+import { velloreCourses, chennaiCourses, apCourses, bhopalCourses } from '@/lib/data/course-data';
 
 export function CampusCards() {
   return (
@@ -121,6 +121,31 @@ export function CampusCards() {
                            <ScrollArea className="h-72 w-full rounded-md border p-4">
                             <ul className="space-y-2">
                                 {apCourses.map((course, index) => (
+                                    <li key={index} className="text-sm text-foreground">{course}</li>
+                                ))}
+                            </ul>
+                           </ScrollArea>
+                         </DialogContent>
+                       </Dialog>
+                    )}
+                    {campus.id === 'bhopal' && (
+                       <Dialog>
+                         <DialogTrigger asChild>
+                            <Badge variant="secondary" className="cursor-pointer hover:bg-primary/20 transition-colors">
+                              <BookOpenCheck className="mr-1 h-3 w-3" />
+                              Courses
+                            </Badge>
+                         </DialogTrigger>
+                         <DialogContent className="sm:max-w-[625px]">
+                           <DialogHeader>
+                             <DialogTitle>B.Tech Programmes - VIT Bhopal</DialogTitle>
+                             <DialogDescription>
+                               List of undergraduate engineering courses available at the VIT Bhopal campus.
+                             </DialogDescription>
+                           </DialogHeader>
+                           <ScrollArea className="h-72 w-full rounded-md border p-4">
+                            <ul className="space-y-2">
+                                {bhopalCourses.map((course, index) => (
                                     <li key={index} className="text-sm text-foreground">{course}</li>
                                 ))}
                             </ul>
