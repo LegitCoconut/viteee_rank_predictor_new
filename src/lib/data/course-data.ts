@@ -22,3 +22,26 @@ export const velloreCourses: string[] = [
     "B.Tech. Mechanical Engineering (Electric Vehicles)",
     "B.Tech. Mechanical Engineering (Smart Manufacturing)"
 ];
+
+export const chennaiCourses: string[] = [
+    "B.Tech. Biotechnology",
+    "B.Tech. Civil Engineering",
+    "B.Tech. Civil Engineering (in collaboration with L&T)",
+    "B.Tech. Computer Science and Engineering",
+    "B.Tech. Computer Science and Engineering (Artificial Intelligence and Machine Learning)",
+    "B.Tech. Computer Science and Engineering (Artificial Intelligence and Robotics)",
+    "B.Tech. Computer Science and Engineering (Cyber Physical Systems)",
+    "B.Tech. Computer Science and Engineering (Cyber Security)",
+    "B.Tech. Computer Science and Engineering (Cyber Security) (2+2 Dual Degree with Deakin University)",
+    "B.Tech. Computer Science and Engineering (Data Science)",
+    "B.Tech. Computer Science and Engineering (Quantum Computing)",
+    "B.Tech. Electrical and Electronics Engineering",
+    "B.Tech. Electrical and Computer Science Engineering",
+    "B.Tech. Electronics and Communication Engineering",
+    "B.Tech. Electronics and Computer Engineering",
+    "B.Tech. Electronics Engineering (VLSI Design and Technology)",
+    "B.Tech. Fashion Technology",
+    "B.Tech. Mechanical Engineering",
+    "B.Tech. Mechatronics and Automation",
+    "B.Tech. Mechanical Engineering (Electric Vehicles)"
+];
