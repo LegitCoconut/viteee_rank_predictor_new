@@ -130,31 +130,33 @@ export function FeedbackForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="token"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Turnstile
-                  siteKey={
-                    process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
-                  }
-                  onSuccess={(token) => {
-                    field.onChange(token);
-                  }}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button
-          type="submit"
-          disabled={isSubmitting || !form.watch("token")}
-        >
-          {isSubmitting ? "Submitting..." : "Submit Feedback"}
-        </Button>
+        <div className="flex items-center justify-between">
+            <Button
+            type="submit"
+            disabled={isSubmitting || !form.watch("token")}
+            >
+            {isSubmitting ? "Submitting..." : "Submit Feedback"}
+            </Button>
+            <FormField
+            control={form.control}
+            name="token"
+            render={({ field }) => (
+                <FormItem>
+                <FormControl>
+                    <Turnstile
+                    siteKey={
+                        process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
+                    }
+                    onSuccess={(token) => {
+                        field.onChange(token);
+                    }}
+                    />
+                </FormControl>
+                <FormMessage />
+                </FormItem>
+            )}
+            />
+        </div>
       </form>
     </Form>
   );
