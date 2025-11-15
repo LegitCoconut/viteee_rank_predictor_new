@@ -3,6 +3,7 @@ import { Footer } from '@/components/footer';
 import { Hero } from '@/components/ui/animated-hero';
 import { CampusCards } from '@/components/campus-cards';
 import { ImportantDates } from '@/components/important-dates';
+import { FeedbackForm } from '@/components/feedback-form';
 
 export default function Home() {
   return (
@@ -12,6 +13,16 @@ export default function Home() {
         <Hero />
         <CampusCards />
         <ImportantDates />
+        <section className="py-12">
+          <div className="container">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
+              Feedback
+            </h2>
+            <div className="max-w-2xl mx-auto">
+              <FeedbackForm />
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

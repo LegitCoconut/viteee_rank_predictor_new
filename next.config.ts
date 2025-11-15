@@ -30,6 +30,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  env: {
+    NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY:
+      process.env.CLOUDFLARE_TURNSTILE_SITE_KEY,
+  },
 };
 
 export default nextConfig;
