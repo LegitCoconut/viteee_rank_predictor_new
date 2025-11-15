@@ -45,3 +45,19 @@ export const chennaiCourses: string[] = [
     "B.Tech. Mechatronics and Automation",
     "B.Tech. Mechanical Engineering (Electric Vehicles)"
 ];
+
+export const apCourses: string[] = [
+    "B.Tech. Computer Science and Engineering",
+    "B.Tech. Computer Science and Engineering (Artificial Intelligence and Machine Learning)",
+    "B.Tech. Computer Science and Engineering (Blockchain)",
+    "B.Tech. Computer Science and Engineering (Cyber Security)",
+    "B.Tech. Computer Science and Engineering (Data Analytics)",
+    "B.Tech. Computer Science and Engineering (Software Engineering)",
+    "B.Tech. Computer Science and Business Systems",
+    "B.Tech. Electronics and Communication Engineering",
+    "B.Tech. Electronics and Communication Engineering (Embedded Systems)",
+    "B.Tech. Electronics and Communication Engineering (VLSI)",
+    "B.Tech. Mechanical Engineering",
+    "B.Tech. Mechanical Engineering (Automotive Design)",
+    "B.Tech. Mechanical Engineering (Robotics)"
+];
