@@ -56,6 +56,11 @@ export default function MockTestSetupPage() {
     'Clearing of cache will clear all the stored data about the test taken.',
     'You will be allowed to attend the mock test after the verification (this action is taken to avoid bots).',
   ];
+  
+  const closingRemarks = [
+    "If you find any issue with the online test, questions, or technical issues feel free to reach out to vitranks@malabarmatrix.site or through the feedback form.",
+    "This application and test environment is made by students of VIT for the good of VITEEE aspirants; please use the platform as a student and help your friends grow with you."
+  ];
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsSubmitting(true);
@@ -90,6 +95,10 @@ export default function MockTestSetupPage() {
                    <li className="flex items-start gap-3">
                       <AlertCircle className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
                       <span>If you find any issue with the online test, questions, or technical issues feel free to reach out to <a href="mailto:vitranks@malabarmatrix.site" className="text-primary underline">vitranks@malabarmatrix.site</a> or through the <Link href="/#feedback" className="text-primary underline">feedback form</Link>.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <AlertCircle className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
+                      <span>This application and test environment is made by students of VIT for the good of VITEEE aspirants; please use the platform as a student and help your friends grow with you.</span>
                     </li>
                 </ul>
               </div>
