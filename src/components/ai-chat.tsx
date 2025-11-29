@@ -104,19 +104,8 @@ export function AIChatAssistant({ syllabusContext }: { syllabusContext: string }
     }
   };
   
-
-  return (
-    <Dialog>
-        <DialogTrigger asChild>
-          <Button
-            className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg"
-            size="icon"
-          >
-            <Sparkles className="h-6 w-6" />
-            <span className="sr-only">Open AI Assistant</span>
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="h-full max-h-full w-full max-w-full flex flex-col p-0 sm:rounded-none">
+  const isDialog = (
+    <DialogContent className="h-full max-h-full w-full max-w-full flex flex-col p-0 sm:rounded-none">
           <DialogHeader className="p-4 border-b">
             <DialogTitle className="flex items-center gap-2 text-xl">
               <Bot className="h-6 w-6" />
@@ -193,6 +182,30 @@ export function AIChatAssistant({ syllabusContext }: { syllabusContext: string }
             </form>
           </div>
         </DialogContent>
+  );
+
+  // This component can be used inside a Dialog or as a standalone button.
+  // If used inside a Dialog, DialogTrigger should wrap the button that opens it.
+  // This check is a bit of a hack to see if we're being rendered as a direct child of a Dialog.
+  // A better approach would be to have two separate components.
+  const isInsideDialog = syllabusContext === undefined;
+
+  if (isInsideDialog) {
+    return isDialog;
+  }
+
+  return (
+    <Dialog>
+        <DialogTrigger asChild>
+          <Button
+            className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg"
+            size="icon"
+          >
+            <Sparkles className="h-6 w-6" />
+            <span className="sr-only">Open AI Assistant</span>
+          </Button>
+        </DialogTrigger>
+        {isDialog}
     </Dialog>
   );
 }
