@@ -63,11 +63,11 @@ export const syllabus: SyllabusSubject[] = [
             },
             {
                 title: '4. Basic Principles of Organic Chemistry',
-                content: "Carbon – tetravalency, hybridization; Classification of organic compounds – functional groups; Homologous series; Nomenclature (IUPAC); Homolytic and heterolytic bond cleavage; carbocations, carbanions and free radicals; electrophiles and nucleophiles; Inductive effect, electromeric effect, resonance and hyperconjugation. Common organic reactions - Substitution, addition, elimination and rearrangement Isomerism in Organic Compounds: Definition, Classification – structural isomerism, stereo isomerism – geometrical and optical isomerism. Optical activity - chirality – compounds containing chiral centres – R, S notation, D, L notation. Detection of the functional groups in organic compounds: Hydroxyl (alcoholic and phenolic), carbonyl (aldehyde and ketones) carboxyl and amino groups."
+                content: "Carbon – tetravalency, hybridization; Classification of organic compounds – functional groups; Homologous series; Nomenclature (IUPAC); Homolytic and heterolytic bond cleavage; carbocations, carbanions and free radicals; electrophiles and nucleophiles; Inductive effect, electromeric effect, resonance and hyperconjugation. Common organic reactions - Substitution, addition, elimination and rearrangement. Isomerism in Organic Compounds: Definition, Classification – structural isomerism, stereo isomerism – geometrical and optical isomerism. Optical activity - chirality – compounds containing chiral centres – R, S notation, D, L notation. Detection of the functional groups in organic compounds: Hydroxyl (alcoholic and phenolic), carbonyl (aldehyde and ketones) carboxyl and amino groups."
             },
             {
                 title: '5. Properties and Chemistry of Functionalized Organic Compounds',
-                content: "Alcohols and Ethers - Nomenclature of alcohols – Classification of alcohols - distinction between 1°, 2° and 3° alcohols – General methods of preparation of primary alcohols, properties. Methods of preparation of dihydric alcohols: Glycol – Properties – Uses. Methods of preparation of trihydric alcohols - Properties – Uses. Aromatic alcohols – preparation and properties of phenols and benzyl alcohol; Ethers – Nomenclature of ethers – general methods of preparation of aliphatic ethers - Properties – Uses. Aromatic ethers – Preparation of Anisole – Uses Carbonyl Compounds - Nomenclature of carbonyl compounds – Comparison of aldehydes and ketones. General methods of preparation of aldehydes – Properties – Uses. Aromatic aldehydes – Preparation of benzaldehyde – Properties and Uses. Ketones – general methods of preparation of aliphatic ketones (acetone) – Properties – Uses. Aromatic ketones – preparation of acetophenone – Properties – Uses, preparation of benzophenone – Properties. Name reactions; Clemmensen reduction, Wolff – Kishner reduction, Cannizzaro reaction, Claisen Schmidt reaction, Benzoin Condensation, Aldol Condensation. Preparation and applications of Grignard reagents. Carboxylic Acids and their derivatives - Nomenclature – Preparation of aliphatic monocarboxylic acids – formic acid – Properties – Uses. Monohydroxy mono carboxylic acids; Lactic acid – Synthesis of lactic acid. Aliphatic dicarboxylic acids; Preparation of oxalic and succinic acids. Aromatic acids: Benzoic and Salicylic acids – Properties – Uses. Derivatives of carboxylic acids; acetyl chloride (CH3COCl) – Preparation – Properties – Uses. Preparation of acetamide, Properties – acetic anhydride – Preparation, Properties. Preparation of esters – methyl acetate – Properties"
+                content: "Alcohols and Ethers - Nomenclature of alcohols – Classification of alcohols - distinction between 1°, 2° and 3° alcohols – General methods of preparation of primary alcohols, properties. Methods of preparation of dihydric alcohols: Glycol – Properties – Uses. Methods of preparation of trihydric alcohols - Properties – Uses. Aromatic alcohols – preparation and properties of phenols and benzyl alcohol; Ethers – Nomenclature of ethers – general methods of preparation of aliphatic ethers - Properties – Uses. Aromatic ethers – Preparation of Anisole – Uses. Carbonyl Compounds - Nomenclature of carbonyl compounds – Comparison of aldehydes and ketones. General methods of preparation of aldehydes – Properties – Uses. Aromatic aldehydes – Preparation of benzaldehyde – Properties and Uses. Ketones – general methods of preparation of aliphatic ketones (acetone) – Properties – Uses. Aromatic ketones – preparation of acetophenone – Properties – Uses, preparation of benzophenone – Properties. Name reactions; Clemmensen reduction, Wolff – Kishner reduction, Cannizzaro reaction, Claisen Schmidt reaction, Benzoin Condensation, Aldol Condensation. Preparation and applications of Grignard reagents. Carboxylic Acids and their derivatives - Nomenclature – Preparation of aliphatic monocarboxylic acids – formic acid – Properties – Uses. Monohydroxy mono carboxylic acids; Lactic acid – Synthesis of lactic acid. Aliphatic dicarboxylic acids; Preparation of oxalic and succinic acids. Aromatic acids: Benzoic and Salicylic acids – Properties – Uses. Derivatives of carboxylic acids; acetyl chloride (CH3COCl) – Preparation – Properties – Uses. Preparation of acetamide, Properties – acetic anhydride – Preparation, Properties. Preparation of esters – methyl acetate – Properties."
             },
             {
                 title: '6. Organic Nitrogen Compounds',
@@ -117,6 +117,51 @@ export const syllabus: SyllabusSubject[] = [
             {
                 title: '10. Discrete Mathematics',
                 content: "Sets – Relations – Functions – Binary Operations. Sequence and series (AP, GP, HP) – Binomial Theorem – Counting Techniques. Mathematical logic – logical statements, connectives, truth tables, logical equivalence, tautology, contradiction."
+            }
+        ]
+    },
+    {
+        subject: 'Biology',
+        topics: [
+            {
+                title: '1. Taxonomy',
+                content: "Need for classification; three domains of life. Linnaean, Whittaker, Bentham and Hooker systems of classification. Salient features and classification of non-chordates up to phyla levels and chordates up to class levels. Morphology and anatomy of flowering plants. Structural organization in insects (cockroach)"
+            },
+            {
+                title: '2. Cell and Molecular Biology',
+                content: "Cell theory. Prokaryotic cell and it’s ultrastructure. Eukaryotic cell- cell wall, cell membrane, cytoskeleton, nucleus, chloroplast, mitochondria, endoplasmic reticulum, Golgi bodies, ribosomes, lysosomes, vacuoles and centrosomes. Cell cycle and division - amitosis, mitosis and meiosis. Search for genetic material; structure of DNA and RNA; replication, transcription, genetic code, translation, splicing, gene expression and regulation (lac operon) and DNArepair."
+            },
+            {
+                title: '3. Reproduction',
+                content: "Asexual reproduction – binary fission, sporulation, budding, gemmule formation and fragmentation, Vegetative propagation in plants. Sexual reproduction in flowering plants - structure of flowers. Pollination, fertilization, development of seeds and fruits, seed dispersal, apomixis, parthenocarpy and poly-embryony. Human reproductive system - Gametogenesis, menstrual cycle, fertilization, implantation, embryo development upto blastocyst formation, pregnancy, parturition and lactation. Assisted reproductive technologies."
+            },
+            {
+                title: '4. Genetics and evolution',
+                content: "Chromosomes - structure and types, linkage and crossing over, recombination of chromosomes, mutation and chromosomal aberrations. Mendelian inheritance, chromosomal theory of inheritance, deviation from Mendelian ratio (incomplete dominance, co-dominance, multiple allelism, pleiotrophy), sex linked inheritance and sex determination in humans. Darwinism, neo Darwinism, Hardy and Weinberg’s principle and factors affecting the equilibrium: selection, mutation, migration and random genetic drift."
+            },
+            {
+                title: '5. Human health and diseases',
+                content: "Pathogens, parasites causing human diseases (malaria, dengue, chickengunia, filariasis, COVID, ascariasis, typhoid, pneumonia, common cold, amoebiasis, ring worm) and their control. Basic concepts of immunology, vaccines, antibiotics, cancer, HIV and AIDS. Adolescence, drug and alcohol abuse."
+            },
+            {
+                title: '6. Biochemistry',
+                content: "Structure and function of carbohydrates, lipids and proteins. Enzymes – types, properties and enzyme action. Metabolism - glycolysis, fermentation and Kreb’s cycle."
+            },
+            {
+                title: '7. Plant physiology',
+                content: "Movement of water, food, nutrients, gases and minerals. Passive diffusion, facilitated diffusion, and active transport. Imbibition, osmosis, apoplast and symplast transport and guttation. Macro and micronutrients and their deficiency symptoms. Transpiration, photosynthesis (light and dark reactions) and electron transport chain. Hormones and growth regulators, photo- periodism and vernalization. Nitrogen cycle and biological nitrogen fixation."
+            },
+            {
+                title: '8. Human physiology',
+                content: "Digestion and absorption, breathing and respiration, body fluids and circulation, excretory system, endocrine system, nervous system, skeletal and muscular systems. Locomotion and movement, growth, aging and death. Hormones - types of hormones, functions and disorders."
+            },
+            {
+                title: '9. Biotechnology and its applications',
+                content: "Recombinant DNA technology, applications in health, agriculture and industries; genetically modified organisms; Human insulin, vaccine and antibiotic production. Stem cell technology and gene therapy. Apiculture and animal husbandry. Plant breeding, tissue culture, single cell protein, fortification, Bt crops and transgenic animals. Microbes in food processing, sewage treatment, waste management and energy generation. Biocontrol agents and biofertilizers. Biosafety issues, biopiracy and patents. Human and rice genome projects. DNA fingerprinting."
+            },
+            {
+                title: '10. Biodiversity, ecology and environment',
+                content: "Ecosystems: components, types, pyramids, nutrient cycles (carbon and phosphorous), ecological succession and energy flow in an ecosystem; Biodiversity - concepts, patterns, importance, conservation, hot spots, endangered organisms, extinction, Red data book, botanical gardens, national parks, sanctuaries, museums, biosphere reserves and Ramsar sites. Environmental issues: pollution and its control. Solid and radioactive waste management. Climate change impact and its mitigation. Population attributes - growth, birth and death rate and age distribution."
             }
         ]
     }
