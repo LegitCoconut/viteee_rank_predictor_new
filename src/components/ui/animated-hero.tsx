@@ -61,7 +61,7 @@ function Hero() {
                 Check Your Rank <ArrowDown className="w-4 h-4" />
               </Link>
             </Button>
-            <Button size="lg" className="gap-2" variant="outline" asChild>
+            <Button size="lg" className="gap-2 hover:bg-white dark:hover:bg-white/10" variant="outline" asChild>
               <Link href="/">
                 VITEEE MOCK test <MoveRight className="w-4 h-4" />
               </Link>
