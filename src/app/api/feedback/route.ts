@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { MongoClient } from "mongodb";
 import { z } from "zod";
+import { connectToDatabase } from "@/lib/db";
 
 const FormSchema = z.object({
   name: z.string().min(2),
@@ -9,21 +9,10 @@ const FormSchema = z.object({
   token: z.string(),
 });
 
-const MONGODB_URI = process.env.MONGODB_URI!;
 const MONGODB_DB = process.env.MONGODB_DB!;
 const CLOUDFLARE_TURNSTILE_SECRET_KEY =
   process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY!;
 
-let cachedClient: MongoClient | null = null;
-
-async function connectToDatabase() {
-  if (cachedClient) {
-    return cachedClient;
-  }
-  const client = new MongoClient(MONGODB_URI);
-  cachedClient = await client.connect();
-  return cachedClient;
-}
 
 export async function POST(req: NextRequest) {
   try {

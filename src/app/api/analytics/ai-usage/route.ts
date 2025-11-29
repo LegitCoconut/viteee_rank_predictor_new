@@ -1,21 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { MongoClient } from "mongodb";
+import { trackAIUsage } from "@/lib/actions";
 
-const MONGODB_URI = process.env.MONGODB_URI!;
-const MONGODB_DB = process.env.MONGODB_DB!;
 const ALLOWED_ORIGIN = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:9002";
 
-
-let cachedClient: MongoClient | null = null;
-
-async function connectToDatabase() {
-  if (cachedClient) {
-    return cachedClient;
-  }
-  const client = new MongoClient(MONGODB_URI);
-  cachedClient = await client.connect();
-  return cachedClient;
-}
 
 const getCorsHeaders = (origin: string) => {
     const headers: { [key: string]: string } = {
@@ -43,21 +30,16 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ message: 'Forbidden' }, { status: 403, headers });
     }
 
-    try {
-        const client = await connectToDatabase();
-        const db = client.db(MONGODB_DB);
-        const collection = db.collection("analytics");
-    
+    try
+    {
         // Fire-and-forget: No await here
-        collection.findOneAndUpdate(
-            { type: 'ai-usage' },
-            { $inc: { count: 1 } },
-            { upsert: true }
-        );
+        trackAIUsage();
 
         return NextResponse.json({ message: "AI usage tracking initiated." }, { status: 202, headers });
   } catch (error) {
-    console.error(error);
+    console.error("Error in AI usage tracking request:", error);
+    // We don't want to expose internal errors, but we still send a response.
+    // The actual processing is happening in the background.
     return NextResponse.json(
         { message: "Internal Server Error" },
         { status: 500, headers }
