@@ -13,7 +13,7 @@ export default function Home() {
         <Hero />
         <CampusCards />
         <ImportantDates />
-        <section className="py-12">
+        <section id="feedback" className="py-12">
           <div className="container">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
               Feedback

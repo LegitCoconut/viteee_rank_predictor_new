@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -86,6 +87,10 @@ export default function MockTestSetupPage() {
                       <span>{instruction}</span>
                     </li>
                   ))}
+                   <li className="flex items-start gap-3">
+                      <AlertCircle className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
+                      <span>If you find any issue with the online test, questions, or technical issues feel free to reach out to <a href="mailto:vitranks@malabarmatrix.site" className="text-primary underline">vitranks@malabarmatrix.site</a> or through the <Link href="/#feedback" className="text-primary underline">feedback form</Link>.</span>
+                    </li>
                 </ul>
               </div>
 
