@@ -102,7 +102,7 @@ export function AIChatAssistant({ syllabusContext }: { syllabusContext: string }
             <span className="sr-only">Open AI Assistant</span>
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] md:max-w-lg lg:max-w-xl h-[80dvh] flex flex-col p-0">
+        <DialogContent className="h-full max-h-full w-full max-w-full flex flex-col p-0 sm:rounded-none">
           <DialogHeader className="p-4 border-b">
             <DialogTitle className="flex items-center gap-2 text-xl">
               <Bot className="h-6 w-6" />
