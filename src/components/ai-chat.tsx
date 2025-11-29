@@ -20,6 +20,19 @@ interface Message {
   content: string;
 }
 
+const trackAIUsage = () => {
+    const hasTracked = sessionStorage.getItem('aiUsageTracked');
+    if (!hasTracked) {
+        fetch('/api/analytics/ai-usage', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ event: 'ai_usage_start' })
+        }).then(() => {
+            sessionStorage.setItem('aiUsageTracked', 'true');
+        }).catch(console.error);
+    }
+};
+
 const parseMessage = (content: string) => {
   return content.split(/(\*\*.*?\*\*)/g).map((part, index) => {
     if (part.startsWith('**') && part.endsWith('**')) {
@@ -45,6 +58,7 @@ export function AIChatAssistant({ syllabusContext }: { syllabusContext: string }
       console.error("Failed to parse chat history from localStorage", error);
       localStorage.removeItem('chatHistory');
     }
+    trackAIUsage();
   }, []);
 
   useEffect(() => {

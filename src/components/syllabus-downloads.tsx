@@ -9,7 +9,7 @@ import {
   import { Button } from "@/components/ui/button";
   import { Download } from "lucide-react";
   import Link from "next/link";
-  import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+  import { Card, CardContent } from "@/components/ui/card";
   
   const syllabusFiles = [
     { subject: "Physics", path: "https://vit.ac.in/sites/default/files/VITEEE-2026/Physics_VITEEE2026.pdf" },
@@ -18,6 +18,14 @@ import {
     { subject: "Biology", path: "https://vit.ac.in/sites/default/files/VITEEE-2026/Biology_VITEEE2026.pdf" },
     { subject: "Aptitude & English", path: "https://vit.ac.in/sites/default/files/VITEEE-2026/English_and_Aptitude_VITEEE2026.pdf" },
   ];
+
+  const trackDownload = () => {
+    fetch('/api/analytics/syllabus-download', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event: 'syllabus_download' })
+    }).catch(console.error);
+  };
   
   export function SyllabusDownloads() {
     return (
@@ -44,7 +52,7 @@ import {
                         <TableRow key={file.subject}>
                         <TableCell className="font-medium">{file.subject}</TableCell>
                         <TableCell className="text-right">
-                            <Button asChild variant="outline" size="sm">
+                            <Button asChild variant="outline" size="sm" onClick={trackDownload}>
                             <Link href={file.path} target="_blank" rel="noopener noreferrer">
                                 <Download className="mr-2 h-4 w-4" />
                                 PDF
