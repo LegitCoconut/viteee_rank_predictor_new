@@ -47,13 +47,14 @@ export async function POST(req: NextRequest) {
         const db = client.db(MONGODB_DB);
         const collection = db.collection("analytics");
     
-        await collection.findOneAndUpdate(
+        // Fire-and-forget: No await here
+        collection.findOneAndUpdate(
             { type: 'syllabus-download' },
             { $inc: { count: 1 } },
             { upsert: true }
         );
 
-        return NextResponse.json({ message: "Syllabus download tracked." }, { status: 202, headers });
+        return NextResponse.json({ message: "Syllabus download tracking initiated." }, { status: 202, headers });
     } catch (error) {
         console.error(error);
         return NextResponse.json(
