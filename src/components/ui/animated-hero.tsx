@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -10,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
   const titles = useMemo(
-    () => ["easily", "quickly", "confidently", "now"],
+    () => ["Predict Ranks", "Practice Mocks", "Succeed"],
     []
   );
 
@@ -30,7 +31,7 @@ function Hero() {
               <Badge variant="outline" className="py-1 px-3 border-primary/50 text-primary hover:bg-primary/10 transition-colors">A Malabar Matrix Initiative</Badge>
             </Link>
             <h1 className="text-5xl md:text-7xl max-w-3xl tracking-tighter text-center font-headline">
-              <span className="text-muted-foreground">Find Your VIT Branch</span>
+              <span className="text-muted-foreground">Your All-in-One VITEEE Hub</span>
               <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1 text-primary">
                 &nbsp;
                 {titles.map((title, index) => (
@@ -52,7 +53,7 @@ function Hero() {
             </h1>
 
             <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center">
-              Enter your VITEEE 2026 rank and instantly see which branches and campuses you are eligible for. Make an informed decision about your future.
+              Predict your potential branches with our rank data and prepare for the VITEEE 2026 exam with free mock tests. Your complete toolkit for success.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
