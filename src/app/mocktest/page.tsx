@@ -46,7 +46,7 @@ export default function MockTestPage() {
                 </p>
                 <div className="flex flex-col items-center justify-center gap-4">
                     <Button size="lg" asChild>
-                        <Link href="/mocktest">
+                        <Link href="/mocktest/setup">
                             <Pencil className="mr-2 h-4 w-4" />
                             Take VITEEE Mock Test
                         </Link>
