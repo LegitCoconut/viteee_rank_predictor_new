@@ -164,5 +164,39 @@ export const syllabus: SyllabusSubject[] = [
                 content: "Ecosystems: components, types, pyramids, nutrient cycles (carbon and phosphorous), ecological succession and energy flow in an ecosystem; Biodiversity - concepts, patterns, importance, conservation, hot spots, endangered organisms, extinction, Red data book, botanical gardens, national parks, sanctuaries, museums, biosphere reserves and Ramsar sites. Environmental issues: pollution and its control. Solid and radioactive waste management. Climate change impact and its mitigation. Population attributes - growth, birth and death rate and age distribution."
             }
         ]
+    },
+    {
+        subject: 'Aptitude',
+        topics: [
+            {
+                title: '1. Data Interpretation',
+                content: 'Tabular Chart, Pie Chart, Bar Chart, Line Graph, Mixed Charts'
+            },
+            {
+                title: '2. Data Sufficiency',
+                content: 'All topics combined'
+            },
+            {
+                title: '3. Syllogism',
+                content: '2 statements and 2 conclusions, 3 statements and 2 conclusion, 2 statements and 4 conclusions, 3 statements and 4 conclusions, 3 statement and 3 conclusions'
+            },
+            {
+                title: '4. Number series, Coding, and Decoding',
+                content: 'Number series, Letter to Letter Coding, Letter to Number Coding, Mixed coding'
+            },
+            {
+                title: '5. Clocks, Calendars, and Directions',
+                content: 'Mirror image of the clock, Angle based questions, Gain or loss per day, finding days/dates, finding odd days, Occurrence of same calendar year, Directions faced with respect to the starting point, Distance between two points'
+            }
+        ]
+    },
+    {
+        subject: 'English',
+        topics: [
+            {
+                title: 'Comprehension and Grammar',
+                content: 'Multiple Choice Questions to test the comprehension of a short passage or line of poems, English grammar, and pronunciation. Please note that the passages, lines of poems, dialogues, grammar, and pronunciation items are chosen to suit the level of higher secondary or equivalent education.'
+            }
+        ]
     }
 ];
