@@ -20,7 +20,7 @@ const mpceaData = [
 const bpceaData = [
   { subject: "Biology", questions: 40 },
   { subject: "Physics", questions: 35 },
-  { subject "Chemistry", questions: 35 },
+  { subject: "Chemistry", questions: 35 },
   { subject: "English", questions: 5 },
   { subject: "Aptitude", questions: 10 },
 ];
