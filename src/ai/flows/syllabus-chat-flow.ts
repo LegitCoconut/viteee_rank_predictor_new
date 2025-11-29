@@ -4,23 +4,10 @@
  * @fileOverview A Genkit flow for chatting about the VITEEE syllabus.
  *
  * - chatWithSyllabus - A function that takes a user query and syllabus context to generate a response.
- * - SyllabusChatInput - The input type for the chatWithSyllabus function.
- * - SyllabusChatOutput - The return type for the chatWithSyllabus function.
  */
 
 import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
-
-export const SyllabusChatInputSchema = z.object({
-  query: z.string().describe('The user\'s question about the syllabus.'),
-  syllabusContext: z.string().describe('The entire syllabus content in JSON format.'),
-});
-export type SyllabusChatInput = z.infer<typeof SyllabusChatInputSchema>;
-
-export const SyllabusChatOutputSchema = z.object({
-  answer: z.string().describe('The AI-generated answer to the user\'s query.'),
-});
-export type SyllabusChatOutput = z.infer<typeof SyllabusChatOutputSchema>;
+import { SyllabusChatInputSchema, SyllabusChatOutputSchema, type SyllabusChatInput, type SyllabusChatOutput } from '@/ai/schemas/syllabus-chat-schema';
 
 
 export async function chatWithSyllabus(input: SyllabusChatInput): Promise<SyllabusChatOutput> {

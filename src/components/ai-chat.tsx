@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { chatWithSyllabus } from '@/ai/flows/syllabus-chat-flow';
+import type { SyllabusChatInput } from '@/ai/schemas/syllabus-chat-schema';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -62,7 +63,7 @@ export function AIChat({ syllabusContext }: { syllabusContext: string }) {
       const aiResponse = await chatWithSyllabus({
         query: input,
         syllabusContext,
-      });
+      } as SyllabusChatInput);
       const assistantMessage: Message = { role: 'assistant', content: aiResponse.answer };
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
