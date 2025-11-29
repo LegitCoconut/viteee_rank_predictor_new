@@ -12,17 +12,17 @@ import {
   import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
   
   const syllabusFiles = [
-    { subject: "Physics", path: "/syllabus/phy.pdf" },
-    { subject: "Chemistry", path: "/syllabus/che.pdf" },
-    { subject: "Mathematics", path: "/syllabus/math.pdf" },
-    { subject: "Biology", path: "/syllabus/bio.pdf" },
-    { subject: "Aptitude & English", path: "/syllabus/apt_eng.pdf" },
+    { subject: "Physics", path: "https://vit.ac.in/sites/default/files/VITEEE-2026/Physics_VITEEE2026.pdf" },
+    { subject: "Chemistry", path: "https://vit.ac.in/sites/default/files/VITEEE-2026/Chemistry_VITEEE2026.pdf" },
+    { subject: "Mathematics", path: "https://vit.ac.in/sites/default/files/VITEEE-2026/Maths_VITEEE2026.pdf" },
+    { subject: "Biology", path: "https://vit.ac.in/sites/default/files/VITEEE-2026/Biology_VITEEE2026.pdf" },
+    { subject: "Aptitude & English", path: "https://vit.ac.in/sites/default/files/VITEEE-2026/English_and_Aptitude_VITEEE2026.pdf" },
   ];
   
   export function SyllabusDownloads() {
     return (
       <section className="py-12 md:py-20">
-        <div className="container px-4">
+        <div className="container px-4 text-center">
             <div className="text-center mb-12">
                 <h2 className="text-4xl md:text-5xl font-headline tracking-tighter font-semibold">Syllabus Downloads</h2>
                 <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
