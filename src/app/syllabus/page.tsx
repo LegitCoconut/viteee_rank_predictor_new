@@ -1,9 +1,11 @@
+'use client';
+
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { SyllabusSection } from '@/components/syllabus-section';
 import { MockTestPattern } from '@/components/mock-test-pattern';
 import { SyllabusDownloads } from '@/components/syllabus-downloads';
-import { AIChat } from '@/components/ai-chat';
+import { AIChatAssistant } from '@/components/ai-chat';
 import { syllabus } from '@/lib/data/syllabus-data';
 
 export default function SyllabusPage() {
@@ -16,7 +18,7 @@ export default function SyllabusPage() {
         <SyllabusSection />
         <SyllabusDownloads />
         <MockTestPattern />
-        <AIChat syllabusContext={syllabusContext} />
+        <AIChatAssistant syllabusContext={syllabusContext} />
       </main>
       <Footer />
     </div>

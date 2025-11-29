@@ -1,10 +1,16 @@
 "use client";
 
-import { useState, useEffect, useRef, FormEvent } from 'react';
-import { Bot, User, CornerDownLeft, Loader2, BookCopy } from 'lucide-react';
+import { useState, useEffect, useRef, FormEvent, Fragment } from 'react';
+import { Bot, User, CornerDownLeft, Loader2, BookCopy, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { chatWithSyllabus } from '@/ai/flows/syllabus-chat-flow';
 import type { SyllabusChatInput } from '@/ai/schemas/syllabus-chat-schema';
@@ -14,7 +20,16 @@ interface Message {
   content: string;
 }
 
-export function AIChat({ syllabusContext }: { syllabusContext: string }) {
+const parseMessage = (content: string) => {
+  return content.split(/(\*\*.*?\*\*)/g).map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={index}>{part.slice(2, -2)}</strong>;
+    }
+    return <Fragment key={index}>{part}</Fragment>;
+  });
+};
+
+export function AIChatAssistant({ syllabusContext }: { syllabusContext: string }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -77,18 +92,26 @@ export function AIChat({ syllabusContext }: { syllabusContext: string }) {
   
 
   return (
-    <section className="py-12 md:py-20">
-      <div className="container px-4 text-center">
-        <Card className="max-w-2xl mx-auto">
-          <CardHeader>
-            <CardTitle className="flex items-center justify-center gap-2 text-2xl font-bold">
+    <Dialog>
+        <DialogTrigger asChild>
+          <Button
+            className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg"
+            size="icon"
+          >
+            <Sparkles className="h-6 w-6" />
+            <span className="sr-only">Open AI Assistant</span>
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px] md:max-w-lg lg:max-w-xl h-[80dvh] flex flex-col p-0">
+          <DialogHeader className="p-4 border-b">
+            <DialogTitle className="flex items-center gap-2 text-xl">
               <Bot className="h-6 w-6" />
-              Syllabus AI Chat
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ScrollArea className="h-96 w-full rounded-md border p-4" ref={scrollAreaRef}>
-              <div className="space-y-4">
+              Syllabus AI Assistant
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex-1 overflow-hidden p-4">
+            <ScrollArea className="h-full w-full" ref={scrollAreaRef}>
+              <div className="space-y-4 pr-4">
                 {messages.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
                     <BookCopy className="h-10 w-10 mb-4" />
@@ -112,10 +135,10 @@ export function AIChat({ syllabusContext }: { syllabusContext: string }) {
                         className={`rounded-lg px-4 py-2 max-w-[80%] text-left ${
                           message.role === 'user'
                             ? 'bg-secondary text-secondary-foreground'
-                            : 'bg-card text-card-foreground'
+                            : 'bg-card text-card-foreground border'
                         }`}
                       >
-                        <p className="text-sm">{message.content}</p>
+                        <p className="text-sm">{parseMessage(message.content)}</p>
                       </div>
                       {message.role === 'user' && (
                         <div className="bg-muted rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
@@ -137,8 +160,8 @@ export function AIChat({ syllabusContext }: { syllabusContext: string }) {
                 )}
               </div>
             </ScrollArea>
-          </CardContent>
-          <CardFooter>
+          </div>
+          <div className="p-4 border-t">
             <form onSubmit={handleSubmit} className="flex w-full items-center space-x-2">
               <Input
                 id="message"
@@ -154,9 +177,8 @@ export function AIChat({ syllabusContext }: { syllabusContext: string }) {
                 <span className="sr-only">Send</span>
               </Button>
             </form>
-          </CardFooter>
-        </Card>
-      </div>
-    </section>
+          </div>
+        </DialogContent>
+    </Dialog>
   );
 }
