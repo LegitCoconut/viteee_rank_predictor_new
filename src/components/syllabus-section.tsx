@@ -32,7 +32,7 @@ export function SyllabusSection() {
                         <span>{subject.subject}</span>
                     </div>
                 </AccordionTrigger>
-                <AccordionContent className="prose prose-sm sm:prose-base max-w-none dark:prose-invert py-4">
+                <AccordionContent className="prose prose-sm sm:prose-base max-w-none dark:prose-invert py-4 text-left">
                   {subject.topics.map((topic, index) => (
                     <div key={index} className="mb-6">
                       <h3 className="font-semibold text-lg text-foreground">{topic.title}</h3>
