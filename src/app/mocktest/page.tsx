@@ -5,7 +5,7 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { MockTestPattern } from '@/components/mock-test-pattern';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Sparkles, Pencil } from 'lucide-react';
+import { BookOpen, Sparkles, Pencil, ArrowDown } from 'lucide-react';
 import { SyllabusSection } from '@/components/syllabus-section';
 import { AIChatAssistant } from '@/components/ai-chat';
 import { syllabus } from '@/lib/data/syllabus-data';
@@ -17,17 +17,22 @@ import {
 
 export default function MockTestPage() {
   const syllabusRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const syllabusContext = JSON.stringify(syllabus);
 
   const handleScrollToSyllabus = () => {
     syllabusRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleScrollToContent = () => {
+    contentRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="flex flex-col min-h-dvh bg-background">
       <Header />
       <main className="flex-1">
-        <section className="py-12 md:py-20 text-center bg-secondary/50">
+        <section className="h-dvh flex flex-col items-center justify-center text-center bg-secondary/50 relative">
             <div className="container">
                 <h1 className="text-4xl md:text-5xl font-headline tracking-tighter font-semibold mb-4">VITEEE Mock Test</h1>
                 <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
@@ -55,8 +60,15 @@ export default function MockTestPage() {
                     </Button>
                 </div>
             </div>
+            <div className="absolute bottom-10 animate-bounce">
+                <Button variant="ghost" size="icon" onClick={handleScrollToContent}>
+                    <ArrowDown className="h-6 w-6" />
+                </Button>
+            </div>
         </section>
-        <MockTestPattern />
+        <div ref={contentRef}>
+          <MockTestPattern />
+        </div>
         <div ref={syllabusRef}>
             <SyllabusSection />
         </div>
