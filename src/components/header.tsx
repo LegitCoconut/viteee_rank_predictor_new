@@ -1,6 +1,7 @@
 import { GraduationCap } from 'lucide-react';
 import Link from 'next/link';
 import { ThemeToggle } from './theme-toggle';
+import { Button } from './ui/button';
 
 export function Header() {
   return (
@@ -12,9 +13,15 @@ export function Header() {
             VITEEE Ranks
           </span>
         </Link>
-        <div className="ml-auto">
+        <nav className="ml-auto flex items-center gap-2">
+            <Button variant="ghost" asChild>
+                <Link href="/syllabus">Syllabus</Link>
+            </Button>
+            <Button variant="ghost" asChild>
+                <Link href="/mocktest">Mock Test</Link>
+            </Button>
           <ThemeToggle />
-        </div>
+        </nav>
       </div>
     </header>
   );
