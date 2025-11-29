@@ -1,4 +1,3 @@
-
 "use server";
 
 import { connectToDatabase } from "./db";
@@ -8,35 +7,34 @@ if (!MONGODB_DB) {
     throw new Error("Please define the MONGODB_DB environment variable inside .env");
 }
 
-export const trackSyllabusDownload = async () => {
+export async function trackSyllabusDownload() {
     try {
         const client = await connectToDatabase();
         const db = client.db(MONGODB_DB);
         const collection = db.collection("analytics");
 
         await collection.findOneAndUpdate(
-            { type: 'syllabus-download' },
+            { type: "syllabus-download" },
             { $inc: { count: 1 } },
             { upsert: true }
         );
     } catch (error) {
         console.error("Failed to track syllabus download:", error);
     }
-};
+}
 
-
-export const trackAIUsage = async () => {
+export async function trackAIUsage() {
     try {
         const client = await connectToDatabase();
         const db = client.db(MONGODB_DB);
         const collection = db.collection("analytics");
 
         await collection.findOneAndUpdate(
-            { type: 'ai-usage' },
+            { type: "ai-usage" },
             { $inc: { count: 1 } },
             { upsert: true }
         );
     } catch (error) {
         console.error("Failed to track AI usage:", error);
     }
-};
+}
