@@ -1,6 +1,7 @@
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { SyllabusSection } from '@/components/syllabus-section';
+import { MockTestPattern } from '@/components/mock-test-pattern';
 
 export default function SyllabusPage() {
   return (
@@ -8,6 +9,7 @@ export default function SyllabusPage() {
       <Header />
       <main className="flex-1">
         <SyllabusSection />
+        <MockTestPattern />
       </main>
       <Footer />
     </div>
