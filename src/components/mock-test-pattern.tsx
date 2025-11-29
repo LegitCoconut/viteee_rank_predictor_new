@@ -20,7 +20,7 @@ const mpceaData = [
 const bpceaData = [
   { subject: "Biology", questions: 40 },
   { subject: "Physics", questions: 35 },
-  { subject: "Chemistry", questions: 35 },
+  { subject "Chemistry", questions: 35 },
   { subject: "English", questions: 5 },
   { subject: "Aptitude", questions: 10 },
 ];
@@ -39,8 +39,8 @@ export function MockTestPattern() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <Card>
-            <CardHeader className="bg-primary text-primary-foreground">
+          <Card className="overflow-hidden">
+            <CardHeader>
               <CardTitle className="text-center text-2xl font-bold">MPCEA</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
@@ -63,8 +63,8 @@ export function MockTestPattern() {
             </CardContent>
           </Card>
           
-          <Card>
-            <CardHeader className="bg-primary text-primary-foreground">
+          <Card className="overflow-hidden">
+            <CardHeader>
               <CardTitle className="text-center text-2xl font-bold">BPCEA</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
