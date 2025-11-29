@@ -104,96 +104,92 @@ export function AIChatAssistant({ syllabusContext }: { syllabusContext: string }
     }
   };
   
-  const isDialog = (
-    <DialogContent className="h-full max-h-full w-full max-w-full flex flex-col p-0 sm:rounded-none">
-          <DialogHeader className="p-4 border-b">
-            <DialogTitle className="flex items-center gap-2 text-xl">
-              <Bot className="h-6 w-6" />
-              Syllabus AI Assistant
-            </DialogTitle>
-          </DialogHeader>
-          <div className="flex-1 overflow-hidden p-4">
-            <ScrollArea className="h-full w-full" ref={scrollAreaRef}>
-              <div className="space-y-4 pr-4">
-                {messages.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
-                    <BookCopy className="h-10 w-10 mb-4" />
-                    <p className="text-center">Ask me anything about the VITEEE syllabus!</p>
-                    <p className="text-sm text-center">For example: "What are the topics in Physics?"</p>
-                  </div>
-                ) : (
-                  messages.map((message, index) => (
-                    <div
-                      key={index}
-                      className={`flex items-start gap-3 ${
-                        message.role === 'user' ? 'justify-end' : ''
-                      }`}
-                    >
-                      {message.role === 'assistant' && (
-                        <div className="bg-primary rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
-                          <Bot className="h-5 w-5 text-primary-foreground" />
-                        </div>
-                      )}
-                      <div
-                        className={`rounded-lg px-4 py-2 max-w-[80%] text-left ${
-                          message.role === 'user'
-                            ? 'bg-secondary text-secondary-foreground'
-                            : 'bg-card text-card-foreground border'
-                        }`}
-                      >
-                        <p className="text-sm">{parseMessage(message.content)}</p>
-                      </div>
-                      {message.role === 'user' && (
-                        <div className="bg-muted rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
-                          <User className="h-5 w-5 text-muted-foreground" />
-                        </div>
-                      )}
-                    </div>
-                  ))
-                )}
-                {isLoading && (
-                  <div className="flex items-start gap-3">
-                     <div className="bg-primary rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
-                        <Bot className="h-5 w-5 text-primary-foreground" />
-                    </div>
-                    <div className="rounded-lg px-4 py-2 max-w-[80%] text-left bg-card text-card-foreground">
-                        <Loader2 className="h-5 w-5 animate-spin text-primary" />
-                    </div>
-                  </div>
-                )}
+  const chatInterface = (
+    <>
+      <DialogHeader className="p-4 border-b">
+        <DialogTitle className="flex items-center gap-2 text-xl">
+          <Bot className="h-6 w-6" />
+          Syllabus AI Assistant
+        </DialogTitle>
+      </DialogHeader>
+      <div className="flex-1 overflow-hidden p-4">
+        <ScrollArea className="h-full w-full" ref={scrollAreaRef}>
+          <div className="space-y-4 pr-4">
+            {messages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
+                <BookCopy className="h-10 w-10 mb-4" />
+                <p className="text-center">Ask me anything about the VITEEE syllabus!</p>
+                <p className="text-sm text-center">For example: "What are the topics in Physics?"</p>
               </div>
-            </ScrollArea>
+            ) : (
+              messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`flex items-start gap-3 ${
+                    message.role === 'user' ? 'justify-end' : ''
+                  }`}
+                >
+                  {message.role === 'assistant' && (
+                    <div className="bg-primary rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
+                      <Bot className="h-5 w-5 text-primary-foreground" />
+                    </div>
+                  )}
+                  <div
+                    className={`rounded-lg px-4 py-2 max-w-[80%] text-left ${
+                      message.role === 'user'
+                        ? 'bg-secondary text-secondary-foreground'
+                        : 'bg-card text-card-foreground border'
+                    }`}
+                  >
+                    <p className="text-sm">{parseMessage(message.content)}</p>
+                  </div>
+                  {message.role === 'user' && (
+                    <div className="bg-muted rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
+                      <User className="h-5 w-5 text-muted-foreground" />
+                    </div>
+                  )}
+                </div>
+              ))
+            )}
+            {isLoading && (
+              <div className="flex items-start gap-3">
+                 <div className="bg-primary rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
+                    <Bot className="h-5 w-5 text-primary-foreground" />
+                </div>
+                <div className="rounded-lg px-4 py-2 max-w-[80%] text-left bg-card text-card-foreground">
+                    <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                </div>
+              </div>
+            )}
           </div>
-          <div className="p-4 border-t">
-            <form onSubmit={handleSubmit} className="flex w-full items-center space-x-2">
-              <Input
-                id="message"
-                placeholder="Ask about the syllabus..."
-                className="flex-1"
-                autoComplete="off"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                disabled={isLoading}
-              />
-              <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
-                <CornerDownLeft className="h-4 w-4" />
-                <span className="sr-only">Send</span>
-              </Button>
-            </form>
-          </div>
-        </DialogContent>
+        </ScrollArea>
+      </div>
+      <div className="p-4 border-t">
+        <form onSubmit={handleSubmit} className="flex w-full items-center space-x-2">
+          <Input
+            id="message"
+            placeholder="Ask about the syllabus..."
+            className="flex-1"
+            autoComplete="off"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            disabled={isLoading}
+          />
+          <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
+            <CornerDownLeft className="h-4 w-4" />
+            <span className="sr-only">Send</span>
+          </Button>
+        </form>
+      </div>
+    </>
   );
 
-  // This component can be used inside a Dialog or as a standalone button.
-  // If used inside a Dialog, DialogTrigger should wrap the button that opens it.
-  // This check is a bit of a hack to see if we're being rendered as a direct child of a Dialog.
-  // A better approach would be to have two separate components.
-  const isInsideDialog = syllabusContext === undefined;
-
-  if (isInsideDialog) {
-    return isDialog;
+  // When used in /mocktest, it's inside a DialogContent already
+  if (window.location.pathname.includes('/mocktest')) {
+    return chatInterface;
   }
 
+  // When used in /syllabus, it provides its own Dialog wrapper
   return (
     <Dialog>
         <DialogTrigger asChild>
@@ -205,7 +201,9 @@ export function AIChatAssistant({ syllabusContext }: { syllabusContext: string }
             <span className="sr-only">Open AI Assistant</span>
           </Button>
         </DialogTrigger>
-        {isDialog}
+        <DialogContent className="h-full max-h-full w-full max-w-full flex flex-col p-0 sm:rounded-none">
+            {chatInterface}
+        </DialogContent>
     </Dialog>
   );
 }
