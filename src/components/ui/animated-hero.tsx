@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, Info, MoveRight } from "lucide-react";
+import { ArrowDown, MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -61,8 +61,10 @@ function Hero() {
                 Check Your Rank <ArrowDown className="w-4 h-4" />
               </Link>
             </Button>
-            <Button size="lg" className="gap-2 hover:bg-gray-200 hover:text-black" variant="outline">
-              Learn More <Info className="w-4 h-4" />
+            <Button size="lg" className="gap-2" variant="outline" asChild>
+              <Link href="/">
+                VITEEE MOCK test <MoveRight className="w-4 h-4" />
+              </Link>
             </Button>
           </div>
         </div>
