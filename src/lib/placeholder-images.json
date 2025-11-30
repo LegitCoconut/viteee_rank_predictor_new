@@ -3,25 +3,25 @@
     {
       "id": "vit-vellore",
       "description": "VIT Vellore Campus",
-      "imageUrl": "https://images.unsplash.com/flagged/photo-1554473675-d0904f3cbf38?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx1bml2ZXJzaXR5JTIwY2FtcHVzfGVufDB8fHx8MTc2Mjg5OTM2MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "/images/vellore.webp",
       "imageHint": "university campus"
     },
     {
       "id": "vit-chennai",
       "description": "VIT Chennai Campus",
-      "imageUrl": "https://images.unsplash.com/photo-1614595737476-42487331b8a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtb2Rlcm4lMjBidWlsZGluZ3xlbnwwfHx8fDE3NjI4NzE2Mjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "/images/chennai.webp",
       "imageHint": "modern building"
     },
     {
       "id": "vit-ap",
       "description": "VIT-AP Campus",
-      "imageUrl": "https://images.unsplash.com/photo-1651305052278-3255ba7aa6f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8dW5pdmVyc2l0eSUyMGFyY2hpdGVjdHVyZXxlbnwwfHx8fDE3NjI5ODU0Njl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "/images/ap.webp",
       "imageHint": "university architecture"
     },
     {
       "id": "vit-bhopal",
       "description": "VIT Bhopal Campus",
-      "imageUrl": "https://images.unsplash.com/photo-1675583152895-f7e8e05eb0ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FtcHVzJTIwYnVpbGRpbmd8ZW58MHx8fHwxNzYyOTg1NDY5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "/images/bhopal.webp",
       "imageHint": "campus building"
     }
   ]
