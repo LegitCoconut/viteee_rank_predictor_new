@@ -61,6 +61,13 @@ export default function MockTestSetupPage() {
   
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsSubmitting(true);
+    
+    // Fire-and-forget analytics tracking
+    fetch('/api/analytics/mocktest-count', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+    }).catch(console.error);
+
     // Store data in sessionStorage to pass to the next page
     sessionStorage.setItem('mockTestSetup', JSON.stringify(data));
     router.push('/mocktest/start');
