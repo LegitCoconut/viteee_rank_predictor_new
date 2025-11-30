@@ -18,12 +18,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Loader2 } from 'lucide-react';
-import type { Question, Answer } from '@/lib/types';
+import type { QuestionWithImage, Answer } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
 import { Skeleton } from './ui/skeleton';
 
 interface MockTestUIProps {
-  questions: Question[];
+  questions: QuestionWithImage[];
   setupData: { name: string; stream: string };
 }
 
@@ -134,22 +134,27 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
 
   const currentQuestion = questions[currentQuestionIndex];
   const currentAnswer = answers[currentQuestionIndex];
+  
+  useEffect(() => {
+    setIsImageLoading(true);
+  }, [currentQuestionIndex]);
 
   return (
     <div ref={elem} className="w-full h-full bg-background p-4 flex flex-col md:flex-row gap-4 overflow-y-auto">
       <div className="flex-1 flex flex-col items-center justify-start p-4 border rounded-lg bg-card gap-4 overflow-y-auto">
         <div className="w-full flex-1 flex items-center justify-center min-h-0">
             {isImageLoading && <Skeleton className="w-full h-64 md:h-96" />}
-            {currentQuestion && (
+            {currentQuestion && currentQuestion.imageUrl && (
                 <Image 
                     key={currentQuestion._id}
-                    src={`/api/mocktest/image/${currentQuestion.image_id}`}
+                    src={currentQuestion.imageUrl}
                     alt={`Question ${currentQuestionIndex + 1}`}
                     width={800}
                     height={400}
                     className={`w-full h-auto object-contain ${isImageLoading ? 'hidden' : 'block'}`}
                     unoptimized
                     onLoad={() => setIsImageLoading(false)}
+                    onError={() => setIsImageLoading(false)} // Handle potential blob errors
                 />
             )}
         </div>

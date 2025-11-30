@@ -4,6 +4,10 @@ export interface Question {
     correct_option: 'a' | 'b' | 'c' | 'd';
     subject: string;
 }
+
+export interface QuestionWithImage extends Question {
+    imageUrl: string;
+}
   
 export interface Answer {
     questionId: string;

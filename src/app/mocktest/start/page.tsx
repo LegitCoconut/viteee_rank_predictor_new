@@ -6,14 +6,14 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Loader2, CheckCircle } from 'lucide-react';
 import { MockTestUI } from '@/components/mock-test-ui';
-import type { Question } from '@/lib/types';
+import type { QuestionWithImage } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 
 export default function MockTestStartPage() {
   const router = useRouter();
   const [setupData, setSetupData] = useState<any>(null);
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<QuestionWithImage[]>([]);
   const [loadingState, setLoadingState] = useState<'fetching' | 'preloading' | 'ready' | 'error'>('fetching');
   const [error, setError] = useState<string | null>(null);
   const [preloadProgress, setPreloadProgress] = useState(0);
@@ -38,32 +38,35 @@ export default function MockTestStartPage() {
         if (!response.ok) {
           throw new Error('Failed to fetch questions. Please try again.');
         }
-        const data: Question[] = await response.json();
-        setQuestions(data);
+        const data: QuestionWithImage[] = await response.json();
         setLoadingState('preloading');
 
-        const imageUrls = data.map(q => `/api/mocktest/image/${q.image_id}`);
         let loadedCount = 0;
         
-        await Promise.all(imageUrls.map(url => 
-            new Promise((resolve, reject) => {
-                const img = new Image();
-                img.src = url;
-                img.onload = () => {
-                    loadedCount++;
-                    setPreloadProgress((loadedCount / imageUrls.length) * 100);
-                    resolve(true);
-                };
-                img.onerror = () => {
-                    console.error(`Failed to load image: ${url}`);
-                    // Resolve even if one image fails to not block the test
-                    loadedCount++;
-                    setPreloadProgress((loadedCount / imageUrls.length) * 100);
-                    resolve(false);
-                };
-            })
-        ));
+        const questionsWithImages = await Promise.all(data.map(async (question) => {
+            try {
+                const imageUrl = `/api/mocktest/image/${question.image_id}`;
+                const imageResponse = await fetch(imageUrl);
+                if (!imageResponse.ok) {
+                    throw new Error(`Failed to fetch image ${question.image_id}`);
+                }
+                const blob = await imageResponse.blob();
+                const blobUrl = URL.createObjectURL(blob);
+                
+                loadedCount++;
+                setPreloadProgress((loadedCount / data.length) * 100);
 
+                return { ...question, imageUrl: blobUrl };
+            } catch (imgError) {
+                console.error(`Failed to load image for question ${question._id}:`, imgError);
+                // Resolve even if one image fails to not block the test
+                loadedCount++;
+                setPreloadProgress((loadedCount / data.length) * 100);
+                return { ...question, imageUrl: '' }; // Provide a fallback
+            }
+        }));
+
+        setQuestions(questionsWithImages);
         setLoadingState('ready');
       } catch (err: any) {
         setError(err.message);
@@ -73,6 +76,18 @@ export default function MockTestStartPage() {
 
     fetchAndPreload();
   }, [setupData]);
+
+  // Cleanup blob URLs on component unmount
+  useEffect(() => {
+    return () => {
+        questions.forEach(q => {
+            if (q.imageUrl && q.imageUrl.startsWith('blob:')) {
+                URL.revokeObjectURL(q.imageUrl);
+            }
+        });
+    };
+  }, [questions]);
+
 
   if (!setupData) {
     return (
