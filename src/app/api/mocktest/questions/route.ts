@@ -35,10 +35,7 @@ export async function GET() {
             ...englishAptitudeQuestions
         ];
 
-        // Shuffle all questions
-        const shuffledQuestions = allQuestions.sort(() => Math.random() - 0.5);
-
-        return NextResponse.json(shuffledQuestions);
+        return NextResponse.json(allQuestions);
     } catch (error) {
         console.error("Failed to fetch questions:", error);
         return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
