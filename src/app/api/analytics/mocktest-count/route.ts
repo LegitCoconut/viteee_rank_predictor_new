@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { trackMockTestStart } from "@/lib/actions";
+import { updateDayWiseAnalytics } from "@/lib/analytics";
 
 export async function OPTIONS(req: NextRequest) {
     return NextResponse.json({}, { status: 200 });
@@ -9,6 +10,7 @@ export async function POST(req: NextRequest) {
     try {
         // Fire-and-forget: No await here
         trackMockTestStart();
+        updateDayWiseAnalytics('mocktest-start');
 
         return NextResponse.json({ message: "Mock test start tracking initiated." }, { status: 202 });
     } catch (error) {

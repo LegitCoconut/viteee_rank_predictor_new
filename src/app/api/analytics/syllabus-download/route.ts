@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { trackSyllabusDownload } from "@/lib/actions";
+import { updateDayWiseAnalytics } from "@/lib/analytics";
 
 export async function OPTIONS(req: NextRequest) {
     return NextResponse.json({}, { status: 200 });
@@ -9,6 +10,7 @@ export async function POST(req: NextRequest) {
     try {
         // Fire-and-forget: No await here
         trackSyllabusDownload();
+        updateDayWiseAnalytics('syllabus-download');
 
         return NextResponse.json({ message: "Syllabus download tracking initiated." }, { status: 202 });
     } catch (error) {
