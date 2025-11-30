@@ -74,27 +74,42 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
   const handleSubmit = useCallback(async () => {
     if (isSubmitting) return;
     setIsSubmitting(true);
-
-    const correctAnswersCount = answers.filter((ans, index) => ans.answer === questions[index].correct_option).length;
     
+    let score = 0;
+    const sectionScores: Record<string, { score: number; total: number }> = {
+        maths: { score: 0, total: 0 },
+        physics: { score: 0, total: 0 },
+        chemistry: { score: 0, total: 0 },
+        apt_english: { score: 0, total: 0 },
+    };
+
+    questions.forEach((question, index) => {
+        const subjectKey = question.subject;
+        if (sectionScores[subjectKey]) {
+            sectionScores[subjectKey].total++;
+            if (answers[index].answer === question.correct_option) {
+                sectionScores[subjectKey].score++;
+                score++;
+            }
+        }
+    });
+
     const examResult = {
       examId: uuidv4(),
-      userId: setupData.name, // Simplified for now
+      userId: setupData.name,
       stream: setupData.stream,
-      questions: questions.map(q => ({_id: q._id, correct_option: q.correct_option, subject: q.subject})),
       answers,
-      score: correctAnswersCount,
+      score: score,
       totalQuestions: questions.length,
+      sectionScores,
       timestamp: new Date().toISOString(),
     };
 
     try {
-      // Save to local storage
       const pastResults = JSON.parse(localStorage.getItem('mockTestResults') || '[]');
       pastResults.push(examResult);
       localStorage.setItem('mockTestResults', JSON.stringify(pastResults));
 
-      // Save to database
       await fetch('/api/mocktest/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -104,9 +119,10 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
     } catch (error) {
         console.error("Failed to save results:", error);
     } finally {
-        setIsSubmitting(false);
-        // Redirect to a results page (to be created)
         sessionStorage.setItem('latestResult', JSON.stringify(examResult));
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
         router.push('/mocktest/results');
     }
   }, [answers, questions, setupData, router, isSubmitting]);

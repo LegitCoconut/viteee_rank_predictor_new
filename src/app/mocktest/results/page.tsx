@@ -7,8 +7,15 @@ import { Footer } from '@/components/footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Award, CheckCircle, XCircle } from 'lucide-react';
+import { Award, CheckCircle, XCircle, BookOpen, BarChart2 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+
+const subjectNames: { [key: string]: string } = {
+    maths: 'Mathematics',
+    physics: 'Physics',
+    chemistry: 'Chemistry',
+    apt_english: 'Aptitude & English'
+};
 
 export default function MockTestResultPage() {
     const router = useRouter();
@@ -20,8 +27,7 @@ export default function MockTestResultPage() {
             router.replace('/mocktest');
         } else {
             setResult(JSON.parse(resultData));
-            // Optional: clear the session storage after displaying to prevent re-display on refresh
-            // sessionStorage.removeItem('latestResult');
+            // Do not clear session storage so user can refresh the page
         }
     }, [router]);
 
@@ -37,7 +43,7 @@ export default function MockTestResultPage() {
         );
     }
     
-    const percentage = (result.score / result.totalQuestions) * 100;
+    const percentage = result.totalQuestions > 0 ? (result.score / result.totalQuestions) * 100 : 0;
     const incorrectAnswers = result.totalQuestions - result.score;
 
     return (
@@ -79,9 +85,35 @@ export default function MockTestResultPage() {
                                 </Card>
                             </div>
 
-                            <div className="text-center pt-4">
+                            {result.sectionScores && (
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle className="flex items-center gap-2 text-xl"><BarChart2 className="h-5 w-5" />Section-wise Performance</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-4">
+                                            {Object.entries(result.sectionScores).map(([subject, scores]: [string, any]) => (
+                                                scores.total > 0 && (
+                                                    <div key={subject} className="flex justify-between items-center">
+                                                        <p className="font-medium">{subjectNames[subject] || subject}</p>
+                                                        <div className="flex items-center gap-4">
+                                                            <p className="font-semibold">{scores.score} / {scores.total}</p>
+                                                            <Progress value={(scores.score / scores.total) * 100} className="w-32" />
+                                                        </div>
+                                                    </div>
+                                                )
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            )}
+
+                            <div className="text-center pt-4 space-x-4">
                                 <Button asChild>
                                     <Link href="/mocktest">Take Another Test</Link>
+                                </Button>
+                                <Button variant="outline" asChild>
+                                    <Link href="/mocktest#past-results">View All Results</Link>
                                 </Button>
                             </div>
 

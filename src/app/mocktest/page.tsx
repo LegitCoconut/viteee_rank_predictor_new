@@ -10,6 +10,7 @@ import { SyllabusSection } from '@/components/syllabus-section';
 import { AIChatAssistant } from '@/components/ai-chat';
 import { syllabus } from '@/lib/data/syllabus-data';
 import Link from 'next/link';
+import { PastResults } from '@/components/past-results';
 import {
   Dialog,
   DialogContent,
@@ -81,6 +82,7 @@ export default function MockTestPage() {
             </div>
         </section>
         <div ref={contentRef}>
+          <PastResults />
           <div ref={patternRef}>
             <MockTestPattern />
           </div>
