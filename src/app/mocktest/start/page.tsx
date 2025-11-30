@@ -39,6 +39,11 @@ export default function MockTestStartPage() {
           throw new Error('Failed to fetch questions. Please try again.');
         }
         const data: QuestionWithImage[] = await response.json();
+        
+        if (data.length < 125) {
+          throw new Error(`Failed to load all questions. Only got ${data.length}/125.`);
+        }
+        
         setLoadingState('preloading');
 
         let loadedCount = 0;
@@ -117,7 +122,7 @@ export default function MockTestStartPage() {
           </>
         )}
         {loadingState === 'preloading' && (
-           <div className="w-full max-w-md">
+           <div className="w-full max-w-md flex flex-col items-center">
             <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
             <h1 className="text-2xl font-headline font-semibold">Loading Test Assets...</h1>
             <p className="text-muted-foreground mb-4">This will ensure a smooth testing experience.</p>
@@ -136,7 +141,7 @@ export default function MockTestStartPage() {
           </div>
         )}
         {loadingState === 'error' && (
-            <div className="text-destructive-foreground bg-destructive p-4 rounded-md">
+            <div className="text-red-500 bg-red-100 dark:bg-red-900/50 p-4 rounded-md">
               <h1 className="text-xl font-bold">Error</h1>
               <p>{error}</p>
             </div>

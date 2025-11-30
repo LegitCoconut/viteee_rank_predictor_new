@@ -158,7 +158,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
                 />
             )}
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-md mt-auto pt-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-2xl mt-auto pt-4">
             {(['a', 'b', 'c', 'd'] as const).map(option => (
                 <Button 
                     key={option}
@@ -184,8 +184,16 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
             />
         </div>
         <div className="grid grid-cols-2 gap-2">
-            <Button onClick={() => handleQuestionSelect(Math.max(0, currentQuestionIndex - 1))} disabled={currentQuestionIndex === 0}>Previous</Button>
-            <Button onClick={() => handleQuestionSelect(Math.min(questions.length - 1, currentQuestionIndex + 1))} disabled={currentQuestionIndex === questions.length - 1}>Next</Button>
+            <Button onClick={() => {
+                if (currentQuestionIndex > 0) {
+                    handleQuestionSelect(currentQuestionIndex - 1);
+                }
+            }} disabled={currentQuestionIndex === 0}>Previous</Button>
+            <Button onClick={() => {
+                if (currentQuestionIndex < questions.length - 1) {
+                    handleQuestionSelect(currentQuestionIndex + 1);
+                }
+            }} disabled={currentQuestionIndex === questions.length - 1}>Next</Button>
         </div>
         <Button onClick={handleMarkForReview} variant={currentAnswer?.status === 'marked' ? 'secondary' : 'outline'}>
             {currentAnswer?.status === 'marked' ? 'Unmark Review' : 'Mark for Review'}
