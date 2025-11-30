@@ -57,15 +57,16 @@ export default function MockTestSetupPage() {
     'A unique ID will be created for you and will be saved in your browser and will be used to store and retrieve marks and info about the exam.',
     'Clearing of cache will clear all the stored data about the test taken.',
     'You will be allowed to attend the mock test after the verification (this action is taken to avoid bots).',
+    'All these services are running on free tier platforms and servers in order to make it ad free and to give a seamless experience. So the test will take some time to get loaded.',
   ];
-  
+
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsSubmitting(true);
-    
+
     // Fire-and-forget analytics tracking
     fetch('/api/analytics/mocktest-count', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
     }).catch(console.error);
 
     // Store data in sessionStorage to pass to the next page
@@ -94,14 +95,14 @@ export default function MockTestSetupPage() {
                       <span>{instruction}</span>
                     </li>
                   ))}
-                   <li className="flex items-start gap-3">
-                      <AlertCircle className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
-                      <span>If you find any issue with the online test, questions, or technical issues feel free to reach out to <a href="mailto:vitranks@malabarmatrix.site" className="text-primary underline">vitranks@malabarmatrix.site</a> or through the <Link href="/#feedback" className="text-primary underline">feedback form</Link>.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <AlertCircle className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
-                      <span>This application and test environment is made by students of VIT for the good of VITEEE aspirants; please use the platform as a student and help your friends grow with you.</span>
-                    </li>
+                  <li className="flex items-start gap-3">
+                    <AlertCircle className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
+                    <span>If you find any issue with the online test, questions, or technical issues feel free to reach out to <a href="mailto:vitranks@malabarmatrix.site" className="text-primary underline">vitranks@malabarmatrix.site</a> or through the <Link href="/#feedback" className="text-primary underline">feedback form</Link>.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <AlertCircle className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
+                    <span>This application and test environment is made by students of VIT for the good of VITEEE aspirants; please use the platform as a student and help your friends grow with you.</span>
+                  </li>
                 </ul>
               </div>
 
@@ -171,32 +172,32 @@ export default function MockTestSetupPage() {
                           <FormLabel>
                             I have read and agree to the instructions.
                           </FormLabel>
-                           <FormMessage />
+                          <FormMessage />
                         </div>
                       </FormItem>
                     )}
                   />
-                  
+
                   <div className="flex flex-col items-center justify-center gap-4">
-                     <FormField
-                        control={form.control}
-                        name="token"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormControl>
-                                <Turnstile
-                                siteKey={
-                                    process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
-                                }
-                                onSuccess={(token) => {
-                                    field.onChange(token);
-                                }}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
+                    <FormField
+                      control={form.control}
+                      name="token"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Turnstile
+                              siteKey={
+                                process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
+                              }
+                              onSuccess={(token) => {
+                                field.onChange(token);
+                              }}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                     <Button
                       type="submit"
                       disabled={isSubmitting || !form.watch('token') || !form.watch('agree') || form.formState.isSubmitting}

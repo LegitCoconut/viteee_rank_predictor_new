@@ -152,6 +152,9 @@ export default function MockTestStartPage() {
             <p className="text-muted-foreground mb-4">This will ensure a smooth testing experience.</p>
             <Progress value={preloadProgress} className="w-full" />
             <p className="text-sm mt-2">{Math.round(preloadProgress)}%</p>
+            <p className="text-xs text-muted-foreground mt-4 text-center max-w-sm">
+              All these services are running on free tier platforms and servers in order to make it ad free and to give a seamless experience. So the test will take some time to get loaded.
+            </p>
           </div>
         )}
         {loadingState === 'ready' && (
