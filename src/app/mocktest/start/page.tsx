@@ -39,37 +39,61 @@ export default function MockTestStartPage() {
           throw new Error('Failed to fetch questions. Please try again.');
         }
         const data: QuestionWithImage[] = await response.json();
-        
+
         if (data.length < 125) {
           throw new Error(`Failed to load all questions. Only got ${data.length}/125.`);
         }
-        
+
         setLoadingState('preloading');
 
         let loadedCount = 0;
-        
-        const questionsWithImages = await Promise.all(data.map(async (question) => {
-            try {
-                const imageUrl = `/api/mocktest/image/${question.image_id}`;
-                const imageResponse = await fetch(imageUrl);
-                if (!imageResponse.ok) {
-                    throw new Error(`Failed to fetch image ${question.image_id}`);
-                }
-                const blob = await imageResponse.blob();
-                const blobUrl = URL.createObjectURL(blob);
-                
-                loadedCount++;
-                setPreloadProgress((loadedCount / data.length) * 100);
+        let currentBatchSize = 1; // Start slow (sequential)
+        let currentIndex = 0;
+        const questionsWithImages: QuestionWithImage[] = [];
 
-                return { ...question, imageUrl: blobUrl };
+        while (currentIndex < data.length) {
+          const batch = data.slice(currentIndex, currentIndex + currentBatchSize);
+          const startTime = performance.now();
+
+          const batchResults = await Promise.all(batch.map(async (question) => {
+            try {
+              const imageUrl = `/api/mocktest/image/${question.image_id}`;
+              const imageResponse = await fetch(imageUrl);
+              if (!imageResponse.ok) {
+                throw new Error(`Failed to fetch image ${question.image_id}`);
+              }
+              const blob = await imageResponse.blob();
+              const blobUrl = URL.createObjectURL(blob);
+
+              loadedCount++;
+              setPreloadProgress((loadedCount / data.length) * 100);
+
+              return { ...question, imageUrl: blobUrl };
             } catch (imgError) {
-                console.error(`Failed to load image for question ${question._id}:`, imgError);
-                // Resolve even if one image fails to not block the test
-                loadedCount++;
-                setPreloadProgress((loadedCount / data.length) * 100);
-                return { ...question, imageUrl: '' }; // Provide a fallback
+              console.error(`Failed to load image for question ${question._id}:`, imgError);
+              loadedCount++;
+              setPreloadProgress((loadedCount / data.length) * 100);
+              return { ...question, imageUrl: '' };
             }
-        }));
+          }));
+
+          const endTime = performance.now();
+          const batchDuration = endTime - startTime;
+          const avgTimePerImage = batchDuration / batch.length;
+
+          questionsWithImages.push(...batchResults);
+          currentIndex += batch.length;
+
+          // Adaptive Logic
+          if (avgTimePerImage < 100) {
+            // Fast response (Cache Hit) -> Increase batch size (max 5)
+            currentBatchSize = Math.min(currentBatchSize + 1, 5);
+          } else if (avgTimePerImage > 200) {
+            // Slow response (Cache Miss / DB Hit) -> Reset to sequential
+            currentBatchSize = 1;
+          }
+          // Otherwise keep current size
+        }
 
         setQuestions(questionsWithImages);
         setLoadingState('ready');
@@ -85,11 +109,11 @@ export default function MockTestStartPage() {
   // Cleanup blob URLs on component unmount
   useEffect(() => {
     return () => {
-        questions.forEach(q => {
-            if (q.imageUrl && q.imageUrl.startsWith('blob:')) {
-                URL.revokeObjectURL(q.imageUrl);
-            }
-        });
+      questions.forEach(q => {
+        if (q.imageUrl && q.imageUrl.startsWith('blob:')) {
+          URL.revokeObjectURL(q.imageUrl);
+        }
+      });
     };
   }, [questions]);
 
@@ -107,7 +131,7 @@ export default function MockTestStartPage() {
   }
 
   if (isTestStarted) {
-      return <MockTestUI questions={questions} setupData={setupData} />;
+    return <MockTestUI questions={questions} setupData={setupData} />;
   }
 
   return (
@@ -122,7 +146,7 @@ export default function MockTestStartPage() {
           </>
         )}
         {loadingState === 'preloading' && (
-           <div className="w-full max-w-md flex flex-col items-center">
+          <div className="w-full max-w-md flex flex-col items-center">
             <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
             <h1 className="text-2xl font-headline font-semibold">Loading Test Assets...</h1>
             <p className="text-muted-foreground mb-4">This will ensure a smooth testing experience.</p>
@@ -130,7 +154,7 @@ export default function MockTestStartPage() {
             <p className="text-sm mt-2">{Math.round(preloadProgress)}%</p>
           </div>
         )}
-         {loadingState === 'ready' && (
+        {loadingState === 'ready' && (
           <div className="flex flex-col items-center gap-4">
             <CheckCircle className="h-16 w-16 text-green-500 mb-4" />
             <h1 className="text-3xl font-headline font-semibold">Your test is ready!</h1>
@@ -141,10 +165,10 @@ export default function MockTestStartPage() {
           </div>
         )}
         {loadingState === 'error' && (
-            <div className="text-red-500 bg-red-100 dark:bg-red-900/50 p-4 rounded-md">
-              <h1 className="text-xl font-bold">Error</h1>
-              <p>{error}</p>
-            </div>
+          <div className="text-red-500 bg-red-100 dark:bg-red-900/50 p-4 rounded-md">
+            <h1 className="text-xl font-bold">Error</h1>
+            <p>{error}</p>
+          </div>
         )}
       </main>
       <Footer />
