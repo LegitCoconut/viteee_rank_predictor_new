@@ -20,6 +20,7 @@ import {
 import { Loader2 } from 'lucide-react';
 import type { Question, Answer } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
+import { Skeleton } from './ui/skeleton';
 
 interface MockTestUIProps {
   questions: Question[];
@@ -32,6 +33,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
     questions.map(q => ({ questionId: q._id, answer: null, status: 'unanswered' }))
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(true);
   const elem = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -57,10 +59,11 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
         index === currentQuestionIndex ? { ...ans, answer: option, status: 'answered' } : ans
       )
     );
-    // Move to next question automatically
-    if (currentQuestionIndex < questions.length - 1) {
-        setTimeout(() => setCurrentQuestionIndex(currentQuestionIndex + 1), 300);
-    }
+  };
+  
+  const handleQuestionSelect = (index: number) => {
+    setIsImageLoading(true);
+    setCurrentQuestionIndex(index);
   };
 
   const handleMarkForReview = () => {
@@ -133,16 +136,21 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
   return (
     <div ref={elem} className="w-full h-full bg-background p-4 flex flex-col md:flex-row gap-4 overflow-y-auto">
       <div className="flex-1 flex flex-col items-center justify-center p-4 border rounded-lg bg-card gap-4">
-        {currentQuestion && (
-            <Image 
-                src={`/api/mocktest/image/${currentQuestion.image_id}`}
-                alt={`Question ${currentQuestionIndex + 1}`}
-                width={800}
-                height={400}
-                className="w-full h-auto object-contain"
-                unoptimized
-            />
-        )}
+        <div className="w-full flex-1 flex items-center justify-center">
+            {isImageLoading && <Skeleton className="w-full h-64 md:h-96" />}
+            {currentQuestion && (
+                <Image 
+                    key={currentQuestion._id}
+                    src={`/api/mocktest/image/${currentQuestion.image_id}`}
+                    alt={`Question ${currentQuestionIndex + 1}`}
+                    width={800}
+                    height={400}
+                    className={`w-full h-auto object-contain ${isImageLoading ? 'hidden' : 'block'}`}
+                    unoptimized
+                    onLoad={() => setIsImageLoading(false)}
+                />
+            )}
+        </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-md">
             {(['a', 'b', 'c', 'd'] as const).map(option => (
                 <Button 
@@ -165,12 +173,12 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
                 questions={questions}
                 answers={answers}
                 currentQuestionIndex={currentQuestionIndex}
-                onQuestionSelect={setCurrentQuestionIndex}
+                onQuestionSelect={handleQuestionSelect}
             />
         </div>
         <div className="grid grid-cols-2 gap-2">
-            <Button onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))} disabled={currentQuestionIndex === 0}>Previous</Button>
-            <Button onClick={() => setCurrentQuestionIndex(prev => Math.min(questions.length - 1, prev + 1))} disabled={currentQuestionIndex === questions.length - 1}>Next</Button>
+            <Button onClick={() => handleQuestionSelect(Math.max(0, currentQuestionIndex - 1))} disabled={currentQuestionIndex === 0}>Previous</Button>
+            <Button onClick={() => handleQuestionSelect(Math.min(questions.length - 1, currentQuestionIndex + 1))} disabled={currentQuestionIndex === questions.length - 1}>Next</Button>
         </div>
         <Button onClick={handleMarkForReview} variant={currentAnswer?.status === 'marked' ? 'secondary' : 'outline'}>
             {currentAnswer?.status === 'marked' ? 'Unmark Review' : 'Mark for Review'}
