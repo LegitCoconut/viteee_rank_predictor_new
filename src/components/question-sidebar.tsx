@@ -1,10 +1,16 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { Question, Answer } from '@/lib/types';
-import { Fragment } from 'react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface QuestionSidebarProps {
   questions: Question[];
@@ -23,6 +29,16 @@ const subjectNames: { [key: string]: string } = {
 
 export function QuestionSidebar({ questions, answers, currentQuestionIndex, onQuestionSelect }: QuestionSidebarProps) {
   
+  const [activeAccordionItem, setActiveAccordionItem] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    const currentSubject = questions[currentQuestionIndex]?.subject;
+    if (currentSubject) {
+      setActiveAccordionItem(currentSubject);
+    }
+  }, [currentQuestionIndex, questions]);
+
+
   const groupedQuestions: { [key: string]: { question: Question, originalIndex: number }[] } = {};
 
   questions.forEach((q, index) => {
@@ -34,12 +50,19 @@ export function QuestionSidebar({ questions, answers, currentQuestionIndex, onQu
 
   return (
     <ScrollArea className="h-full">
-        <div className="space-y-4 pr-2">
-            {subjectOrder.map(subjectKey => (
-                groupedQuestions[subjectKey] && (
-                    <Fragment key={subjectKey}>
-                        <h4 className="font-semibold text-sm text-muted-foreground">{subjectNames[subjectKey]}</h4>
-                        <div className="grid grid-cols-5 gap-2">
+      <Accordion 
+        type="single" 
+        collapsible 
+        className="w-full"
+        value={activeAccordionItem}
+        onValueChange={setActiveAccordionItem}
+      >
+        {subjectOrder.map(subjectKey => (
+            groupedQuestions[subjectKey] && (
+                <AccordionItem value={subjectKey} key={subjectKey}>
+                    <AccordionTrigger className="text-sm py-2 hover:no-underline">{subjectNames[subjectKey]}</AccordionTrigger>
+                    <AccordionContent>
+                        <div className="grid grid-cols-5 gap-2 pt-2">
                             {groupedQuestions[subjectKey].map(({ originalIndex }) => {
                                 const answerStatus = answers[originalIndex].status;
                                 return (
@@ -63,10 +86,11 @@ export function QuestionSidebar({ questions, answers, currentQuestionIndex, onQu
                                 )
                             })}
                         </div>
-                    </Fragment>
-                )
-            ))}
-        </div>
+                    </AccordionContent>
+                </AccordionItem>
+            )
+        ))}
+      </Accordion>
     </ScrollArea>
   );
 }

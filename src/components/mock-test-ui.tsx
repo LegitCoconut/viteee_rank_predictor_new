@@ -131,36 +131,36 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
   const currentAnswer = answers[currentQuestionIndex];
 
   return (
-    <div ref={elem} className="w-full h-full bg-background p-4 flex flex-col md:flex-row gap-4">
-      <div className="flex-1 flex flex-col items-center justify-center p-4 border rounded-lg bg-card">
+    <div ref={elem} className="w-full h-full bg-background p-4 flex flex-col md:flex-row gap-4 overflow-y-auto">
+      <div className="flex-1 flex flex-col items-center justify-center p-4 border rounded-lg bg-card gap-4">
         {currentQuestion && (
             <Image 
                 src={`/api/mocktest/image/${currentQuestion.image_id}`}
                 alt={`Question ${currentQuestionIndex + 1}`}
                 width={800}
                 height={400}
-                objectFit="contain"
+                className="w-full h-auto object-contain"
                 unoptimized
             />
         )}
-      </div>
-      <div className="w-full md:w-80 flex flex-col gap-4">
-        <div className="p-4 border rounded-lg bg-card text-center">
-            <Timer duration={2.5 * 60 * 60} onTimeUp={handleSubmit} />
-        </div>
-        <div className="p-4 border rounded-lg bg-card grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-md">
             {(['a', 'b', 'c', 'd'] as const).map(option => (
                 <Button 
                     key={option}
                     variant={currentAnswer?.answer === option ? 'default' : 'outline'}
                     onClick={() => handleAnswerSelect(option)}
-                    className="text-lg h-12"
+                    className="text-lg h-14"
                 >
                     {option.toUpperCase()}
                 </Button>
             ))}
         </div>
-        <div className="p-4 border rounded-lg bg-card flex-1">
+      </div>
+      <div className="w-full md:w-80 flex flex-col gap-4">
+        <div className="p-4 border rounded-lg bg-card text-center">
+            <Timer duration={2.5 * 60 * 60} onTimeUp={handleSubmit} />
+        </div>
+        <div className="p-4 border rounded-lg bg-card flex-1 min-h-0">
             <QuestionSidebar 
                 questions={questions}
                 answers={answers}
