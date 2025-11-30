@@ -19,13 +19,13 @@ export async function GET(
 
         // 1. Check Redis Cache
         try {
-            const cachedImage = await redis.get(cacheKey);
+            const cachedImage = await redis.get<string>(cacheKey);
             if (cachedImage) {
                 // Redis returns the data as a string (base64 or similar depending on storage), 
                 // but here we likely stored it as a buffer or base64 string.
                 // For simplicity with Vercel KV, we'll assume we stored it as a base64 string.
                 const buffer = Buffer.from(cachedImage, 'base64');
-                return new NextResponse(buffer, {
+                return new NextResponse(buffer as any, {
                     status: 200,
                     headers: {
                         'Content-Type': 'image/png',
@@ -69,12 +69,12 @@ export async function GET(
             // We don't await this to avoid blocking the response, 
             // BUT in serverless, the process might freeze. 
             // Ideally use `waitUntil` if available, or just await it to be safe.
-            await redis.set(cacheKey, base64Image, 'EX', 86400);
+            await redis.set(cacheKey, base64Image, { ex: 86400 });
         } catch (redisError) {
             console.error('Failed to cache image in Redis:', redisError);
         }
 
-        return new NextResponse(buffer, {
+        return new NextResponse(buffer as any, {
             status: 200,
             headers: {
                 'Content-Type': 'image/png',
