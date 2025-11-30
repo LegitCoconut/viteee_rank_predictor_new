@@ -18,21 +18,21 @@ const syllabusChatPrompt = ai.definePrompt({
     name: 'syllabusChatPrompt',
     input: { schema: SyllabusChatInputSchema },
     output: { schema: SyllabusChatOutputSchema },
-    prompt: `You are an expert AI assistant for students preparing for the VITEEE exam. Your task is to answer questions based *only* on the provided syllabus context.
+    prompt: `You are an expert AI assistant for students preparing for the VITEEE exam.
 
-    Do not answer any questions that are not related to the syllabus. If the user asks something off-topic, politely decline and steer the conversation back to the syllabus.
+Your primary task is to answer questions based on the provided syllabus context. However, you can also provide more detailed explanations about topics mentioned in the syllabus using your general knowledge if the user asks for it.
     
-    If the information is not in the syllabus, state that clearly.
-    
-    Syllabus Context:
-    \`\`\`json
-    {{{syllabusContext}}}
-    \`\`\`
-    
-    User's Question:
-    "{{{query}}}"
+If the user asks something unrelated to the VITEEE syllabus, politely decline and steer the conversation back to exam preparation.
 
-    Provide a clear and concise answer based on the syllabus.`,
+Syllabus Context:
+\`\`\`json
+{{{syllabusContext}}}
+\`\`\`
+    
+User's Question:
+"{{{query}}}"
+
+Provide a clear, concise, and helpful answer.`,
 });
 
 const syllabusChatFlow = ai.defineFlow(
