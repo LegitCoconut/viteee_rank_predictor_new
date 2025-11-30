@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useRef, FormEvent, Fragment } from 'react';
@@ -46,9 +47,13 @@ export function AIChatAssistant({ syllabusContext }: { syllabusContext: string }
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isMockTestPage, setIsMockTestPage] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // This check can only run on the client
+    setIsMockTestPage(window.location.pathname.includes('/mocktest'));
+
     try {
       const storedMessages = localStorage.getItem('chatHistory');
       if (storedMessages) {
@@ -185,7 +190,7 @@ export function AIChatAssistant({ syllabusContext }: { syllabusContext: string }
   );
 
   // When used in /mocktest, it's inside a DialogContent already
-  if (window.location.pathname.includes('/mocktest')) {
+  if (isMockTestPage) {
     return chatInterface;
   }
 
