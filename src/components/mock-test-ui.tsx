@@ -62,8 +62,10 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
   };
   
   const handleQuestionSelect = (index: number) => {
-    setIsImageLoading(true);
-    setCurrentQuestionIndex(index);
+    if (index !== currentQuestionIndex) {
+        setIsImageLoading(true);
+        setCurrentQuestionIndex(index);
+    }
   };
 
   const handleMarkForReview = () => {
@@ -135,8 +137,8 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
 
   return (
     <div ref={elem} className="w-full h-full bg-background p-4 flex flex-col md:flex-row gap-4 overflow-y-auto">
-      <div className="flex-1 flex flex-col items-center justify-center p-4 border rounded-lg bg-card gap-4">
-        <div className="w-full flex-1 flex items-center justify-center">
+      <div className="flex-1 flex flex-col items-center justify-start p-4 border rounded-lg bg-card gap-4 overflow-y-auto">
+        <div className="w-full flex-1 flex items-center justify-center min-h-0">
             {isImageLoading && <Skeleton className="w-full h-64 md:h-96" />}
             {currentQuestion && (
                 <Image 
@@ -151,7 +153,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
                 />
             )}
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-md">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-md mt-auto pt-4">
             {(['a', 'b', 'c', 'd'] as const).map(option => (
                 <Button 
                     key={option}
@@ -190,7 +192,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
               Submit Test
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent>
+          <AlertDialogContent container={elem.current ?? undefined}>
             <AlertDialogHeader>
               <AlertDialogTitle>Are you sure you want to submit?</AlertDialogTitle>
               <AlertDialogDescription>
