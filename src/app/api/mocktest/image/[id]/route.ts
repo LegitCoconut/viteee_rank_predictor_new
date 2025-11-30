@@ -19,7 +19,7 @@ export async function GET(
 
         // 1. Check Redis Cache
         try {
-            const cachedImage = await redis.get<string>(cacheKey);
+            const cachedImage = await redis.get(cacheKey);
             if (cachedImage) {
                 // Redis returns the data as a string (base64 or similar depending on storage), 
                 // but here we likely stored it as a buffer or base64 string.
@@ -69,7 +69,7 @@ export async function GET(
             // We don't await this to avoid blocking the response, 
             // BUT in serverless, the process might freeze. 
             // Ideally use `waitUntil` if available, or just await it to be safe.
-            await redis.set(cacheKey, base64Image, { ex: 3600 });
+            await redis.set(cacheKey, base64Image, 'EX', 3600);
         } catch (redisError) {
             console.error('Failed to cache image in Redis:', redisError);
         }

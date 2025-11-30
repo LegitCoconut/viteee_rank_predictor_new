@@ -1,15 +1,14 @@
-import { createClient } from '@vercel/kv';
+import Redis from 'ioredis';
 
-const KV_REST_API_URL = process.env.VIT_RANKS_REDIS_CACHE_REDIS_URL || process.env.KV_REST_API_URL;
-const KV_REST_API_TOKEN = process.env.VIT_RANKS_REDIS_CACHE_REDIS_TOKEN || process.env.KV_REST_API_TOKEN;
+const REDIS_URL = process.env.VIT_RANKS_REDIS_CACHE_REDIS_URL;
 
-if (!KV_REST_API_URL || !KV_REST_API_TOKEN) {
+if (!REDIS_URL) {
     console.warn(
-        "Redis configuration missing. Please set VIT_RANKS_REDIS_CACHE_REDIS_URL and VIT_RANKS_REDIS_CACHE_REDIS_TOKEN."
+        "Redis configuration missing. Please set VIT_RANKS_REDIS_CACHE_REDIS_URL."
     );
 }
 
-export const redis = createClient({
-    url: KV_REST_API_URL || '',
-    token: KV_REST_API_TOKEN || '',
-});
+// Create a Redis client instance
+// If REDIS_URL is not provided, ioredis will try to connect to localhost:6379 by default,
+// which is fine for local dev if you have redis running.
+export const redis = new Redis(REDIS_URL || 'redis://localhost:6379');
