@@ -85,7 +85,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
         maths: { score: 0, total: 0 },
         physics: { score: 0, total: 0 },
         chemistry: { score: 0, total: 0 },
-        apt_english: { score: 0, total: 0 },
+        apt_eng: { score: 0, total: 0 },
     };
 
     questions.forEach((question, index) => {

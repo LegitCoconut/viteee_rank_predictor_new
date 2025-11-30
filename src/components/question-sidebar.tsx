@@ -19,12 +19,12 @@ interface QuestionSidebarProps {
   onQuestionSelect: (index: number) => void;
 }
 
-const subjectOrder = ['maths', 'physics', 'chemistry', 'apt_english'];
+const subjectOrder = ['maths', 'physics', 'chemistry', 'apt_eng'];
 const subjectNames: { [key: string]: string } = {
     maths: 'Mathematics',
     physics: 'Physics',
     chemistry: 'Chemistry',
-    apt_english: 'Aptitude & English'
+    apt_eng: 'Aptitude & English'
 };
 
 export function QuestionSidebar({ questions, answers, currentQuestionIndex, onQuestionSelect }: QuestionSidebarProps) {

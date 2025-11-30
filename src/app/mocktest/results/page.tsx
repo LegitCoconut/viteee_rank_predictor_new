@@ -14,7 +14,7 @@ const subjectNames: { [key: string]: string } = {
     maths: 'Mathematics',
     physics: 'Physics',
     chemistry: 'Chemistry',
-    apt_english: 'Aptitude & English'
+    apt_eng: 'Aptitude & English'
 };
 
 export default function MockTestResultPage() {
