@@ -1,11 +1,11 @@
-
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import Link from 'next/link';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
@@ -39,11 +39,13 @@ const FormSchema = z.object({
 
 export default function MockTestSetupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       name: '',
+      stream: 'MPCEA',
       agree: false,
       token: '',
     },
@@ -57,18 +59,11 @@ export default function MockTestSetupPage() {
     'You will be allowed to attend the mock test after the verification (this action is taken to avoid bots).',
   ];
   
-  const closingRemarks = [
-    "If you find any issue with the online test, questions, or technical issues feel free to reach out to vitranks@malabarmatrix.site or through the feedback form.",
-    "This application and test environment is made by students of VIT for the good of VITEEE aspirants; please use the platform as a student and help your friends grow with you."
-  ];
-
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsSubmitting(true);
-    console.log(data);
-    // For now, the proceed button does nothing.
-    setTimeout(() => {
-      setIsSubmitting(false);
-    }, 2000);
+    // Store data in sessionStorage to pass to the next page
+    sessionStorage.setItem('mockTestSetup', JSON.stringify(data));
+    router.push('/mocktest/start');
   }
 
   return (
@@ -141,10 +136,10 @@ export default function MockTestSetupPage() {
                             </FormItem>
                             <FormItem className="flex items-center space-x-3 space-y-0">
                               <FormControl>
-                                <RadioGroupItem value="BPCEA" />
+                                <RadioGroupItem value="BPCEA" disabled />
                               </FormControl>
-                              <FormLabel className="font-normal">
-                                BPCEA (Biology, Physics, Chemistry, English, Aptitude)
+                              <FormLabel className="font-normal text-muted-foreground">
+                                BPCEA (Biology, Physics, Chemistry, English, Aptitude) - Coming Soon
                               </FormLabel>
                             </FormItem>
                           </RadioGroup>
@@ -197,7 +192,7 @@ export default function MockTestSetupPage() {
                         />
                     <Button
                       type="submit"
-                      disabled={isSubmitting || !form.watch('token') || !form.watch('agree')}
+                      disabled={isSubmitting || !form.watch('token') || !form.watch('agree') || form.formState.isSubmitting}
                     >
                       {isSubmitting ? 'Processing...' : 'Proceed'}
                     </Button>
