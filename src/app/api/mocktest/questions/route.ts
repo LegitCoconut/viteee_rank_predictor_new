@@ -26,7 +26,7 @@ export async function GET() {
         const mathQuestions = await getQuestionsFromCollection('maths', 40);
         const physicsQuestions = await getQuestionsFromCollection('physics', 35);
         const chemistryQuestions = await getQuestionsFromCollection('chemistry', 35);
-        const englishAptitudeQuestions = await getQuestionsfromCollection('apt_english', 15);
+        const englishAptitudeQuestions = await getQuestionsFromCollection('apt_english', 15);
         
         const allQuestions = [
             ...mathQuestions,
