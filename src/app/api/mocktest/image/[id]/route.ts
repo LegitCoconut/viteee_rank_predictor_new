@@ -17,19 +17,30 @@ export async function GET(
         const db = client.db(MONGODB_DB);
         const bucket = new GridFSBucket(db);
 
-        const downloadStream = bucket.openDownloadStream(new ObjectId(params.id));
+        const objectId = new ObjectId(params.id);
 
-        const chunks = [];
-        for await (const chunk of downloadStream) {
-            chunks.push(chunk);
+        // Check if file exists first to avoid opening stream for non-existent file
+        const files = await bucket.find({ _id: objectId }).limit(1).toArray();
+        if (!files.length) {
+            return NextResponse.json({ message: 'Image not found' }, { status: 404 });
         }
-        const buffer = Buffer.concat(chunks);
-        
-        // Assuming images are png, you might need to store mime-type in DB
-        return new NextResponse(buffer, {
+
+        const downloadStream = bucket.openDownloadStream(objectId);
+
+        // Create a ReadableStream from the GridFS download stream
+        const stream = new ReadableStream({
+            start(controller) {
+                downloadStream.on('data', (chunk) => controller.enqueue(chunk));
+                downloadStream.on('end', () => controller.close());
+                downloadStream.on('error', (err) => controller.error(err));
+            },
+        });
+
+        return new NextResponse(stream, {
             status: 200,
             headers: {
-                'Content-Type': 'image/png',
+                'Content-Type': 'image/png', // Ideally, get this from file metadata
+                'Cache-Control': 'public, max-age=31536000, immutable',
             },
         });
 
