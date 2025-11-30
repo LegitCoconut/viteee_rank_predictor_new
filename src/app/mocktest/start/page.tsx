@@ -5,27 +5,47 @@ import { useRouter } from 'next/navigation';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Loader2 } from 'lucide-react';
+import { MockTestUI } from '@/components/mock-test-ui';
+import type { Question } from '@/lib/types';
 
 export default function MockTestStartPage() {
   const router = useRouter();
   const [setupData, setSetupData] = useState<any>(null);
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const data = sessionStorage.getItem('mockTestSetup');
     if (!data) {
       router.replace('/mocktest/setup');
-    } else {
-      setSetupData(JSON.parse(data));
-      // Simulate fetching questions
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000); // Placeholder for actual API call
+      return;
     }
+    setSetupData(JSON.parse(data));
   }, [router]);
 
+  useEffect(() => {
+    if (!setupData) return;
+
+    async function fetchQuestions() {
+      try {
+        const response = await fetch('/api/mocktest/questions');
+        if (!response.ok) {
+          throw new Error('Failed to fetch questions. Please try again.');
+        }
+        const data = await response.json();
+        setQuestions(data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchQuestions();
+  }, [setupData]);
+
   if (!setupData) {
-    // This shows while checking session storage
     return (
       <div className="flex flex-col min-h-dvh">
         <Header />
@@ -47,15 +67,13 @@ export default function MockTestStartPage() {
             <h1 className="text-2xl font-headline font-semibold">Generating Your Mock Test...</h1>
             <p className="text-muted-foreground">Please wait while we prepare the questions for you.</p>
           </>
-        ) : (
-          <>
-            <h1 className="text-2xl font-bold">Mock Test Ready!</h1>
-            <p>Welcome, {setupData.name}!</p>
-            <p>Stream: {setupData.stream}</p>
-            <div className="mt-8 p-8 border rounded-lg bg-secondary w-full max-w-4xl">
-              <p className="text-center text-lg font-semibold">Test interface will be built here.</p>
+        ) : error ? (
+            <div className="text-destructive-foreground bg-destructive p-4 rounded-md">
+              <h1 className="text-xl font-bold">Error</h1>
+              <p>{error}</p>
             </div>
-          </>
+        ) : (
+          <MockTestUI questions={questions} setupData={setupData} />
         )}
       </main>
       <Footer />
