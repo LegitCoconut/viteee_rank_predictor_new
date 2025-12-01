@@ -35,6 +35,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(true);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const elem = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -180,7 +181,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
             </AlertDialogContent>
           </AlertDialog>
 
-          <Sheet>
+          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon">
                 <Menu className="h-5 w-5" />
@@ -196,8 +197,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
                     currentQuestionIndex={currentQuestionIndex}
                     onQuestionSelect={(index) => {
                       handleQuestionSelect(index);
-                      // Close sheet logic would go here if we had control, 
-                      // but for now user closes it manually or we use a controlled Sheet.
+                      setIsSheetOpen(false); // Close the sheet
                     }}
                   />
                 </div>
