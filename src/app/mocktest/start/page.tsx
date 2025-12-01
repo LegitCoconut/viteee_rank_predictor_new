@@ -47,8 +47,7 @@ export default function MockTestStartPage() {
         setLoadingState('preloading');
 
         let loadedCount = 0;
-        let loadedCount = 0;
-        const concurrencyLimit = 5; // Fetch 5 images at a time
+        const concurrencyLimit = 10; // Fetch 10 images at a time
         let currentIndex = 0;
         const questionsWithImages: QuestionWithImage[] = [];
 
