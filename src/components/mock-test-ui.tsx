@@ -36,6 +36,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const elem = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -52,7 +53,30 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
   };
 
   useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    // Initial check
+    setIsFullscreen(!!document.fullscreenElement);
+
+    // Try to open fullscreen on mount
     openFullscreen();
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+    };
+  }, []);
+
+  useEffect(() => {
     // Mark first question as visited
     setAnswers(prev =>
       prev.map((ans, index) =>
@@ -153,12 +177,27 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
   }, [currentQuestionIndex]);
 
   return (
-    <div ref={elem} className="w-full h-[100dvh] bg-background flex flex-col overflow-hidden">
+    <div ref={elem} className="w-full h-[100dvh] bg-background flex flex-col overflow-hidden relative">
+
+      {/* Fullscreen Enforcement Overlay */}
+      {!isFullscreen && (
+        <div className="absolute inset-0 z-[100] bg-background/95 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center">
+          <div className="max-w-md space-y-4">
+            <h2 className="text-2xl font-bold">Test Paused</h2>
+            <p className="text-muted-foreground">
+              Please enable fullscreen mode to continue the test. This is required to ensure a fair testing environment.
+            </p>
+            <Button onClick={openFullscreen} size="lg">
+              Return to Fullscreen
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Mobile Top Bar */}
       <div className="md:hidden flex items-center justify-between p-2 border-b bg-card shrink-0">
         <div className="text-sm font-bold">
-          <Timer duration={2.5 * 60 * 60} onTimeUp={handleSubmit} />
+          <Timer duration={2.5 * 60 * 60} onTimeUp={handleSubmit} isPaused={!isFullscreen} />
         </div>
         <div className="flex items-center gap-2">
           <AlertDialog>
@@ -187,7 +226,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[80%] sm:w-[380px] p-0">
+            <SheetContent side="right" className="w-[80%] sm:w-[380px] p-0" container={elem.current ?? undefined}>
               <div className="h-full flex flex-col p-4">
                 <h3 className="font-bold mb-4">Question Palette</h3>
                 <div className="flex-1 min-h-0">
@@ -249,7 +288,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
         {/* Desktop Right Sidebar */}
         <div className="hidden md:flex w-80 flex-col gap-4 h-full">
           <div className="p-4 border rounded-lg bg-card text-center shrink-0">
-            <Timer duration={2.5 * 60 * 60} onTimeUp={handleSubmit} />
+            <Timer duration={2.5 * 60 * 60} onTimeUp={handleSubmit} isPaused={!isFullscreen} />
           </div>
           <div className="p-4 border rounded-lg bg-card flex-1 min-h-0 overflow-hidden">
             <QuestionSidebar
