@@ -47,13 +47,12 @@ export default function MockTestStartPage() {
         setLoadingState('preloading');
 
         let loadedCount = 0;
-        let currentBatchSize = 1; // Start slow (sequential)
+        const concurrencyLimit = 10; // Fetch 10 images at a time
         let currentIndex = 0;
         const questionsWithImages: QuestionWithImage[] = [];
 
         while (currentIndex < data.length) {
-          const batch = data.slice(currentIndex, currentIndex + currentBatchSize);
-          const startTime = performance.now();
+          const batch = data.slice(currentIndex, currentIndex + concurrencyLimit);
 
           const batchResults = await Promise.all(batch.map(async (question) => {
             try {
@@ -77,22 +76,8 @@ export default function MockTestStartPage() {
             }
           }));
 
-          const endTime = performance.now();
-          const batchDuration = endTime - startTime;
-          const avgTimePerImage = batchDuration / batch.length;
-
           questionsWithImages.push(...batchResults);
-          currentIndex += batch.length;
-
-          // Adaptive Logic
-          if (avgTimePerImage < 100) {
-            // Fast response (Cache Hit) -> Increase batch size (max 5)
-            currentBatchSize = Math.min(currentBatchSize + 1, 5);
-          } else if (avgTimePerImage > 200) {
-            // Slow response (Cache Miss / DB Hit) -> Reset to sequential
-            currentBatchSize = 1;
-          }
-          // Otherwise keep current size
+          currentIndex += concurrencyLimit;
         }
 
         setQuestions(questionsWithImages);

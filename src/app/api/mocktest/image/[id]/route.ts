@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { connectToDatabase } from '@/lib/db';
 import { redis } from '@/lib/redis';
-import { MongoClient, GridFSBucket, ObjectId } from 'mongodb';
+import { r2, R2_BUCKET_NAME } from '@/lib/r2';
+import { GetObjectCommand } from '@aws-sdk/client-s3';
+import { Readable } from 'stream';
 
-const MONGODB_DB = process.env.MONGODB_DB!;
 
 export async function GET(
     request: Request,
@@ -39,55 +39,57 @@ export async function GET(
             // Continue to fetch from DB if Redis fails
         }
 
-        // 2. Fetch from MongoDB
-        const client: MongoClient = await connectToDatabase();
-        const db = client.db(MONGODB_DB);
-        const bucket = new GridFSBucket(db);
+        // 2. Fetch from R2
+        try {
+            const command = new GetObjectCommand({
+                Bucket: R2_BUCKET_NAME,
+                Key: imageId,
+            });
 
-        const objectId = new ObjectId(imageId);
+            const response = await r2.send(command);
+            if (!response.Body) {
+                return NextResponse.json({ message: 'Image not found' }, { status: 404 });
+            }
 
-        const files = await bucket.find({ _id: objectId }).limit(1).toArray();
-        if (!files.length) {
+            // Convert stream to buffer
+            const stream = response.Body as Readable;
+            const chunks: Uint8Array[] = [];
+            for await (const chunk of stream) {
+                chunks.push(chunk);
+            }
+            const buffer = Buffer.concat(chunks);
+
+            // 3. Store in Redis (Background)
+            // Store as base64 string because Vercel KV (Redis) handles strings best.
+            // TTL: 3600 seconds (1 hour)
+            try {
+                const base64Image = buffer.toString('base64');
+                console.log(`Caching image ${imageId} to Redis...`);
+                await redis.set(cacheKey, base64Image, { ex: 86400 });
+                console.log(`Successfully cached image ${imageId}`);
+            } catch (redisError) {
+                console.error('Failed to cache image in Redis:', redisError);
+            }
+
+            return new NextResponse(buffer as any, {
+                status: 200,
+                headers: {
+                    'Content-Type': 'image/png',
+                    'Cache-Control': 'public, max-age=31536000, immutable',
+                    'X-Cache': 'MISS',
+                },
+            });
+
+        } catch (error) {
+            console.error('Failed to fetch image from R2:', error);
+            // If R2 fails to find the object, it typically throws an error.
+            // We can simplify the error handling here to just return 404 for any R2 fetch error.
             return NextResponse.json({ message: 'Image not found' }, { status: 404 });
         }
-
-        const downloadStream = bucket.openDownloadStream(objectId);
-
-        // We need to buffer the stream to store it in Redis
-        const chunks: Uint8Array[] = [];
-        for await (const chunk of downloadStream) {
-            chunks.push(chunk);
-        }
-        const buffer = Buffer.concat(chunks);
-
-        // 3. Store in Redis (Background)
-        // Store as base64 string because Vercel KV (Redis) handles strings best.
-        // TTL: 3600 seconds (1 hour)
-        try {
-            const base64Image = buffer.toString('base64');
-            // Use set with EX (expiration) option
-            // We don't await this to avoid blocking the response, 
-            // BUT in serverless, the process might freeze. 
-            // Ideally use `waitUntil` if available, or just await it to be safe.
-            await redis.set(cacheKey, base64Image, { ex: 86400 });
-        } catch (redisError) {
-            console.error('Failed to cache image in Redis:', redisError);
-        }
-
-        return new NextResponse(buffer as any, {
-            status: 200,
-            headers: {
-                'Content-Type': 'image/png',
-                'Cache-Control': 'public, max-age=31536000, immutable',
-                'X-Cache': 'MISS',
-            },
-        });
-
     } catch (error) {
         console.error('Failed to fetch image:', error);
         if (error instanceof Error && error.message.includes('not found')) {
             return NextResponse.json({ message: 'Image not found' }, { status: 404 });
         }
-        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
 }
