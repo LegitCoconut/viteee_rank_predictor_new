@@ -64,11 +64,9 @@ export async function GET(
             // TTL: 3600 seconds (1 hour)
             try {
                 const base64Image = buffer.toString('base64');
-                // Use set with EX (expiration) option
-                // We don't await this to avoid blocking the response, 
-                // BUT in serverless, the process might freeze. 
-                // Ideally use `waitUntil` if available, or just await it to be safe.
+                console.log(`Caching image ${imageId} to Redis...`);
                 await redis.set(cacheKey, base64Image, { ex: 86400 });
+                console.log(`Successfully cached image ${imageId}`);
             } catch (redisError) {
                 console.error('Failed to cache image in Redis:', redisError);
             }
