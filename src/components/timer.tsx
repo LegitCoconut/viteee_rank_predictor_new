@@ -6,23 +6,26 @@ import { AlarmClock } from 'lucide-react';
 interface TimerProps {
   duration: number; // in seconds
   onTimeUp: () => void;
+  isPaused?: boolean;
 }
 
-export function Timer({ duration, onTimeUp }: TimerProps) {
+export function Timer({ duration, onTimeUp, isPaused = false }: TimerProps) {
   const [timeLeft, setTimeLeft] = useState(duration);
 
   useEffect(() => {
+    if (isPaused) return;
+
     if (timeLeft <= 0) {
       onTimeUp();
       return;
     }
 
     const intervalId = setInterval(() => {
-      setTimeLeft(timeLeft - 1);
+      setTimeLeft(prev => prev - 1);
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [timeLeft, onTimeUp]);
+  }, [timeLeft, onTimeUp, isPaused]);
 
   const hours = Math.floor(timeLeft / 3600);
   const minutes = Math.floor((timeLeft % 3600) / 60);
