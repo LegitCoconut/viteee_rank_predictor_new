@@ -47,52 +47,62 @@ export default function MockTestStartPage() {
         setLoadingState('preloading');
 
         let loadedCount = 0;
-        let currentBatchSize = 1; // Start slow (sequential)
+        const batchSize = 25; // Requested batch size 25-50
         let currentIndex = 0;
         const questionsWithImages: QuestionWithImage[] = [];
 
         while (currentIndex < data.length) {
-          const batch = data.slice(currentIndex, currentIndex + currentBatchSize);
-          const startTime = performance.now();
+          const batch = data.slice(currentIndex, currentIndex + batchSize);
+          const batchIds = batch.map(q => q.image_id);
 
-          const batchResults = await Promise.all(batch.map(async (question) => {
-            try {
-              const imageUrl = `/api/mocktest/image/${question.image_id}`;
-              const imageResponse = await fetch(imageUrl);
-              if (!imageResponse.ok) {
-                throw new Error(`Failed to fetch image ${question.image_id}`);
-              }
-              const blob = await imageResponse.blob();
-              const blobUrl = URL.createObjectURL(blob);
+          try {
+            const batchResponse = await fetch('/api/mocktest/images/batch', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ ids: batchIds }),
+            });
 
-              loadedCount++;
-              setPreloadProgress((loadedCount / data.length) * 100);
-
-              return { ...question, imageUrl: blobUrl };
-            } catch (imgError) {
-              console.error(`Failed to load image for question ${question._id}:`, imgError);
-              loadedCount++;
-              setPreloadProgress((loadedCount / data.length) * 100);
-              return { ...question, imageUrl: '' };
+            if (!batchResponse.ok) {
+              throw new Error('Failed to fetch batch images');
             }
-          }));
 
-          const endTime = performance.now();
-          const batchDuration = endTime - startTime;
-          const avgTimePerImage = batchDuration / batch.length;
+            const { images } = await batchResponse.json();
 
-          questionsWithImages.push(...batchResults);
-          currentIndex += batch.length;
+            const processedBatch = batch.map(question => {
+              const base64Data = images[question.image_id];
+              let imageUrl = '';
+              if (base64Data) {
+                // Convert base64 to Blob URL for efficient rendering
+                try {
+                  const byteCharacters = atob(base64Data);
+                  const byteNumbers = new Array(byteCharacters.length);
+                  for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                  }
+                  const byteArray = new Uint8Array(byteNumbers);
+                  const blob = new Blob([byteArray], { type: 'image/png' });
+                  imageUrl = URL.createObjectURL(blob);
+                } catch (e) {
+                  console.error("Failed to convert base64 to blob", e);
+                }
+              }
+              return { ...question, imageUrl };
+            });
 
-          // Adaptive Logic
-          if (avgTimePerImage < 100) {
-            // Fast response (Cache Hit) -> Increase batch size (max 5)
-            currentBatchSize = Math.min(currentBatchSize + 1, 5);
-          } else if (avgTimePerImage > 200) {
-            // Slow response (Cache Miss / DB Hit) -> Reset to sequential
-            currentBatchSize = 1;
+            questionsWithImages.push(...processedBatch);
+            loadedCount += batch.length;
+            setPreloadProgress((loadedCount / data.length) * 100);
+
+          } catch (batchError) {
+            console.error("Batch fetch failed, falling back to empty images for this batch:", batchError);
+            // Fallback: push questions without images so the test can still proceed?
+            // Or retry? For now, push with empty images.
+            questionsWithImages.push(...batch.map(q => ({ ...q, imageUrl: '' })));
+            loadedCount += batch.length;
+            setPreloadProgress((loadedCount / data.length) * 100);
           }
-          // Otherwise keep current size
+
+          currentIndex += batchSize;
         }
 
         setQuestions(questionsWithImages);
