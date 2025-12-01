@@ -42,7 +42,7 @@ export default function MockTestResultPage() {
             </div>
         );
     }
-    
+
     const percentage = result.totalQuestions > 0 ? (result.score / result.totalQuestions) * 100 : 0;
     const incorrectAnswers = result.totalQuestions - result.score;
 
@@ -67,21 +67,46 @@ export default function MockTestResultPage() {
                                 <Progress value={percentage} className="w-full" />
                                 <p className="text-center text-muted-foreground">{percentage.toFixed(2)}% Correct</p>
                             </div>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
                                 <Card className="p-4 bg-green-100 dark:bg-green-900/50">
                                     <div className="flex items-center justify-center gap-2">
                                         <CheckCircle className="h-6 w-6 text-green-600" />
                                         <p className="text-2xl font-bold">{result.score}</p>
                                     </div>
-                                    <p className="text-sm text-muted-foreground">Correct Answers</p>
+                                    <p className="text-sm text-muted-foreground">Correct</p>
                                 </Card>
-                                 <Card className="p-4 bg-red-100 dark:bg-red-900/50">
+                                <Card className="p-4 bg-red-100 dark:bg-red-900/50">
                                     <div className="flex items-center justify-center gap-2">
                                         <XCircle className="h-6 w-6 text-red-600" />
                                         <p className="text-2xl font-bold">{incorrectAnswers}</p>
                                     </div>
-                                    <p className="text-sm text-muted-foreground">Incorrect Answers</p>
+                                    <p className="text-sm text-muted-foreground">Incorrect</p>
+                                </Card>
+                                <Card className="p-4 bg-blue-100 dark:bg-blue-900/50">
+                                    <div className="flex items-center justify-center gap-2">
+                                        <BookOpen className="h-6 w-6 text-blue-600" />
+                                        <p className="text-2xl font-bold">{result.answers?.filter((a: any) => a.visited).length || 0}</p>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">Visited</p>
+                                </Card>
+                                <Card className="p-4 bg-gray-100 dark:bg-gray-800">
+                                    <div className="flex items-center justify-center gap-2">
+                                        <p className="text-2xl font-bold">{result.answers?.filter((a: any) => !a.visited).length || 0}</p>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">Not Visited</p>
+                                </Card>
+                                <Card className="p-4 bg-yellow-100 dark:bg-yellow-900/50">
+                                    <div className="flex items-center justify-center gap-2">
+                                        <p className="text-2xl font-bold">{result.answers?.filter((a: any) => a.status === 'marked').length || 0}</p>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">Marked</p>
+                                </Card>
+                                <Card className="p-4 bg-purple-100 dark:bg-purple-900/50">
+                                    <div className="flex items-center justify-center gap-2">
+                                        <p className="text-2xl font-bold">{result.answers?.filter((a: any) => a.status === 'answered').length || 0}</p>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">Attempted</p>
                                 </Card>
                             </div>
 

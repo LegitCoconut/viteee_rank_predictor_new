@@ -8,9 +8,10 @@ export interface Question {
 export interface QuestionWithImage extends Question {
     imageUrl: string;
 }
-  
+
 export interface Answer {
     questionId: string;
     answer: 'a' | 'b' | 'c' | 'd' | null;
     status: 'answered' | 'unanswered' | 'marked';
+    visited: boolean;
 }
