@@ -8,7 +8,7 @@ if (!MONGODB_URI) {
 }
 
 const options: MongoClientOptions = {
-  maxPoolSize: 10, // Limit the number of connections
+  maxPoolSize: 5, // Limit the number of connections
 };
 
 let client: MongoClient;
