@@ -3,7 +3,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { BookOpen, MoveRight } from "lucide-react";
+import { Sparkles, MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -58,8 +58,8 @@ function Hero() {
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button size="lg" className="gap-2" asChild>
-              <Link href="/syllabus">
-                Explore Syllabus <BookOpen className="w-4 h-4" />
+              <Link href="/">
+                Predict Rank and College <Sparkles className="w-4 h-4" />
               </Link>
             </Button>
             <Button size="lg" className="gap-2 hover:bg-white dark:hover:bg-white/10" variant="outline" asChild>
