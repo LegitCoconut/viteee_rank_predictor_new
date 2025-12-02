@@ -91,10 +91,10 @@ export function FeedbackForm() {
           control={form.control}
           name="name"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-[90%] mx-auto md:w-full">
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Your Name" {...field} />
+                <Input className="h-12 md:h-10" placeholder="Your Name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -104,10 +104,10 @@ export function FeedbackForm() {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-[90%] mx-auto md:w-full">
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="your.email@example.com" {...field} />
+                <Input className="h-12 md:h-10" placeholder="your.email@example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -117,7 +117,7 @@ export function FeedbackForm() {
           control={form.control}
           name="feedback"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-[90%] mx-auto md:w-full">
               <FormLabel>Feedback</FormLabel>
               <FormControl>
                 <Textarea
@@ -130,39 +130,38 @@ export function FeedbackForm() {
             </FormItem>
           )}
         />
-        <div className="flex flex-col items-center gap-4">
-          <div className="flex flex-row items-center justify-center gap-4">
-              <Button
-              type="submit"
-              disabled={isSubmitting || !form.watch("token")}
-              >
-              {isSubmitting ? "Submitting..." : "Submit Feedback"}
-              </Button>
-              <FormField
-              control={form.control}
-              name="token"
-              render={({ field }) => (
-                  <FormItem>
-                  <FormControl>
-                      <Turnstile
-                      siteKey={
-                          process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
-                      }
-                      onSuccess={(token) => {
-                          field.onChange(token);
-                      }}
-                      />
-                  </FormControl>
-                  </FormItem>
-              )}
-              />
-          </div>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4">
           <FormField
             control={form.control}
             name="token"
-            render={()=>(<FormMessage />)}
-           />
+            render={({ field }) => (
+              <FormItem className="w-full md:w-auto flex justify-center">
+                <FormControl>
+                  <Turnstile
+                    siteKey={
+                      process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
+                    }
+                    onSuccess={(token) => {
+                      field.onChange(token);
+                    }}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <Button
+            type="submit"
+            disabled={isSubmitting || !form.watch("token")}
+            className="w-auto px-8"
+          >
+            {isSubmitting ? "Submitting..." : "Submit Feedback"}
+          </Button>
         </div>
+        <FormField
+          control={form.control}
+          name="token"
+          render={() => <FormMessage className="text-center" />}
+        />
       </form>
     </Form>
   );
