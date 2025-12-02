@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import getHypertune from "@/lib/hypertune";
+import LimitReachedScreen from "@/components/LimitReachedScreen";
 
 export const metadata: Metadata = {
     title: "Free VITEEE Mock Test 2026 - No Signup Required | VIT RANKS",
@@ -50,10 +52,17 @@ export const metadata: Metadata = {
     },
 };
 
-export default function MockTestLayout({
+export default async function MockTestLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const root = await getHypertune();
+    const allowTest = root.allowTEST({ fallback: false });
+
+    if (!allowTest) {
+        return <LimitReachedScreen />;
+    }
+
     return <>{children}</>;
 }
