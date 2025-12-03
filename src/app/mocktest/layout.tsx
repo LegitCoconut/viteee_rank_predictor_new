@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import getHypertune from "@/lib/hypertune";
 import LimitReachedScreen from "@/components/LimitReachedScreen";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
     title: "Free VITEEE Mock Test 2026 - No Signup Required | VIT RANKS",
     description:
