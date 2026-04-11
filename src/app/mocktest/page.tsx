@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { BookOpen, Sparkles, Pencil, ArrowDown, FileText } from 'lucide-react';
 import { SyllabusSection } from '@/components/syllabus-section';
 import { SyllabusDownloads } from '@/components/syllabus-downloads';
+import { MockTestJsonLd } from '@/components/json-ld';
 
 import { syllabus } from '@/lib/data/syllabus-data';
 import Link from 'next/link';
@@ -34,6 +35,7 @@ export default function MockTestPage() {
 
   return (
     <div className="flex flex-col min-h-dvh bg-background">
+      <MockTestJsonLd />
       <Header />
       <main className="flex-1">
         <section className="h-dvh flex flex-col items-center justify-center text-center bg-secondary/50 relative">
