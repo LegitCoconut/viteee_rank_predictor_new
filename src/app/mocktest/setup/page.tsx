@@ -20,9 +20,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Turnstile } from '@marsidev/react-turnstile';
-import { AlertCircle } from 'lucide-react';
+import { Info, User, BookOpen, ShieldCheck, ArrowRight, Clock, HelpCircle, Server } from 'lucide-react';
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -52,12 +52,30 @@ export default function MockTestSetupPage() {
   });
 
   const instructions = [
-    'You shall be loaded with 125 questions based on the weightage from previous question papers.',
-    'You shall wait till all the 125 questions are loaded and the test is created.',
-    'A unique ID will be created for you and will be saved in your browser and will be used to store and retrieve marks and info about the exam.',
-    'Clearing of cache will clear all the stored data about the test taken.',
-    'You will be allowed to attend the mock test after the verification (this action is taken to avoid bots).',
-    'All these services are running on free tier platforms and servers in order to make it ad free and to give a seamless experience. So the test will take some time to get loaded.',
+    {
+      icon: HelpCircle,
+      text: 'You will be loaded with 125 questions based on the weightage from previous question papers.',
+    },
+    {
+      icon: Clock,
+      text: 'Please wait till all 125 questions are loaded and the test is created.',
+    },
+    {
+      icon: User,
+      text: 'A unique ID will be created and saved in your browser to store and retrieve your exam data.',
+    },
+    {
+      icon: Info,
+      text: 'Clearing your browser cache will remove all stored data about tests taken.',
+    },
+    {
+      icon: ShieldCheck,
+      text: 'You will need to complete a verification step to prevent bot access.',
+    },
+    {
+      icon: Server,
+      text: 'This platform runs on free-tier servers to keep it ad-free. The test may take a moment to load.',
+    },
   ];
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -77,138 +95,185 @@ export default function MockTestSetupPage() {
   return (
     <div className="flex flex-col min-h-dvh bg-background">
       <Header />
-      <main className="flex-1 py-12">
-        <div className="container max-w-4xl mx-auto">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-3xl font-headline text-center">
-                Mock Test Setup & Instructions
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="mb-8">
-                <h3 className="font-semibold text-lg mb-4">Instructions:</h3>
-                <ul className="space-y-3 text-muted-foreground">
-                  {instructions.map((instruction, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <AlertCircle className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
-                      <span>{instruction}</span>
-                    </li>
-                  ))}
-                  <li className="flex items-start gap-3">
-                    <AlertCircle className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
-                    <span>If you find any issue with the online test, questions, or technical issues feel free to reach out to <a href="mailto:vitranks@malabarmatrix.site" className="text-primary underline">vitranks@malabarmatrix.site</a> or through the <Link href="/#feedback" className="text-primary underline">feedback form</Link>.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <AlertCircle className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
-                    <span>This application and test environment is made by students of VIT for the good of VITEEE aspirants; please use the platform as a student and help your friends grow with you.</span>
-                  </li>
-                </ul>
+      <main className="flex-1">
+        {/* Header Banner */}
+        <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-accent/5 border-b">
+          <div className="container max-w-4xl mx-auto px-4 py-10 text-center">
+            <h1 className="text-3xl md:text-4xl font-headline font-semibold tracking-tight mb-2">
+              Before You Begin
+            </h1>
+            <p className="text-muted-foreground text-base max-w-xl mx-auto">
+              Review the instructions below, fill in your details, and start your mock test.
+            </p>
+          </div>
+        </div>
+
+        <div className="container max-w-4xl mx-auto px-4 py-10 space-y-8">
+          {/* Instructions */}
+          <div>
+            <div className="flex items-center gap-2 mb-5">
+              <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-primary/10">
+                <Info className="h-4 w-4 text-primary" />
               </div>
+              <h2 className="text-xl font-semibold font-headline">Instructions</h2>
+            </div>
 
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Your Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Enter your full name" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+            <div className="grid gap-3 sm:grid-cols-2">
+              {instructions.map((item, index) => (
+                <Card key={index} className="border-border/50">
+                  <CardContent className="flex items-start gap-3 p-4">
+                    <div className="flex items-center justify-center h-8 w-8 rounded-md bg-secondary flex-shrink-0 mt-0.5">
+                      <item.icon className="h-4 w-4 text-muted-foreground" />
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
 
-                  <FormField
-                    control={form.control}
-                    name="stream"
-                    render={({ field }) => (
-                      <FormItem className="space-y-3">
-                        <FormLabel>Select Stream</FormLabel>
-                        <FormControl>
-                          <RadioGroup
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            className="flex flex-col space-y-1"
-                          >
-                            <FormItem className="flex items-center space-x-3 space-y-0">
-                              <FormControl>
-                                <RadioGroupItem value="MPCEA" />
-                              </FormControl>
-                              <FormLabel className="font-normal">
-                                MPCEA (Mathematics, Physics, Chemistry, English, Aptitude)
-                              </FormLabel>
-                            </FormItem>
-                            <FormItem className="flex items-center space-x-3 space-y-0">
-                              <FormControl>
-                                <RadioGroupItem value="BPCEA" disabled />
-                              </FormControl>
-                              <FormLabel className="font-normal text-muted-foreground">
-                                BPCEA (Biology, Physics, Chemistry, English, Aptitude) - Coming Soon
-                              </FormLabel>
-                            </FormItem>
-                          </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+            {/* Extra notes */}
+            <div className="mt-4 rounded-lg border border-border/50 bg-muted/30 p-4 text-sm text-muted-foreground space-y-2">
+              <p>
+                If you find any issues with the test, questions, or technical problems, feel free to reach out at{' '}
+                <a href="mailto:vitranks@malabarmatrix.site" className="text-primary underline underline-offset-2 hover:text-primary/80">
+                  vitranks@malabarmatrix.site
+                </a>{' '}
+                or through the{' '}
+                <Link href="/#feedback" className="text-primary underline underline-offset-2 hover:text-primary/80">
+                  feedback form
+                </Link>.
+              </p>
+              <p>
+                This platform is built by VIT students for VITEEE aspirants. Please use it responsibly and help your friends grow with you.
+              </p>
+            </div>
+          </div>
 
-                  <FormField
-                    control={form.control}
-                    name="agree"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel>
-                            I have read and agree to the instructions.
-                          </FormLabel>
-                          <FormMessage />
-                        </div>
-                      </FormItem>
-                    )}
-                  />
+          {/* Form */}
+          <div>
+            <div className="flex items-center gap-2 mb-5">
+              <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-primary/10">
+                <User className="h-4 w-4 text-primary" />
+              </div>
+              <h2 className="text-xl font-semibold font-headline">Your Details</h2>
+            </div>
 
-                  <div className="flex flex-col items-center justify-center gap-4">
+            <Card className="border-border/50">
+              <CardContent className="p-6">
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <FormField
                       control={form.control}
-                      name="token"
+                      name="name"
                       render={({ field }) => (
                         <FormItem>
+                          <FormLabel className="text-sm font-medium">Full Name</FormLabel>
                           <FormControl>
-                            <Turnstile
-                              siteKey={
-                                process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
-                              }
-                              onSuccess={(token) => {
-                                field.onChange(token);
-                              }}
-                            />
+                            <Input placeholder="Enter your full name" className="h-11" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting || !form.watch('token') || !form.watch('agree') || form.formState.isSubmitting}
-                    >
-                      {isSubmitting ? 'Processing...' : 'Proceed'}
-                    </Button>
-                  </div>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
+
+                    <FormField
+                      control={form.control}
+                      name="stream"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-sm font-medium">Select Stream</FormLabel>
+                          <FormControl>
+                            <RadioGroup
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                              className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1"
+                            >
+                              <FormItem className="flex items-center space-x-0 space-y-0">
+                                <label className="flex items-center gap-3 w-full cursor-pointer rounded-lg border p-4 transition-colors hover:bg-muted/50 has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary/5">
+                                  <FormControl>
+                                    <RadioGroupItem value="MPCEA" />
+                                  </FormControl>
+                                  <div>
+                                    <p className="font-medium text-sm">MPCEA</p>
+                                    <p className="text-xs text-muted-foreground">Maths, Physics, Chemistry, English, Aptitude</p>
+                                  </div>
+                                </label>
+                              </FormItem>
+                              <FormItem className="flex items-center space-x-0 space-y-0">
+                                <label className="flex items-center gap-3 w-full rounded-lg border p-4 opacity-50 cursor-not-allowed">
+                                  <FormControl>
+                                    <RadioGroupItem value="BPCEA" disabled />
+                                  </FormControl>
+                                  <div>
+                                    <p className="font-medium text-sm">BPCEA</p>
+                                    <p className="text-xs text-muted-foreground">Biology stream &middot; Coming Soon</p>
+                                  </div>
+                                </label>
+                              </FormItem>
+                            </RadioGroup>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="agree"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-lg border border-border/50 bg-muted/30 p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                              className="mt-0.5"
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel className="text-sm cursor-pointer">
+                              I have read and agree to the instructions above.
+                            </FormLabel>
+                            <FormMessage />
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+
+                    <div className="flex flex-col items-center gap-5 pt-2">
+                      <FormField
+                        control={form.control}
+                        name="token"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Turnstile
+                                siteKey={
+                                  process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
+                                }
+                                onSuccess={(token) => {
+                                  field.onChange(token);
+                                }}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button
+                        type="submit"
+                        size="lg"
+                        className="gap-2 px-8 h-12 text-base shadow-lg shadow-primary/20 w-full sm:w-auto"
+                        disabled={isSubmitting || !form.watch('token') || !form.watch('agree') || form.formState.isSubmitting}
+                      >
+                        {isSubmitting ? 'Processing...' : 'Start Mock Test'}
+                        {!isSubmitting && <ArrowRight className="h-4 w-4" />}
+                      </Button>
+                    </div>
+                  </form>
+                </Form>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </main>
       <Footer />

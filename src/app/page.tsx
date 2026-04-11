@@ -56,11 +56,19 @@ export default function Home() {
         <Hero />
         <CampusCards />
         <ImportantDates />
-        <section id="feedback" className="py-12">
-          <div className="container">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
-              Feedback
-            </h2>
+        <section id="feedback" className="py-16 md:py-24 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-14">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                We Value Your Input
+              </div>
+              <h2 className="text-3xl md:text-5xl font-headline tracking-tighter font-semibold">
+                Feedback
+              </h2>
+              <p className="text-lg text-muted-foreground mt-3 max-w-2xl mx-auto">
+                Help us improve this platform by sharing your thoughts and suggestions.
+              </p>
+            </div>
             <div className="max-w-2xl mx-auto">
               <FeedbackForm />
             </div>

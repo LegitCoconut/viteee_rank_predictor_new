@@ -7,92 +7,125 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Clock } from "lucide-react";
+import { Clock, BookOpen, FlaskConical, Calculator, Brain, Languages } from "lucide-react";
 
 const mpceaData = [
-  { subject: "Mathematics", questions: 40 },
-  { subject: "Physics", questions: 35 },
-  { subject: "Chemistry", questions: 35 },
-  { subject: "English", questions: 5 },
-  { subject: "Aptitude", questions: 10 },
+  { subject: "Mathematics", questions: 40, icon: Calculator },
+  { subject: "Physics", questions: 35, icon: BookOpen },
+  { subject: "Chemistry", questions: 35, icon: FlaskConical },
+  { subject: "English", questions: 5, icon: Languages },
+  { subject: "Aptitude", questions: 10, icon: Brain },
 ];
 
 const bpceaData = [
-  { subject: "Biology", questions: 40 },
-  { subject: "Physics", questions: 35 },
-  { subject: "Chemistry", questions: 35 },
-  { subject: "English", questions: 5 },
-  { subject: "Aptitude", questions: 10 },
+  { subject: "Biology", questions: 40, icon: BookOpen },
+  { subject: "Physics", questions: 35, icon: BookOpen },
+  { subject: "Chemistry", questions: 35, icon: FlaskConical },
+  { subject: "English", questions: 5, icon: Languages },
+  { subject: "Aptitude", questions: 10, icon: Brain },
 ];
 
 export function MockTestPattern() {
   return (
-    <section className="py-12 md:py-20">
+    <section className="py-16 md:py-24 bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-headline tracking-tighter font-semibold">
+        <div className="text-center mb-14">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+            <BookOpen className="h-3.5 w-3.5" />
+            Exam Structure
+          </div>
+          <h2 className="text-3xl md:text-5xl font-headline tracking-tighter font-semibold">
             VITEEE Exam Pattern
-          </h1>
-          <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
+          </h2>
+          <p className="text-lg text-muted-foreground mt-3 max-w-2xl mx-auto">
             Understand the structure of the VITEEE for both MPCEA and BPCEA streams.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <Card className="overflow-hidden">
-            <CardHeader>
-              <CardTitle className="text-center text-2xl font-bold">MPCEA</CardTitle>
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <Card className="overflow-hidden border-border/50 shadow-sm">
+            <CardHeader className="bg-primary/5 border-b border-border/50 pb-4">
+              <CardTitle className="text-center text-xl font-semibold">MPCEA Stream</CardTitle>
+              <p className="text-center text-sm text-muted-foreground">Mathematics Group</p>
             </CardHeader>
             <CardContent className="p-0">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead className="font-semibold">Subject</TableHead>
-                    <TableHead className="text-right font-semibold">No. of Questions</TableHead>
+                  <TableRow className="bg-muted/30">
+                    <TableHead className="font-semibold text-xs uppercase tracking-wider">Subject</TableHead>
+                    <TableHead className="text-right font-semibold text-xs uppercase tracking-wider">Questions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {mpceaData.map((row) => (
                     <TableRow key={row.subject}>
-                      <TableCell>{row.subject}</TableCell>
-                      <TableCell className="text-right">{row.questions}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2.5">
+                          <div className="flex items-center justify-center h-7 w-7 rounded-md bg-secondary">
+                            <row.icon className="h-3.5 w-3.5 text-muted-foreground" />
+                          </div>
+                          <span className="font-medium text-sm">{row.subject}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-right font-semibold">{row.questions}</TableCell>
                     </TableRow>
                   ))}
+                  <TableRow className="bg-primary/5 font-semibold">
+                    <TableCell className="text-sm">Total</TableCell>
+                    <TableCell className="text-right text-primary text-sm">125</TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </CardContent>
           </Card>
-          
-          <Card className="overflow-hidden">
-            <CardHeader>
-              <CardTitle className="text-center text-2xl font-bold">BPCEA</CardTitle>
+
+          <Card className="overflow-hidden border-border/50 shadow-sm">
+            <CardHeader className="bg-primary/5 border-b border-border/50 pb-4">
+              <CardTitle className="text-center text-xl font-semibold">BPCEA Stream</CardTitle>
+              <p className="text-center text-sm text-muted-foreground">Biology Group</p>
             </CardHeader>
             <CardContent className="p-0">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead className="font-semibold">Subject</TableHead>
-                    <TableHead className="text-right font-semibold">No. of Questions</TableHead>
+                  <TableRow className="bg-muted/30">
+                    <TableHead className="font-semibold text-xs uppercase tracking-wider">Subject</TableHead>
+                    <TableHead className="text-right font-semibold text-xs uppercase tracking-wider">Questions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {bpceaData.map((row) => (
                     <TableRow key={row.subject}>
-                      <TableCell>{row.subject}</TableCell>
-                      <TableCell className="text-right">{row.questions}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2.5">
+                          <div className="flex items-center justify-center h-7 w-7 rounded-md bg-secondary">
+                            <row.icon className="h-3.5 w-3.5 text-muted-foreground" />
+                          </div>
+                          <span className="font-medium text-sm">{row.subject}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-right font-semibold">{row.questions}</TableCell>
                     </TableRow>
                   ))}
+                  <TableRow className="bg-primary/5 font-semibold">
+                    <TableCell className="text-sm">Total</TableCell>
+                    <TableCell className="text-right text-primary text-sm">125</TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </CardContent>
           </Card>
         </div>
 
-        <div className="mt-12 text-center">
-            <div className="inline-flex items-center justify-center gap-2 text-lg font-medium bg-secondary text-secondary-foreground p-4 rounded-lg">
-                <Clock className="h-5 w-5" />
-                <span>Exam Duration: 2 Hours and 30 Minutes</span>
+        <div className="mt-10 flex justify-center">
+          <div className="inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-card border border-border/50 shadow-sm">
+            <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10">
+              <Clock className="h-5 w-5 text-primary" />
             </div>
+            <div className="text-left">
+              <p className="font-semibold text-sm">Exam Duration</p>
+              <p className="text-xs text-muted-foreground">2 Hours and 30 Minutes &middot; Online CBT Mode</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
