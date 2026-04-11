@@ -122,7 +122,7 @@ export default function MockTestStartPage() {
   return (
     <div className="flex flex-col min-h-dvh">
       <Header />
-      <main className="flex-1 flex flex-col items-center justify-center container py-8 text-center">
+      <main className="flex-1 flex flex-col items-center justify-center container mx-auto py-8 text-center">
         {loadingState === 'fetching' && (
           <>
             <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />

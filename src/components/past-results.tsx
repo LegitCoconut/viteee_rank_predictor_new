@@ -41,7 +41,7 @@ export function PastResults() {
 
     return (
         <section id="past-results" className="py-12 md:py-20">
-            <div className="container px-4">
+            <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl md:text-5xl font-headline tracking-tighter font-semibold">Past Results</h2>
                     <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
