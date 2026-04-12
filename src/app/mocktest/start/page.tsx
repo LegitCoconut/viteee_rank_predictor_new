@@ -47,40 +47,39 @@ export default function MockTestStartPage() {
         setLoadingState('preloading');
 
         let loadedCount = 0;
-        const concurrencyLimit = 10; // Fetch 10 images at a time
+        const concurrencyLimit = 10;
         let currentIndex = 0;
-        const questionsWithImages: QuestionWithImage[] = [];
 
         while (currentIndex < data.length) {
           const batch = data.slice(currentIndex, currentIndex + concurrencyLimit);
 
-          const batchResults = await Promise.all(batch.map(async (question) => {
-            try {
-              const imageUrl = `/api/mocktest/image/${question.image_id}`;
-              const imageResponse = await fetch(imageUrl);
-              if (!imageResponse.ok) {
-                throw new Error(`Failed to fetch image ${question.image_id}`);
+          await Promise.all(batch.map((question) =>
+            new Promise<void>((resolve) => {
+              if (!question.imageUrl) {
+                loadedCount++;
+                setPreloadProgress((loadedCount / data.length) * 100);
+                resolve();
+                return;
               }
-              const blob = await imageResponse.blob();
-              const blobUrl = URL.createObjectURL(blob);
+              const img = new Image();
+              const done = () => {
+                loadedCount++;
+                setPreloadProgress((loadedCount / data.length) * 100);
+                resolve();
+              };
+              img.onload = done;
+              img.onerror = () => {
+                console.error(`Failed to preload image for question ${question._id}`);
+                done();
+              };
+              img.src = question.imageUrl;
+            })
+          ));
 
-              loadedCount++;
-              setPreloadProgress((loadedCount / data.length) * 100);
-
-              return { ...question, imageUrl: blobUrl };
-            } catch (imgError) {
-              console.error(`Failed to load image for question ${question._id}:`, imgError);
-              loadedCount++;
-              setPreloadProgress((loadedCount / data.length) * 100);
-              return { ...question, imageUrl: '' };
-            }
-          }));
-
-          questionsWithImages.push(...batchResults);
           currentIndex += concurrencyLimit;
         }
 
-        setQuestions(questionsWithImages);
+        setQuestions(data);
         setLoadingState('ready');
       } catch (err: any) {
         setError(err.message);
@@ -90,18 +89,6 @@ export default function MockTestStartPage() {
 
     fetchAndPreload();
   }, [setupData]);
-
-  // Cleanup blob URLs on component unmount
-  useEffect(() => {
-    return () => {
-      questions.forEach(q => {
-        if (q.imageUrl && q.imageUrl.startsWith('blob:')) {
-          URL.revokeObjectURL(q.imageUrl);
-        }
-      });
-    };
-  }, [questions]);
-
 
   if (!setupData) {
     return (
