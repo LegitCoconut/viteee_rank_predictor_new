@@ -27,22 +27,22 @@ const bpceaData = [
 
 export function MockTestPattern() {
   return (
-    <section className="py-16 md:py-24 bg-muted/30">
+    <section className="py-12 md:py-24 bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+        <div className="text-center mb-8 md:mb-14">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs md:text-sm font-medium mb-3 md:mb-4">
             <BookOpen className="h-3.5 w-3.5" />
             Exam Structure
           </div>
-          <h2 className="text-3xl md:text-5xl font-headline tracking-tighter font-semibold">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-headline tracking-tighter font-semibold">
             VITEEE Exam Pattern
           </h2>
-          <p className="text-lg text-muted-foreground mt-3 max-w-2xl mx-auto">
+          <p className="text-sm md:text-lg text-muted-foreground mt-2 md:mt-3 max-w-2xl mx-auto px-2">
             Understand the structure of the VITEEE for both MPCEA and BPCEA streams.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
           <Card className="overflow-hidden border-border/50 shadow-sm">
             <CardHeader className="bg-primary/5 border-b border-border/50 pb-4">
               <CardTitle className="text-center text-xl font-semibold">MPCEA Stream</CardTitle>
@@ -116,14 +116,14 @@ export function MockTestPattern() {
           </Card>
         </div>
 
-        <div className="mt-10 flex justify-center">
-          <div className="inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-card border border-border/50 shadow-sm">
-            <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10">
-              <Clock className="h-5 w-5 text-primary" />
+        <div className="mt-6 md:mt-10 flex justify-center px-2">
+          <div className="inline-flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-card border border-border/50 shadow-sm">
+            <div className="flex items-center justify-center h-9 w-9 sm:h-10 sm:w-10 rounded-lg bg-primary/10 shrink-0">
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
             </div>
             <div className="text-left">
-              <p className="font-semibold text-sm">Exam Duration</p>
-              <p className="text-xs text-muted-foreground">2 Hours and 30 Minutes &middot; Online CBT Mode</p>
+              <p className="font-semibold text-xs sm:text-sm">Exam Duration</p>
+              <p className="text-[11px] sm:text-xs text-muted-foreground">2 Hours and 30 Minutes &middot; Online CBT Mode</p>
             </div>
           </div>
         </div>
