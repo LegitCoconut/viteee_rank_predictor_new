@@ -1,11 +1,12 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { MockTestPattern } from '@/components/mock-test-pattern';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Pencil, ArrowDown, FileText, Clock, HelpCircle, Zap } from 'lucide-react';
+import { BookOpen, Pencil, ArrowDown, FileText, Clock, HelpCircle, Zap, Lock, Shuffle, ListChecks, RotateCcw } from 'lucide-react';
+import type { PredefinedMockTestSummary } from '@/lib/types';
 import { SyllabusSection } from '@/components/syllabus-section';
 import { SyllabusDownloads } from '@/components/syllabus-downloads';
 import { MockTestJsonLd } from '@/components/json-ld';
@@ -20,6 +21,41 @@ export default function MockTestPage() {
   const contentRef = useRef<HTMLDivElement>(null);
   const patternRef = useRef<HTMLDivElement>(null);
   const syllabusContext = JSON.stringify(syllabus);
+
+  const [predefined, setPredefined] = useState<PredefinedMockTestSummary[] | null>(null);
+  const [takenPredefinedIds, setTakenPredefinedIds] = useState<Set<number>>(new Set());
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('/api/mocktest/predefined');
+        if (!res.ok) throw new Error('failed');
+        const list: PredefinedMockTestSummary[] = await res.json();
+        setPredefined(list);
+      } catch {
+        setPredefined([]);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('mockTestResults');
+      if (!raw) return;
+      const results: Array<{ mode?: string; predefinedId?: number }> = JSON.parse(raw);
+      const taken = new Set<number>();
+      for (const r of results) {
+        if (r.mode === 'predefined' && typeof r.predefinedId === 'number') {
+          taken.add(r.predefinedId);
+        }
+      }
+      setTakenPredefinedIds(taken);
+    } catch {
+      // ignore malformed local storage
+    }
+  }, []);
+
+  const predefinedById = (id: number) => predefined?.find(s => s.id === id);
 
   const handleScrollToSyllabus = () => {
     syllabusRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -80,12 +116,12 @@ export default function MockTestPage() {
               ))}
             </div>
 
-            {/* CTA Buttons */}
+            {/* Primary CTA — Random test */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
               <Button size="lg" className="gap-2 px-8 h-12 text-base shadow-lg shadow-primary/20" asChild>
-                <Link href="/mocktest/setup">
-                  <Pencil className="h-4 w-4" />
-                  Start Mock Test
+                <Link href="/mocktest/setup?mode=random">
+                  <Shuffle className="h-4 w-4" />
+                  Random Mock Test
                 </Link>
               </Button>
               <Button size="lg" variant="outline" className="gap-2 px-8 h-12 text-base" onClick={handleScrollToPattern}>
@@ -96,6 +132,55 @@ export default function MockTestPage() {
                 <BookOpen className="h-4 w-4" />
                 View Syllabus
               </Button>
+            </div>
+
+            {/* Curated Mock Tests (1-5) */}
+            <div className="max-w-3xl mx-auto mt-10">
+              <div className="flex items-center justify-center gap-2 mb-4 text-sm text-muted-foreground">
+                <ListChecks className="h-4 w-4" />
+                <span>Or pick a curated mock test</span>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                {[1, 2, 3, 4, 5].map((id) => {
+                  const slot = predefinedById(id);
+                  const loading = predefined === null;
+                  const active = !!slot?.active;
+                  const label = slot?.name ?? `Mock Test ${id}`;
+                  const base = 'h-16 rounded-xl border flex flex-col items-center justify-center gap-1 text-sm font-medium transition-colors';
+                  if (loading) {
+                    return (
+                      <div key={id} className={`${base} bg-muted/40 border-border/50 animate-pulse`} aria-hidden>
+                        <span className="opacity-0">Mock Test {id}</span>
+                      </div>
+                    );
+                  }
+                  if (!active) {
+                    return (
+                      <div
+                        key={id}
+                        className={`${base} bg-muted/40 border-border/50 text-muted-foreground grayscale cursor-not-allowed`}
+                        title="Coming soon"
+                      >
+                        <Lock className="h-3.5 w-3.5" />
+                        <span>{label}</span>
+                      </div>
+                    );
+                  }
+                  const hasTaken = takenPredefinedIds.has(id);
+                  const Icon = hasTaken ? RotateCcw : Pencil;
+                  return (
+                    <Link
+                      key={id}
+                      href={`/mocktest/setup?mode=predefined&id=${id}`}
+                      className={`${base} bg-card border-primary/40 text-foreground hover:bg-primary/5 hover:border-primary shadow-sm`}
+                      title={hasTaken ? 'Retake this test' : undefined}
+                    >
+                      <Icon className="h-3.5 w-3.5 text-primary" />
+                      <span>{label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
 

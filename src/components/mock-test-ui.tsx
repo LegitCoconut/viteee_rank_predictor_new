@@ -25,7 +25,7 @@ import { Skeleton } from './ui/skeleton';
 
 interface MockTestUIProps {
   questions: QuestionWithImage[];
-  setupData: { name: string; stream: string };
+  setupData: { name: string; stream: string; predefinedName?: string };
 }
 
 export function MockTestUI({ questions, setupData }: MockTestUIProps) {
@@ -136,6 +136,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
       }
     });
 
+    const anySetup = setupData as any;
     const examResult = {
       examId: uuidv4(),
       userId: setupData.name,
@@ -145,6 +146,9 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
       totalQuestions: questions.length,
       sectionScores,
       timestamp: new Date().toISOString(),
+      mode: anySetup.mode ?? 'random',
+      predefinedId: anySetup.predefinedId,
+      predefinedName: setupData.predefinedName,
     };
 
     try {
@@ -162,6 +166,11 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
       console.error("Failed to save results:", error);
     } finally {
       sessionStorage.setItem('latestResult', JSON.stringify(examResult));
+      try {
+        sessionStorage.setItem('latestQuestions', JSON.stringify(questions));
+      } catch (err) {
+        console.warn('Could not persist latestQuestions for detailed review:', err);
+      }
       if (document.fullscreenElement) {
         document.exitFullscreen();
       }
@@ -288,6 +297,9 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
         {/* Desktop Right Sidebar */}
         <div className="hidden md:flex w-80 flex-col gap-4 h-full">
           <div className="p-4 border rounded-lg bg-card text-center shrink-0">
+            {setupData.predefinedName && (
+              <p className="text-xs uppercase tracking-wider text-primary font-medium mb-1">{setupData.predefinedName}</p>
+            )}
             <Timer duration={2.5 * 60 * 60} onTimeUp={handleSubmit} isPaused={!isFullscreen} />
           </div>
           <div className="p-4 border rounded-lg bg-card flex-1 min-h-0 overflow-hidden">

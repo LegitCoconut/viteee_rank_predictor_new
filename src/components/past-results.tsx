@@ -65,8 +65,13 @@ export function PastResults() {
                                     <AccordionTrigger className="hover:no-underline px-6 py-4">
                                         <div className="flex items-center justify-between w-full pr-4 gap-4">
                                             <div className="text-left">
-                                                <p className="font-mono text-xs text-muted-foreground">{result.examId}</p>
-                                                <p className="text-sm text-muted-foreground mt-0.5">{new Date(result.timestamp).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                                                <p className="text-sm font-medium">
+                                                    {result.mode === 'predefined' && result.predefinedId
+                                                        ? (result.predefinedName || `Mock Test ${result.predefinedId}`)
+                                                        : 'Random Test'}
+                                                </p>
+                                                <p className="font-mono text-[11px] text-muted-foreground mt-0.5">{result.examId}</p>
+                                                <p className="text-xs text-muted-foreground mt-0.5">{new Date(result.timestamp).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
                                             </div>
                                             <div className="flex items-center gap-3">
                                                 <div className="w-24 hidden sm:block">

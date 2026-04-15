@@ -133,9 +133,12 @@ export default function MockTestResultPage() {
                                 </Card>
                             )}
 
-                            <div className="text-center pt-4 space-x-4">
+                            <div className="flex flex-wrap justify-center gap-3 pt-4">
                                 <Button asChild>
                                     <Link href="/mocktest">Take Another Test</Link>
+                                </Button>
+                                <Button variant="outline" asChild>
+                                    <Link href="/mocktest/results/detailed">View Detailed Results</Link>
                                 </Button>
                                 <Button variant="outline" asChild>
                                     <Link href="/mocktest#past-results">View All Results</Link>

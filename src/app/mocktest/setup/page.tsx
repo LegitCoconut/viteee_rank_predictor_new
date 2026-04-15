@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -23,6 +23,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Card, CardContent } from '@/components/ui/card';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { Info, User, BookOpen, ShieldCheck, ArrowRight, Clock, HelpCircle, Server } from 'lucide-react';
+import type { PredefinedMockTestSummary } from '@/lib/types';
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -40,6 +41,45 @@ const FormSchema = z.object({
 export default function MockTestSetupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const rawMode = searchParams.get('mode');
+  const rawId = searchParams.get('id');
+  const mode: 'random' | 'predefined' = rawMode === 'predefined' ? 'predefined' : 'random';
+  const predefinedId = useMemo(() => {
+    if (mode !== 'predefined') return null;
+    const n = Number(rawId);
+    return Number.isInteger(n) && n >= 1 && n <= 5 ? n : null;
+  }, [mode, rawId]);
+
+  const [predefinedName, setPredefinedName] = useState<string | null>(null);
+  const [modeValidated, setModeValidated] = useState(mode === 'random');
+
+  useEffect(() => {
+    if (mode === 'random') {
+      setModeValidated(true);
+      return;
+    }
+    if (!predefinedId) {
+      router.replace('/mocktest');
+      return;
+    }
+    (async () => {
+      try {
+        const res = await fetch('/api/mocktest/predefined');
+        const list: PredefinedMockTestSummary[] = await res.json();
+        const slot = list.find(s => s.id === predefinedId);
+        if (!slot || !slot.active) {
+          router.replace('/mocktest');
+          return;
+        }
+        setPredefinedName(slot.name);
+        setModeValidated(true);
+      } catch {
+        router.replace('/mocktest');
+      }
+    })();
+  }, [mode, predefinedId, router]);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -87,8 +127,14 @@ export default function MockTestSetupPage() {
       headers: { 'Content-Type': 'application/json' },
     }).catch(console.error);
 
-    // Store data in sessionStorage to pass to the next page
-    sessionStorage.setItem('mockTestSetup', JSON.stringify(data));
+    const setupPayload = {
+      ...data,
+      mode,
+      ...(mode === 'predefined' && predefinedId
+        ? { predefinedId, predefinedName: predefinedName ?? `Mock Test ${predefinedId}` }
+        : {}),
+    };
+    sessionStorage.setItem('mockTestSetup', JSON.stringify(setupPayload));
     router.push('/mocktest/start');
   }
 
@@ -99,6 +145,9 @@ export default function MockTestSetupPage() {
         {/* Header Banner */}
         <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-accent/5 border-b">
           <div className="container max-w-4xl mx-auto px-4 py-10 text-center">
+            {mode === 'predefined' && predefinedName && (
+              <p className="text-sm uppercase tracking-wider text-primary font-medium mb-2">{predefinedName}</p>
+            )}
             <h1 className="text-3xl md:text-4xl font-headline font-semibold tracking-tight mb-2">
               Before You Begin
             </h1>
@@ -263,7 +312,7 @@ export default function MockTestSetupPage() {
                         type="submit"
                         size="lg"
                         className="gap-2 px-8 h-12 text-base shadow-lg shadow-primary/20 w-full sm:w-auto"
-                        disabled={isSubmitting || !form.watch('token') || !form.watch('agree') || form.formState.isSubmitting}
+                        disabled={!modeValidated || isSubmitting || !form.watch('token') || !form.watch('agree') || form.formState.isSubmitting}
                       >
                         {isSubmitting ? 'Processing...' : 'Start Mock Test'}
                         {!isSubmitting && <ArrowRight className="h-4 w-4" />}

@@ -34,7 +34,11 @@ export default function MockTestStartPage() {
     async function fetchAndPreload() {
       try {
         setLoadingState('fetching');
-        const response = await fetch('/api/mocktest/questions');
+        const endpoint =
+          setupData.mode === 'predefined' && setupData.predefinedId
+            ? `/api/mocktest/predefined/${setupData.predefinedId}/questions`
+            : '/api/mocktest/questions';
+        const response = await fetch(endpoint);
         if (!response.ok) {
           throw new Error('Failed to fetch questions. Please try again.');
         }
