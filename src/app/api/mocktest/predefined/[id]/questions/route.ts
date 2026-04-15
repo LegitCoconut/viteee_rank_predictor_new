@@ -12,13 +12,13 @@ type PredefinedQuestion = {
     subject: string;
 };
 
-function shuffle<T>(arr: T[]): T[] {
-    const copy = arr.slice();
-    for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-    }
-    return copy;
+const SUBJECT_ORDER = ['maths', 'physics', 'chemistry', 'apt_eng'];
+
+function orderBySubject<T extends { subject: string }>(arr: T[]): T[] {
+    const rank = new Map(SUBJECT_ORDER.map((s, i) => [s, i]));
+    return arr
+        .slice()
+        .sort((a, b) => (rank.get(a.subject) ?? 99) - (rank.get(b.subject) ?? 99));
 }
 
 async function loadQuestionsFromMongo(id: number): Promise<PredefinedQuestion[]> {
@@ -120,8 +120,8 @@ export async function GET(
             }
         }
 
-        const shuffled = shuffle(pool);
-        const response = shuffled.map(q => ({
+        const ordered = orderBySubject(pool);
+        const response = ordered.map(q => ({
             _id: q._id,
             image_id: q.image_id,
             correct_option: q.correct_option,
