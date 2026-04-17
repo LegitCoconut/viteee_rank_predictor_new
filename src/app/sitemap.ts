@@ -26,6 +26,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'monthly' as const,
             priority: 0.5,
         },
+        {
+            path: '/terms',
+            changeFrequency: 'yearly' as const,
+            priority: 0.3,
+        },
     ]
 
     return baseUrls.flatMap(baseUrl =>
