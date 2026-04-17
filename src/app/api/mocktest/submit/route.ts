@@ -32,13 +32,40 @@ async function pushToLeaderboard(body: any) {
         // Sub-second tiebreaker so two equal scores don't overwrite each other.
         const tieBreaker = Date.now() % 1000 / 1e6;
         const newScore = percentage + tieBreaker;
+        const normalizedName = name.toLowerCase();
+
+        // Look for existing entries from the same student (case-insensitive name match).
+        // Members are stored as raw JSON strings.
+        const allMembers = await redis.zrange<string[]>(LEADERBOARD_KEY, 0, -1, { withScores: true });
+        let bestExistingScore = -Infinity;
+        const sameNameMembers: string[] = [];
+        // Format: [member, score, member, score, ...]
+        for (let i = 0; i < allMembers.length; i += 2) {
+            const memberStr = allMembers[i];
+            const existingScore = Number(allMembers[i + 1]);
+            try {
+                const parsed = typeof memberStr === 'string' ? JSON.parse(memberStr) : memberStr;
+                if (parsed?.name && String(parsed.name).toLowerCase() === normalizedName) {
+                    sameNameMembers.push(memberStr);
+                    if (Number.isFinite(existingScore) && existingScore > bestExistingScore) {
+                        bestExistingScore = existingScore;
+                    }
+                }
+            } catch {
+                // skip unparseable members
+            }
+        }
+
+        if (sameNameMembers.length > 0) {
+            // This student is already on the board. Replace only if the new score is strictly better.
+            if (newScore <= bestExistingScore) return;
+            await redis.zrem(LEADERBOARD_KEY, ...sameNameMembers);
+        }
 
         // Only write if this score can make it into the top 10.
-        // If the board already has 10 entries, compare against the current lowest.
         const size = await redis.zcard(LEADERBOARD_KEY);
         if (size >= LEADERBOARD_MAX_ENTRIES) {
             const lowest = await redis.zrange<string[]>(LEADERBOARD_KEY, 0, 0, { withScores: true });
-            // @upstash/redis returns [member, score, member, score, ...] when withScores=true
             const lowestScore = Number(lowest?.[1]);
             if (Number.isFinite(lowestScore) && newScore <= lowestScore) {
                 return;
@@ -46,7 +73,6 @@ async function pushToLeaderboard(body: any) {
         }
 
         await redis.zadd(LEADERBOARD_KEY, { score: newScore, member: JSON.stringify(entry) });
-        // Trim back to the top 10 — evicts the lowest that just got bumped out.
         await redis.zremrangebyrank(LEADERBOARD_KEY, 0, -LEADERBOARD_MAX_ENTRIES - 1);
     } catch (err) {
         console.error('Failed to push leaderboard entry:', err);
