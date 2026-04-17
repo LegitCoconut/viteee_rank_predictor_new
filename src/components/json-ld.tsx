@@ -5,7 +5,7 @@ export function WebsiteJsonLd() {
     name: 'VIT RANKS',
     url: 'https://ranks.vhome.co.in',
     description:
-      'Predict your VITEEE 2026 rank, take free mock tests, view syllabus, exam pattern & cutoff. No signup required.',
+      'Free, full-length VITEEE 2026 mock tests with instant analytics and a live leaderboard. No signup required.',
     potentialAction: {
       '@type': 'SearchAction',
       target: 'https://ranks.vhome.co.in/?q={search_term_string}',
@@ -20,7 +20,7 @@ export function WebsiteJsonLd() {
     url: 'https://ranks.vhome.co.in',
     logo: 'https://ranks.vhome.co.in/logo.png',
     description:
-      'Free VITEEE rank predictor, mock tests, and exam preparation resources for VIT entrance exam 2026.',
+      'Free VITEEE mock tests, syllabus, and exam preparation resources for VIT entrance exam 2026.',
   };
 
   return (
@@ -52,10 +52,10 @@ export function FAQJsonLd() {
       },
       {
         '@type': 'Question',
-        name: 'How can I predict my VITEEE rank?',
+        name: 'How many mock tests can I take on VIT RANKS?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'You can predict your VITEEE rank using VIT RANKS free rank predictor tool. Enter your expected VITEEE score, and the tool estimates your rank based on historical data and trends.',
+          text: 'You can take unlimited VITEEE mock tests on VIT RANKS. Choose from curated papers or generate a fresh randomised 125-question test anytime. Every attempt comes with instant analytics and a live leaderboard.',
         },
       },
       {

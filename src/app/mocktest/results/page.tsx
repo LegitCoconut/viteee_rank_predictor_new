@@ -1,155 +1,496 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { motion, useSpring, useTransform } from 'framer-motion';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Award, CheckCircle, XCircle, BookOpen, BarChart2 } from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
+import {
+  Award,
+  CheckCircle2,
+  XCircle,
+  BookOpen,
+  BarChart2,
+  Eye,
+  EyeOff,
+  BookmarkCheck,
+  Check,
+  ArrowRight,
+  RotateCcw,
+  Sparkles,
+} from 'lucide-react';
 
-const subjectNames: { [key: string]: string } = {
-    maths: 'Mathematics',
-    physics: 'Physics',
-    chemistry: 'Chemistry',
-    apt_eng: 'Aptitude & English'
+const subjectNames: Record<string, string> = {
+  maths: 'Mathematics',
+  physics: 'Physics',
+  chemistry: 'Chemistry',
+  apt_eng: 'Aptitude & English',
 };
 
+const subjectAccent: Record<string, string> = {
+  maths: 'from-coral to-peach',
+  physics: 'from-mint to-sky',
+  chemistry: 'from-lavender to-coral',
+  apt_eng: 'from-sky to-mint',
+};
+
+interface ResultData {
+  userId: string;
+  score: number;
+  totalQuestions: number;
+  answers?: Array<{ visited?: boolean; status?: string }>;
+  sectionScores?: Record<string, { score: number; total: number }>;
+  mode?: 'random' | 'predefined';
+  predefinedName?: string;
+}
+
+function grade(pct: number) {
+  if (pct >= 85) return { label: 'Incredible', tone: 'Top-tier performance.' };
+  if (pct >= 70) return { label: 'Strong', tone: 'Keep this momentum.' };
+  if (pct >= 55) return { label: 'Solid base', tone: 'Fix the gaps and you\u2019re there.' };
+  if (pct >= 40) return { label: 'Getting there', tone: 'One more pass through weak topics.' };
+  return { label: 'Good start', tone: 'Every topper started somewhere.' };
+}
+
 export default function MockTestResultPage() {
-    const router = useRouter();
-    const [result, setResult] = useState<any>(null);
+  const router = useRouter();
+  const [result, setResult] = useState<ResultData | null>(null);
 
-    useEffect(() => {
-        const resultData = sessionStorage.getItem('latestResult');
-        if (!resultData) {
-            router.replace('/mocktest');
-        } else {
-            setResult(JSON.parse(resultData));
-            // Do not clear session storage so user can refresh the page
-        }
-    }, [router]);
-
-    if (!result) {
-        return (
-            <div className="flex flex-col min-h-dvh">
-                <Header />
-                <main className="flex-1 flex items-center justify-center">
-                    <p>Loading results...</p>
-                </main>
-                <Footer />
-            </div>
-        );
+  useEffect(() => {
+    const resultData = sessionStorage.getItem('latestResult');
+    if (!resultData) {
+      router.replace('/mocktest');
+    } else {
+      setResult(JSON.parse(resultData));
     }
+  }, [router]);
 
-    const percentage = result.totalQuestions > 0 ? (result.score / result.totalQuestions) * 100 : 0;
-    const incorrectAnswers = result.totalQuestions - result.score;
+  const percentage = useMemo(() => {
+    if (!result) return 0;
+    return result.totalQuestions > 0
+      ? (result.score / result.totalQuestions) * 100
+      : 0;
+  }, [result]);
 
+  if (!result) {
     return (
-        <div className="flex flex-col min-h-dvh">
-            <Header />
-            <main className="flex-1 py-12">
-                <div className="container max-w-4xl mx-auto">
-                    <Card>
-                        <CardHeader className="text-center">
-                            <Award className="h-16 w-16 mx-auto text-yellow-500" />
-                            <CardTitle className="text-3xl font-headline mt-4">Test Completed!</CardTitle>
-                            <CardDescription>Well done, {result.userId}! Here are your results.</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-6">
-                            <div className="text-center space-y-2">
-                                <p className="text-5xl font-bold">{result.score}<span className="text-2xl text-muted-foreground">/{result.totalQuestions}</span></p>
-                                <p className="text-lg font-medium">Your Score</p>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Progress value={percentage} className="w-full" />
-                                <p className="text-center text-muted-foreground">{percentage.toFixed(2)}% Correct</p>
-                            </div>
-
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
-                                <Card className="p-4 bg-green-100 dark:bg-green-900/50">
-                                    <div className="flex items-center justify-center gap-2">
-                                        <CheckCircle className="h-6 w-6 text-green-600" />
-                                        <p className="text-2xl font-bold">{result.score}</p>
-                                    </div>
-                                    <p className="text-sm text-muted-foreground">Correct</p>
-                                </Card>
-                                <Card className="p-4 bg-red-100 dark:bg-red-900/50">
-                                    <div className="flex items-center justify-center gap-2">
-                                        <XCircle className="h-6 w-6 text-red-600" />
-                                        <p className="text-2xl font-bold">{incorrectAnswers}</p>
-                                    </div>
-                                    <p className="text-sm text-muted-foreground">Incorrect</p>
-                                </Card>
-                                <Card className="p-4 bg-blue-100 dark:bg-blue-900/50">
-                                    <div className="flex items-center justify-center gap-2">
-                                        <BookOpen className="h-6 w-6 text-blue-600" />
-                                        <p className="text-2xl font-bold">{result.answers?.filter((a: any) => a.visited).length || 0}</p>
-                                    </div>
-                                    <p className="text-sm text-muted-foreground">Visited</p>
-                                </Card>
-                                <Card className="p-4 bg-gray-100 dark:bg-gray-800">
-                                    <div className="flex items-center justify-center gap-2">
-                                        <p className="text-2xl font-bold">{result.answers?.filter((a: any) => !a.visited).length || 0}</p>
-                                    </div>
-                                    <p className="text-sm text-muted-foreground">Not Visited</p>
-                                </Card>
-                                <Card className="p-4 bg-yellow-100 dark:bg-yellow-900/50">
-                                    <div className="flex items-center justify-center gap-2">
-                                        <p className="text-2xl font-bold">{result.answers?.filter((a: any) => a.status === 'marked').length || 0}</p>
-                                    </div>
-                                    <p className="text-sm text-muted-foreground">Marked</p>
-                                </Card>
-                                <Card className="p-4 bg-purple-100 dark:bg-purple-900/50">
-                                    <div className="flex items-center justify-center gap-2">
-                                        <p className="text-2xl font-bold">{result.answers?.filter((a: any) => a.status === 'answered').length || 0}</p>
-                                    </div>
-                                    <p className="text-sm text-muted-foreground">Attempted</p>
-                                </Card>
-                            </div>
-
-                            {result.sectionScores && (
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle className="flex items-center gap-2 text-xl"><BarChart2 className="h-5 w-5" />Section-wise Performance</CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="space-y-4">
-                                            {Object.entries(result.sectionScores).map(([subject, scores]: [string, any]) => (
-                                                scores.total > 0 && (
-                                                    <div key={subject} className="flex justify-between items-center">
-                                                        <p className="font-medium">{subjectNames[subject] || subject}</p>
-                                                        <div className="flex items-center gap-4">
-                                                            <p className="font-semibold">{scores.score} / {scores.total}</p>
-                                                            <Progress value={(scores.score / scores.total) * 100} className="w-32" />
-                                                        </div>
-                                                    </div>
-                                                )
-                                            ))}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            )}
-
-                            <div className="flex flex-wrap justify-center gap-3 pt-4">
-                                <Button asChild>
-                                    <Link href="/mocktest">Take Another Test</Link>
-                                </Button>
-                                <Button variant="outline" asChild>
-                                    <Link href="/mocktest/results/detailed">View Detailed Results</Link>
-                                </Button>
-                                <Button variant="outline" asChild>
-                                    <Link href="/mocktest#past-results">View All Results</Link>
-                                </Button>
-                            </div>
-
-                        </CardContent>
-                    </Card>
-                </div>
-            </main>
-            <Footer />
-        </div>
+      <div className="flex min-h-dvh flex-col">
+        <Header />
+        <main className="flex flex-1 items-center justify-center">
+          <p className="text-muted-foreground">Loading results\u2026</p>
+        </main>
+        <Footer />
+      </div>
     );
+  }
+
+  const incorrectAnswers = result.totalQuestions - result.score;
+  const visitedCount = result.answers?.filter((a) => a.visited).length || 0;
+  const notVisitedCount = result.answers?.filter((a) => !a.visited).length || 0;
+  const markedCount =
+    result.answers?.filter((a) => a.status === 'marked').length || 0;
+  const attemptedCount =
+    result.answers?.filter((a) => a.status === 'answered').length || 0;
+
+  const gradeInfo = grade(percentage);
+  const title =
+    result.mode === 'predefined' && result.predefinedName
+      ? result.predefinedName
+      : 'Random mock test';
+
+  const tiles = [
+    {
+      icon: CheckCircle2,
+      value: result.score,
+      label: 'Correct',
+      color: 'text-mint',
+      ring: 'ring-mint/30',
+      glow: 'bg-mint/10',
+    },
+    {
+      icon: XCircle,
+      value: incorrectAnswers,
+      label: 'Incorrect',
+      color: 'text-coral',
+      ring: 'ring-coral/30',
+      glow: 'bg-coral/10',
+    },
+    {
+      icon: Check,
+      value: attemptedCount,
+      label: 'Attempted',
+      color: 'text-sky',
+      ring: 'ring-sky/30',
+      glow: 'bg-sky/10',
+    },
+    {
+      icon: BookmarkCheck,
+      value: markedCount,
+      label: 'Marked',
+      color: 'text-lavender',
+      ring: 'ring-lavender/30',
+      glow: 'bg-lavender/10',
+    },
+    {
+      icon: Eye,
+      value: visitedCount,
+      label: 'Visited',
+      color: 'text-peach',
+      ring: 'ring-peach/30',
+      glow: 'bg-peach/10',
+    },
+    {
+      icon: EyeOff,
+      value: notVisitedCount,
+      label: 'Skipped',
+      color: 'text-muted-foreground',
+      ring: 'ring-border',
+      glow: 'bg-muted/40',
+    },
+  ];
+
+  return (
+    <div className="flex min-h-dvh flex-col bg-background">
+      <Header />
+      <main className="flex-1">
+        {/* Hero banner */}
+        <section className="relative isolate overflow-hidden hero-mesh py-20 md:py-24">
+          <div className="pointer-events-none absolute inset-0">
+            <div
+              className="absolute -top-24 left-1/4 h-[26rem] w-[26rem] rounded-full blur-3xl animate-blob-slow"
+              style={{ background: 'radial-gradient(circle, hsl(var(--coral) / 0.5), transparent 60%)' }}
+            />
+            <div
+              className="absolute bottom-0 right-1/4 h-[24rem] w-[24rem] rounded-full blur-3xl animate-blob"
+              style={{ background: 'radial-gradient(circle, hsl(var(--mint) / 0.4), transparent 60%)' }}
+            />
+          </div>
+          <div className="pointer-events-none absolute inset-0 bg-grid opacity-20 reveal-mask" />
+          <div className="pointer-events-none absolute inset-0 bg-noise mix-blend-overlay" />
+
+          <div className="container relative z-10 mx-auto max-w-4xl px-4 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 16, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/85 backdrop-blur-md"
+            >
+              <Award className="h-3.5 w-3.5 text-coral" />
+              Test complete · {title}
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="text-[clamp(2.25rem,6vw,4.5rem)] font-semibold leading-[0.95] tracking-tighter text-white"
+            >
+              Well done,{' '}
+              <span className="font-display italic gradient-text">
+                {result.userId}
+              </span>
+              .
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="mx-auto mt-4 max-w-xl text-base text-white/70 md:text-lg"
+            >
+              Here\u2019s how your attempt broke down. Take a breath, then go
+              fix what slipped.
+            </motion.p>
+          </div>
+        </section>
+
+        {/* Score orb + grade */}
+        <section className="container mx-auto -mt-16 max-w-5xl px-4 md:-mt-20">
+          <motion.div
+            initial={{ opacity: 0, y: 24, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="shimmer-border relative mx-auto max-w-3xl rounded-3xl"
+          >
+            <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/90 p-6 shadow-2xl backdrop-blur-xl md:p-10">
+              <div className="pointer-events-none absolute inset-0 bg-grid-fine opacity-[0.12]" />
+              <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-gradient-to-br from-coral/20 to-peach/20 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-gradient-to-br from-mint/20 to-sky/20 blur-3xl" />
+
+              <div className="relative z-10 flex flex-col items-center gap-8 md:flex-row md:items-center md:gap-12">
+                <ScoreOrb score={result.score} total={result.totalQuestions} percentage={percentage} />
+
+                <div className="flex-1 text-center md:text-left">
+                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-coral">
+                    {gradeInfo.label}
+                  </p>
+                  <h2 className="mt-2 text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
+                    You answered{' '}
+                    <span className="font-display italic text-coral">
+                      {result.score}
+                    </span>{' '}
+                    of{' '}
+                    <span className="font-display italic">
+                      {result.totalQuestions}
+                    </span>{' '}
+                    correctly.
+                  </h2>
+                  <p className="mt-3 text-base text-muted-foreground">
+                    {gradeInfo.tone}
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap justify-center gap-2 md:justify-start">
+                    <Button
+                      asChild
+                      className="shimmer-border group h-11 gap-2 rounded-full bg-gradient-to-r from-coral to-peach px-6 text-sm font-semibold text-plum-deep shadow-lg shadow-coral/25 hover:from-coral hover:to-peach"
+                    >
+                      <Link href="/mocktest/results/detailed">
+                        Review every question
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </Link>
+                    </Button>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="h-11 gap-2 rounded-full border-border/70"
+                    >
+                      <Link href="/mocktest">
+                        <RotateCcw className="h-4 w-4" />
+                        Take another
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* Breakdown tiles */}
+        <section className="container mx-auto mt-14 max-w-5xl px-4">
+          <div className="mb-6 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-coral/20 to-peach/20">
+              <Sparkles className="h-5 w-5 text-coral" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-semibold tracking-tight">
+                The breakdown
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Six slices of the attempt.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+            {tiles.map((t, i) => (
+              <motion.div
+                key={t.label}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 + i * 0.04 }}
+                className={`group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 shadow-sm transition-shadow hover:shadow-md ring-1 ${t.ring}`}
+              >
+                <div
+                  className={`pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full ${t.glow} blur-2xl opacity-60 transition-opacity group-hover:opacity-100`}
+                />
+                <div className="relative z-10 flex items-center justify-between">
+                  <div>
+                    <p className="font-display text-5xl italic leading-none">
+                      {t.value}
+                    </p>
+                    <p className="mt-2 text-xs uppercase tracking-widest text-muted-foreground">
+                      {t.label}
+                    </p>
+                  </div>
+                  <div
+                    className={`flex h-11 w-11 items-center justify-center rounded-xl bg-background shadow-sm ${t.color}`}
+                  >
+                    <t.icon className="h-5 w-5" />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Section-wise performance */}
+        {result.sectionScores && (
+          <section className="container mx-auto mt-14 max-w-5xl px-4">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-mint/20 to-sky/20">
+                <BarChart2 className="h-5 w-5 text-mint" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-semibold tracking-tight">
+                  Subject-wise performance
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Where you shone, where you stumbled.
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-border/60 bg-card p-6 shadow-sm md:p-8">
+              <div className="space-y-6">
+                {Object.entries(result.sectionScores).map(
+                  ([subject, scores], i) => {
+                    if (!scores || scores.total <= 0) return null;
+                    const pct = (scores.score / scores.total) * 100;
+                    const gradient =
+                      subjectAccent[subject] ?? 'from-coral to-peach';
+                    return (
+                      <motion.div
+                        key={subject}
+                        initial={{ opacity: 0, x: -16 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: i * 0.06 }}
+                      >
+                        <div className="mb-2 flex items-baseline justify-between">
+                          <p className="text-sm font-semibold tracking-tight">
+                            {subjectNames[subject] || subject}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            <span className="font-display text-lg italic text-foreground">
+                              {scores.score}
+                            </span>{' '}
+                            / {scores.total}{' '}
+                            <span className="ml-2 text-xs uppercase tracking-widest">
+                              {pct.toFixed(0)}%
+                            </span>
+                          </p>
+                        </div>
+                        <div className="relative h-2 overflow-hidden rounded-full bg-muted">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${pct}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.9, delay: i * 0.06, ease: 'easeOut' }}
+                            className={`absolute inset-y-0 left-0 rounded-full bg-gradient-to-r ${gradient}`}
+                          />
+                        </div>
+                      </motion.div>
+                    );
+                  }
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Footer actions */}
+        <section className="container mx-auto mt-14 max-w-5xl px-4 pb-20">
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Button
+              asChild
+              className="h-11 gap-2 rounded-full bg-foreground px-6 text-background hover:bg-foreground/90"
+            >
+              <Link href="/mocktest">
+                <RotateCcw className="h-4 w-4" />
+                Take another test
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="h-11 gap-2 rounded-full border-border/70"
+            >
+              <Link href="/mocktest/results/detailed">
+                <BookOpen className="h-4 w-4" />
+                Detailed review
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="ghost"
+              className="h-11 gap-2 rounded-full"
+            >
+              <Link href="/mocktest#past-results">
+                All past attempts
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+function ScoreOrb({
+  score,
+  total,
+  percentage,
+}: {
+  score: number;
+  total: number;
+  percentage: number;
+}) {
+  const spring = useSpring(0, { stiffness: 40, damping: 18 });
+  useEffect(() => {
+    spring.set(percentage);
+  }, [spring, percentage]);
+
+  const pctDisplay = useTransform(spring, (v) => `${Math.round(v)}%`);
+  const scoreSpring = useSpring(0, { stiffness: 40, damping: 18 });
+  useEffect(() => {
+    scoreSpring.set(score);
+  }, [scoreSpring, score]);
+  const scoreDisplay = useTransform(scoreSpring, (v) => Math.round(v).toString());
+
+  // SVG ring geometry
+  const size = 220;
+  const stroke = 14;
+  const radius = (size - stroke) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const dashOffset = useTransform(spring, (v) => circumference * (1 - v / 100));
+
+  return (
+    <div className="relative flex h-[220px] w-[220px] items-center justify-center">
+      <svg width={size} height={size} className="-rotate-90">
+        <defs>
+          <linearGradient id="orbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="hsl(var(--coral))" />
+            <stop offset="50%" stopColor="hsl(var(--peach))" />
+            <stop offset="100%" stopColor="hsl(var(--mint))" />
+          </linearGradient>
+        </defs>
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke="hsl(var(--border))"
+          strokeWidth={stroke}
+          opacity={0.4}
+        />
+        <motion.circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke="url(#orbGrad)"
+          strokeWidth={stroke}
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          style={{ strokeDashoffset: dashOffset }}
+        />
+      </svg>
+
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <motion.span className="font-display text-6xl italic leading-none text-foreground">
+          {scoreDisplay}
+        </motion.span>
+        <span className="mt-1 text-xs uppercase tracking-[0.25em] text-muted-foreground">
+          of {total}
+        </span>
+        <motion.span className="mt-3 rounded-full bg-muted px-3 py-0.5 text-xs font-semibold text-foreground">
+          {pctDisplay}
+        </motion.span>
+      </div>
+    </div>
+  );
 }

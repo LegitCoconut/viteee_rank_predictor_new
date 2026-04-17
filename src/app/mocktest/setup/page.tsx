@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
@@ -20,9 +21,20 @@ import {
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Card, CardContent } from '@/components/ui/card';
 import { Turnstile } from '@marsidev/react-turnstile';
-import { Info, User, BookOpen, ShieldCheck, ArrowRight, Clock, HelpCircle, Server } from 'lucide-react';
+import {
+  Info,
+  User,
+  BookOpen,
+  ShieldCheck,
+  ArrowRight,
+  Clock,
+  HelpCircle,
+  Server,
+  Sparkles,
+  Mail,
+  ChevronRight,
+} from 'lucide-react';
 import type { PredefinedMockTestSummary } from '@/lib/types';
 
 const FormSchema = z
@@ -94,7 +106,7 @@ export default function MockTestSetupPage() {
       try {
         const res = await fetch('/api/mocktest/predefined');
         const list: PredefinedMockTestSummary[] = await res.json();
-        const slot = list.find(s => s.id === predefinedId);
+        const slot = list.find((s) => s.id === predefinedId);
         if (!slot || !slot.active) {
           router.replace('/mocktest');
           return;
@@ -122,34 +134,39 @@ export default function MockTestSetupPage() {
   const instructions = [
     {
       icon: HelpCircle,
-      text: 'You will be loaded with 125 questions based on the weightage from previous question papers.',
+      title: '125 questions, VITEEE-weighted',
+      text: 'The question set mirrors the actual VITEEE paper weightage — Physics, Chemistry, Mathematics, Aptitude & English.',
     },
     {
       icon: Clock,
-      text: 'Please wait till all 125 questions are loaded and the test is created.',
+      title: 'Wait for the full load',
+      text: 'Please wait until all 125 questions finish loading and the test is fully created before you start.',
     },
     {
       icon: User,
-      text: 'A unique ID will be created and saved in your browser to store and retrieve your exam data.',
+      title: 'Anonymous, browser-local',
+      text: 'A unique ID is created in your browser to save progress and results. No signup, nothing on our servers tied to you.',
     },
     {
       icon: Info,
-      text: 'Clearing your browser cache will remove all stored data about tests taken.',
+      title: 'Don\u2019t clear your browser',
+      text: 'Clearing cache or switching browsers will wipe your local test history and results.',
     },
     {
       icon: ShieldCheck,
-      text: 'You will need to complete a verification step to prevent bot access.',
+      title: 'One quick human check',
+      text: 'You\u2019ll complete a Cloudflare Turnstile verification to prevent bot abuse — it\u2019s invisible to you most of the time.',
     },
     {
       icon: Server,
-      text: 'This platform runs on free-tier servers to keep it ad-free. The test may take a moment to load.',
+      title: 'Free-tier infrastructure',
+      text: 'This platform runs on free-tier servers to stay ad-free. First load may take a few extra seconds — thank you for your patience.',
     },
   ];
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsSubmitting(true);
 
-    // Fire-and-forget analytics tracking
     fetch('/api/analytics/mocktest-count', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -164,7 +181,9 @@ export default function MockTestSetupPage() {
           name: data.name,
           source: 'mocktest-setup',
         }),
-      }).catch(() => { /* silent */ });
+      }).catch(() => {
+        /* silent */
+      });
       try {
         localStorage.setItem('mockTestSubscribed', 'true');
       } catch {
@@ -184,243 +203,372 @@ export default function MockTestSetupPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-dvh bg-background">
+    <div className="flex min-h-dvh flex-col bg-background">
       <Header />
       <main className="flex-1">
-        {/* Header Banner */}
-        <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-accent/5 border-b">
-          <div className="container max-w-4xl mx-auto px-4 py-10 text-center">
-            {mode === 'predefined' && predefinedName && (
-              <p className="text-sm uppercase tracking-wider text-primary font-medium mb-2">{predefinedName}</p>
-            )}
-            <h1 className="text-3xl md:text-4xl font-headline font-semibold tracking-tight mb-2">
-              Before You Begin
-            </h1>
-            <p className="text-muted-foreground text-base max-w-xl mx-auto">
-              Review the instructions below, fill in your details, and start your mock test.
-            </p>
+        {/* Banner */}
+        <section className="relative isolate overflow-hidden hero-mesh py-20 md:py-28">
+          <div className="pointer-events-none absolute inset-0">
+            <div
+              className="absolute -top-24 left-1/4 h-[28rem] w-[28rem] rounded-full blur-3xl animate-blob-slow"
+              style={{ background: 'radial-gradient(circle, hsl(var(--coral) / 0.5), transparent 60%)' }}
+            />
+            <div
+              className="absolute bottom-0 right-1/4 h-[26rem] w-[26rem] rounded-full blur-3xl animate-blob"
+              style={{ background: 'radial-gradient(circle, hsl(var(--mint) / 0.4), transparent 60%)' }}
+            />
           </div>
-        </div>
+          <div className="pointer-events-none absolute inset-0 bg-grid opacity-20 reveal-mask" />
+          <div className="pointer-events-none absolute inset-0 bg-noise mix-blend-overlay" />
 
-        <div className="container max-w-4xl mx-auto px-4 py-10 space-y-8">
+          <div className="container relative z-10 mx-auto max-w-4xl px-4 text-center">
+            {/* Breadcrumb */}
+            <div className="mb-6 flex items-center justify-center gap-2 text-xs text-white/55">
+              <Link href="/mocktest" className="transition hover:text-white/80">
+                Mock tests
+              </Link>
+              <ChevronRight className="h-3 w-3" />
+              <span className="text-white/80">
+                {mode === 'predefined' && predefinedName ? predefinedName : 'Random mock'}
+              </span>
+            </div>
+
+            {mode === 'predefined' && predefinedName && (
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-coral"
+              >
+                {predefinedName}
+              </motion.p>
+            )}
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.05 }}
+              className="text-[clamp(2.25rem,6vw,4.5rem)] font-semibold leading-[0.95] tracking-tighter text-white"
+            >
+              Before you{' '}
+              <span className="font-display italic gradient-text">begin</span>.
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+              className="mx-auto mt-5 max-w-xl text-base text-white/70 md:text-lg"
+            >
+              Read the house rules, fill in a couple of details, and you\u2019re
+              ready to sit down with 125 questions and a 2.5-hour clock.
+            </motion.p>
+          </div>
+        </section>
+
+        <div className="container mx-auto max-w-4xl space-y-12 px-4 py-14 md:py-20">
           {/* Instructions */}
-          <div>
-            <div className="flex items-center gap-2 mb-5">
-              <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-primary/10">
-                <Info className="h-4 w-4 text-primary" />
+          <section>
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-coral/20 to-peach/20">
+                <Info className="h-5 w-5 text-coral" />
               </div>
-              <h2 className="text-xl font-semibold font-headline">Instructions</h2>
+              <div>
+                <h2 className="text-2xl font-semibold tracking-tight">
+                  Instructions
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Six quick things worth knowing.
+                </p>
+              </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
               {instructions.map((item, index) => (
-                <Card key={index} className="border-border/50">
-                  <CardContent className="flex items-start gap-3 p-4">
-                    <div className="flex items-center justify-center h-8 w-8 rounded-md bg-secondary flex-shrink-0 mt-0.5">
-                      <item.icon className="h-4 w-4 text-muted-foreground" />
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.5, delay: index * 0.04 }}
+                  className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-4 transition-shadow hover:shadow-md"
+                >
+                  <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br from-coral/10 to-peach/10 opacity-0 blur-2xl transition-opacity group-hover:opacity-100" />
+                  <div className="flex items-start gap-3">
+                    <div className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-muted">
+                      <item.icon className="h-4 w-4 text-coral" />
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
-                  </CardContent>
-                </Card>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold tracking-tight">
+                        {item.title}
+                      </p>
+                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                        {item.text}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
               ))}
             </div>
 
-            {/* Extra notes */}
-            <div className="mt-4 rounded-lg border border-border/50 bg-muted/30 p-4 text-sm text-muted-foreground space-y-2">
-              <p>
-                If you find any issues with the test, questions, or technical problems, feel free to reach out at{' '}
-                <a href="mailto:vitranks@malabarmatrix.site" className="text-primary underline underline-offset-2 hover:text-primary/80">
-                  vitranks@malabarmatrix.site
-                </a>{' '}
-                or through the{' '}
-                <Link href="/#feedback" className="text-primary underline underline-offset-2 hover:text-primary/80">
-                  feedback form
-                </Link>.
-              </p>
-              <p>
-                This platform is built by VIT students for VITEEE aspirants. Please use it responsibly and help your friends grow with you.
+            <div className="mt-5 rounded-2xl border border-border/60 bg-muted/30 p-5 text-sm text-muted-foreground">
+              <p className="flex items-start gap-2">
+                <Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-coral" />
+                <span>
+                  Broken question, a bug, or a feature idea? Write to{' '}
+                  <a
+                    href="mailto:vitranks@malabarmatrix.site"
+                    className="font-medium text-foreground underline underline-offset-4 hover:text-coral"
+                  >
+                    vitranks@malabarmatrix.site
+                  </a>{' '}
+                  or use the{' '}
+                  <Link
+                    href="/#feedback"
+                    className="font-medium text-foreground underline underline-offset-4 hover:text-coral"
+                  >
+                    feedback form
+                  </Link>
+                  . Built by VIT students, for VITEEE aspirants — please use it
+                  responsibly.
+                </span>
               </p>
             </div>
-          </div>
+          </section>
 
-          {/* Form */}
-          <div>
-            <div className="flex items-center gap-2 mb-5">
-              <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-primary/10">
-                <User className="h-4 w-4 text-primary" />
+          {/* Your Details */}
+          <section>
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-mint/20 to-sky/20">
+                <User className="h-5 w-5 text-mint" />
               </div>
-              <h2 className="text-xl font-semibold font-headline">Your Details</h2>
+              <div>
+                <h2 className="text-2xl font-semibold tracking-tight">
+                  Your details
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Just a name and a stream — that\u2019s it.
+                </p>
+              </div>
             </div>
 
-            <Card className="border-border/50">
-              <CardContent className="p-6">
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-sm font-medium">Full Name</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Enter your full name" className="h-11" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="stream"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-sm font-medium">Select Stream</FormLabel>
-                          <FormControl>
-                            <RadioGroup
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                              className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1"
-                            >
-                              <FormItem className="flex items-center space-x-0 space-y-0">
-                                <label className="flex items-center gap-3 w-full cursor-pointer rounded-lg border p-4 transition-colors hover:bg-muted/50 has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary/5">
-                                  <FormControl>
-                                    <RadioGroupItem value="MPCEA" />
-                                  </FormControl>
-                                  <div>
-                                    <p className="font-medium text-sm">MPCEA</p>
-                                    <p className="text-xs text-muted-foreground">Maths, Physics, Chemistry, English, Aptitude</p>
-                                  </div>
-                                </label>
-                              </FormItem>
-                              <FormItem className="flex items-center space-x-0 space-y-0">
-                                <label className="flex items-center gap-3 w-full rounded-lg border p-4 opacity-50 cursor-not-allowed">
-                                  <FormControl>
-                                    <RadioGroupItem value="BPCEA" disabled />
-                                  </FormControl>
-                                  <div>
-                                    <p className="font-medium text-sm">BPCEA</p>
-                                    <p className="text-xs text-muted-foreground">Biology stream &middot; Coming Soon</p>
-                                  </div>
-                                </label>
-                              </FormItem>
-                            </RadioGroup>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="agree"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-lg border border-border/50 bg-muted/30 p-4">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                              className="mt-0.5"
-                            />
-                          </FormControl>
-                          <div className="space-y-1 leading-none">
-                            <FormLabel className="text-sm cursor-pointer">
-                              I have read and agree to the instructions above.
-                            </FormLabel>
-                            <FormMessage />
-                          </div>
-                        </FormItem>
-                      )}
-                    />
-
-                    {!alreadySubscribed && (
-                      <>
-                        <FormField
-                          control={form.control}
-                          name="subscribe"
-                          render={({ field }) => (
-                            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-lg border border-border/50 bg-muted/30 p-4">
-                              <FormControl>
-                                <Checkbox
-                                  checked={field.value}
-                                  onCheckedChange={(checked) => {
-                                    field.onChange(checked);
-                                    if (!checked) {
-                                      form.setValue('subscribeEmail', '');
-                                      form.clearErrors('subscribeEmail');
-                                    }
-                                  }}
-                                  className="mt-0.5"
-                                />
-                              </FormControl>
-                              <div className="space-y-1 leading-none">
-                                <FormLabel className="text-sm cursor-pointer">
-                                  Email me when we publish new mock tests or ship updates{' '}
-                                  <span className="text-muted-foreground font-normal">(optional)</span>
-                                </FormLabel>
-                              </div>
-                            </FormItem>
-                          )}
-                        />
-
-                        {form.watch('subscribe') && (
-                          <FormField
-                            control={form.control}
-                            name="subscribeEmail"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-sm font-medium">Email address</FormLabel>
-                                <FormControl>
-                                  <Input
-                                    type="email"
-                                    placeholder="you@example.com"
-                                    className="h-11"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        )}
-                      </>
-                    )}
-
-                    <div className="flex flex-col items-center gap-5 pt-2">
+            <div className="shimmer-border rounded-3xl">
+              <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/80 p-6 shadow-xl backdrop-blur-xl md:p-8">
+                <div className="pointer-events-none absolute inset-0 bg-grid-fine opacity-[0.12]" />
+                <div className="relative z-10">
+                  <Form {...form}>
+                    <form
+                      onSubmit={form.handleSubmit(onSubmit)}
+                      className="space-y-6"
+                    >
                       <FormField
                         control={form.control}
-                        name="token"
+                        name="name"
                         render={({ field }) => (
                           <FormItem>
+                            <FormLabel className="text-sm font-medium">
+                              Full name
+                            </FormLabel>
                             <FormControl>
-                              <Turnstile
-                                siteKey={
-                                  process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
-                                }
-                                onSuccess={(token) => {
-                                  field.onChange(token);
-                                }}
+                              <Input
+                                placeholder="e.g. Arjun Menon"
+                                className="h-11 rounded-xl"
+                                {...field}
                               />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
-                      <Button
-                        type="submit"
-                        size="lg"
-                        className="gap-2 px-8 h-12 text-base shadow-lg shadow-primary/20 w-full sm:w-auto"
-                        disabled={!modeValidated || isSubmitting || !form.watch('token') || !form.watch('agree') || form.formState.isSubmitting}
-                      >
-                        {isSubmitting ? 'Processing...' : 'Start Mock Test'}
-                        {!isSubmitting && <ArrowRight className="h-4 w-4" />}
-                      </Button>
-                    </div>
-                  </form>
-                </Form>
-              </CardContent>
-            </Card>
-          </div>
+
+                      <FormField
+                        control={form.control}
+                        name="stream"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-sm font-medium">
+                              Stream
+                            </FormLabel>
+                            <FormControl>
+                              <RadioGroup
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                                className="grid grid-cols-1 gap-3 pt-1 sm:grid-cols-2"
+                              >
+                                <FormItem className="flex items-center space-x-0 space-y-0">
+                                  <label className="group/option flex w-full cursor-pointer items-center gap-3 rounded-2xl border border-border/70 p-4 transition-all hover:border-coral/50 hover:bg-coral/5 has-[[data-state=checked]]:border-coral has-[[data-state=checked]]:bg-coral/10 has-[[data-state=checked]]:shadow-sm">
+                                    <FormControl>
+                                      <RadioGroupItem value="MPCEA" />
+                                    </FormControl>
+                                    <div>
+                                      <p className="flex items-center gap-2 text-sm font-semibold tracking-tight">
+                                        MPCEA
+                                        <Sparkles className="h-3 w-3 text-coral opacity-0 transition-opacity group-has-[[data-state=checked]]/option:opacity-100" />
+                                      </p>
+                                      <p className="text-xs text-muted-foreground">
+                                        Maths, Physics, Chemistry, English,
+                                        Aptitude
+                                      </p>
+                                    </div>
+                                  </label>
+                                </FormItem>
+                                <FormItem className="flex items-center space-x-0 space-y-0">
+                                  <label className="flex w-full cursor-not-allowed items-center gap-3 rounded-2xl border border-dashed border-border/70 bg-muted/20 p-4 opacity-60">
+                                    <FormControl>
+                                      <RadioGroupItem value="BPCEA" disabled />
+                                    </FormControl>
+                                    <div>
+                                      <p className="text-sm font-semibold tracking-tight">
+                                        BPCEA
+                                      </p>
+                                      <p className="text-xs text-muted-foreground">
+                                        Biology stream · Coming Soon
+                                      </p>
+                                    </div>
+                                  </label>
+                                </FormItem>
+                              </RadioGroup>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="agree"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-2xl border border-border/60 bg-muted/30 p-4">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                                className="mt-0.5"
+                              />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                              <FormLabel className="cursor-pointer text-sm">
+                                I&apos;ve read and I agree to the instructions
+                                above.
+                              </FormLabel>
+                              <FormMessage />
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+
+                      {!alreadySubscribed && (
+                        <>
+                          <FormField
+                            control={form.control}
+                            name="subscribe"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-2xl border border-coral/30 bg-coral/5 p-4">
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={(checked) => {
+                                      field.onChange(checked);
+                                      if (!checked) {
+                                        form.setValue('subscribeEmail', '');
+                                        form.clearErrors('subscribeEmail');
+                                      }
+                                    }}
+                                    className="mt-0.5"
+                                  />
+                                </FormControl>
+                                <div className="space-y-1 leading-none">
+                                  <FormLabel className="cursor-pointer text-sm">
+                                    <span className="inline-flex items-center gap-1.5 font-semibold">
+                                      <Mail className="h-3.5 w-3.5 text-coral" />
+                                      Email me when new mock tests drop
+                                    </span>{' '}
+                                    <span className="font-normal text-muted-foreground">
+                                      (optional, no spam)
+                                    </span>
+                                  </FormLabel>
+                                </div>
+                              </FormItem>
+                            )}
+                          />
+
+                          {form.watch('subscribe') && (
+                            <FormField
+                              control={form.control}
+                              name="subscribeEmail"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel className="text-sm font-medium">
+                                    Email address
+                                  </FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      type="email"
+                                      placeholder="you@example.com"
+                                      className="h-11 rounded-xl"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          )}
+                        </>
+                      )}
+
+                      <div className="flex flex-col items-center gap-5 pt-2">
+                        <FormField
+                          control={form.control}
+                          name="token"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Turnstile
+                                  siteKey={
+                                    process.env
+                                      .NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
+                                  }
+                                  onSuccess={(token) => {
+                                    field.onChange(token);
+                                  }}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <Button
+                          type="submit"
+                          size="lg"
+                          className="shimmer-border group h-12 w-full gap-2 rounded-full bg-gradient-to-r from-coral to-peach px-8 text-base font-semibold text-plum-deep shadow-lg shadow-coral/20 hover:from-coral hover:to-peach sm:w-auto"
+                          disabled={
+                            !modeValidated ||
+                            isSubmitting ||
+                            !form.watch('token') ||
+                            !form.watch('agree') ||
+                            form.formState.isSubmitting
+                          }
+                        >
+                          {isSubmitting ? (
+                            'Preparing your test\u2026'
+                          ) : (
+                            <>
+                              Start mock test
+                              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            </>
+                          )}
+                        </Button>
+                        <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                          <BookOpen className="h-3 w-3" />
+                          125 questions · 2.5 hours · instant results
+                        </p>
+                      </div>
+                    </form>
+                  </Form>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
       <Footer />

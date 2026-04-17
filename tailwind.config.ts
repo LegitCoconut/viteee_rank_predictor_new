@@ -11,7 +11,8 @@ export default {
     extend: {
       fontFamily: {
         body: ['Inter', 'sans-serif'],
-        headline: ['Space Grotesk', 'sans-serif'],
+        headline: ['"Space Grotesk"', 'sans-serif'],
+        display: ['"Instrument Serif"', '"Space Grotesk"', 'Georgia', 'serif'],
         code: ['monospace'],
       },
       colors: {
@@ -65,6 +66,13 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        plum: 'hsl(var(--plum))',
+        'plum-deep': 'hsl(var(--plum-deep))',
+        coral: 'hsl(var(--coral))',
+        peach: 'hsl(var(--peach))',
+        mint: 'hsl(var(--mint))',
+        sky: 'hsl(var(--sky))',
+        lavender: 'hsl(var(--lavender))',
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -16,7 +16,7 @@ import {
 export const metadata: Metadata = {
   title: 'Terms & Conditions',
   description:
-    'Terms, conditions and privacy information for VIT RANKS — a VITEEE rank predictor and mock test platform owned and managed by Malabar Matrix.',
+    'Terms, conditions and privacy information for VIT RANKS — a free VITEEE mock test platform owned and managed by Malabar Matrix.',
   alternates: {
     canonical: '/terms',
   },
@@ -182,11 +182,10 @@ export default function TermsPage() {
                       <p className="text-muted-foreground mt-2 leading-relaxed">
                         VIT RANKS is an independent, student-built platform and
                         is not officially affiliated with VIT or the conducting
-                        body of VITEEE. Rank predictions, cutoffs, and score
-                        estimates are indicative only and based on publicly
-                        available historical data. Always refer to the official
-                        VIT website for authoritative information regarding
-                        admissions.
+                        body of VITEEE. Mock tests, scores, and analytics are
+                        provided purely for practice purposes. Always refer to
+                        the official VIT website for authoritative information
+                        regarding the exam, eligibility, and admissions.
                       </p>
                     </div>
                   </div>
