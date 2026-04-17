@@ -2,7 +2,9 @@ import { NextResponse } from 'next/server';
 import { redis } from '@/lib/redis';
 
 const LEADERBOARD_KEY = 'mocktest:leaderboard';
-const FETCH_LIMIT = 30; // headroom so historical duplicates don't eat into the top-10 display
+// Must match LEADERBOARD_STORE_LIMIT in submit/route.ts — read every member so
+// per-name dedup can't leave us short of DISPLAY_LIMIT unique students.
+const FETCH_LIMIT = 50;
 const DISPLAY_LIMIT = 10;
 
 export async function GET() {
