@@ -25,18 +25,33 @@ import { Turnstile } from '@marsidev/react-turnstile';
 import { Info, User, BookOpen, ShieldCheck, ArrowRight, Clock, HelpCircle, Server } from 'lucide-react';
 import type { PredefinedMockTestSummary } from '@/lib/types';
 
-const FormSchema = z.object({
-  name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
-  }),
-  stream: z.enum(['MPCEA', 'BPCEA'], {
-    required_error: 'You need to select a stream.',
-  }),
-  agree: z.boolean().refine((val) => val === true, {
-    message: 'You must agree to the instructions to continue.',
-  }),
-  token: z.string().min(1, { message: 'Please verify you are human.' }),
-});
+const FormSchema = z
+  .object({
+    name: z.string().min(2, {
+      message: 'Name must be at least 2 characters.',
+    }),
+    stream: z.enum(['MPCEA', 'BPCEA'], {
+      required_error: 'You need to select a stream.',
+    }),
+    agree: z.boolean().refine((val) => val === true, {
+      message: 'You must agree to the instructions to continue.',
+    }),
+    subscribe: z.boolean().optional().default(false),
+    subscribeEmail: z.string().optional().default(''),
+    token: z.string().min(1, { message: 'Please verify you are human.' }),
+  })
+  .superRefine((data, ctx) => {
+    if (data.subscribe) {
+      const emailOk = z.string().email().safeParse(data.subscribeEmail).success;
+      if (!emailOk) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['subscribeEmail'],
+          message: 'Enter a valid email to subscribe.',
+        });
+      }
+    }
+  });
 
 export default function MockTestSetupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,6 +69,17 @@ export default function MockTestSetupPage() {
 
   const [predefinedName, setPredefinedName] = useState<string | null>(null);
   const [modeValidated, setModeValidated] = useState(mode === 'random');
+  const [alreadySubscribed, setAlreadySubscribed] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (localStorage.getItem('mockTestSubscribed') === 'true') {
+        setAlreadySubscribed(true);
+      }
+    } catch {
+      // localStorage unavailable; treat as not subscribed
+    }
+  }, []);
 
   useEffect(() => {
     if (mode === 'random') {
@@ -87,6 +113,8 @@ export default function MockTestSetupPage() {
       name: '',
       stream: 'MPCEA',
       agree: false,
+      subscribe: false,
+      subscribeEmail: '',
       token: '',
     },
   });
@@ -126,6 +154,23 @@ export default function MockTestSetupPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     }).catch(console.error);
+
+    if (data.subscribe && data.subscribeEmail) {
+      fetch('/api/subscribers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: data.subscribeEmail,
+          name: data.name,
+          source: 'mocktest-setup',
+        }),
+      }).catch(() => { /* silent */ });
+      try {
+        localStorage.setItem('mockTestSubscribed', 'true');
+      } catch {
+        // ignore
+      }
+    }
 
     const setupPayload = {
       ...data,
@@ -287,6 +332,59 @@ export default function MockTestSetupPage() {
                         </FormItem>
                       )}
                     />
+
+                    {!alreadySubscribed && (
+                      <>
+                        <FormField
+                          control={form.control}
+                          name="subscribe"
+                          render={({ field }) => (
+                            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-lg border border-border/50 bg-muted/30 p-4">
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value}
+                                  onCheckedChange={(checked) => {
+                                    field.onChange(checked);
+                                    if (!checked) {
+                                      form.setValue('subscribeEmail', '');
+                                      form.clearErrors('subscribeEmail');
+                                    }
+                                  }}
+                                  className="mt-0.5"
+                                />
+                              </FormControl>
+                              <div className="space-y-1 leading-none">
+                                <FormLabel className="text-sm cursor-pointer">
+                                  Email me when we publish new mock tests or ship updates{' '}
+                                  <span className="text-muted-foreground font-normal">(optional)</span>
+                                </FormLabel>
+                              </div>
+                            </FormItem>
+                          )}
+                        />
+
+                        {form.watch('subscribe') && (
+                          <FormField
+                            control={form.control}
+                            name="subscribeEmail"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-sm font-medium">Email address</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    type="email"
+                                    placeholder="you@example.com"
+                                    className="h-11"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        )}
+                      </>
+                    )}
 
                     <div className="flex flex-col items-center gap-5 pt-2">
                       <FormField
