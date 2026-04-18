@@ -141,48 +141,63 @@ function TimelineRow({
   index: number;
 }) {
   return (
-    <div className="relative mb-12 flex items-center last:mb-0">
+    <div className="relative mb-12 grid grid-cols-[1fr_auto_1fr] items-center gap-x-8 last:mb-0">
+      {/* Left column */}
+      <div className="flex justify-end">
+        {side === 'left' && <TimelineCard event={event} side="left" index={index} />}
+      </div>
+
       {/* Node */}
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.5, delay: 0.1 + index * 0.05, type: 'spring' }}
-        className="absolute left-1/2 z-10 -translate-x-1/2"
+        className="relative z-10"
       >
         <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-coral to-peach shadow-lg shadow-coral/25 ring-4 ring-background">
           <CalendarCheck className="h-4 w-4 text-white" />
         </div>
       </motion.div>
 
-      {/* Card */}
-      <div
-        className={`flex w-full ${
-          side === 'left' ? 'justify-start pr-[calc(50%+2rem)]' : 'justify-end pl-[calc(50%+2rem)]'
-        }`}
-      >
-        <motion.div
-          initial={{ opacity: 0, x: side === 'left' ? -30 : 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, delay: 0.15 + index * 0.05 }}
-          whileHover={{ y: -4 }}
-          className="group relative w-full max-w-xs overflow-hidden rounded-2xl border border-border/70 bg-card p-5 shadow-sm transition-shadow hover:shadow-lg"
-        >
-          <div className="pointer-events-none absolute -right-4 -top-4 h-24 w-24 rounded-full bg-coral/10 blur-2xl opacity-0 transition-opacity group-hover:opacity-100" />
-          <p className="text-xs font-semibold uppercase tracking-wider text-coral">
-            {event.date}
-          </p>
-          <p className="mt-1.5 text-base font-semibold tracking-tight">
-            {event.title}
-          </p>
-          {event.description && (
-            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              {event.description}
-            </p>
-          )}
-        </motion.div>
+      {/* Right column */}
+      <div className="flex justify-start">
+        {side === 'right' && <TimelineCard event={event} side="right" index={index} />}
       </div>
     </div>
+  );
+}
+
+function TimelineCard({
+  event,
+  side,
+  index,
+}: {
+  event: TimelineEvent;
+  side: 'left' | 'right';
+  index: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: side === 'left' ? -30 : 30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.6, delay: 0.15 + index * 0.05 }}
+      whileHover={{ y: -4 }}
+      className="group relative w-full max-w-xs overflow-hidden rounded-2xl border border-border/70 bg-card p-5 shadow-sm transition-shadow hover:shadow-lg"
+    >
+      <div className="pointer-events-none absolute -right-4 -top-4 h-24 w-24 rounded-full bg-coral/10 blur-2xl opacity-0 transition-opacity group-hover:opacity-100" />
+      <p className="text-xs font-semibold uppercase tracking-wider text-coral">
+        {event.date}
+      </p>
+      <p className="mt-1.5 text-base font-semibold tracking-tight">
+        {event.title}
+      </p>
+      {event.description && (
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+          {event.description}
+        </p>
+      )}
+    </motion.div>
   );
 }
