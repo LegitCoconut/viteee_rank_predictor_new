@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense, useEffect, useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -15,8 +15,10 @@ import {
   ChevronLeft,
   Filter,
   Search,
+  RotateCcw,
+  FileWarning,
 } from 'lucide-react';
-import type { Answer, QuestionWithImage } from '@/lib/types';
+import type { Answer, QuestionSnapshot, QuestionWithImage } from '@/lib/types';
 
 const subjectNames: Record<string, string> = {
   maths: 'Mathematics',
@@ -43,26 +45,91 @@ interface StoredResult {
 const MARK_CORRECT = 4;
 const MARK_WRONG = -1;
 
-export default function DetailedResultsPage() {
+type LoadState =
+  | { status: 'loading' }
+  | { status: 'ready'; result: StoredResult; questions: QuestionWithImage[]; source: 'session' | 'local' }
+  | { status: 'missing-snapshot' }
+  | { status: 'not-found' };
+
+export default function DetailedResultsPageWrapper() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-dvh flex-col">
+          <Header />
+          <main className="flex flex-1 items-center justify-center">
+            <p className="text-muted-foreground">Loading detailed results\u2026</p>
+          </main>
+          <Footer />
+        </div>
+      }
+    >
+      <DetailedResultsPage />
+    </Suspense>
+  );
+}
+
+function DetailedResultsPage() {
   const router = useRouter();
-  const [questions, setQuestions] = useState<QuestionWithImage[] | null>(null);
-  const [result, setResult] = useState<StoredResult | null>(null);
+  const searchParams = useSearchParams();
+  const examIdParam = searchParams.get('examId');
+  const [load, setLoad] = useState<LoadState>({ status: 'loading' });
   const [filter, setFilter] = useState<FilterKey>('all');
 
   useEffect(() => {
+    // Two data sources:
+    //   1. With ?examId=<id> → past attempt: read from localStorage (results
+    //      list + per-attempt question snapshot).
+    //   2. Without examId → fresh post-submit redirect: read the in-flight
+    //      copy from sessionStorage so nothing changes for the immediate flow.
     try {
+      if (examIdParam) {
+        const rawResults = localStorage.getItem('mockTestResults');
+        const rawMap = localStorage.getItem('mockTestQuestions');
+        const results: StoredResult[] = rawResults ? JSON.parse(rawResults) : [];
+        const snapMap: Record<string, QuestionSnapshot[]> = rawMap
+          ? JSON.parse(rawMap)
+          : {};
+        const result = results.find((r) => r.examId === examIdParam);
+        if (!result) {
+          setLoad({ status: 'not-found' });
+          return;
+        }
+        const snapshot = snapMap[examIdParam];
+        if (!snapshot || snapshot.length === 0) {
+          setLoad({ status: 'missing-snapshot' });
+          return;
+        }
+        const questions: QuestionWithImage[] = snapshot.map((s) => ({
+          _id: s._id,
+          imageUrl: s.imageUrl,
+          correct_option: s.correct_option,
+          subject: s.subject,
+          image_id: s._id,
+        }));
+        setLoad({ status: 'ready', result, questions, source: 'local' });
+        return;
+      }
+
       const rawResult = sessionStorage.getItem('latestResult');
       const rawQuestions = sessionStorage.getItem('latestQuestions');
       if (!rawResult || !rawQuestions) {
         router.replace('/mocktest');
         return;
       }
-      setResult(JSON.parse(rawResult));
-      setQuestions(JSON.parse(rawQuestions));
+      setLoad({
+        status: 'ready',
+        result: JSON.parse(rawResult),
+        questions: JSON.parse(rawQuestions),
+        source: 'session',
+      });
     } catch {
       router.replace('/mocktest');
     }
-  }, [router]);
+  }, [router, examIdParam]);
+
+  const questions = load.status === 'ready' ? load.questions : null;
+  const result = load.status === 'ready' ? load.result : null;
 
   const rows = useMemo(() => {
     if (!questions || !result) return [];
@@ -97,7 +164,7 @@ export default function DetailedResultsPage() {
     [rows]
   );
 
-  if (!questions || !result) {
+  if (load.status === 'loading') {
     return (
       <div className="flex min-h-dvh flex-col">
         <Header />
@@ -107,6 +174,60 @@ export default function DetailedResultsPage() {
         <Footer />
       </div>
     );
+  }
+
+  if (load.status === 'not-found' || load.status === 'missing-snapshot') {
+    const isLegacy = load.status === 'missing-snapshot';
+    return (
+      <div className="flex min-h-dvh flex-col bg-background">
+        <Header />
+        <main className="flex-1">
+          <section className="container mx-auto max-w-2xl px-4 py-24 text-center">
+            <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-muted">
+              <FileWarning className="h-6 w-6 text-muted-foreground" />
+            </div>
+            <h1 className="text-3xl font-semibold tracking-tighter md:text-4xl">
+              {isLegacy
+                ? 'Detailed review isn\u2019t available for this attempt.'
+                : 'We couldn\u2019t find that attempt.'}
+            </h1>
+            <p className="mx-auto mt-4 max-w-md text-base text-muted-foreground">
+              {isLegacy
+                ? 'This test was taken before we started caching question-by-question data in your browser. Future attempts will open fully in this view.'
+                : 'The attempt may have been deleted, or the link is out of date. Head back to your history and pick another.'}
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Button
+                asChild
+                className="h-11 gap-2 rounded-full bg-foreground px-6 text-background hover:bg-foreground/90"
+              >
+                <Link href="/mocktest">
+                  <RotateCcw className="h-4 w-4" />
+                  Take a new test
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="h-11 gap-2 rounded-full border-border/70"
+              >
+                <Link href="/mocktest#past-results">
+                  <ChevronLeft className="h-4 w-4" />
+                  Back to history
+                </Link>
+              </Button>
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!questions || !result) {
+    // Belt-and-braces: load.status === 'ready' guarantees these, but TS
+    // narrowing won't always carry that through the derived locals above.
+    return null;
   }
 
   const title =
@@ -155,8 +276,15 @@ export default function DetailedResultsPage() {
               asChild
               className="mb-4 -ml-2 gap-1 text-white/75 hover:bg-white/10 hover:text-white"
             >
-              <Link href="/mocktest/results">
-                <ChevronLeft className="h-4 w-4" /> Back to summary
+              <Link
+                href={
+                  load.source === 'local'
+                    ? '/mocktest#past-results'
+                    : '/mocktest/results'
+                }
+              >
+                <ChevronLeft className="h-4 w-4" />
+                {load.source === 'local' ? 'Back to history' : 'Back to summary'}
               </Link>
             </Button>
 

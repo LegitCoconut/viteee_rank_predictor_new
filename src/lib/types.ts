@@ -16,6 +16,15 @@ export interface Answer {
     visited: boolean;
 }
 
+// Minimal subset of QuestionWithImage persisted per attempt so past tests can
+// be re-opened in the detailed-review UI without refetching from the server.
+export interface QuestionSnapshot {
+    _id: string;
+    imageUrl: string;
+    correct_option: 'a' | 'b' | 'c' | 'd';
+    subject: string;
+}
+
 export type MockTestMode = 'random' | 'predefined';
 
 export interface MockTestSetup {

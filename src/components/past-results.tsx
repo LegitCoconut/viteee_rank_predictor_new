@@ -20,7 +20,8 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from '@/components/ui/button';
-import { History, Trophy, Trash2 } from 'lucide-react';
+import { History, Trophy, Trash2, FileText, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import { Progress } from '@/components/ui/progress';
 
 const subjectNames: { [key: string]: string } = {
@@ -84,11 +85,24 @@ export function PastResults() {
         const next = results.filter(r => r.examId !== examId);
         setResults(next);
         localStorage.setItem('mockTestResults', JSON.stringify(next));
+        try {
+            const raw = localStorage.getItem('mockTestQuestions');
+            if (raw) {
+                const map = JSON.parse(raw) as Record<string, unknown>;
+                if (examId in map) {
+                    delete map[examId];
+                    localStorage.setItem('mockTestQuestions', JSON.stringify(map));
+                }
+            }
+        } catch {
+            // Stale snapshot map — not worth surfacing to the user.
+        }
     };
 
     const deleteAllResults = () => {
         setResults([]);
         localStorage.removeItem('mockTestResults');
+        localStorage.removeItem('mockTestQuestions');
     };
 
     if (results.length === 0) {
@@ -199,7 +213,19 @@ export function PastResults() {
                                                 );
                                             })}
 
-                                            <div className="pt-3 border-t border-border/50 flex justify-end">
+                                            <div className="pt-3 border-t border-border/50 flex flex-wrap justify-end items-center gap-2">
+                                                <Button
+                                                    asChild
+                                                    variant="outline"
+                                                    size="sm"
+                                                    className="gap-1.5 h-8"
+                                                >
+                                                    <Link href={`/mocktest/results/detailed?examId=${encodeURIComponent(result.examId)}`}>
+                                                        <FileText className="h-3.5 w-3.5" />
+                                                        View detailed
+                                                        <ArrowRight className="h-3 w-3" />
+                                                    </Link>
+                                                </Button>
                                                 <AlertDialog>
                                                     <AlertDialogTrigger asChild>
                                                         <Button variant="ghost" size="sm" className="text-destructive hover:bg-destructive/10 hover:text-destructive gap-1.5 h-8">

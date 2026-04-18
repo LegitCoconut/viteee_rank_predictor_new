@@ -175,6 +175,48 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
       pastResults.push(examResult);
       localStorage.setItem('mockTestResults', JSON.stringify(pastResults));
 
+      // Snapshot the question metadata so the detailed-review UI can reopen
+      // this attempt later (past-results → "View detailed"). Strip to just
+      // what the review page needs so storage stays bounded.
+      try {
+        const snapshot = questions.map((q) => ({
+          _id: q._id,
+          imageUrl: q.imageUrl,
+          correct_option: q.correct_option,
+          subject: q.subject,
+        }));
+        const writeSnapshots = (map: Record<string, unknown>) => {
+          map[examResult.examId] = snapshot;
+          localStorage.setItem('mockTestQuestions', JSON.stringify(map));
+        };
+        const currentMap: Record<string, unknown> = JSON.parse(
+          localStorage.getItem('mockTestQuestions') || '{}'
+        );
+        try {
+          writeSnapshots(currentMap);
+        } catch (quotaErr) {
+          // Likely QuotaExceededError — drop snapshots whose examId is no
+          // longer in mockTestResults (orphans), then retry once.
+          const liveIds = new Set<string>(
+            (pastResults as Array<{ examId?: string }>)
+              .map((r) => r?.examId)
+              .filter((id): id is string => typeof id === 'string')
+          );
+          const pruned: Record<string, unknown> = {};
+          for (const [id, v] of Object.entries(currentMap)) {
+            if (liveIds.has(id)) pruned[id] = v;
+          }
+          try {
+            writeSnapshots(pruned);
+          } catch (retryErr) {
+            console.warn('Could not persist question snapshot:', retryErr);
+          }
+          void quotaErr;
+        }
+      } catch (err) {
+        console.warn('Could not persist question snapshot:', err);
+      }
+
       await fetch('/api/mocktest/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
