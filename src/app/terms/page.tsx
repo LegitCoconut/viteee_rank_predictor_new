@@ -11,6 +11,7 @@ import {
   Trophy,
   Lock,
   Info,
+  HardDrive,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -131,6 +132,47 @@ export default function TermsPage() {
                         </Link>
                         . Please avoid entering sensitive information — you can
                         use a nickname or initials if you prefer.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-6 md:p-8">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 h-10 w-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                      <HardDrive className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold font-headline">
+                        Local Storage &amp; Detailed Analysis
+                      </h2>
+                      <p className="text-muted-foreground mt-2 leading-relaxed">
+                        So you can revisit any attempt later and review it
+                        question by question, we save the full details of each
+                        mock test to your{' '}
+                        <span className="font-medium text-foreground">
+                          browser&rsquo;s local storage
+                        </span>{' '}
+                        right after you submit. This includes your final marks
+                        &amp; section-wise breakdown, the option you picked for
+                        every question (answered, skipped, or marked for
+                        review), the correct answer, and the question image
+                        reference used to render the detailed view.
+                      </p>
+                      <p className="text-muted-foreground mt-3 leading-relaxed">
+                        This data stays{' '}
+                        <span className="font-medium text-foreground">
+                          entirely on your device
+                        </span>{' '}
+                        — we don&rsquo;t read it from our servers. Clearing
+                        your browser cache, switching devices, or using
+                        incognito mode will wipe your local test history and
+                        you&rsquo;ll no longer be able to reopen those
+                        attempts. You can also remove individual attempts (or
+                        all of them) from the Past Results section at any
+                        time.
                       </p>
                     </div>
                   </div>
