@@ -76,6 +76,14 @@ export function FAQJsonLd() {
       },
       {
         '@type': 'Question',
+        name: 'Does VITEEE have negative marking?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'The official VITEEE does not have negative marking — each correct answer awards +1 with no penalty for wrong answers. However, VIT RANKS mock tests use a stricter +4/-1/0 marking scheme (+4 for each correct answer, -1 for each wrong answer, 0 for unanswered) so students practise attempt discipline and build exam temperament similar to JEE-style papers.',
+        },
+      },
+      {
+        '@type': 'Question',
         name: 'What is the VITEEE 2026 syllabus?',
         acceptedAnswer: {
           '@type': 'Answer',

@@ -15,13 +15,47 @@ export const metadata: Metadata = {
   description:
     'Free, full-length VITEEE 2026 mock tests with instant analytics, a live leaderboard, and the complete syllabus. No signup. No paywall. Built by students, for VITEEE aspirants.',
   keywords: [
-    'viteee 2026', 'viteee mock test', 'viteee free mock test',
-    'viteee practice test', 'viteee exam', 'vit entrance exam',
-    'viteee registration 2026', 'viteee exam date 2026',
-    'viteee syllabus 2026', 'viteee exam pattern',
-    'viteee preparation', 'viteee admit card 2026',
-    'viteee previous year papers', 'viteee sample papers',
-    'viteee eligibility', 'viteee slot booking',
+    // Registration & dates (highest volume)
+    'viteee registration', 'viteee registration 2026', 'viteee registration form',
+    'viteee registration last date', 'viteee registration last date 2026',
+    'viteee application', 'viteee form', 'viteee exam date',
+    'viteee exam date 2026', 'viteee date', 'viteee dates',
+    'vit exam date', 'vit exam registration',
+
+    // Mock tests & practice
+    'viteee mock test', 'viteee mock tests', 'viteee mock test 2026',
+    'viteee free mock test', 'viteee practice test', 'viteee online practice test free',
+    'viteee sample paper', 'viteee model paper', 'viteee question paper',
+    'viteee test series', 'viteee exam simulator',
+
+    // Previous year papers (PYQ)
+    'viteee pyq', 'viteee pyqs', 'viteee previous year question paper',
+    'viteee previous year question papers', 'viteee pyq chapterwise pdf',
+
+    // Syllabus & pattern
+    'viteee syllabus', 'viteee syllabus 2026', 'viteee exam pattern',
+    'vit syllabus', 'does viteee have negative marking',
+
+    // Slot booking & OTBS
+    'viteee slot booking', 'viteee slot booking date',
+    'viteee slot booking official website', 'vit slot booking',
+    'viteee otbs', 'viteee otbs portal', 'vit otbs portal', 'otbs vit',
+    'viteee online test booking system',
+
+    // Login & official
+    'viteee login', 'viteee.vit.ac.in', 'viteee.vit.ac.in login',
+    'viteee official website', 'vit login', 'vit registration',
+    'vit official website', 'vit.ac.in', 'vit ac in',
+
+    // Admit card & results
+    'viteee admit card', 'viteee admit card 2026',
+
+    // Exam & institute
+    'viteee 2026', 'viteee exam', 'vit exam', 'vit entrance exam',
+    'vit eee', 'vitmee', 'vitmee mca', 'vitree',
+    'vit vellore', 'vit university', 'vit college', 'vit form',
+    'vellore institute of technology', 'vellore institute of technology vellore',
+    'viteee preparation', 'viteee eligibility',
   ],
   authors: [{ name: 'VIT RANKS' }],
   creator: 'VIT RANKS',

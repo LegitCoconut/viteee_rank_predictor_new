@@ -13,12 +13,44 @@ export const metadata: Metadata = {
   description:
     "Free, full-length VITEEE 2026 mock tests with instant analytics, a live leaderboard, and the complete syllabus. No signup. No paywall. Built by students, for VITEEE aspirants.",
   keywords: [
-    "viteee 2026", "viteee mock test", "viteee free mock test",
-    "viteee practice test online", "viteee exam", "vit entrance exam",
-    "viteee syllabus 2026", "viteee exam pattern", "viteee preparation",
-    "viteee previous year papers", "viteee sample papers", "viteee eligibility",
-    "viteee slot booking", "viteee admit card 2026", "viteee registration 2026",
-    "viteee exam date 2026",
+    // Core (highest impression count in search console)
+    "viteee registration", "viteee registration 2026", "viteee registration form",
+    "viteee registration last date", "viteee registration last date 2026",
+    "viteee 2026", "viteee exam", "viteee exam date", "viteee exam date 2026",
+    "viteee date", "viteee dates", "vit exam date",
+
+    // Mock tests (primary platform offering)
+    "viteee mock test", "viteee mock tests", "viteee free mock test",
+    "viteee practice test online", "viteee practice test", "viteee sample paper",
+    "viteee question paper",
+
+    // Previous year papers
+    "viteee pyq", "viteee pyqs", "viteee previous year question paper",
+    "viteee previous year question papers", "viteee pyq chapterwise pdf",
+
+    // Syllabus / pattern / marking
+    "viteee syllabus", "viteee syllabus 2026", "viteee exam pattern",
+    "does viteee have negative marking",
+
+    // Slot booking / OTBS
+    "viteee slot booking", "viteee slot booking date",
+    "viteee otbs", "viteee otbs portal", "vit otbs portal",
+    "viteee online test booking system",
+
+    // Login / official portal
+    "viteee login", "viteee.vit.ac.in", "viteee.vit.ac.in login",
+    "viteee official website", "vit login", "vit registration",
+
+    // Admit card / application
+    "viteee admit card", "viteee admit card 2026",
+    "viteee application", "viteee form",
+
+    // VIT brand queries
+    "vit entrance exam", "vit eee", "vit vellore",
+    "vit university", "vellore institute of technology",
+
+    // Preparation meta
+    "viteee preparation", "viteee eligibility",
   ],
   alternates: {
     canonical: '/',

@@ -11,6 +11,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "flush:redis": "tsx scripts/flush-redis.ts",
+    "flush:leaderboard": "tsx scripts/flush-leaderboard.ts",
     "warm:redis": "tsx scripts/warm-redis.ts"
   },
   "dependencies": {

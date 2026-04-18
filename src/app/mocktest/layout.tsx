@@ -9,14 +9,35 @@ export const metadata: Metadata = {
     description:
         "Take free VITEEE 2026 mock tests online without signup. Practice Physics, Chemistry, Maths & Aptitude with real exam pattern. Get instant results with section-wise analysis. 125 questions, 2.5 hours - exactly like the real VITEEE exam.",
     keywords: [
-        "viteee mock test 2026", "viteee practice test", "viteee online test",
-        "free viteee mock test", "viteee sample paper", "viteee model paper",
-        "viteee test series", "viteee previous year questions",
+        // Mock test core
+        "viteee mock test", "viteee mock tests", "viteee mock test 2026",
+        "viteee practice test", "viteee practice test online",
+        "viteee online practice test free", "free viteee mock test",
+        "viteee online test", "viteee test series", "viteee exam simulator",
+        "viteee CBT practice", "vit mock test 2026",
+
+        // Previous year papers (high impressions)
+        "viteee pyq", "viteee pyqs", "viteee previous year question paper",
+        "viteee previous year question papers", "viteee pyq chapterwise pdf",
+        "viteee sample paper", "viteee question paper", "viteee model paper",
+        "viteee previous year questions",
+
+        // Subject-wise practice
         "viteee physics mock test", "viteee chemistry mock test",
         "viteee maths mock test", "viteee aptitude questions",
-        "viteee exam preparation", "viteee practice questions",
-        "viteee online practice test free", "vit mock test 2026",
-        "viteee CBT practice", "viteee exam simulator",
+        "viteee practice questions",
+
+        // Exam & marking
+        "viteee exam pattern", "viteee syllabus", "viteee syllabus 2026",
+        "does viteee have negative marking", "viteee exam preparation",
+
+        // Registration / date context
+        "viteee registration", "viteee registration 2026",
+        "viteee exam date", "viteee exam date 2026",
+        "viteee slot booking", "viteee otbs", "viteee admit card",
+
+        // Brand
+        "vit entrance exam", "vit eee", "vit vellore",
     ],
     alternates: {
         canonical: '/mocktest',

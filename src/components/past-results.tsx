@@ -34,12 +34,41 @@ type StoredResult = {
     examId: string;
     timestamp: string;
     score: number;
+    wrong?: number;
+    marks?: number;
+    maxMarks?: number;
     totalQuestions: number;
-    sectionScores?: Record<string, { score: number; total: number }>;
+    answers?: Array<{ status?: string }>;
+    sectionScores?: Record<
+        string,
+        { score: number; wrong?: number; total: number }
+    >;
     mode?: 'random' | 'predefined';
     predefinedId?: number;
     predefinedName?: string;
 };
+
+// VITEEE-style marking scheme — mirrors mock-test-ui / results page.
+const MARK_CORRECT = 4;
+const MARK_WRONG = -1;
+
+function deriveMarks(result: StoredResult) {
+    const attempted =
+        result.answers?.filter((a) => a.status === 'answered').length ?? 0;
+    const wrong =
+        typeof result.wrong === 'number'
+            ? result.wrong
+            : Math.max(attempted - result.score, 0);
+    const marks =
+        typeof result.marks === 'number'
+            ? result.marks
+            : result.score * MARK_CORRECT + wrong * MARK_WRONG;
+    const maxMarks =
+        typeof result.maxMarks === 'number' && result.maxMarks > 0
+            ? result.maxMarks
+            : result.totalQuestions * MARK_CORRECT;
+    return { wrong, marks, maxMarks };
+}
 
 export function PastResults() {
     const [results, setResults] = useState<StoredResult[]>([]);
@@ -122,7 +151,9 @@ export function PastResults() {
                     <CardContent className="p-0">
                         <Accordion type="single" collapsible className="w-full">
                         {results.map((result, index) => {
-                            const percentage = result.totalQuestions > 0 ? (result.score / result.totalQuestions) * 100 : 0;
+                            const { wrong, marks, maxMarks } = deriveMarks(result);
+                            const percentage = maxMarks > 0 ? (marks / maxMarks) * 100 : 0;
+                            const progressPct = Math.max(0, Math.min(100, percentage));
                             const testLabel = result.mode === 'predefined' && result.predefinedId
                                 ? (result.predefinedName || `Mock Test ${result.predefinedId}`)
                                 : 'Random Test';
@@ -137,28 +168,36 @@ export function PastResults() {
                                             </div>
                                             <div className="flex items-center gap-2 md:gap-3 shrink-0">
                                                 <div className="w-16 md:w-24 hidden sm:block">
-                                                    <Progress value={percentage} className="h-2" />
+                                                    <Progress value={progressPct} className="h-2" />
                                                 </div>
-                                                <span className="font-semibold text-sm md:text-base whitespace-nowrap">{result.score}/{result.totalQuestions}</span>
+                                                <div className="text-right whitespace-nowrap">
+                                                    <span className="font-semibold text-sm md:text-base">{marks}<span className="text-muted-foreground">/{maxMarks}</span></span>
+                                                    <span className="block text-[10px] text-muted-foreground font-mono">{result.score}C · {wrong}W</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </AccordionTrigger>
                                     <AccordionContent>
                                         <div className="mx-4 md:mx-6 mb-4 p-3 md:p-4 bg-muted/30 rounded-lg space-y-3">
                                             <h4 className="font-semibold text-sm">Section-wise Score</h4>
-                                            {result.sectionScores && Object.entries(result.sectionScores).map(([subject, scores]: [string, any]) => (
-                                                scores.total > 0 && (
+                                            {result.sectionScores && Object.entries(result.sectionScores).map(([subject, scores]: [string, any]) => {
+                                                if (!scores || scores.total <= 0) return null;
+                                                const sWrong = typeof scores.wrong === 'number' ? scores.wrong : 0;
+                                                const sMarks = scores.score * MARK_CORRECT + sWrong * MARK_WRONG;
+                                                const sMax = scores.total * MARK_CORRECT;
+                                                const sPct = sMax > 0 ? Math.max(0, Math.min(100, (sMarks / sMax) * 100)) : 0;
+                                                return (
                                                     <div key={subject} className="flex items-center justify-between gap-4">
                                                         <span className="text-xs md:text-sm text-muted-foreground">{subjectNames[subject] || subject}</span>
                                                         <div className="flex items-center gap-3">
                                                             <div className="w-16 md:w-20">
-                                                                <Progress value={(scores.score / scores.total) * 100} className="h-1.5" />
+                                                                <Progress value={sPct} className="h-1.5" />
                                                             </div>
-                                                            <span className="text-xs md:text-sm font-medium w-12 md:w-14 text-right">{scores.score}/{scores.total}</span>
+                                                            <span className="text-xs md:text-sm font-medium w-16 md:w-20 text-right">{sMarks}<span className="text-muted-foreground">/{sMax}</span></span>
                                                         </div>
                                                     </div>
-                                                )
-                                            ))}
+                                                );
+                                            })}
 
                                             <div className="pt-3 border-t border-border/50 flex justify-end">
                                                 <AlertDialog>
@@ -172,7 +211,7 @@ export function PastResults() {
                                                         <AlertDialogHeader>
                                                             <AlertDialogTitle>Delete this result?</AlertDialogTitle>
                                                             <AlertDialogDescription>
-                                                                This removes {testLabel} ({result.score}/{result.totalQuestions}) from your local history. Server-side records and the leaderboard are unaffected. This cannot be undone.
+                                                                This removes {testLabel} ({marks}/{maxMarks} marks) from your local history. Server-side records and the leaderboard are unaffected. This cannot be undone.
                                                             </AlertDialogDescription>
                                                         </AlertDialogHeader>
                                                         <AlertDialogFooter>

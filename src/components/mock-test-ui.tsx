@@ -117,24 +117,40 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
     if (isSubmitting) return;
     setIsSubmitting(true);
 
+    // VITEEE-style marking: +4 per correct, -1 per wrong, 0 unanswered.
+    const MARK_CORRECT = 4;
+    const MARK_WRONG = -1;
+
     let score = 0;
-    const sectionScores: Record<string, { score: number; total: number }> = {
-      maths: { score: 0, total: 0 },
-      physics: { score: 0, total: 0 },
-      chemistry: { score: 0, total: 0 },
-      apt_eng: { score: 0, total: 0 },
+    let wrong = 0;
+    const sectionScores: Record<
+      string,
+      { score: number; wrong: number; total: number }
+    > = {
+      maths: { score: 0, wrong: 0, total: 0 },
+      physics: { score: 0, wrong: 0, total: 0 },
+      chemistry: { score: 0, wrong: 0, total: 0 },
+      apt_eng: { score: 0, wrong: 0, total: 0 },
     };
 
     questions.forEach((question, index) => {
       const subjectKey = question.subject;
-      if (sectionScores[subjectKey]) {
-        sectionScores[subjectKey].total++;
-        if (answers[index].answer === question.correct_option) {
-          sectionScores[subjectKey].score++;
-          score++;
-        }
+      if (!sectionScores[subjectKey]) return;
+      sectionScores[subjectKey].total++;
+      const chosen = answers[index]?.answer;
+      if (chosen == null) return;
+      if (chosen === question.correct_option) {
+        sectionScores[subjectKey].score++;
+        score++;
+      } else {
+        sectionScores[subjectKey].wrong++;
+        wrong++;
       }
     });
+
+    const totalQuestions = questions.length;
+    const marks = score * MARK_CORRECT + wrong * MARK_WRONG;
+    const maxMarks = totalQuestions * MARK_CORRECT;
 
     const anySetup = setupData as any;
     const examResult = {
@@ -142,8 +158,11 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
       userId: setupData.name,
       stream: setupData.stream,
       answers,
-      score: score,
-      totalQuestions: questions.length,
+      score,
+      wrong,
+      marks,
+      maxMarks,
+      totalQuestions,
       sectionScores,
       timestamp: new Date().toISOString(),
       mode: anySetup.mode ?? 'random',

@@ -30,11 +30,18 @@ type FilterKey = 'all' | 'correct' | 'incorrect' | 'unanswered';
 interface StoredResult {
   examId: string;
   score: number;
+  wrong?: number;
+  marks?: number;
+  maxMarks?: number;
   totalQuestions: number;
   answers: Answer[];
   mode?: 'random' | 'predefined';
   predefinedName?: string;
 }
+
+// VITEEE-style marking — mirror of results/page.tsx so the chip stays honest.
+const MARK_CORRECT = 4;
+const MARK_WRONG = -1;
 
 export default function DetailedResultsPage() {
   const router = useRouter();
@@ -107,9 +114,20 @@ export default function DetailedResultsPage() {
       ? result.predefinedName
       : 'Random mock test';
 
-  const pct = result.totalQuestions
-    ? (result.score / result.totalQuestions) * 100
-    : 0;
+  const attemptedCount = result.answers.filter((a) => a.answer !== null).length;
+  const wrongAnswers =
+    typeof result.wrong === 'number'
+      ? result.wrong
+      : Math.max(attemptedCount - result.score, 0);
+  const marks =
+    typeof result.marks === 'number'
+      ? result.marks
+      : result.score * MARK_CORRECT + wrongAnswers * MARK_WRONG;
+  const maxMarks =
+    typeof result.maxMarks === 'number' && result.maxMarks > 0
+      ? result.maxMarks
+      : result.totalQuestions * MARK_CORRECT;
+  const pct = maxMarks ? (marks / maxMarks) * 100 : 0;
 
   return (
     <div className="flex min-h-dvh flex-col bg-background">
@@ -168,11 +186,11 @@ export default function DetailedResultsPage() {
               <div className="glass inline-flex items-center gap-4 self-start rounded-2xl px-5 py-3 text-left md:self-auto">
                 <div>
                   <p className="font-display text-3xl italic leading-none text-white">
-                    {result.score}
-                    <span className="text-coral">/{result.totalQuestions}</span>
+                    {marks}
+                    <span className="text-coral">/{maxMarks}</span>
                   </p>
                   <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-white/60">
-                    {pct.toFixed(0)}% correct
+                    {result.score}C · {wrongAnswers}W · {pct.toFixed(0)}%
                   </p>
                 </div>
               </div>

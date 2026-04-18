@@ -10,12 +10,31 @@ const LEADERBOARD_KEY = 'mocktest:leaderboard';
 // out of the visible top 10.
 const LEADERBOARD_STORE_LIMIT = 50;
 
+// VITEEE-style marking the mock test uses — mirrors mock-test-ui.
+const MARK_CORRECT = 4;
+const MARK_WRONG = -1;
+
 async function pushToLeaderboard(body: any) {
     try {
         const name = String(body.userId ?? '').trim().slice(0, 40);
         const score = Number(body.score);
         const total = Number(body.totalQuestions);
         if (!name || !Number.isFinite(score) || !Number.isFinite(total) || total <= 0) return;
+
+        // Older payloads don't carry marks/wrong — derive them from the answers
+        // array so the leaderboard stays comparable across schema versions.
+        const attempted = Array.isArray(body.answers)
+            ? body.answers.filter((a: any) => a?.status === 'answered').length
+            : 0;
+        const wrong = Number.isFinite(Number(body.wrong))
+            ? Number(body.wrong)
+            : Math.max(attempted - score, 0);
+        const marks = Number.isFinite(Number(body.marks))
+            ? Number(body.marks)
+            : score * MARK_CORRECT + wrong * MARK_WRONG;
+        const maxMarks = Number.isFinite(Number(body.maxMarks)) && Number(body.maxMarks) > 0
+            ? Number(body.maxMarks)
+            : total * MARK_CORRECT;
 
         const testLabel =
             body.mode === 'predefined' && body.predefinedId
@@ -26,12 +45,16 @@ async function pushToLeaderboard(body: any) {
             examId: body.examId,
             name,
             score,
+            wrong,
+            marks,
+            maxMarks,
             total,
             testLabel,
             timestamp: body.timestamp ?? new Date().toISOString(),
         };
 
-        const percentage = (score / total) * 100;
+        // Rank by marks-percentage so +4/-1 scoring flows through to ranking.
+        const percentage = maxMarks > 0 ? (marks / maxMarks) * 100 : 0;
         // Sub-second tiebreaker so two equal scores don't overwrite each other.
         const tieBreaker = Date.now() % 1000 / 1e6;
         const newScore = percentage + tieBreaker;

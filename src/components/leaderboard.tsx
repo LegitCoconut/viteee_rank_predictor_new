@@ -8,9 +8,29 @@ interface Entry {
     examId: string;
     name: string;
     score: number;
+    wrong?: number;
+    marks?: number;
+    maxMarks?: number;
     total: number;
     testLabel: string;
     timestamp: string;
+}
+
+// Fallback marking if a legacy leaderboard entry lacks marks/maxMarks.
+const MARK_CORRECT = 4;
+const MARK_WRONG = -1;
+
+function marksOf(e: Entry): { marks: number; maxMarks: number; pct: number } {
+    const marks =
+        typeof e.marks === 'number'
+            ? e.marks
+            : e.score * MARK_CORRECT + (e.wrong ?? 0) * MARK_WRONG;
+    const maxMarks =
+        typeof e.maxMarks === 'number' && e.maxMarks > 0
+            ? e.maxMarks
+            : e.total * MARK_CORRECT;
+    const pct = maxMarks > 0 ? (marks / maxMarks) * 100 : 0;
+    return { marks, maxMarks, pct };
 }
 
 function rankBadge(rank: number) {
@@ -84,7 +104,7 @@ export function Leaderboard() {
                             <ul className="divide-y divide-border/50">
                                 {entries.map((e, idx) => {
                                     const rank = idx + 1;
-                                    const percentage = e.total > 0 ? (e.score / e.total) * 100 : 0;
+                                    const { marks, maxMarks, pct } = marksOf(e);
                                     return (
                                         <li
                                             key={e.examId ?? idx}
@@ -101,10 +121,10 @@ export function Leaderboard() {
                                             </div>
                                             <div className="text-right shrink-0">
                                                 <p className="text-sm md:text-base font-semibold whitespace-nowrap">
-                                                    {e.score}/{e.total}
+                                                    {marks}<span className="text-muted-foreground">/{maxMarks}</span>
                                                 </p>
                                                 <p className="text-[11px] md:text-xs text-muted-foreground">
-                                                    {percentage.toFixed(1)}%
+                                                    {pct.toFixed(1)}% · {e.score}C
                                                 </p>
                                             </div>
                                         </li>

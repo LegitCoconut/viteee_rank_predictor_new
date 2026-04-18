@@ -14,13 +14,18 @@ import {
   BookOpen,
   BarChart2,
   Eye,
-  EyeOff,
   BookmarkCheck,
   Check,
   ArrowRight,
   RotateCcw,
   Sparkles,
+  Calculator,
+  MinusCircle,
 } from 'lucide-react';
+
+// VITEEE-style marking scheme applied on the results page.
+const MARK_CORRECT = 4;
+const MARK_WRONG = -1;
 
 const subjectNames: Record<string, string> = {
   maths: 'Mathematics',
@@ -39,9 +44,15 @@ const subjectAccent: Record<string, string> = {
 interface ResultData {
   userId: string;
   score: number;
+  wrong?: number;
+  marks?: number;
+  maxMarks?: number;
   totalQuestions: number;
   answers?: Array<{ visited?: boolean; status?: string }>;
-  sectionScores?: Record<string, { score: number; total: number }>;
+  sectionScores?: Record<
+    string,
+    { score: number; wrong?: number; total: number }
+  >;
   mode?: 'random' | 'predefined';
   predefinedName?: string;
 }
@@ -67,13 +78,6 @@ export default function MockTestResultPage() {
     }
   }, [router]);
 
-  const percentage = useMemo(() => {
-    if (!result) return 0;
-    return result.totalQuestions > 0
-      ? (result.score / result.totalQuestions) * 100
-      : 0;
-  }, [result]);
-
   if (!result) {
     return (
       <div className="flex min-h-dvh flex-col">
@@ -86,24 +90,52 @@ export default function MockTestResultPage() {
     );
   }
 
-  const incorrectAnswers = result.totalQuestions - result.score;
+  const attemptedCount =
+    result.answers?.filter((a) => a.status === 'answered').length || 0;
   const visitedCount = result.answers?.filter((a) => a.visited).length || 0;
   const notVisitedCount = result.answers?.filter((a) => !a.visited).length || 0;
   const markedCount =
     result.answers?.filter((a) => a.status === 'marked').length || 0;
-  const attemptedCount =
-    result.answers?.filter((a) => a.status === 'answered').length || 0;
 
+  // Backward-compat: older stored results don't carry marks/wrong fields.
+  // Derive them: wrong = attempted - correct, marks = correct*4 - wrong*1.
+  const wrongAnswers =
+    typeof result.wrong === 'number'
+      ? result.wrong
+      : Math.max(attemptedCount - result.score, 0);
+  const unansweredCount = Math.max(
+    result.totalQuestions - result.score - wrongAnswers,
+    0
+  );
+  const marks =
+    typeof result.marks === 'number'
+      ? result.marks
+      : result.score * MARK_CORRECT + wrongAnswers * MARK_WRONG;
+  const maxMarks =
+    typeof result.maxMarks === 'number' && result.maxMarks > 0
+      ? result.maxMarks
+      : result.totalQuestions * MARK_CORRECT;
+
+  const percentage = maxMarks > 0 ? (marks / maxMarks) * 100 : 0;
   const gradeInfo = grade(percentage);
   const title =
     result.mode === 'predefined' && result.predefinedName
       ? result.predefinedName
       : 'Random mock test';
 
-  const tiles = [
+  const tiles: Array<{
+    icon: typeof CheckCircle2;
+    value: number | string;
+    sub?: string;
+    label: string;
+    color: string;
+    ring: string;
+    glow: string;
+  }> = [
     {
       icon: CheckCircle2,
       value: result.score,
+      sub: `+${result.score * MARK_CORRECT} marks`,
       label: 'Correct',
       color: 'text-mint',
       ring: 'ring-mint/30',
@@ -111,11 +143,21 @@ export default function MockTestResultPage() {
     },
     {
       icon: XCircle,
-      value: incorrectAnswers,
-      label: 'Incorrect',
+      value: wrongAnswers,
+      sub: `${wrongAnswers * MARK_WRONG} marks`,
+      label: 'Wrong',
       color: 'text-coral',
       ring: 'ring-coral/30',
       glow: 'bg-coral/10',
+    },
+    {
+      icon: MinusCircle,
+      value: unansweredCount,
+      sub: '0 marks',
+      label: 'Unanswered',
+      color: 'text-muted-foreground',
+      ring: 'ring-border',
+      glow: 'bg-muted/40',
     },
     {
       icon: Check,
@@ -136,18 +178,11 @@ export default function MockTestResultPage() {
     {
       icon: Eye,
       value: visitedCount,
+      sub: `${notVisitedCount} skipped`,
       label: 'Visited',
       color: 'text-peach',
       ring: 'ring-peach/30',
       glow: 'bg-peach/10',
-    },
-    {
-      icon: EyeOff,
-      value: notVisitedCount,
-      label: 'Skipped',
-      color: 'text-muted-foreground',
-      ring: 'ring-border',
-      glow: 'bg-muted/40',
     },
   ];
 
@@ -219,26 +254,31 @@ export default function MockTestResultPage() {
               <div className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-gradient-to-br from-mint/20 to-sky/20 blur-3xl" />
 
               <div className="relative z-10 flex flex-col items-center gap-8 md:flex-row md:items-center md:gap-12">
-                <ScoreOrb score={result.score} total={result.totalQuestions} percentage={percentage} />
+                <ScoreOrb marks={marks} maxMarks={maxMarks} percentage={percentage} />
 
                 <div className="flex-1 text-center md:text-left">
                   <p className="text-xs font-semibold uppercase tracking-[0.25em] text-coral">
                     {gradeInfo.label}
                   </p>
                   <h2 className="mt-2 text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
-                    You answered{' '}
+                    You scored{' '}
                     <span className="font-display italic text-coral">
-                      {result.score}
+                      {marks}
                     </span>{' '}
-                    of{' '}
-                    <span className="font-display italic">
-                      {result.totalQuestions}
-                    </span>{' '}
-                    correctly.
+                    out of{' '}
+                    <span className="font-display italic">{maxMarks}</span>.
                   </h2>
                   <p className="mt-3 text-base text-muted-foreground">
                     {gradeInfo.tone}
                   </p>
+
+                  <div className="mt-4 inline-flex flex-wrap items-center justify-center gap-1.5 rounded-full border border-border bg-muted/50 px-3 py-1.5 text-xs text-muted-foreground md:justify-start">
+                    <Calculator className="h-3.5 w-3.5 text-coral" />
+                    <span className="font-mono">+{MARK_CORRECT}</span> per
+                    correct ·{' '}
+                    <span className="font-mono">{MARK_WRONG}</span> per wrong ·{' '}
+                    <span className="font-mono">0</span> unanswered
+                  </div>
 
                   <div className="mt-6 flex flex-wrap justify-center gap-2 md:justify-start">
                     <Button
@@ -303,6 +343,11 @@ export default function MockTestResultPage() {
                     <p className="mt-2 text-xs uppercase tracking-widest text-muted-foreground">
                       {t.label}
                     </p>
+                    {t.sub && (
+                      <p className={`mt-1 font-mono text-[11px] ${t.color}`}>
+                        {t.sub}
+                      </p>
+                    )}
                   </div>
                   <div
                     className={`flex h-11 w-11 items-center justify-center rounded-xl bg-background shadow-sm ${t.color}`}
@@ -337,7 +382,14 @@ export default function MockTestResultPage() {
                 {Object.entries(result.sectionScores).map(
                   ([subject, scores], i) => {
                     if (!scores || scores.total <= 0) return null;
-                    const pct = (scores.score / scores.total) * 100;
+                    const sectionWrong =
+                      typeof scores.wrong === 'number' ? scores.wrong : 0;
+                    const sectionMarks =
+                      scores.score * MARK_CORRECT + sectionWrong * MARK_WRONG;
+                    const sectionMax = scores.total * MARK_CORRECT;
+                    const pct =
+                      sectionMax > 0 ? (sectionMarks / sectionMax) * 100 : 0;
+                    const clampedPct = Math.max(0, Math.min(100, pct));
                     const gradient =
                       subjectAccent[subject] ?? 'from-coral to-peach';
                     return (
@@ -348,15 +400,21 @@ export default function MockTestResultPage() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: i * 0.06 }}
                       >
-                        <div className="mb-2 flex items-baseline justify-between">
-                          <p className="text-sm font-semibold tracking-tight">
-                            {subjectNames[subject] || subject}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
+                        <div className="mb-2 flex items-baseline justify-between gap-3">
+                          <div>
+                            <p className="text-sm font-semibold tracking-tight">
+                              {subjectNames[subject] || subject}
+                            </p>
+                            <p className="mt-0.5 text-[11px] text-muted-foreground">
+                              {scores.score} correct · {sectionWrong} wrong ·{' '}
+                              {scores.total} total
+                            </p>
+                          </div>
+                          <p className="text-right text-sm text-muted-foreground">
                             <span className="font-display text-lg italic text-foreground">
-                              {scores.score}
+                              {sectionMarks}
                             </span>{' '}
-                            / {scores.total}{' '}
+                            / {sectionMax}
                             <span className="ml-2 text-xs uppercase tracking-widest">
                               {pct.toFixed(0)}%
                             </span>
@@ -365,7 +423,7 @@ export default function MockTestResultPage() {
                         <div className="relative h-2 overflow-hidden rounded-full bg-muted">
                           <motion.div
                             initial={{ width: 0 }}
-                            whileInView={{ width: `${pct}%` }}
+                            whileInView={{ width: `${clampedPct}%` }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.9, delay: i * 0.06, ease: 'easeOut' }}
                             className={`absolute inset-y-0 left-0 rounded-full bg-gradient-to-r ${gradient}`}
@@ -421,25 +479,29 @@ export default function MockTestResultPage() {
 }
 
 function ScoreOrb({
-  score,
-  total,
+  marks,
+  maxMarks,
   percentage,
 }: {
-  score: number;
-  total: number;
+  marks: number;
+  maxMarks: number;
   percentage: number;
 }) {
+  // The ring can only fill from 0→100. Clamp so negative totals (rare but
+  // possible with heavy negative marking) don't produce NaN geometry.
+  const clamped = Math.max(0, Math.min(100, percentage));
   const spring = useSpring(0, { stiffness: 40, damping: 18 });
   useEffect(() => {
-    spring.set(percentage);
-  }, [spring, percentage]);
+    spring.set(clamped);
+  }, [spring, clamped]);
 
   const pctDisplay = useTransform(spring, (v) => `${Math.round(v)}%`);
-  const scoreSpring = useSpring(0, { stiffness: 40, damping: 18 });
+
+  const marksSpring = useSpring(0, { stiffness: 40, damping: 18 });
   useEffect(() => {
-    scoreSpring.set(score);
-  }, [scoreSpring, score]);
-  const scoreDisplay = useTransform(scoreSpring, (v) => Math.round(v).toString());
+    marksSpring.set(marks);
+  }, [marksSpring, marks]);
+  const marksDisplay = useTransform(marksSpring, (v) => Math.round(v).toString());
 
   // SVG ring geometry
   const size = 220;
@@ -482,10 +544,10 @@ function ScoreOrb({
 
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <motion.span className="font-display text-6xl italic leading-none text-foreground">
-          {scoreDisplay}
+          {marksDisplay}
         </motion.span>
-        <span className="mt-1 text-xs uppercase tracking-[0.25em] text-muted-foreground">
-          of {total}
+        <span className="mt-1 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+          of {maxMarks} marks
         </span>
         <motion.span className="mt-3 rounded-full bg-muted px-3 py-0.5 text-xs font-semibold text-foreground">
           {pctDisplay}
