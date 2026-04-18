@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from '@/components/theme-provider';
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -108,7 +107,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -138,17 +137,10 @@ export default function RootLayout({
             })(window, document, "clarity", "script", "wd7k5hym2x");
           `}
         </Script>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <Toaster />
-          <Analytics />
-          <SpeedInsights />
-        </ThemeProvider>
+        {children}
+        <Toaster />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

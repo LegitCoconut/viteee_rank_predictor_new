@@ -7,51 +7,13 @@ body {
 }
 
 @layer base {
+  /*
+   * Dark-only theme. Tokens live on :root so the page renders correctly
+   * even if the .dark class isn't on <html> for any reason. Tailwind's
+   * `dark:` variants and any third-party components that gate on the
+   * .dark class still work because layout.tsx sets it explicitly.
+   */
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 210 40% 98%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 210 40% 98%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 228 64% 32%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 25 95% 49%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 228 64% 32%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.75rem;
-    --sidebar-background: 228 64% 32%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 25 95% 49%;
-    --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 228 64% 42%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 228 64% 22%;
-    --sidebar-ring: 25 95% 49%;
-
-    /* Premium palette extensions (playful-premium) */
-    --plum: 260 45% 12%;          /* deep plum base for dark showcase backgrounds */
-    --plum-deep: 258 50% 6%;      /* near-black plum */
-    --coral: 8 92% 66%;           /* hero gradient start */
-    --peach: 28 95% 70%;          /* hero gradient end */
-    --mint: 158 72% 64%;          /* success / accent */
-    --sky: 210 95% 68%;           /* data / info accent */
-    --lavender: 272 80% 82%;      /* soft highlight */
-  }
-  .dark {
     --background: 258 45% 5%;
     --foreground: 210 40% 98%;
     --card: 260 40% 9%;
@@ -76,6 +38,7 @@ body {
     --chart-3: 210 95% 68%;
     --chart-4: 272 80% 82%;
     --chart-5: 28 95% 70%;
+    --radius: 0.75rem;
     --sidebar-background: 258 45% 5%;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 8 92% 66%;
@@ -85,6 +48,7 @@ body {
     --sidebar-border: 260 30% 18%;
     --sidebar-ring: 8 92% 66%;
 
+    /* Playful-premium accent palette */
     --plum: 260 45% 10%;
     --plum-deep: 258 50% 4%;
     --coral: 8 92% 66%;

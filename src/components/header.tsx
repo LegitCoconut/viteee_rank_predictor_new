@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ThemeToggle } from './theme-toggle';
 import { Button } from './ui/button';
 
 export function Header() {
@@ -20,7 +19,6 @@ export function Header() {
           <Button variant="ghost" size="sm" asChild className="px-2 sm:px-3">
             <Link href="/mocktest#leaderboard">Leaderboard</Link>
           </Button>
-          <ThemeToggle />
         </nav>
       </div>
     </header>
