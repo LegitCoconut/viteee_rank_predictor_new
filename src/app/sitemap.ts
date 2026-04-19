@@ -31,6 +31,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'yearly' as const,
             priority: 0.3,
         },
+        {
+            path: '/donate',
+            changeFrequency: 'monthly' as const,
+            priority: 0.4,
+        },
     ]
 
     return baseUrls.flatMap(baseUrl =>

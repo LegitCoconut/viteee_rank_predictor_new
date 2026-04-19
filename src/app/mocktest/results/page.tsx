@@ -21,6 +21,7 @@ import {
   Sparkles,
   Calculator,
   MinusCircle,
+  Heart,
 } from 'lucide-react';
 
 // VITEEE-style marking scheme applied on the results page.
@@ -437,6 +438,52 @@ export default function MockTestResultPage() {
             </div>
           </section>
         )}
+
+        {/* Donate ask */}
+        <section className="container mx-auto mt-14 max-w-5xl px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6 }}
+            className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/90 p-6 shadow-lg md:p-8"
+          >
+            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-gradient-to-br from-coral/15 to-peach/15 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-gradient-to-br from-mint/15 to-lavender/15 blur-3xl" />
+
+            <div className="relative z-10 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+              <div className="flex-1">
+                <div className="inline-flex items-center gap-2 rounded-full border border-coral/30 bg-coral/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-coral">
+                  <Heart className="h-3 w-3" />
+                  Liked the test?
+                </div>
+                <h3 className="mt-3 text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
+                  Keep VIT RANKS free for the{' '}
+                  <span className="font-display italic gradient-text">
+                    next
+                  </span>{' '}
+                  student.
+                </h3>
+                <p className="mt-3 max-w-xl text-sm text-muted-foreground md:text-base">
+                  No ads, no paywall, no signup — we&rsquo;ve kept it that way
+                  on purpose. If this attempt helped you, the price of a cup
+                  of chai goes a long way on a student budget.
+                </p>
+              </div>
+              <Button
+                asChild
+                size="lg"
+                className="shimmer-border group h-12 gap-2 rounded-full bg-gradient-to-r from-coral to-peach px-7 text-base font-semibold text-plum-deep shadow-lg shadow-coral/25 hover:from-coral hover:to-peach"
+              >
+                <Link href="/donate">
+                  <Heart className="h-4 w-4 transition-transform group-hover:scale-110" />
+                  Support us
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              </Button>
+            </div>
+          </motion.div>
+        </section>
 
         {/* Footer actions */}
         <section className="container mx-auto mt-14 max-w-5xl px-4 pb-20">

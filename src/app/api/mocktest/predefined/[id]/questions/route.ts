@@ -80,7 +80,7 @@ function recordAttempt(id: number) {
 
 export async function GET(
     _request: Request,
-    { params }: { params: { id: string } },
+    { params }: { params: Promise<{ id: string }> },
 ) {
     if (!R2_PUBLIC_URL) {
         return NextResponse.json(
@@ -89,7 +89,8 @@ export async function GET(
         );
     }
 
-    const id = Number(params.id);
+    const { id: rawId } = await params;
+    const id = Number(rawId);
     if (!Number.isInteger(id) || id < 1 || id > 5) {
         return NextResponse.json({ message: 'Invalid mock test id' }, { status: 400 });
     }

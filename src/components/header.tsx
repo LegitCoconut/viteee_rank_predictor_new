@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Heart } from 'lucide-react';
 import { Button } from './ui/button';
 
 export function Header() {
@@ -18,6 +19,16 @@ export function Header() {
           </Button>
           <Button variant="ghost" size="sm" asChild className="px-2 sm:px-3">
             <Link href="/mocktest#leaderboard">Leaderboard</Link>
+          </Button>
+          <Button
+            size="sm"
+            asChild
+            className="ml-1 h-8 gap-1.5 rounded-full bg-gradient-to-r from-coral to-peach px-3 text-xs font-semibold text-plum-deep shadow-sm shadow-coral/20 hover:from-coral hover:to-peach sm:px-4"
+          >
+            <Link href="/donate">
+              <Heart className="h-3.5 w-3.5" />
+              Donate
+            </Link>
           </Button>
         </nav>
       </div>

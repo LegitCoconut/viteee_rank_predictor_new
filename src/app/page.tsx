@@ -6,7 +6,9 @@ import { HowItWorks } from '@/components/how-it-works';
 import { ImportantDates } from '@/components/important-dates';
 import { FeedbackForm } from '@/components/feedback-form';
 import { WebsiteJsonLd, FAQJsonLd } from '@/components/json-ld';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, Heart, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
   title: "Free VITEEE Mock Tests 2026 | VIT RANKS",
@@ -115,6 +117,42 @@ export default function Home() {
               <div className="shimmer-border rounded-3xl">
                 <div className="relative rounded-3xl border border-border/60 bg-card/80 p-6 shadow-xl backdrop-blur-xl md:p-8">
                   <FeedbackForm />
+                </div>
+              </div>
+            </div>
+
+            {/* Donate nudge */}
+            <div className="relative mx-auto mt-10 max-w-2xl">
+              <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/70 p-6 shadow-lg backdrop-blur-xl md:p-8">
+                <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-coral/15 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-mint/15 blur-3xl" />
+
+                <div className="relative z-10 flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <div className="inline-flex items-center gap-2 rounded-full border border-coral/30 bg-coral/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-coral">
+                      <Heart className="h-3 w-3" />
+                      Or, support us
+                    </div>
+                    <p className="mt-3 text-lg font-semibold tracking-tight md:text-xl">
+                      Not in a feedback mood? Buy us a{' '}
+                      <span className="font-display italic text-coral">cup of chai</span>{' '}
+                      instead.
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Every ₹ goes straight into keeping the mock tests free and ad-free.
+                    </p>
+                  </div>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="shimmer-border group h-11 shrink-0 gap-2 rounded-full bg-gradient-to-r from-coral to-peach px-6 text-sm font-semibold text-plum-deep shadow-lg shadow-coral/25 hover:from-coral hover:to-peach"
+                  >
+                    <Link href="/donate">
+                      <Heart className="h-4 w-4 transition-transform group-hover:scale-110" />
+                      Donate
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    </Link>
+                  </Button>
                 </div>
               </div>
             </div>
