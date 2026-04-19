@@ -46,6 +46,9 @@ export async function POST(req: NextRequest) {
       amount,
       currency: 'INR',
       status: 'claimed',
+      // Thank-you mail delivery tracking — flipped by qp-cropper script.
+      mailSent: false,
+      mailSentAt: null,
       createdAt: new Date(),
     };
     const result = await collection.insertOne(doc);
