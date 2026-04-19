@@ -84,7 +84,7 @@ export default function MockTestResultPage() {
       <div className="flex min-h-dvh flex-col">
         <Header />
         <main className="flex flex-1 items-center justify-center">
-          <p className="text-muted-foreground">Loading results\u2026</p>
+          <p className="text-muted-foreground">Loading results&hellip;</p>
         </main>
         <Footer />
       </div>
@@ -235,7 +235,7 @@ export default function MockTestResultPage() {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="mx-auto mt-4 max-w-xl text-base text-white/70 md:text-lg"
             >
-              Here\u2019s how your attempt broke down. Take a breath, then go
+              Here&rsquo;s how your attempt broke down. Take a breath, then go
               fix what slipped.
             </motion.p>
           </div>

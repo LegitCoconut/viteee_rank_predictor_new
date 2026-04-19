@@ -51,10 +51,30 @@ export const metadata: Metadata = {
 
     // Exam & institute
     'viteee 2026', 'viteee exam', 'vit exam', 'vit entrance exam',
-    'vit eee', 'vitmee', 'vitmee mca', 'vitree',
+    'vit entrance', 'vit entrance exam 2026', 'vit eee', 'vit',
+    'vitmee', 'vitmee mca', 'vitree',
     'vit vellore', 'vit university', 'vit college', 'vit form',
     'vellore institute of technology', 'vellore institute of technology vellore',
     'viteee preparation', 'viteee eligibility',
+
+    // NRI / international / category admissions
+    'vit nri', 'vit nri admission', 'vit nri quota', 'vit nri fees',
+    'vit nri entrance', 'vit nri entrance exam',
+    'viteee nri', 'viteee nri quota',
+    'vit foreign students', 'vit international students',
+    'vit category 1', 'vit category 2', 'vit c2',
+
+    // Admissions / fees / counselling
+    'vit admission', 'vit admission 2026', 'vit b.tech admission',
+    'vit b.tech', 'vit fees', 'vit b.tech fees',
+    'vit counselling', 'vit counselling 2026', 'viteee counselling',
+    'viteee counselling 2026', 'vit hostel', 'vit scholarship',
+
+    // Campus-specific admissions
+    'vit vellore admission', 'vit chennai admission',
+    'vit bhopal admission', 'vit ap admission',
+    'vit vellore admission 2026', 'vit chennai admission 2026',
+    'vit bhopal admission 2026', 'vit ap admission 2026',
   ],
   authors: [{ name: 'VIT RANKS' }],
   creator: 'VIT RANKS',

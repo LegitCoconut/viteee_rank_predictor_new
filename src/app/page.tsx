@@ -48,8 +48,23 @@ export const metadata: Metadata = {
     "viteee application", "viteee form",
 
     // VIT brand queries
-    "vit entrance exam", "vit eee", "vit vellore",
+    "vit", "vit exam", "vit entrance", "vit entrance exam",
+    "vit entrance exam 2026", "vit eee", "vit vellore",
     "vit university", "vellore institute of technology",
+
+    // NRI / category admissions
+    "vit nri", "vit nri admission", "vit nri entrance",
+    "vit nri entrance exam", "viteee nri", "vit category 2",
+    "vit foreign students",
+
+    // Admissions / counselling / fees
+    "vit admission", "vit admission 2026", "vit b.tech admission",
+    "vit b.tech", "vit fees", "vit counselling 2026",
+    "viteee counselling", "viteee counselling 2026",
+
+    // Campus-specific admissions
+    "vit vellore admission", "vit chennai admission",
+    "vit bhopal admission", "vit ap admission",
 
     // Preparation meta
     "viteee preparation", "viteee eligibility",

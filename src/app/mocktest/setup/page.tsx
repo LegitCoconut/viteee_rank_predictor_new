@@ -259,7 +259,7 @@ export default function MockTestSetupPage() {
               transition={{ duration: 0.7, delay: 0.15 }}
               className="mx-auto mt-5 max-w-xl text-base text-white/70 md:text-lg"
             >
-              Read the house rules, fill in a couple of details, and you\u2019re
+              Read the house rules, fill in a couple of details, and you&rsquo;re
               ready to sit down with 125 questions and a 2.5-hour clock.
             </motion.p>
           </div>
@@ -346,7 +346,7 @@ export default function MockTestSetupPage() {
                   Your details
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Just a name and a stream — that\u2019s it.
+                  Just a name and a stream — that&rsquo;s it.
                 </p>
               </div>
             </div>

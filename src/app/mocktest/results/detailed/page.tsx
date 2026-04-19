@@ -58,7 +58,7 @@ export default function DetailedResultsPageWrapper() {
         <div className="flex min-h-dvh flex-col">
           <Header />
           <main className="flex flex-1 items-center justify-center">
-            <p className="text-muted-foreground">Loading detailed results\u2026</p>
+            <p className="text-muted-foreground">Loading detailed results&hellip;</p>
           </main>
           <Footer />
         </div>
@@ -169,7 +169,7 @@ function DetailedResultsPage() {
       <div className="flex min-h-dvh flex-col">
         <Header />
         <main className="flex flex-1 items-center justify-center">
-          <p className="text-muted-foreground">Loading detailed results\u2026</p>
+          <p className="text-muted-foreground">Loading detailed results&hellip;</p>
         </main>
         <Footer />
       </div>

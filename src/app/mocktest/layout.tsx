@@ -37,7 +37,14 @@ export const metadata: Metadata = {
         "viteee slot booking", "viteee otbs", "viteee admit card",
 
         // Brand
-        "vit entrance exam", "vit eee", "vit vellore",
+        "vit", "vit exam", "vit entrance", "vit entrance exam",
+        "vit entrance exam 2026", "vit eee", "vit vellore",
+        "vit university",
+
+        // NRI / admissions context
+        "vit nri", "vit nri admission", "vit nri entrance",
+        "vit nri entrance exam", "viteee nri",
+        "vit admission", "vit admission 2026", "viteee counselling",
     ],
     alternates: {
         canonical: '/mocktest',
