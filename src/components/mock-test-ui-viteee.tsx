@@ -143,10 +143,10 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
       prev.map((ans, index) =>
         index === currentQuestionIndex
           ? {
-              ...ans,
-              answer: option,
-              status: ans.status === "marked" ? "marked" : "answered",
-            }
+            ...ans,
+            answer: option,
+            status: ans.status === "marked" ? "marked" : "answered",
+          }
           : ans
       )
     );
@@ -185,10 +185,10 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
       prev.map((ans, index) =>
         index === currentQuestionIndex
           ? {
-              ...ans,
-              answer: null,
-              status: ans.status === "marked" ? "marked" : "unanswered",
-            }
+            ...ans,
+            answer: null,
+            status: ans.status === "marked" ? "marked" : "unanswered",
+          }
           : ans
       )
     );
@@ -390,7 +390,7 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
             </span>
           </div>
           <div className="ml-2 flex h-8 w-12 items-center justify-center border border-gray-300 bg-white text-[10px] font-bold tracking-wider text-[#1a1a1a]">
-            VIT
+            CBT
           </div>
         </div>
       </div>
@@ -410,17 +410,15 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
                   const idx = subjectToFirstIndex[subj];
                   if (idx !== undefined) goToIndex(idx);
                 }}
-                className={`flex items-center gap-1.5 whitespace-nowrap px-4 py-1.5 text-[11px] font-bold uppercase tracking-wide ${
-                  active
-                    ? "border border-b-0 border-[#2d89ef] bg-white text-[#2d89ef]"
-                    : "border border-transparent bg-[#eef4fb] text-[#2d89ef] hover:bg-[#e2ecf6]"
-                }`}
+                className={`flex items-center gap-1.5 whitespace-nowrap px-4 py-1.5 text-[11px] font-bold uppercase tracking-wide ${active
+                  ? "border border-b-0 border-[#2d89ef] bg-white text-[#2d89ef]"
+                  : "border border-transparent bg-[#eef4fb] text-[#2d89ef] hover:bg-[#e2ecf6]"
+                  }`}
               >
                 {SUBJECT_DISPLAY[subj]}
                 <span
-                  className={`flex h-3.5 w-3.5 items-center justify-center rounded-full text-[9px] text-white ${
-                    active ? "bg-[#2d89ef]" : "bg-[#2d89ef]/70"
-                  }`}
+                  className={`flex h-3.5 w-3.5 items-center justify-center rounded-full text-[9px] text-white ${active ? "bg-[#2d89ef]" : "bg-[#2d89ef]/70"
+                    }`}
                 >
                   i
                 </span>
@@ -452,9 +450,8 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
                   key={currentQuestion._id}
                   src={currentQuestion.imageUrl}
                   alt={`Question ${currentQuestionIndex + 1}`}
-                  className={`mx-auto max-h-[50vh] w-auto object-contain ${
-                    isImageLoading ? "opacity-0" : "opacity-100"
-                  } transition-opacity duration-200`}
+                  className={`mx-auto max-h-[50vh] w-auto object-contain ${isImageLoading ? "opacity-0" : "opacity-100"
+                    } transition-opacity duration-200`}
                   onLoad={() => setIsImageLoading(false)}
                   onError={() => setIsImageLoading(false)}
                 />
@@ -467,9 +464,8 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
                   return (
                     <label
                       key={opt}
-                      className={`flex cursor-pointer items-center gap-3 rounded-sm border border-transparent px-2 py-1.5 text-[13px] hover:bg-gray-50 ${
-                        selected ? "bg-[#e6f1fc]" : ""
-                      }`}
+                      className={`flex cursor-pointer items-center gap-3 rounded-sm border border-transparent px-2 py-1.5 text-[13px] hover:bg-gray-50 ${selected ? "bg-[#e6f1fc]" : ""
+                        }`}
                     >
                       <span className="relative flex h-4 w-4 items-center justify-center rounded-full border border-gray-400 bg-white">
                         {selected && (
@@ -582,7 +578,7 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
 
       {/* Version footer */}
       <div className="shrink-0 border-t border-gray-300 bg-[#f5f5f5] px-3 py-1 text-center text-[10px] text-gray-500">
-        Version : 17.07.00
+        Latest Deployment: 22/04/2026 11:35PM
       </div>
 
       {/* Dialogs */}
@@ -824,6 +820,8 @@ function InstructionsContent() {
           for you to complete the examination. When the timer reaches zero, the
           examination will end by itself.
         </li>
+        <li>This is a implementation of the actual VITEEE CBT UI to give you a feel of the actual test.</li>
+        <li>For any kind of issues with the platform, contact us thorugh the feedback form or via our email vitranks@malabarmatrix.site</li>
         <li>The Question Palette on the right shows the status of each question:</li>
       </ol>
       <ul className="space-y-2 pl-2 text-xs">
@@ -999,7 +997,7 @@ function ViteeeCalculator() {
         <Btn variant="eq" onClick={pressEquals}>=</Btn>
       </div>
       <p className="text-[10px] text-gray-500">
-        Basic 4-function + √ / x² / negate. For full trig/log, use your OS calculator.
+        Basic 4-function + √ / x² / negate. For full trig/log, use your OS calculator. A virtual calculator with more functions will be available on the actual VITEEE CBT test.
       </p>
     </div>
   );
