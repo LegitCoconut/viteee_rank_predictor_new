@@ -18,7 +18,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Loader2, Menu } from 'lucide-react';
+import { Loader2, Menu, X } from 'lucide-react';
 import type { QuestionWithImage, Answer } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
 import { Skeleton } from './ui/skeleton';
@@ -109,6 +109,16 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
     setAnswers(prev =>
       prev.map((ans, index) =>
         index === currentQuestionIndex ? { ...ans, status: ans.status === 'marked' ? (ans.answer ? 'answered' : 'unanswered') : 'marked' } : ans
+      )
+    );
+  };
+
+  const handleClearResponse = () => {
+    setAnswers(prev =>
+      prev.map((ans, index) =>
+        index === currentQuestionIndex
+          ? { ...ans, answer: null, status: ans.status === 'marked' ? 'marked' : 'unanswered' }
+          : ans
       )
     );
   };
@@ -383,6 +393,21 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
               }
             }} disabled={currentQuestionIndex === questions.length - 1}>Next</Button>
           </div>
+          <Button
+            onClick={handleClearResponse}
+            disabled={!currentAnswer?.answer}
+            className="shrink-0 w-full flex items-center justify-center gap-2 transition-all"
+            style={{
+              backgroundColor: currentAnswer?.answer ? '#ef4444' : '#9ca3af',
+              color: 'white',
+              border: 'none',
+              opacity: currentAnswer?.answer ? 1 : 0.6,
+              cursor: currentAnswer?.answer ? 'pointer' : 'not-allowed',
+            }}
+          >
+            <X className="h-4 w-4" />
+            Clear Selection
+          </Button>
           <Button onClick={handleMarkForReview} variant={currentAnswer?.status === 'marked' ? 'secondary' : 'outline'} className="shrink-0">
             {currentAnswer?.status === 'marked' ? 'Unmark Review' : 'Mark for Review'}
           </Button>
@@ -425,6 +450,22 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
             </Button>
           ))}
         </div>
+        {/* Clear Selection */}
+        <Button
+          onClick={handleClearResponse}
+          disabled={!currentAnswer?.answer}
+          className="w-full flex items-center justify-center gap-2 transition-all"
+          style={{
+            backgroundColor: currentAnswer?.answer ? '#ef4444' : '#9ca3af',
+            color: 'white',
+            border: 'none',
+            opacity: currentAnswer?.answer ? 1 : 0.6,
+            cursor: currentAnswer?.answer ? 'pointer' : 'not-allowed',
+          }}
+        >
+          <X className="h-4 w-4" />
+          Clear Selection
+        </Button>
         {/* Navigation Row */}
         <div className="grid grid-cols-3 gap-2">
           <Button
