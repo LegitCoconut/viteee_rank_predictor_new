@@ -3,6 +3,7 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Hero } from '@/components/ui/animated-hero';
 import { HowItWorks } from '@/components/how-it-works';
+import { DualUIShowcase } from '@/components/dual-ui-showcase';
 import { ImportantDates } from '@/components/important-dates';
 import { FeedbackForm } from '@/components/feedback-form';
 import { Testimonials } from '@/components/testimonials';
@@ -105,6 +106,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <HowItWorks />
+        <DualUIShowcase />
         <ImportantDates />
         <Testimonials />
 

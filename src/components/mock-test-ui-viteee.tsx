@@ -301,8 +301,8 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
   return (
     <div
       ref={elem}
-      className="viteee-ui relative flex h-[100dvh] w-full flex-col overflow-hidden bg-white text-[#222] font-sans"
-      style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}
+      className="viteee-ui relative flex h-[100dvh] w-full flex-col overflow-hidden bg-white text-[#222]"
+      style={{ fontFamily: 'Verdana, "DejaVu Sans", Tahoma, Geneva, sans-serif' }}
     >
       {!isFullscreen && (
         <div className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-white/95 p-4 text-center backdrop-blur-sm">
