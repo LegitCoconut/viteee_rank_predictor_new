@@ -1,14 +1,19 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import NextImage from 'next/image';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { Loader2, CheckCircle } from 'lucide-react';
+import { Loader2, CheckCircle, Monitor } from 'lucide-react';
 import { MockTestUI } from '@/components/mock-test-ui';
+import { MockTestUIViteee } from '@/components/mock-test-ui-viteee';
 import type { QuestionWithImage } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+
+const LG_BREAKPOINT_PX = 1024;
+type ExamInterface = 'modern' | 'viteee';
 
 export default function MockTestStartPage() {
   const router = useRouter();
@@ -18,6 +23,32 @@ export default function MockTestStartPage() {
   const [error, setError] = useState<string | null>(null);
   const [preloadProgress, setPreloadProgress] = useState(0);
   const [isTestStarted, setIsTestStarted] = useState(false);
+  const [viewportAllowsViteee, setViewportAllowsViteee] = useState(true);
+  const [examInterface, setExamInterface] = useState<ExamInterface>('modern');
+
+  useEffect(() => {
+    const check = () => setViewportAllowsViteee(window.innerWidth >= LG_BREAKPOINT_PX);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('mockTestExamInterface');
+      if (stored === 'viteee' || stored === 'modern') {
+        setExamInterface(stored);
+      }
+    } catch {
+      // localStorage unavailable
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!viewportAllowsViteee && examInterface === 'viteee') {
+      setExamInterface('modern');
+    }
+  }, [viewportAllowsViteee, examInterface]);
 
   useEffect(() => {
     const data = sessionStorage.getItem('mockTestSetup');
@@ -107,8 +138,30 @@ export default function MockTestStartPage() {
   }
 
   if (isTestStarted) {
-    return <MockTestUI questions={questions} setupData={setupData} />;
+    const wantsViteee = examInterface === 'viteee' && viewportAllowsViteee;
+    return wantsViteee
+      ? <MockTestUIViteee questions={questions} setupData={setupData} />
+      : <MockTestUI questions={questions} setupData={setupData} />;
   }
+
+  const pickUI = (choice: ExamInterface) => {
+    if (choice === 'viteee' && !viewportAllowsViteee) return;
+    setExamInterface(choice);
+    try {
+      localStorage.setItem('mockTestExamInterface', choice);
+    } catch {
+      // ignore
+    }
+  };
+
+  const startTest = () => {
+    try {
+      localStorage.setItem('mockTestExamInterface', examInterface);
+    } catch {
+      // ignore
+    }
+    setIsTestStarted(true);
+  };
 
   return (
     <div className="flex flex-col min-h-dvh">
@@ -134,13 +187,43 @@ export default function MockTestStartPage() {
           </div>
         )}
         {loadingState === 'ready' && (
-          <div className="flex flex-col items-center gap-4">
-            <CheckCircle className="h-16 w-16 text-green-500 mb-4" />
-            <h1 className="text-3xl font-headline font-semibold">Your test is ready!</h1>
-            <p className="text-muted-foreground">The test will start in fullscreen mode.</p>
-            <Button size="lg" onClick={() => setIsTestStarted(true)}>
-              Start Test
-            </Button>
+          <div className="flex w-full max-w-5xl flex-col items-center gap-6">
+            <CheckCircle className="h-14 w-14 text-green-500" />
+            <div className="text-center">
+              <h1 className="text-3xl font-headline font-semibold">Your test is ready.</h1>
+              <p className="mt-2 text-muted-foreground">
+                Pick the interface you want for this test. You can change your
+                mind any time — your last choice is remembered.
+              </p>
+            </div>
+
+            <div className="grid w-full gap-4 md:grid-cols-2">
+              <UIPreviewCard
+                title="Modern"
+                subtitle="Clean, dark UI designed for this site. Works on any device."
+                imageSrc="/ui-vitranks.png"
+                selected={examInterface === 'modern'}
+                onClick={() => pickUI('modern')}
+              />
+              <UIPreviewCard
+                title="VITEEE-style"
+                subtitle="Mirrors the official VITEEE CBT interface — sections, palette, Mark-for-Review."
+                imageSrc="/vit-ui.png"
+                selected={examInterface === 'viteee'}
+                onClick={() => pickUI('viteee')}
+                disabled={!viewportAllowsViteee}
+                disabledHint="Available on laptop / tablet only"
+              />
+            </div>
+
+            <div className="flex flex-col items-center gap-2">
+              <Button size="lg" onClick={startTest}>
+                Start Test
+              </Button>
+              <p className="text-xs text-muted-foreground">
+                The test will start in fullscreen mode.
+              </p>
+            </div>
           </div>
         )}
         {loadingState === 'error' && (
@@ -152,5 +235,66 @@ export default function MockTestStartPage() {
       </main>
       <Footer />
     </div>
+  );
+}
+
+function UIPreviewCard({
+  title,
+  subtitle,
+  imageSrc,
+  selected,
+  disabled,
+  disabledHint,
+  onClick,
+}: {
+  title: string;
+  subtitle: string;
+  imageSrc: string;
+  selected: boolean;
+  disabled?: boolean;
+  disabledHint?: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-pressed={selected}
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border bg-card p-3 text-left transition-all ${
+        disabled
+          ? 'cursor-not-allowed border-dashed border-border/50 opacity-60'
+          : selected
+          ? 'border-coral shadow-lg shadow-coral/10 ring-1 ring-coral'
+          : 'border-border/70 hover:border-coral/50 hover:shadow-md'
+      }`}
+    >
+      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-border/60 bg-background">
+        <NextImage
+          src={imageSrc}
+          alt={`${title} exam UI preview`}
+          fill
+          sizes="(min-width: 768px) 480px, 100vw"
+          className="object-cover object-top"
+          priority
+        />
+        {selected && (
+          <div className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-coral px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-plum-deep shadow">
+            <CheckCircle className="h-3 w-3" /> Selected
+          </div>
+        )}
+      </div>
+      <div className="mt-3 flex items-start justify-between gap-3 px-1">
+        <div>
+          <p className="flex items-center gap-2 text-sm font-semibold tracking-tight">
+            <Monitor className="h-4 w-4 text-muted-foreground" />
+            {title}
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {disabled && disabledHint ? disabledHint : subtitle}
+          </p>
+        </div>
+      </div>
+    </button>
   );
 }
