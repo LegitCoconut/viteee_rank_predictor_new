@@ -5,6 +5,7 @@ import { Hero } from '@/components/ui/animated-hero';
 import { HowItWorks } from '@/components/how-it-works';
 import { ImportantDates } from '@/components/important-dates';
 import { FeedbackForm } from '@/components/feedback-form';
+import { Testimonials } from '@/components/testimonials';
 import { WebsiteJsonLd, FAQJsonLd } from '@/components/json-ld';
 import { MessageCircle, Heart, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -105,6 +106,7 @@ export default function Home() {
         <Hero />
         <HowItWorks />
         <ImportantDates />
+        <Testimonials />
 
         <section id="feedback" className="relative overflow-hidden py-24 md:py-32">
           <div className="pointer-events-none absolute inset-0 -z-10">
