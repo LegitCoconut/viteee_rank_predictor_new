@@ -9,12 +9,10 @@ import { Button } from '@/components/ui/button';
 import {
   BookOpen,
   Pencil,
-  ArrowDown,
   FileText,
   Clock,
   HelpCircle,
   Zap,
-  Lock,
   Shuffle,
   ListChecks,
   RotateCcw,
@@ -45,6 +43,7 @@ export default function MockTestPage() {
   const opacityContent = useTransform(scrollYProgress, [0, 0.7, 1], [1, 0.9, 0]);
 
   const [predefined, setPredefined] = useState<PredefinedMockTestSummary[] | null>(null);
+  const [mobileTab, setMobileTab] = useState<'random' | 'predefined'>('random');
   const [takenPredefinedIds, setTakenPredefinedIds] = useState<Set<number>>(new Set());
 
   useEffect(() => {
@@ -83,10 +82,6 @@ export default function MockTestPage() {
     syllabusRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleScrollToContent = () => {
-    contentRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const handleScrollToPattern = () => {
     patternRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -122,7 +117,7 @@ export default function MockTestPage() {
 
           <motion.div
             style={{ y: yContent, opacity: opacityContent }}
-            className="container relative z-10 mx-auto px-4 py-24 md:py-0"
+            className="container relative z-10 mx-auto px-4 py-24 pb-32 md:py-0 md:pb-0"
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -169,7 +164,7 @@ export default function MockTestPage() {
               {[
                 { icon: HelpCircle, value: '125', label: 'Questions' },
                 { icon: Clock, value: '2.5h', label: 'Timer' },
-                { icon: Zap, value: '0s', label: 'Wait for results' },
+                { icon: Zap, value: '10k+', label: 'Mocks taken' },
               ].map((s) => (
                 <div
                   key={s.label}
@@ -239,75 +234,35 @@ export default function MockTestPage() {
                 <ListChecks className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 <span>Or pick a curated mock test</span>
               </div>
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 md:grid-cols-5">
-                {[1, 2, 3, 4, 5].map((id) => {
-                  const slot = predefinedById(id);
-                  const loading = predefined === null;
-                  const active = !!slot?.active;
-                  const label = slot?.name ?? `Mock Test ${id}`;
-                  const base =
-                    'h-16 rounded-2xl border flex flex-col items-center justify-center gap-1 text-xs sm:text-sm font-medium transition-all backdrop-blur-md';
-                  if (loading) {
-                    return (
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+                {predefined === null
+                  ? [1, 2].map((i) => (
                       <div
-                        key={id}
-                        className={`${base} animate-pulse border-white/10 bg-white/5`}
+                        key={i}
+                        className="h-16 w-36 sm:w-40 animate-pulse rounded-2xl border border-white/10 bg-white/5"
                         aria-hidden
-                      >
-                        <span className="opacity-0">Mock Test {id}</span>
-                      </div>
-                    );
-                  }
-                  if (!active) {
-                    return (
-                      <div
-                        key={id}
-                        className={`${base} cursor-not-allowed border-white/10 bg-white/5 text-white/40`}
-                        title="Coming soon"
-                      >
-                        <Lock className="h-3.5 w-3.5" />
-                        <span>{label}</span>
-                      </div>
-                    );
-                  }
-                  const hasTaken = takenPredefinedIds.has(id);
-                  const Icon = hasTaken ? RotateCcw : Pencil;
-                  return (
-                    <Link
-                      key={id}
-                      href={`/mocktest/setup?mode=predefined&id=${id}`}
-                      className={`${base} border-white/15 bg-white/10 text-white hover:-translate-y-0.5 hover:border-coral/40 hover:bg-white/20`}
-                      title={hasTaken ? 'Retake this test' : undefined}
-                    >
-                      <Icon className="h-3.5 w-3.5 text-coral" />
-                      <span>{label}</span>
-                    </Link>
-                  );
-                })}
+                      />
+                    ))
+                  : [1, 2, 3, 4, 5].map((id) => {
+                      const slot = predefinedById(id);
+                      if (!slot?.active) return null;
+                      const label = slot?.name ?? `Mock Test ${id}`;
+                      const hasTaken = takenPredefinedIds.has(id);
+                      const Icon = hasTaken ? RotateCcw : Pencil;
+                      return (
+                        <Link
+                          key={id}
+                          href={`/mocktest/setup?mode=predefined&id=${id}`}
+                          className="h-16 w-36 sm:w-40 rounded-2xl border border-white/15 bg-white/10 flex flex-col items-center justify-center gap-1 text-xs sm:text-sm font-medium text-white backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-coral/40 hover:bg-white/20"
+                          title={hasTaken ? 'Retake this test' : undefined}
+                        >
+                          <Icon className="h-3.5 w-3.5 text-coral" />
+                          <span>{label}</span>
+                        </Link>
+                      );
+                    })}
               </div>
             </motion.div>
-          </motion.div>
-
-          {/* Scroll hint */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.4, duration: 1 }}
-            className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2"
-          >
-            <button
-              onClick={handleScrollToContent}
-              className="flex flex-col items-center gap-2 text-white/50 transition hover:text-white/80"
-              aria-label="Scroll to content"
-            >
-              <span className="text-[10px] uppercase tracking-[0.25em]">Your history</span>
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <ArrowDown className="h-3.5 w-3.5" />
-              </motion.div>
-            </button>
           </motion.div>
 
           {/* Fade into next section */}
@@ -330,9 +285,37 @@ export default function MockTestPage() {
                   Beat the best. Your name could be here.
                 </p>
               </div>
+              {/* Mobile tab switcher */}
+              <div className="flex md:hidden mb-5 w-fit mx-auto rounded-full border border-border bg-muted/50 p-1">
+                <button
+                  onClick={() => setMobileTab('random')}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                    mobileTab === 'random'
+                      ? 'bg-background shadow text-foreground'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  Random Tests
+                </button>
+                <button
+                  onClick={() => setMobileTab('predefined')}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                    mobileTab === 'predefined'
+                      ? 'bg-background shadow text-foreground'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  Mock Tests
+                </button>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-                <Leaderboard mode="random" />
-                <Leaderboard mode="predefined" />
+                <div className={mobileTab === 'random' ? 'block' : 'hidden md:block'}>
+                  <Leaderboard mode="random" />
+                </div>
+                <div className={mobileTab === 'predefined' ? 'block' : 'hidden md:block'}>
+                  <Leaderboard mode="predefined" />
+                </div>
               </div>
             </div>
           </section>

@@ -73,7 +73,11 @@ export default function MockTestStartPage() {
         if (!response.ok) {
           throw new Error('Failed to fetch questions. Please try again.');
         }
-        const data: QuestionWithImage[] = await response.json();
+        let data: QuestionWithImage[] = await response.json();
+
+        if (setupData.mode === 'predefined') {
+          data = shuffleWithinSubjects(data);
+        }
 
         if (data.length < 125) {
           throw new Error(`Failed to load all questions. Only got ${data.length}/125.`);
@@ -236,6 +240,31 @@ export default function MockTestStartPage() {
       <Footer />
     </div>
   );
+}
+
+const SUBJECT_ORDER = ['maths', 'physics', 'chemistry', 'apt_eng'];
+
+function shuffleWithinSubjects(questions: QuestionWithImage[]): QuestionWithImage[] {
+  const groups = new Map<string, QuestionWithImage[]>();
+  for (const q of questions) {
+    const g = groups.get(q.subject) ?? [];
+    g.push(q);
+    groups.set(q.subject, g);
+  }
+  for (const qs of groups.values()) {
+    for (let i = qs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [qs[i], qs[j]] = [qs[j], qs[i]];
+    }
+  }
+  const ordered: QuestionWithImage[] = [];
+  for (const s of SUBJECT_ORDER) {
+    if (groups.has(s)) ordered.push(...groups.get(s)!);
+  }
+  for (const [subj, qs] of groups) {
+    if (!SUBJECT_ORDER.includes(subj)) ordered.push(...qs);
+  }
+  return ordered;
 }
 
 function UIPreviewCard({
