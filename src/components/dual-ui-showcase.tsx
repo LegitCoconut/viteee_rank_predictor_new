@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Layers, Monitor, Sparkles, Check } from "lucide-react";
@@ -23,7 +22,7 @@ const surfaces: Surface[] = [
     title: "Modern",
     subtitle:
       "Our own clean, dark take on the CBT — built for a laptop, a phone, whatever's in front of you.",
-    imageSrc: "/ui-vitranks.png",
+    imageSrc: "/ui-vitranks.webp",
     imageAlt: "VIT Ranks modern exam UI — dark theme, A/B/C/D buttons, per-subject palette",
     features: [
       "Works on laptop, tablet, and phone",
@@ -38,7 +37,7 @@ const surfaces: Surface[] = [
     title: "VITEEE-style",
     subtitle:
       "Mirrors the official VITEEE CBT interface so you walk into test day with muscle memory already in place.",
-    imageSrc: "/vit-ui.png",
+    imageSrc: "/vit-ui.webp",
     imageAlt: "VITEEE-style CBT UI — section tabs, numbered palette, Save & Next",
     features: [
       "Section + subject tabs",
@@ -170,12 +169,12 @@ function SurfaceCard({ surface, index }: { surface: Surface; index: number }) {
       </div>
 
       <div className="relative mt-4 aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border/60 bg-background">
-        <Image
+        <img
           src={surface.imageSrc}
           alt={surface.imageAlt}
-          fill
-          sizes="(min-width: 768px) 560px, 100vw"
-          className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
+          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
+          loading="lazy"
+          decoding="async"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
       </div>

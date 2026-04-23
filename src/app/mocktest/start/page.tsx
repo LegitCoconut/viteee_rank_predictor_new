@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import NextImage from 'next/image';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Loader2, CheckCircle, Monitor } from 'lucide-react';
@@ -205,14 +204,14 @@ export default function MockTestStartPage() {
               <UIPreviewCard
                 title="Modern"
                 subtitle="Clean, dark UI designed for this site. Works on any device."
-                imageSrc="/ui-vitranks.png"
+                imageSrc="/ui-vitranks.webp"
                 selected={examInterface === 'modern'}
                 onClick={() => pickUI('modern')}
               />
               <UIPreviewCard
                 title="VITEEE-style"
                 subtitle="Mirrors the official VITEEE CBT interface — sections, palette, Mark-for-Review."
-                imageSrc="/vit-ui.png"
+                imageSrc="/vit-ui.webp"
                 selected={examInterface === 'viteee'}
                 onClick={() => pickUI('viteee')}
                 disabled={!viewportAllowsViteee}
@@ -299,13 +298,12 @@ function UIPreviewCard({
       }`}
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-border/60 bg-background">
-        <NextImage
+        <img
           src={imageSrc}
           alt={`${title} exam UI preview`}
-          fill
-          sizes="(min-width: 768px) 480px, 100vw"
-          className="object-cover object-top"
-          priority
+          className="absolute inset-0 w-full h-full object-cover object-top"
+          loading="eager"
+          decoding="async"
         />
         {selected && (
           <div className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-coral px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-plum-deep shadow">
