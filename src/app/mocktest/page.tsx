@@ -19,6 +19,7 @@ import {
   ListChecks,
   RotateCcw,
   Sparkles,
+  Trophy,
 } from 'lucide-react';
 import type { PredefinedMockTestSummary } from '@/lib/types';
 import { SyllabusSection } from '@/components/syllabus-section';
@@ -315,7 +316,27 @@ export default function MockTestPage() {
 
         <div ref={contentRef}>
           <PastResults />
-          <Leaderboard />
+
+          {/* Split leaderboard */}
+          <section id="leaderboard" className="py-12 md:py-20">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-8 md:mb-12">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                  <Trophy className="h-3.5 w-3.5" />
+                  Leaderboard
+                </div>
+                <h2 className="text-3xl md:text-5xl font-headline tracking-tighter font-semibold">Top Scorers</h2>
+                <p className="text-sm md:text-lg text-muted-foreground mt-2 md:mt-3 max-w-2xl mx-auto px-2">
+                  Beat the best. Your name could be here.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <Leaderboard mode="random" />
+                <Leaderboard mode="predefined" />
+              </div>
+            </div>
+          </section>
+
           <div ref={patternRef}>
             <MockTestPattern />
           </div>

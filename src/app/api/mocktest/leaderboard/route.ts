@@ -7,7 +7,10 @@ const LEADERBOARD_KEY = 'mocktest:leaderboard';
 const FETCH_LIMIT = 50;
 const DISPLAY_LIMIT = 10;
 
-export async function GET() {
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const mode = searchParams.get('mode'); // 'random' | 'predefined' | null (all)
+
     try {
         const members = await redis.zrange<string[]>(LEADERBOARD_KEY, 0, FETCH_LIMIT - 1, { rev: true });
 
@@ -16,6 +19,9 @@ export async function GET() {
         for (const m of members ?? []) {
             try {
                 const parsed = typeof m === 'string' ? JSON.parse(m) : m;
+                const label: string = parsed?.testLabel ?? '';
+                if (mode === 'random' && label !== 'Random Test') continue;
+                if (mode === 'predefined' && label === 'Random Test') continue;
                 const name = parsed?.name ? String(parsed.name).trim().toLowerCase() : '';
                 if (!name || seen.has(name)) continue;
                 seen.add(name);
