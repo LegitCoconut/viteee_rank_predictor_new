@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Layers, Monitor, Sparkles, Check } from "lucide-react";
-import { useCachedImage } from "@/lib/use-cached-image";
 
 type Surface = {
   key: "modern" | "viteee";
@@ -146,7 +145,6 @@ export function DualUIShowcase() {
 
 function SurfaceCard({ surface, index }: { surface: Surface; index: number }) {
   const tint = tintStyles[surface.tint];
-  const cachedSrc = useCachedImage(surface.imageSrc);
   return (
     <motion.div
       initial={{ opacity: 0, y: 32 }}
@@ -172,12 +170,11 @@ function SurfaceCard({ surface, index }: { surface: Surface; index: number }) {
 
       <div className="relative mt-4 aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border/60 bg-background">
         <img
-          src={cachedSrc}
+          src={surface.imageSrc}
           alt={surface.imageAlt}
           className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
           loading="lazy"
           decoding="async"
-          crossOrigin="anonymous"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
       </div>

@@ -10,7 +10,6 @@ import { MockTestUIViteee } from '@/components/mock-test-ui-viteee';
 import type { QuestionWithImage } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { useCachedImage } from '@/lib/use-cached-image';
 
 const LG_BREAKPOINT_PX = 1024;
 type ExamInterface = 'modern' | 'viteee';
@@ -284,7 +283,6 @@ function UIPreviewCard({
   disabledHint?: string;
   onClick: () => void;
 }) {
-  const cachedSrc = useCachedImage(imageSrc);
   return (
     <button
       type="button"
@@ -301,12 +299,11 @@ function UIPreviewCard({
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-border/60 bg-background">
         <img
-          src={cachedSrc}
+          src={imageSrc}
           alt={`${title} exam UI preview`}
           className="absolute inset-0 w-full h-full object-cover object-top"
           loading="eager"
           decoding="async"
-          crossOrigin="anonymous"
         />
         {selected && (
           <div className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-coral px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-plum-deep shadow">
