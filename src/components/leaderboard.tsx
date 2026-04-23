@@ -18,6 +18,7 @@ interface Entry {
 
 interface LeaderboardProps {
     mode?: 'random' | 'predefined';
+    initialData?: Entry[];
 }
 
 const MARK_CORRECT = 4;
@@ -64,12 +65,13 @@ const BOARD_META = {
     },
 };
 
-export function Leaderboard({ mode }: LeaderboardProps) {
-    const [entries, setEntries] = useState<Entry[] | null>(null);
+export function Leaderboard({ mode, initialData }: LeaderboardProps) {
+    const [entries, setEntries] = useState<Entry[] | null>(initialData ?? null);
     const meta = BOARD_META[mode ?? 'all'];
     const Icon = meta.icon;
 
     useEffect(() => {
+        if (initialData !== undefined) return; // data provided by parent — skip fetch
         let cancelled = false;
         const url = mode
             ? `/api/mocktest/leaderboard?mode=${mode}`
@@ -84,7 +86,7 @@ export function Leaderboard({ mode }: LeaderboardProps) {
             }
         })();
         return () => { cancelled = true; };
-    }, [mode]);
+    }, [mode, initialData]);
 
     return (
         <Card className="border-border/50 shadow-sm h-full flex flex-col">

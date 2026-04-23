@@ -7,16 +7,46 @@ const LEADERBOARD_KEY = 'mocktest:leaderboard';
 const FETCH_LIMIT = 50;
 const DISPLAY_LIMIT = 10;
 
+function filterEntries(members: string[], isRandom: boolean): any[] {
+    const seen = new Set<string>();
+    const entries: any[] = [];
+    for (const m of members) {
+        try {
+            const parsed = typeof m === 'string' ? JSON.parse(m) : m;
+            const label: string = parsed?.testLabel ?? '';
+            const matchesMode = isRandom ? label === 'Random Test' : label !== 'Random Test';
+            if (!matchesMode) continue;
+            const name = parsed?.name ? String(parsed.name).trim().toLowerCase() : '';
+            if (!name || seen.has(name)) continue;
+            seen.add(name);
+            entries.push(parsed);
+            if (entries.length >= DISPLAY_LIMIT) break;
+        } catch {
+            // skip unparseable members
+        }
+    }
+    return entries;
+}
+
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
-    const mode = searchParams.get('mode'); // 'random' | 'predefined' | null (all)
+    const split = searchParams.get('split') === 'true';
 
     try {
-        const members = await redis.zrange<string[]>(LEADERBOARD_KEY, 0, FETCH_LIMIT - 1, { rev: true });
+        const members = (await redis.zrange<string[]>(LEADERBOARD_KEY, 0, FETCH_LIMIT - 1, { rev: true })) ?? [];
 
+        if (split) {
+            return NextResponse.json({
+                random: filterEntries(members, true),
+                predefined: filterEntries(members, false),
+            });
+        }
+
+        // legacy single-mode path
+        const mode = searchParams.get('mode');
         const seen = new Set<string>();
         const entries: any[] = [];
-        for (const m of members ?? []) {
+        for (const m of members) {
             try {
                 const parsed = typeof m === 'string' ? JSON.parse(m) : m;
                 const label: string = parsed?.testLabel ?? '';
@@ -27,14 +57,13 @@ export async function GET(request: Request) {
                 seen.add(name);
                 entries.push(parsed);
                 if (entries.length >= DISPLAY_LIMIT) break;
-            } catch {
-                // skip unparseable members
-            }
+            } catch {}
         }
-
         return NextResponse.json(entries);
     } catch (error) {
         console.error('Failed to read leaderboard:', error);
-        return NextResponse.json([], { status: 200 });
+        return split
+            ? NextResponse.json({ random: [], predefined: [] }, { status: 200 })
+            : NextResponse.json([], { status: 200 });
     }
 }

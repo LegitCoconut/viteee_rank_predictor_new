@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Layers, Monitor, Sparkles, Check } from "lucide-react";
+import { useCachedImage } from "@/lib/use-cached-image";
 
 type Surface = {
   key: "modern" | "viteee";
@@ -22,7 +23,7 @@ const surfaces: Surface[] = [
     title: "Modern",
     subtitle:
       "Our own clean, dark take on the CBT — built for a laptop, a phone, whatever's in front of you.",
-    imageSrc: "/ui-vitranks.webp",
+    imageSrc: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/images/ui-vitranks.webp`,
     imageAlt: "VIT Ranks modern exam UI — dark theme, A/B/C/D buttons, per-subject palette",
     features: [
       "Works on laptop, tablet, and phone",
@@ -33,11 +34,11 @@ const surfaces: Surface[] = [
   },
   {
     key: "viteee",
-    eyebrow: "VITEEE-faithful",
+    eyebrow: "VITEEE-CBT",
     title: "VITEEE-style",
     subtitle:
       "Mirrors the official VITEEE CBT interface so you walk into test day with muscle memory already in place.",
-    imageSrc: "/vit-ui.webp",
+    imageSrc: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/images/vit-ui.webp`,
     imageAlt: "VITEEE-style CBT UI — section tabs, numbered palette, Save & Next",
     features: [
       "Section + subject tabs",
@@ -145,6 +146,7 @@ export function DualUIShowcase() {
 
 function SurfaceCard({ surface, index }: { surface: Surface; index: number }) {
   const tint = tintStyles[surface.tint];
+  const cachedSrc = useCachedImage(surface.imageSrc);
   return (
     <motion.div
       initial={{ opacity: 0, y: 32 }}
@@ -170,11 +172,12 @@ function SurfaceCard({ surface, index }: { surface: Surface; index: number }) {
 
       <div className="relative mt-4 aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border/60 bg-background">
         <img
-          src={surface.imageSrc}
+          src={cachedSrc}
           alt={surface.imageAlt}
           className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
           loading="lazy"
           decoding="async"
+          crossOrigin="anonymous"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
       </div>
@@ -194,9 +197,8 @@ function SurfaceCard({ surface, index }: { surface: Surface; index: number }) {
               className="flex items-start gap-2 text-sm text-foreground/80"
             >
               <Check
-                className={`mt-0.5 h-4 w-4 flex-shrink-0 ${
-                  surface.tint === "mint" ? "text-mint" : "text-coral"
-                }`}
+                className={`mt-0.5 h-4 w-4 flex-shrink-0 ${surface.tint === "mint" ? "text-mint" : "text-coral"
+                  }`}
               />
               <span>{f}</span>
             </li>

@@ -45,6 +45,7 @@ export default function MockTestPage() {
   const [predefined, setPredefined] = useState<PredefinedMockTestSummary[] | null>(null);
   const [mobileTab, setMobileTab] = useState<'random' | 'predefined'>('random');
   const [takenPredefinedIds, setTakenPredefinedIds] = useState<Set<number>>(new Set());
+  const [leaderboardData, setLeaderboardData] = useState<{ random: any[]; predefined: any[] } | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -55,6 +56,19 @@ export default function MockTestPage() {
         setPredefined(list);
       } catch {
         setPredefined([]);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('/api/mocktest/leaderboard?split=true');
+        if (!res.ok) throw new Error('failed');
+        const data = await res.json();
+        setLeaderboardData(data);
+      } catch {
+        setLeaderboardData({ random: [], predefined: [] });
       }
     })();
   }, []);
@@ -311,10 +325,10 @@ export default function MockTestPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
                 <div className={mobileTab === 'random' ? 'block' : 'hidden md:block'}>
-                  <Leaderboard mode="random" />
+                  <Leaderboard mode="random" initialData={leaderboardData?.random} />
                 </div>
                 <div className={mobileTab === 'predefined' ? 'block' : 'hidden md:block'}>
-                  <Leaderboard mode="predefined" />
+                  <Leaderboard mode="predefined" initialData={leaderboardData?.predefined} />
                 </div>
               </div>
             </div>
