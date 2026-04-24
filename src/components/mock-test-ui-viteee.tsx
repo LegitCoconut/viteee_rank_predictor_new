@@ -164,6 +164,13 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
   );
 
   const handleSaveAndNext = () => {
+    setAnswers((prev) =>
+      prev.map((ans, index) =>
+        index === currentQuestionIndex && ans.status === "marked"
+          ? { ...ans, status: ans.answer ? "answered" : "unanswered" }
+          : ans
+      )
+    );
     if (currentQuestionIndex < questions.length - 1) {
       goToIndex(currentQuestionIndex + 1);
     }
@@ -172,7 +179,17 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
   const handleMarkAndNext = () => {
     setAnswers((prev) =>
       prev.map((ans, index) =>
-        index === currentQuestionIndex ? { ...ans, status: "marked" } : ans
+        index === currentQuestionIndex
+          ? {
+              ...ans,
+              status:
+                ans.status === "marked"
+                  ? ans.answer
+                    ? "answered"
+                    : "unanswered"
+                  : "marked",
+            }
+          : ans
       )
     );
     if (currentQuestionIndex < questions.length - 1) {
@@ -497,7 +514,7 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
               onClick={handleMarkAndNext}
               className="rounded-sm border border-gray-400 bg-white px-3 py-1.5 text-[12px] font-semibold text-gray-800 shadow-sm hover:bg-gray-50"
             >
-              Mark for Review &amp; Next
+              {currentAnswer?.status === "marked" ? "Unmark & Next" : "Mark for Review & Next"}
             </button>
             <button
               onClick={handleClearResponse}

@@ -151,8 +151,9 @@ function SurfaceCard({ surface, index }: { surface: Surface; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, delay: index * 0.1, ease: "easeOut" }}
-      whileHover={{ y: -6 }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-xl transition-shadow hover:shadow-xl md:p-6"
+      className="shimmer-border-hover rounded-3xl"
+    >
+      <div className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-xl transition-shadow hover:shadow-xl md:p-6"
     >
       <div
         className={`pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-gradient-to-br ${tint.glow} blur-3xl`}
@@ -172,7 +173,7 @@ function SurfaceCard({ surface, index }: { surface: Surface; index: number }) {
         <img
           src={surface.imageSrc}
           alt={surface.imageAlt}
-          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
+          className="w-full h-full object-cover object-top"
           loading="lazy"
           decoding="async"
         />
@@ -201,6 +202,7 @@ function SurfaceCard({ surface, index }: { surface: Surface; index: number }) {
             </li>
           ))}
         </ul>
+      </div>
       </div>
     </motion.div>
   );

@@ -158,6 +158,37 @@ body {
     z-index: -1;
   }
 
+  /* Hover-only spinning conic gradient border (same as shimmer-border, activates on hover) */
+  .shimmer-border-hover {
+    position: relative;
+    isolation: isolate;
+  }
+  .shimmer-border-hover::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--angle, 0deg),
+      hsl(var(--coral)),
+      hsl(var(--peach)),
+      hsl(var(--mint)),
+      hsl(var(--lavender)),
+      hsl(var(--coral))
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+  }
+  .shimmer-border-hover:hover::before {
+    opacity: 1;
+    animation: spin-angle 4s linear infinite;
+  }
+
   /* Section reveal helper */
   .reveal-mask {
     -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
