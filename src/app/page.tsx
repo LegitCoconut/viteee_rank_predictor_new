@@ -11,6 +11,7 @@ import { WebsiteJsonLd, FAQJsonLd } from '@/components/json-ld';
 import { MessageCircle, Heart, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { DonationPopup } from '@/components/donation-popup';
 
 export const metadata: Metadata = {
   title: "Free VITEEE Mock Tests 2026 | VIT RANKS",
@@ -102,6 +103,7 @@ export default function Home() {
     <div className="flex min-h-dvh flex-col bg-background">
       <WebsiteJsonLd />
       <FAQJsonLd />
+      <DonationPopup />
       <Header />
       <main className="flex-1">
         <Hero />

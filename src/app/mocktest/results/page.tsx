@@ -7,6 +7,7 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { DonationPopup } from '@/components/donation-popup';
 import {
   Award,
   CheckCircle2,
@@ -189,6 +190,7 @@ export default function MockTestResultPage() {
 
   return (
     <div className="flex min-h-dvh flex-col bg-background">
+      <DonationPopup delay={500} />
       <Header />
       <main className="flex-1">
         {/* Hero banner */}

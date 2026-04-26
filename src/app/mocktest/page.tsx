@@ -27,6 +27,7 @@ import { MockTestJsonLd } from '@/components/json-ld';
 import Link from 'next/link';
 import { PastResults } from '@/components/past-results';
 import { Leaderboard } from '@/components/leaderboard';
+import { DonationPopup } from '@/components/donation-popup';
 
 export default function MockTestPage() {
   const syllabusRef = useRef<HTMLDivElement>(null);
@@ -103,6 +104,7 @@ export default function MockTestPage() {
   return (
     <div className="flex min-h-dvh flex-col bg-background">
       <MockTestJsonLd />
+      <DonationPopup />
       <Header />
       <main className="flex-1">
         {/* Hero */}
