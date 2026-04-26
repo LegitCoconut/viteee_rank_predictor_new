@@ -1,7 +1,7 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useRef, useMemo, useState } from 'react';
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { Header } from '@/components/header';
@@ -21,6 +21,7 @@ import {
   HandHeart,
   Coffee,
   BookOpen,
+  Check,
 } from 'lucide-react';
 
 const UPI_ID = 'mail.adithyanp-2@oksbi';
@@ -37,9 +38,144 @@ function buildUpiLink(amount: number) {
 }
 
 const SUGGESTED = [49, 99, 199, 499];
+const SPRING = { damping: 26, stiffness: 220 };
 
 type Phase = 'form' | 'qr' | 'verify' | 'done';
 
+// ─── Why Card (with tilt) ────────────────────────────────────────────────────
+function WhyCard({
+  icon: Icon,
+  title,
+  body,
+  tone,
+  index,
+}: {
+  icon: React.ElementType;
+  title: string;
+  body: string;
+  tone: 'coral' | 'mint' | 'sky' | 'lavender';
+  index: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-40px' });
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [6, -6]), SPRING);
+  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-6, 6]), SPRING);
+
+  function onMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (!ref.current) return;
+    const r = ref.current.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
+  }
+  function onLeave() { mx.set(0); my.set(0); }
+
+  const toneClass: Record<typeof tone, string> = {
+    coral: 'bg-coral/10 text-coral border-coral/20',
+    mint: 'bg-mint/10 text-mint border-mint/20',
+    sky: 'bg-sky/10 text-sky border-sky/20',
+    lavender: 'bg-lavender/10 text-lavender border-lavender/20',
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 24 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      style={{ perspective: 800 }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+    >
+      <motion.div
+        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+        className="rounded-2xl border border-border/60 bg-background/40 p-4 transition-shadow hover:shadow-lg"
+      >
+        <div className={`flex h-10 w-10 items-center justify-center rounded-xl border ${toneClass[tone]}`}>
+          <Icon className="h-5 w-5" />
+        </div>
+        <p className="mt-3 text-sm font-semibold tracking-tight">{title}</p>
+        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{body}</p>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// ─── Tier Card ───────────────────────────────────────────────────────────────
+function TierCard({
+  icon: Icon,
+  amount,
+  title,
+  body,
+  active,
+  onClick,
+}: {
+  icon: React.ElementType;
+  amount: number;
+  title: string;
+  body: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <motion.button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+      className={`group relative overflow-hidden rounded-2xl border p-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 ${
+        active
+          ? 'border-coral/60 bg-coral/5 shadow-lg shadow-coral/10'
+          : 'border-border/60 bg-card hover:border-coral/40'
+      }`}
+    >
+      {/* Glow blob */}
+      <div
+        className={`pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-coral/15 blur-2xl transition-opacity duration-300 ${
+          active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+        }`}
+      />
+
+      <div className="relative z-10 flex items-center justify-between">
+        <span className="font-display text-3xl italic text-foreground">
+          &#8377;{amount}
+        </span>
+        <div
+          className={`flex h-10 w-10 items-center justify-center rounded-xl transition-colors ${
+            active
+              ? 'bg-coral/20 text-coral'
+              : 'bg-gradient-to-br from-coral/10 to-peach/10 text-coral/80'
+          }`}
+        >
+          <Icon className="h-5 w-5" />
+        </div>
+      </div>
+
+      <p className="relative z-10 mt-3 text-sm font-semibold tracking-tight">{title}</p>
+      <p className="relative z-10 mt-1 text-xs leading-relaxed text-muted-foreground">{body}</p>
+
+      <div
+        className={`relative z-10 mt-3 inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-widest transition-colors ${
+          active ? 'text-coral' : 'text-muted-foreground group-hover:text-coral/70'
+        }`}
+      >
+        {active ? (
+          <>
+            <Check className="h-3 w-3" />
+            Selected
+          </>
+        ) : (
+          'Tap to pick'
+        )}
+      </div>
+    </motion.button>
+  );
+}
+
+// ─── Page ────────────────────────────────────────────────────────────────────
 export default function DonatePage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -65,7 +201,6 @@ export default function DonatePage() {
 
   function pickTierAmount(v: number) {
     setAmountStr(String(v));
-    // Scroll the form + QR into view so the user sees the value apply.
     if (typeof window !== 'undefined') {
       document
         .getElementById('donate-form')
@@ -81,12 +216,7 @@ export default function DonatePage() {
       const res = await fetch('/api/donations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          amount,
-          token,
-        }),
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), amount, token }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -103,20 +233,28 @@ export default function DonatePage() {
     }
   }
 
+  const aboutRef = useRef<HTMLElement>(null);
+  const aboutInView = useInView(aboutRef, { once: true, margin: '-60px' });
+
   return (
     <div className="flex min-h-dvh flex-col bg-background">
       <Header />
       <main className="flex-1">
-        {/* Hero */}
-        <section className="relative isolate overflow-hidden hero-mesh py-20 md:py-28">
+
+        {/* ── Hero ─────────────────────────────────────────────────────── */}
+        <section className="relative isolate flex min-h-[88svh] flex-col items-center justify-center overflow-hidden hero-mesh py-20 md:py-28">
           <div className="pointer-events-none absolute inset-0">
             <div
-              className="absolute -top-24 left-1/4 h-[28rem] w-[28rem] rounded-full blur-3xl animate-blob-slow"
-              style={{ background: 'radial-gradient(circle, hsl(var(--coral) / 0.5), transparent 60%)' }}
+              className="absolute -top-24 -left-16 h-[32rem] w-[32rem] rounded-full blur-3xl animate-blob-slow"
+              style={{ background: 'radial-gradient(circle, hsl(var(--coral) / 0.55), transparent 60%)' }}
             />
             <div
-              className="absolute bottom-0 right-1/4 h-[26rem] w-[26rem] rounded-full blur-3xl animate-blob"
+              className="absolute bottom-0 -right-24 h-[30rem] w-[30rem] rounded-full blur-3xl animate-blob"
               style={{ background: 'radial-gradient(circle, hsl(var(--mint) / 0.4), transparent 60%)' }}
+            />
+            <div
+              className="absolute top-1/2 left-1/2 h-[26rem] w-[26rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl animate-blob-fast"
+              style={{ background: 'radial-gradient(circle, hsl(var(--lavender) / 0.35), transparent 60%)' }}
             />
           </div>
           <div className="pointer-events-none absolute inset-0 bg-grid opacity-20 reveal-mask" />
@@ -126,43 +264,65 @@ export default function DonatePage() {
             <motion.div
               initial={{ opacity: 0, y: 12, scale: 0.94 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.55 }}
               className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/85 backdrop-blur-md"
             >
               <Heart className="h-3.5 w-3.5 text-coral" />
               Support a student-run platform
             </motion.div>
+
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-[clamp(2.5rem,7vw,5rem)] font-semibold leading-[0.95] tracking-tighter text-white"
+              transition={{ duration: 0.75, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="text-[clamp(2.5rem,7vw,5rem)] font-semibold leading-[0.92] tracking-tighter text-white"
             >
               Back the{' '}
               <span className="font-display italic gradient-text">builders</span>
               <br />
               behind this platform.
             </motion.h1>
+
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="mx-auto mt-5 max-w-2xl text-base text-white/70 md:text-lg"
+              className="mx-auto mt-6 max-w-2xl text-base text-white/70 md:text-lg"
             >
               VIT RANKS is free, ad-free, and always will be. If it helped you
               study — and you can spare the price of a cup of chai — it keeps
               our servers humming and the next feature shipping.
             </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.34 }}
+              className="mx-auto mt-8 flex flex-wrap justify-center gap-6 text-sm text-white/60"
+            >
+              {[
+                { icon: Users, label: 'Student-built' },
+                { icon: ShieldCheck, label: 'No ads, no paywall' },
+                { icon: Sparkles, label: 'Genuinely free' },
+              ].map(({ icon: Icon, label }) => (
+                <span key={label} className="inline-flex items-center gap-1.5">
+                  <Icon className="h-4 w-4 text-white/40" />
+                  {label}
+                </span>
+              ))}
+            </motion.div>
           </div>
         </section>
 
-        {/* About Malabar Matrix */}
-        <section className="container mx-auto -mt-12 max-w-5xl px-4 md:-mt-16">
+        {/* ── About Malabar Matrix ─────────────────────────────────────── */}
+        <section
+          ref={aboutRef}
+          className="container mx-auto -mt-12 max-w-5xl px-4 md:-mt-16"
+        >
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.7 }}
+            initial={{ opacity: 0, y: 28 }}
+            animate={aboutInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.75 }}
             className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/90 p-6 shadow-2xl backdrop-blur-xl md:p-10"
           >
             <div className="pointer-events-none absolute inset-0 bg-grid-fine opacity-[0.12]" />
@@ -170,7 +330,11 @@ export default function DonatePage() {
             <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-gradient-to-br from-mint/20 to-sky/20 blur-3xl" />
 
             <div className="relative z-10 grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-12">
-              <div>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={aboutInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.1 }}
+              >
                 <p className="text-xs font-semibold uppercase tracking-[0.25em] text-coral">
                   Who we are
                 </p>
@@ -183,50 +347,36 @@ export default function DonatePage() {
                 </h2>
                 <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                   A small collective of students, mostly from Kerala, who got
-                  tired of paywalled mock tests, shady coaching funnels, and
-                  the basic stuff in education being harder to find than it
-                  should be.
+                  tired of paywalled mock tests, shady coaching funnels, and the
+                  basic stuff in education being harder to find than it should
+                  be.
                 </p>
                 <p className="mt-3 text-base leading-relaxed text-muted-foreground">
                   So we build. Quietly, for free, for anyone preparing for an
-                  exam that could change their life. This platform is the
-                  first of a few things we&rsquo;re putting out.
+                  exam that could change their life. This platform is the first
+                  of a few things we&rsquo;re putting out.
                 </p>
-              </div>
+              </motion.div>
 
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <WhyCard
-                  icon={GraduationCap}
-                  title="Built by students"
-                  body="We know what the grind actually feels like — because we're in it."
-                  tone="coral"
-                />
-                <WhyCard
-                  icon={Users}
-                  title="Free, forever"
-                  body="No signup, no paywall, no upsell. The mock tests stay free."
-                  tone="mint"
-                />
-                <WhyCard
-                  icon={ShieldCheck}
-                  title="No data games"
-                  body="Your attempts stay on your device. We never sell or trade data."
-                  tone="sky"
-                />
-                <WhyCard
-                  icon={Rocket}
-                  title="More on the way"
-                  body="Next up: JEE, NEET, CUET tools. Your support accelerates us."
-                  tone="lavender"
-                />
+                <WhyCard index={0} icon={GraduationCap} title="Built by students" body="We know what the grind actually feels like — because we're in it." tone="coral" />
+                <WhyCard index={1} icon={Users} title="Free, forever" body="No signup, no paywall, no upsell. The mock tests stay free." tone="mint" />
+                <WhyCard index={2} icon={ShieldCheck} title="No data games" body="Your attempts stay on your device. We never sell or trade data." tone="sky" />
+                <WhyCard index={3} icon={Rocket} title="More on the way" body="Next up: JEE, NEET, CUET tools. Your support accelerates us." tone="lavender" />
               </div>
             </div>
           </motion.div>
         </section>
 
-        {/* Where it goes */}
+        {/* ── Where it goes ────────────────────────────────────────────── */}
         <section className="container mx-auto mt-14 max-w-5xl px-4">
-          <div className="mb-6 flex items-center gap-3">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6 }}
+            className="mb-6 flex items-center gap-3"
+          >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-coral/20 to-peach/20">
               <HandHeart className="h-5 w-5 text-coral" />
             </div>
@@ -238,36 +388,16 @@ export default function DonatePage() {
                 Small sums, directly at the running cost of keeping this live.
               </p>
             </div>
-          </div>
+          </motion.div>
+
           <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-            <TierCard
-              icon={Coffee}
-              amount={49}
-              title="A cup of chai"
-              body="Keeps one free-tier server alive for a day."
-              active={amount === 49}
-              onClick={() => pickTierAmount(49)}
-            />
-            <TierCard
-              icon={BookOpen}
-              amount={199}
-              title="A new mock set"
-              body="Funds licensing a fresh batch of practice questions."
-              active={amount === 199}
-              onClick={() => pickTierAmount(199)}
-            />
-            <TierCard
-              icon={Sparkles}
-              amount={499}
-              title="A new feature"
-              body="Unlocks a weekend of development on the next big thing."
-              active={amount === 499}
-              onClick={() => pickTierAmount(499)}
-            />
+            <TierCard icon={Coffee} amount={49} title="A cup of chai" body="Keeps one free-tier server alive for a day." active={amount === 49} onClick={() => pickTierAmount(49)} />
+            <TierCard icon={BookOpen} amount={199} title="A new mock set" body="Funds licensing a fresh batch of practice questions." active={amount === 199} onClick={() => pickTierAmount(199)} />
+            <TierCard icon={Sparkles} amount={499} title="A new feature" body="Unlocks a weekend of development on the next big thing." active={amount === 499} onClick={() => pickTierAmount(499)} />
           </div>
         </section>
 
-        {/* The actual donate form + QR */}
+        {/* ── Donate form + QR ─────────────────────────────────────────── */}
         <section
           id="donate-form"
           className="container mx-auto mt-16 max-w-5xl px-4 pb-24 scroll-mt-20"
@@ -323,11 +453,12 @@ export default function DonatePage() {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="donor-amount" className="text-sm font-medium">
-                        Amount <span className="text-muted-foreground">(INR)</span>
+                        Amount{' '}
+                        <span className="text-muted-foreground">(INR)</span>
                       </Label>
                       <div className="relative">
                         <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-display text-lg italic text-muted-foreground">
-                          ₹
+                          &#8377;
                         </span>
                         <Input
                           id="donor-amount"
@@ -354,7 +485,7 @@ export default function DonatePage() {
                                 : 'border-border bg-muted/30 text-muted-foreground hover:bg-muted/60'
                             }`}
                           >
-                            ₹{v}
+                            &#8377;{v}
                           </button>
                         ))}
                       </div>
@@ -369,7 +500,7 @@ export default function DonatePage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.6, delay: 0.05 }}
+              transition={{ duration: 0.6, delay: 0.06 }}
               className="relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/60 bg-card p-6 shadow-xl md:p-8"
             >
               <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-gradient-to-br from-coral/15 to-peach/15 blur-3xl" />
@@ -390,7 +521,7 @@ export default function DonatePage() {
                 </p>
 
                 <div className="relative mt-6 h-64 w-64">
-                  {/* Decorative frame */}
+                  {/* Decorative spinning frame */}
                   <div
                     className={`pointer-events-none absolute -inset-3 rounded-3xl transition-opacity duration-500 ${
                       amount > 0 ? 'opacity-100' : 'opacity-40'
@@ -436,15 +567,13 @@ export default function DonatePage() {
                         transition={{ duration: 0.4 }}
                         className="absolute inset-0 flex items-center justify-center rounded-2xl bg-white/80 p-4 shadow-xl"
                       >
-                        {/* Blurred pseudo-QR */}
                         <div className="relative h-full w-full">
                           <div
                             className="absolute inset-0 rounded-xl"
                             style={{
                               backgroundImage:
                                 'radial-gradient(circle at 20% 20%, #0b0520 3px, transparent 4px), radial-gradient(circle at 80% 20%, #0b0520 3px, transparent 4px), radial-gradient(circle at 20% 80%, #0b0520 3px, transparent 4px), linear-gradient(45deg, #0b0520 25%, transparent 25%, transparent 75%, #0b0520 75%, #0b0520), linear-gradient(-45deg, #0b0520 25%, transparent 25%, transparent 75%, #0b0520 75%, #0b0520)',
-                              backgroundSize:
-                                '40px 40px, 40px 40px, 40px 40px, 8px 8px, 8px 8px',
+                              backgroundSize: '40px 40px, 40px 40px, 40px 40px, 8px 8px, 8px 8px',
                               filter: 'blur(10px)',
                               opacity: 0.5,
                             }}
@@ -523,10 +652,7 @@ export default function DonatePage() {
                         </p>
                         <div className="flex justify-center">
                           <Turnstile
-                            siteKey={
-                              process.env
-                                .NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
-                            }
+                            siteKey={process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!}
                             onSuccess={(t) => setToken(t)}
                           />
                         </div>
@@ -541,7 +667,7 @@ export default function DonatePage() {
                           className="shimmer-border group h-12 w-full gap-2 rounded-full bg-gradient-to-r from-mint to-sky text-base font-semibold text-plum-deep shadow-lg shadow-mint/20 hover:from-mint hover:to-sky disabled:cursor-not-allowed disabled:opacity-60"
                         >
                           <CheckCircle2 className="h-4 w-4" />
-                          {submitting ? 'Saving\u2026' : 'Confirm donation'}
+                          {submitting ? 'Saving…' : 'Confirm donation'}
                         </Button>
                       </motion.div>
                     )}
@@ -561,9 +687,9 @@ export default function DonatePage() {
                               Thank you, {name.trim().split(' ')[0] || 'friend'}.
                             </p>
                             <p className="mt-1 text-xs text-muted-foreground">
-                              Your ₹{amount} donation is logged. We&rsquo;ll
-                              reach out on {email.trim().toLowerCase()} if we
-                              need to verify anything. Seriously — thank you.
+                              Your &#8377;{amount} donation is logged. We&rsquo;ll
+                              reach out on {email.trim().toLowerCase()} if we need
+                              to verify anything. Seriously — thank you.
                             </p>
                           </div>
                         </div>
@@ -575,108 +701,17 @@ export default function DonatePage() {
             </motion.div>
           </div>
 
-          {/* Non-donor footer */}
-          <div className="mt-12 rounded-2xl border border-dashed border-border bg-muted/20 p-6 text-center">
+          {/* Non-donor note */}
+          <div className="mt-12 rounded-2xl border border-dashed border-border/60 bg-muted/10 p-6 text-center">
             <p className="text-sm text-muted-foreground">
-              Can&rsquo;t donate right now? Totally fine. Share VIT RANKS with
-              a friend preparing for VITEEE — that helps us just as much.
+              Can&rsquo;t donate right now? Totally fine. Share VIT RANKS with a
+              friend preparing for VITEEE — that helps us just as much.
             </p>
           </div>
         </section>
+
       </main>
       <Footer />
     </div>
-  );
-}
-
-function WhyCard({
-  icon: Icon,
-  title,
-  body,
-  tone,
-}: {
-  icon: React.ElementType;
-  title: string;
-  body: string;
-  tone: 'coral' | 'mint' | 'sky' | 'lavender';
-}) {
-  const toneClass: Record<typeof tone, string> = {
-    coral: 'bg-coral/10 text-coral',
-    mint: 'bg-mint/10 text-mint',
-    sky: 'bg-sky/10 text-sky',
-    lavender: 'bg-lavender/10 text-lavender',
-  } as const;
-  return (
-    <div className="group rounded-2xl border border-border/60 bg-background/40 p-4 transition-shadow hover:shadow-md">
-      <div
-        className={`flex h-10 w-10 items-center justify-center rounded-xl ${toneClass[tone]}`}
-      >
-        <Icon className="h-5 w-5" />
-      </div>
-      <p className="mt-3 text-sm font-semibold tracking-tight">{title}</p>
-      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-        {body}
-      </p>
-    </div>
-  );
-}
-
-function TierCard({
-  icon: Icon,
-  amount,
-  title,
-  body,
-  active,
-  onClick,
-}: {
-  icon: React.ElementType;
-  amount: number;
-  title: string;
-  body: string;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      className={`group relative overflow-hidden rounded-2xl border p-5 text-left transition-all hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 ${
-        active
-          ? 'border-coral/60 bg-coral/5 shadow-lg shadow-coral/10'
-          : 'border-border/60 bg-card hover:border-coral/40'
-      }`}
-    >
-      <div
-        className={`pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-coral/15 blur-2xl transition-opacity ${
-          active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-        }`}
-      />
-      <div className="relative z-10 flex items-center justify-between">
-        <span className="font-display text-3xl italic text-foreground">
-          ₹{amount}
-        </span>
-        <div
-          className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-coral/15 to-peach/15 ${
-            active ? 'text-coral' : 'text-coral/80'
-          }`}
-        >
-          <Icon className="h-5 w-5" />
-        </div>
-      </div>
-      <p className="relative z-10 mt-3 text-sm font-semibold tracking-tight">
-        {title}
-      </p>
-      <p className="relative z-10 mt-1 text-xs leading-relaxed text-muted-foreground">
-        {body}
-      </p>
-      <div
-        className={`relative z-10 mt-3 inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-widest transition-colors ${
-          active ? 'text-coral' : 'text-muted-foreground group-hover:text-coral'
-        }`}
-      >
-        {active ? 'Selected ✓' : 'Tap to pick'}
-      </div>
-    </button>
   );
 }
