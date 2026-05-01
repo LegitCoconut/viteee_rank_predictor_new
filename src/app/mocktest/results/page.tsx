@@ -8,6 +8,7 @@ import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { DonationPopup } from '@/components/donation-popup';
+import { AdSlot } from '@/components/ad-slot';
 import {
   Award,
   CheckCircle2,
@@ -363,6 +364,9 @@ export default function MockTestResultPage() {
           </div>
         </section>
 
+        {/* Ad #8a: after the breakdown section */}
+        <AdSlot />
+
         {/* Section-wise performance */}
         {result.sectionScores && (
           <section className="container mx-auto mt-14 max-w-5xl px-4">
@@ -521,6 +525,9 @@ export default function MockTestResultPage() {
             </Button>
           </div>
         </section>
+
+        {/* Ad #8b: just before the footer */}
+        <AdSlot />
       </main>
       <Footer />
     </div>

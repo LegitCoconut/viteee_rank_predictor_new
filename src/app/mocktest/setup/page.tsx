@@ -36,6 +36,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import type { PredefinedMockTestSummary } from '@/lib/types';
+import { AdSlot } from '@/components/ad-slot';
 
 const FormSchema = z
   .object({
@@ -569,6 +570,9 @@ function MockTestSetupContent() {
               </div>
             </div>
           </section>
+
+          {/* Ad #6: after Your Details section */}
+          <AdSlot />
         </div>
       </main>
       <Footer />

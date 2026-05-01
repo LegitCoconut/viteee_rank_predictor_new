@@ -148,6 +148,12 @@ export default function RootLayout({
             gtag('config', 'G-LKRW6B6ZH0');
           `}
         </Script>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1967920296589260"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){

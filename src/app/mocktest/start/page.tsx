@@ -10,6 +10,7 @@ import { MockTestUIViteee } from '@/components/mock-test-ui-viteee';
 import type { QuestionWithImage } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { AdSlot } from '@/components/ad-slot';
 
 const LG_BREAKPOINT_PX = 1024;
 type ExamInterface = 'modern' | 'viteee';
@@ -236,6 +237,8 @@ export default function MockTestStartPage() {
           </div>
         )}
       </main>
+      {/* Ad #7: above footer on loading/start page */}
+      <AdSlot />
       <Footer />
     </div>
   );

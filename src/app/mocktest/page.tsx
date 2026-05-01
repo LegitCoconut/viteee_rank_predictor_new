@@ -27,6 +27,7 @@ import { MockTestJsonLd } from '@/components/json-ld';
 import Link from 'next/link';
 import { PastResults } from '@/components/past-results';
 import { Leaderboard } from '@/components/leaderboard';
+import { AdSlot } from '@/components/ad-slot';
 import { DonationPopup } from '@/components/donation-popup';
 
 export default function MockTestPage() {
@@ -285,8 +286,14 @@ export default function MockTestPage() {
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background" />
         </section>
 
+        {/* Ad #1: after hero */}
+        <AdSlot />
+
         <div ref={contentRef}>
           <PastResults />
+
+          {/* Ad #2: after history */}
+          <AdSlot />
 
           {/* Split leaderboard */}
           <section id="leaderboard" className="py-12 md:py-20">
@@ -336,13 +343,23 @@ export default function MockTestPage() {
             </div>
           </section>
 
+          {/* Ad #3: after leaderboard */}
+          <AdSlot />
+
           <div ref={patternRef}>
             <MockTestPattern />
           </div>
         </div>
         <div ref={syllabusRef}>
           <SyllabusSection />
+
+          {/* Ad #4: after syllabus */}
+          <AdSlot />
+
           <SyllabusDownloads />
+
+          {/* Ad #5: after syllabus download */}
+          <AdSlot />
         </div>
       </main>
       <Footer />

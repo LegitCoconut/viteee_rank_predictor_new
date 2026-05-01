@@ -19,6 +19,7 @@ import {
   FileWarning,
 } from 'lucide-react';
 import type { Answer, QuestionSnapshot, QuestionWithImage } from '@/lib/types';
+import { AdSlot } from '@/components/ad-slot';
 
 const subjectNames: Record<string, string> = {
   maths: 'Mathematics',
@@ -366,9 +367,19 @@ function DetailedResultsPage() {
         <div className="container mx-auto max-w-7xl px-4 py-10 pb-20">
           {filtered.length > 0 ? (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {filtered.map((row, i) => (
-                <QuestionReviewCard key={row.question._id} row={row} order={i} />
-              ))}
+              {filtered.flatMap((row, i) => {
+                const card = (
+                  <QuestionReviewCard key={row.question._id} row={row} order={i} />
+                );
+                const isAdBoundary = (i + 1) % 6 === 0 && i + 1 < filtered.length;
+                if (!isAdBoundary) return [card];
+                return [
+                  card,
+                  <div key={`ad-${i}`} className="col-span-full">
+                    <AdSlot slot="1678847129" />
+                  </div>,
+                ];
+              })}
             </div>
           ) : (
             <div className="rounded-3xl border border-dashed border-border bg-muted/30 px-6 py-16 text-center">
