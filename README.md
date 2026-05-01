@@ -72,3 +72,5 @@ Upon submission, the user's answers are compared against the correct options sto
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+contact@malabarmatrix.site
