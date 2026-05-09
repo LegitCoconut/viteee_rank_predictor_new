@@ -47,3 +47,5 @@ qp-cropper/
 
 # local-only: marketing / email templates
 docs/email-template/
+
+.agents/

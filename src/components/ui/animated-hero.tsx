@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
-import { Sparkles, MoveRight, Users, FileText, Clock, ArrowDown } from "lucide-react";
+import { Sparkles, MoveRight, Users, FileText, Clock, ArrowDown, Medal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -184,9 +184,19 @@ function Hero() {
             </Button>
             <Button
               size="lg"
+              asChild
+              className="group h-12 gap-2 rounded-full bg-gradient-to-r from-coral to-peach px-7 text-base font-semibold text-plum-deep shadow-lg shadow-coral/25 hover:from-coral hover:to-peach"
+            >
+              <Link href="/ranks">
+                <Medal className="h-4 w-4 transition-transform group-hover:rotate-12" />
+                Predict your rank
+              </Link>
+            </Button>
+            <Button
+              size="lg"
               variant="outline"
               asChild
-              className="h-12 gap-2 rounded-full border-white/20 bg-white/5 px-7 text-base font-medium text-white backdrop-blur-md hover:bg-white/10 hover:text-white"
+              className="group h-12 gap-2 rounded-full border-white/20 bg-white/5 px-7 text-base font-medium text-white backdrop-blur-md hover:bg-white/10 hover:text-white"
             >
               <Link href="/mocktest#leaderboard">
                 View leaderboard

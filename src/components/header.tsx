@@ -18,6 +18,9 @@ export function Header() {
             <Link href="/mocktest">Mock Tests</Link>
           </Button>
           <Button variant="ghost" size="sm" asChild className="px-2 sm:px-3">
+            <Link href="/ranks">Rank Predictor</Link>
+          </Button>
+          <Button variant="ghost" size="sm" asChild className="px-2 sm:px-3">
             <Link href="/mocktest#leaderboard">Leaderboard</Link>
           </Button>
           <Button
