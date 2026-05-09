@@ -17,6 +17,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.9,
         },
         {
+            path: '/ranks',
+            changeFrequency: 'weekly' as const,
+            priority: 0.9,
+        },
+        {
+            path: '/ranks/info',
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+        },
+        {
             path: '/mocktest/setup',
             changeFrequency: 'monthly' as const,
             priority: 0.7,

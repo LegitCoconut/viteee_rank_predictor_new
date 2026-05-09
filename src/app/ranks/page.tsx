@@ -50,7 +50,9 @@ import {
   RefreshCw,
   Link2,
   Check,
+  Compass,
 } from 'lucide-react';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import {
   Campus,
@@ -66,7 +68,7 @@ import {
   ALL_CATEGORIES,
 } from '@/lib/viteee-data';
 import { buildRanksQuery, parseRanksQuery, RanksAction } from '@/lib/ranks-url';
-import { generateReport, ReportRow } from '@/lib/ranks-report';
+import type { ReportRow } from '@/lib/ranks-report';
 
 type Step = 'rank' | 'action' | 'preferences' | 'results';
 
@@ -203,6 +205,7 @@ export default function RanksPage() {
   const isHero = step === 'rank';
 
   const [showAllAnalysisCourses, setShowAllAnalysisCourses] = useState(false);
+  const [showAllCounsellingRows, setShowAllCounsellingRows] = useState(false);
   const [copiedShare, setCopiedShare] = useState(false);
 
   const handleCopyShare = async () => {
@@ -219,16 +222,29 @@ export default function RanksPage() {
 
   const securableCourses = useMemo(() => {
     if (!isValidRank || actionType !== 'analysis' || step !== 'results') return [];
-    return COURSE_DATA.filter((c) => eligibleCampuses.includes(c.campus))
+    const activeCampuses = campuses.length > 0 ? campuses : eligibleCampuses;
+    const activeDomains = domains.length > 0 ? new Set(domains) : null;
+    const minCat = minCategory ?? 1;
+    return COURSE_DATA.filter((c) => activeCampuses.includes(c.campus))
+      .filter((c) => !activeDomains || activeDomains.has(c.domain))
       .map((course) => {
         const secured = course.categories
           .map((closingRank, i) => ({ cat: i + 1, closingRank }))
-          .filter((x) => rankNum <= x.closingRank);
+          .filter((x) => x.cat >= minCat && rankNum <= x.closingRank);
         return { course, secured };
       })
       .filter((x) => x.secured.length > 0)
       .sort((a, b) => a.secured[0].closingRank - b.secured[0].closingRank);
-  }, [isValidRank, actionType, step, rankNum, eligibleCampuses]);
+  }, [
+    isValidRank,
+    actionType,
+    step,
+    rankNum,
+    eligibleCampuses,
+    domains,
+    campuses,
+    minCategory,
+  ]);
 
   const shareUrl = useMemo(() => {
     if (!isValidRank || !actionType) return SHARE_BASE;
@@ -271,6 +287,7 @@ export default function RanksPage() {
   const qrContainerRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = async () => {
+    if (typeof window === 'undefined') return;
     const canvas = qrContainerRef.current?.querySelector<HTMLCanvasElement>('canvas');
     const qrDataURL = canvas ? canvas.toDataURL('image/png') : '';
     const rows: ReportRow[] = orderedRows.map((r) => ({
@@ -282,6 +299,9 @@ export default function RanksPage() {
       status: rankNum <= r.closingRank ? 'Secured' : 'Reach',
       isNew: r.course.isNewCourse,
     }));
+    // Lazy-load jspdf only in the browser, on demand. Keeps the PDF stack
+    // out of the SSR bundle and the initial client chunk.
+    const { generateReport } = await import('@/lib/ranks-report');
     await generateReport({
       rank: rankNum,
       actionType: actionType ?? 'counselling',
@@ -387,8 +407,9 @@ export default function RanksPage() {
                       transition={{ duration: 0.7, delay: 0.2 }}
                       className="mx-auto mt-6 max-w-2xl text-center text-base text-white/70 md:text-lg"
                     >
-                      Based on 2025 cutoff data. Enter your VITEEE rank to see which
-                      courses and campuses you can get.
+                      Built from publicly scraped 2025 cutoff data — not official VIT
+                      figures. Use it to understand where your rank lands, not as a
+                      guarantee.
                     </motion.p>
 
                     <motion.div
@@ -458,6 +479,22 @@ export default function RanksPage() {
                           </div>
                         </div>
                       ))}
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.65 }}
+                      className="mt-6 flex justify-center"
+                    >
+                      <Link
+                        href="/ranks/info"
+                        className="group inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-black/10 backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/15 sm:gap-3 sm:px-7 sm:text-base"
+                      >
+                        <Compass className="h-4 w-4 text-coral transition-transform group-hover:rotate-12 sm:h-5 sm:w-5" />
+                        Read the data behind this predictor
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </Link>
                     </motion.div>
                   </motion.div>
                 ) : (
@@ -899,12 +936,26 @@ export default function RanksPage() {
                           Domain-wise options near your rank
                         </div>
                         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                          {ALL_DOMAINS.map((d) => {
-                            const domainCourses = getCoursesInRankRange(rankNum, 2500, {
-                              domains: [d],
-                              campuses: eligibleCampuses,
-                            });
-                            const top = domainCourses[0];
+                          {(domains.length > 0 ? domains : ALL_DOMAINS).map((d) => {
+                            const activeCampuses =
+                              campuses.length > 0 ? campuses : eligibleCampuses;
+                            const minCat = minCategory ?? 1;
+                            // Match the list logic: count distinct courses where the user
+                            // can secure at least one category at or above minCat.
+                            const domainCourses = COURSE_DATA.filter(
+                              (c) =>
+                                c.domain === d &&
+                                activeCampuses.includes(c.campus) &&
+                                c.categories.some(
+                                  (cr, i) => i + 1 >= minCat && rankNum <= cr,
+                                ),
+                            ).sort(
+                              (a, b) =>
+                                a.categories[minCat - 1] - b.categories[minCat - 1],
+                            );
+                            const top = domainCourses[0]
+                              ? { course: domainCourses[0] }
+                              : null;
                             return (
                               <div
                                 key={d}
@@ -917,7 +968,9 @@ export default function RanksPage() {
                                   {domainCourses.length}
                                 </p>
                                 <p className="text-xs text-muted-foreground">
-                                  matches in ±2,500 rank
+                                  {domainCourses.length === 1
+                                    ? 'course you can secure'
+                                    : 'courses you can secure'}
                                 </p>
                                 {top && (
                                   <p className="mt-2 truncate text-xs text-muted-foreground">
@@ -1130,7 +1183,10 @@ export default function RanksPage() {
                             </TableRow>
                           </TableHeader>
                           <TableBody>
-                            {orderedRows.slice(0, 80).map((item, idx, arr) => {
+                            {(showAllCounsellingRows
+                              ? orderedRows
+                              : orderedRows.slice(0, 80)
+                            ).map((item, idx, arr) => {
                               const key = rowKey(item.course.id, item.category);
                               const secured = rankNum <= item.closingRank;
                               const isOver = dragOverKey === key;
@@ -1313,26 +1369,62 @@ export default function RanksPage() {
                     )}
 
                     {orderedRows.length > 80 && (
-                      <p className="border-t border-border/40 py-4 text-center text-sm text-muted-foreground">
-                        Showing top 80 of {orderedRows.length} matches. Narrow your
-                        filters to focus the list.
-                      </p>
+                      <div className="flex items-center justify-center gap-3 border-t border-border/40 py-4 text-sm text-muted-foreground">
+                        <span>
+                          {showAllCounsellingRows
+                            ? `Showing all ${orderedRows.length} matches.`
+                            : `Showing top 80 of ${orderedRows.length} matches.`}
+                        </span>
+                        <Button
+                          variant="link"
+                          size="sm"
+                          onClick={() => setShowAllCounsellingRows((s) => !s)}
+                          className="h-auto p-0 text-xs"
+                        >
+                          {showAllCounsellingRows ? 'Show top 80' : 'Show all'}
+                        </Button>
+                      </div>
                     )}
                   </div>
                 )}
 
-                <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
-                  <div className="flex items-start gap-3">
-                    <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
-                    <div>
-                      <p className="text-sm font-medium text-amber-500">
-                        About new 2026 courses
-                      </p>
-                      <p className="mt-1 text-xs text-muted-foreground">
-                        Some courses listed are new for 2026 and don&apos;t have 2025
-                        cutoff data. Their cutoffs are estimated based on similar
-                        courses, so treat those rows as approximate.
-                      </p>
+                <div className="mt-6 space-y-3">
+                  <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
+                    <div className="flex items-start gap-3">
+                      <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
+                      <div>
+                        <p className="text-sm font-medium text-amber-500">
+                          Unofficial data — use as guidance only
+                        </p>
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          All cutoffs and rank ladders shown here were scraped from
+                          public sources (CollegeDunia, GetMyUni, CollegeDekho,
+                          Careers360). VIT does <strong>not</strong> publish a clean
+                          marks-vs-rank table, and category cutoffs change every year.
+                          Treat this as a way to understand where your rank lands —
+                          not as an official prediction.{' '}
+                          <Link
+                            href="/ranks/info"
+                            className="font-medium text-coral underline-offset-2 hover:underline"
+                          >
+                            Read the full data notes →
+                          </Link>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="rounded-xl border border-border/40 bg-card/40 p-4">
+                    <div className="flex items-start gap-3">
+                      <Info className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" />
+                      <div>
+                        <p className="text-sm font-medium">About new 2026 courses</p>
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          Some courses listed are new for 2026 and don&apos;t have
+                          2025 cutoff data. Their cutoffs are estimated based on
+                          similar courses, so treat those rows as approximate.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>

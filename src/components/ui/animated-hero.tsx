@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
-import { Sparkles, MoveRight, Users, FileText, Clock, ArrowDown, Medal } from "lucide-react";
+import { Sparkles, MoveRight, Users, FileText, Clock, ArrowDown, Medal, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -101,7 +101,7 @@ function Hero() {
         style={{ y: yContent, opacity: opacityContent, scale: scaleContent }}
         className="relative z-10 container mx-auto px-4"
       >
-        <div className="flex flex-col items-center justify-center gap-10 py-28 md:py-40 text-center">
+        <div className="flex flex-col items-center justify-center gap-6 py-16 md:gap-8 md:py-24 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -203,6 +203,21 @@ function Hero() {
                 <MoveRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.55 }}
+          >
+            <Link
+              href="/ranks/info"
+              className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/80 backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/10 hover:text-white"
+            >
+              <Compass className="h-4 w-4 text-coral transition-transform group-hover:rotate-12" />
+              Read the data behind the rank predictor
+              <MoveRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+            </Link>
           </motion.div>
 
           <motion.div

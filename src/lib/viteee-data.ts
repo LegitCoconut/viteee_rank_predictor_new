@@ -746,7 +746,7 @@ export function getEligibleCampuses(rank: number): Campus[] {
 
 export function getCoursesInRankRange(
   rank: number,
-  rankRange: number = 200,
+  reachWindow: number = 2500,
   options?: {
     domain?: Domain;
     domains?: Domain[];
@@ -759,6 +759,7 @@ export function getCoursesInRankRange(
   category: number;
   withinRange: boolean;
   closingRank: number;
+  secured: boolean;
 }> {
   const eligibleCampuses = getEligibleCampuses(rank);
   const campuses = options?.campuses?.filter(c => eligibleCampuses.includes(c)) || eligibleCampuses;
@@ -772,10 +773,14 @@ export function getCoursesInRankRange(
     category: number;
     withinRange: boolean;
     closingRank: number;
+    secured: boolean;
   }> = [];
 
-  const minRank = Math.max(1, rank - rankRange);
-  const maxRank = rank + rankRange;
+  // Reachable means the user is within `reachWindow` ranks of, or better than, the cutoff.
+  //   rank <= closingRank                 -> secured (always include — no upper bound)
+  //   closingRank < rank <= closingRank+W -> reach
+  //   rank > closingRank + reachWindow    -> out of reach (skip)
+  const reachThreshold = Math.max(1, rank - reachWindow);
 
   for (const course of COURSE_DATA) {
     if (!campuses.includes(course.campus)) continue;
@@ -783,16 +788,15 @@ export function getCoursesInRankRange(
 
     for (let cat = minCat; cat <= 5; cat++) {
       const closingRank = course.categories[cat - 1];
-      const withinRange = closingRank >= minRank && closingRank <= maxRank;
+      if (closingRank < reachThreshold) continue;
 
-      if (withinRange) {
-        results.push({
-          course,
-          category: cat,
-          withinRange,
-          closingRank,
-        });
-      }
+      results.push({
+        course,
+        category: cat,
+        withinRange: true,
+        closingRank,
+        secured: rank <= closingRank,
+      });
     }
   }
 
