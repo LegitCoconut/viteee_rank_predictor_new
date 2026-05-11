@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { RanksInfoJsonLd } from '@/components/ranks-jsonld';
 
 export const metadata: Metadata = {
   title: 'VITEEE 2025 Cutoffs, Marks vs Rank & Counselling Data',
@@ -68,5 +69,10 @@ export const metadata: Metadata = {
 };
 
 export default function RanksInfoLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <RanksInfoJsonLd />
+      {children}
+    </>
+  );
 }

@@ -1,0 +1,354 @@
+# VIT Ranks — Full LLM Reference (VITEEE 2026)
+
+> Last updated: 2026-05-11
+> Canonical source: https://ranks.vhome.co.in/ranks/info
+> Maintained by: Malabar Matrix (malabarmatrix.site)
+>
+> This file is intended for ingestion by LLM-based search and chat tools (ChatGPT,
+> Claude, Perplexity, Gemini, Apple Intelligence, etc.). It contains the same data
+> shown on the live https://ranks.vhome.co.in/ranks and https://ranks.vhome.co.in/ranks/info pages, formatted for
+> retrieval. All cutoff numbers are publicly scraped 2025 figures, not official
+> VIT data. Treat as reference for prediction, not as official guarantees.
+
+---
+
+## 1. About VIT Ranks
+
+VIT Ranks is a free, student-built platform for VITEEE 2026 aspirants. The primary
+products are:
+
+1. A **VITEEE rank and college predictor** at https://ranks.vhome.co.in/ranks that maps a VITEEE rank
+   to every B.Tech programme, fee category (1–5) and campus the candidate can
+   secure or reach across VIT Vellore, VIT Chennai, VIT AP and VIT Bhopal.
+2. **Full-length VITEEE mock tests** at https://ranks.vhome.co.in/mocktest with instant analytics
+   and a live leaderboard.
+3. A **public 2025 cutoff and marks-to-rank reference** at https://ranks.vhome.co.in/ranks/info.
+
+There is no signup, no paywall, no email collection. The site is maintained by
+the Malabar Matrix student collective. Suggestions and corrections can be sent
+through the feedback form on the homepage.
+
+## 2. VITEEE 2025 exam — quick facts
+
+- VITEEE 2025 had 125 questions, 1 mark per question, total 500 marks.
+- There is no negative marking.
+- The official rank list is prepared using equi-percentile normalisation, which
+  means two candidates with the same raw score can land on different ranks
+  depending on the session they wrote. Every public marks-vs-rank table on the
+  internet (including the one on this site) is therefore an estimate, not a
+  lookup.
+- During counselling, candidates pick (a) campus, (b) programme, (c) fee
+  category — independently. The same branch usually opens across all five fee
+  categories at different closing ranks.
+
+## 3. Counselling eligibility rule (2025)
+
+- Candidates with rank up to 1,00,000 (one lakh) are eligible to choose from
+  any of the four VIT campuses: VIT Vellore, VIT Chennai, VIT AP and VIT Bhopal.
+- Candidates with rank above 1,00,000 are eligible only for VIT AP and VIT
+  Bhopal under the 2025 counselling rule.
+
+## 4. Fee categories (2025–26)
+
+VIT's "category" is a fee tier, not a reservation slot. Five categories exist
+per programme:
+
+- Category 1 has the lowest tuition (most competitive closing rank).
+- Category 5 has the highest tuition (highest accepted rank).
+- The same branch usually opens across all five categories at different cutoffs.
+
+Annual B.Tech tuition (2025–26):
+- Group A — ₹1,73,000 / year.
+- Group B (Vellore, Chennai, AP) — ₹1,95,000 / year.
+- Group B (Bhopal) — ₹1,98,000 / year.
+
+## 5. Marks-to-rank ladder (estimated, 2025)
+
+| VITEEE marks (of 125) | Expected rank range | Confidence |
+| --- | --- | --- |
+| 118–125 | 1–250 | High |
+| 113–117 | 251–500 | High |
+| 90–112 | 501–2,500 | High |
+| 81–89 | 2,501–5,000 | High |
+| 72–80 | 5,001–6,500 | High |
+| 60–71 | 6,501–8,500 | High |
+| 43–59 | 8,501–11,000 | High |
+| 31–42 | 14,001–20,000 | Medium-Low |
+| 0–30 | 20,001–2,00,000 | Medium |
+
+Estimates compiled from CollegeDekho, Careers360 and GetMyUni. High and mid
+score bands are consistent across sources; low score bands are fuzzier.
+
+## 6. Campus-wise 2025 cutoffs
+
+### VIT Vellore
+
+- VIT Vellore — B.Tech. Computer Science and Engineering. 2025 closing ranks: Cat 1: 600; Cat 2: 1,450; Cat 3: 7,700; Cat 4: 18,500; Cat 5: 31,500.
+- VIT Vellore — B.Tech. Computer Science and Engineering (Artificial Intelligence and Data Engineering). 2025 closing ranks: Cat 1: 1,500; Cat 2: 2,800; Cat 3: 14,500; Cat 4: 23,000; Cat 5: 32,000.
+- VIT Vellore — B.Tech. Computer Science and Engineering (Data Science). 2025 closing ranks: Cat 1: 1,800; Cat 2: 3,500; Cat 3: 16,000; Cat 4: 29,500; Cat 5: 36,000.
+- VIT Vellore — B.Tech. Computer Science and Engineering (Artificial Intelligence and Machine Learning). 2025 closing ranks: Cat 1: 2,000; Cat 2: 3,200; Cat 3: 16,500; Cat 4: 25,500; Cat 5: 34,500.
+- VIT Vellore — B.Tech. Computer Science and Engineering (Cyber Security). 2025 closing ranks: Cat 1: 2,100; Cat 2: 3,400; Cat 3: 17,000; Cat 4: 27,000; Cat 5: 33,500.
+- VIT Vellore — B.Tech. Information Security. 2025 closing ranks: Cat 1: 2,500; Cat 2: 6,500; Cat 3: 16,750; Cat 4: 28,000; Cat 5: 39,500. Note: Appears on 2025 cutoff page but not on official 2025 programme list.
+- VIT Vellore — B.Tech. Computer Science and Engineering and Business Systems (in collaboration with TCS). 2025 closing ranks: Cat 1: 3,000; Cat 2: 6,700; Cat 3: 18,500; Cat 4: 28,500; Cat 5: 40,500.
+- VIT Vellore — B.Tech. Information Technology. 2025 closing ranks: Cat 1: 4,000; Cat 2: 7,500; Cat 3: 17,000; Cat 4: 28,500; Cat 5: 38,100.
+- VIT Vellore — B.Tech. Computer Science and Engineering (Bioinformatics). 2025 closing ranks: Cat 1: 8,100; Cat 2: 15,500; Cat 3: 20,000; Cat 4: 30,500; Cat 5: 40,700.
+- VIT Vellore — B.Tech. Biotechnology. 2025 closing ranks: Cat 1: 9,500; Cat 2: 16,000; Cat 3: 23,500; Cat 4: 44,000; Cat 5: 51,000.
+- VIT Vellore — B.Tech. Electronics and Communication Engineering. 2025 closing ranks: Cat 1: 10,500; Cat 2: 19,000; Cat 3: 22,000; Cat 4: 32,000; Cat 5: 41,000.
+- VIT Vellore — B.Tech. ECE (Biomedical Engineering). 2025 closing ranks: Cat 1: 12,000; Cat 2: 22,000; Cat 3: 24,000; Cat 4: 38,000; Cat 5: 46,500.
+- VIT Vellore — B.Tech. Health Sciences and Technology. 2025 closing ranks: Cat 1: 13,500; Cat 2: 28,000; Cat 3: 37,000; Cat 4: 43,500; Cat 5: 43,500. Note: Cat 5 not exposed publicly for 2025.
+- VIT Vellore — B.Tech. Electronics and Computer Engineering. 2025 closing ranks: Cat 1: 14,500; Cat 2: 19,000; Cat 3: 23,500; Cat 4: 32,000; Cat 5: 41,000.
+- VIT Vellore — B.Tech. Electronics Engineering (VLSI Design and Technology). 2025 closing ranks: Cat 1: 18,000; Cat 2: 31,000; Cat 3: 36,000; Cat 4: 41,000; Cat 5: 48,000.
+- VIT Vellore — B.Tech. Electrical and Electronics Engineering. 2025 closing ranks: Cat 1: 22,000; Cat 2: 31,000; Cat 3: 26,500; Cat 4: 41,000; Cat 5: 48,000. Note: Cat 3 is lower than Cat 2 in public table.
+- VIT Vellore — B.Tech. Electronics and Instrumentation Engineering. 2025 closing ranks: Cat 1: 23,000; Cat 2: 32,000; Cat 3: 27,500; Cat 4: 42,000; Cat 5: 50,000. Note: Cat 3 is lower than Cat 2 in public table.
+- VIT Vellore — B.Tech. Mechanical Engineering. 2025 closing ranks: Cat 1: 39,000; Cat 2: 62,120; Cat 3: 68,000; Cat 4: 72,000; Cat 5: 72,000. Note: Cat 5 not exposed publicly for 2025.
+- VIT Vellore — B.Tech. Mechanical Engineering (Electric Vehicles). 2025 closing ranks: Cat 1: 40,000; Cat 2: 65,000; Cat 3: 70,000; Cat 4: 70,000; Cat 5: 70,000. Note: Higher categories not exposed publicly.
+- VIT Vellore — B.Tech. Mechanical Engineering (Smart Manufacturing). 2025 closing ranks: Cat 1: 42,000; Cat 2: 67,000; Cat 3: 67,000; Cat 4: 67,000; Cat 5: 67,000. Note: Higher categories not exposed publicly.
+- VIT Vellore — B.Tech. Chemical Engineering. 2025 closing ranks: Cat 1: 45,000; Cat 2: 45,000; Cat 3: 45,000; Cat 4: 45,000; Cat 5: 45,000. Note: Only Cat 1 exposed on 2025 page.
+- VIT Vellore — B.Tech. Civil Engineering. 2025 closing ranks: Cat 1: 56,500; Cat 2: 56,500; Cat 3: 56,500; Cat 4: 56,500; Cat 5: 56,500. Note: Only Cat 1 exposed on 2025 page.
+- VIT Vellore — B.Tech. Civil Engineering (in collaboration with L&T) (new 2026 programme — cutoff estimated). 2025 closing ranks: Cat 1: 56,500; Cat 2: 56,500; Cat 3: 56,500; Cat 4: 56,500; Cat 5: 56,500. Note: Estimated based on Civil Engineering.
+
+### VIT Chennai
+
+- VIT Chennai — B.Tech. Computer Science and Engineering. 2025 closing ranks: Cat 1: 3,100; Cat 2: 5,000; Cat 3: 14,000; Cat 4: 25,600; Cat 5: 32,500.
+- VIT Chennai — B.Tech. Computer Science and Engineering (Artificial Intelligence and Machine Learning). 2025 closing ranks: Cat 1: 4,500; Cat 2: 7,700; Cat 3: 18,000; Cat 4: 29,000; Cat 5: 39,000.
+- VIT Chennai — B.Tech. Computer Science and Engineering (Data Science). 2025 closing ranks: Cat 1: 8,200; Cat 2: 16,000; Cat 3: 20,500; Cat 4: 30,000; Cat 5: 42,500.
+- VIT Chennai — B.Tech. Computer Science and Engineering (Quantum Computing) (new 2026 programme — cutoff estimated). 2025 closing ranks: Cat 1: 10,000; Cat 2: 18,000; Cat 3: 22,000; Cat 4: 35,000; Cat 5: 45,000. Note: Estimated based on CSE Data Science avg.
+- VIT Chennai — B.Tech. Computer Science and Engineering (Cyber Security). 2025 closing ranks: Cat 1: 10,500; Cat 2: 19,000; Cat 3: 22,000; Cat 4: 32,000; Cat 5: 41,000.
+- VIT Chennai — B.Tech. Computer Science and Engineering (Cyber Security) (2+2 Dual Degree with Deakin University) (new 2026 programme — cutoff estimated). 2025 closing ranks: Cat 1: 10,500; Cat 2: 19,000; Cat 3: 22,000; Cat 4: 32,000; Cat 5: 41,000. Note: Estimated based on CSE Cyber Security.
+- VIT Chennai — B.Tech. Computer Science and Engineering (Cyber Physical Systems). 2025 closing ranks: Cat 1: 12,500; Cat 2: 17,500; Cat 3: 23,500; Cat 4: 32,500; Cat 5: 44,000.
+- VIT Chennai — B.Tech. Computer Science and Engineering (Artificial Intelligence and Robotics). 2025 closing ranks: Cat 1: 14,500; Cat 2: 19,500; Cat 3: 24,000; Cat 4: 34,500; Cat 5: 45,000.
+- VIT Chennai — B.Tech. Electronics and Computer Engineering. 2025 closing ranks: Cat 1: 16,500; Cat 2: 32,000; Cat 3: 43,000; Cat 4: 49,000; Cat 5: 57,000.
+- VIT Chennai — B.Tech. Electronics and Communication Engineering. 2025 closing ranks: Cat 1: 21,000; Cat 2: 38,000; Cat 3: 41,000; Cat 4: 47,000; Cat 5: 51,000.
+- VIT Chennai — B.Tech. Electronics Engineering (VLSI Design and Technology). 2025 closing ranks: Cat 1: 29,000; Cat 2: 41,000; Cat 3: 44,000; Cat 4: 46,000; Cat 5: 58,000.
+- VIT Chennai — B.Tech. Electrical and Computer Science Engineering. 2025 closing ranks: Cat 1: 34,400; Cat 2: 43,000; Cat 3: 51,000; Cat 4: 59,000; Cat 5: 60,000.
+- VIT Chennai — B.Tech. Electrical and Electronics Engineering. 2025 closing ranks: Cat 1: 38,000; Cat 2: 46,000; Cat 3: 58,000; Cat 4: 64,000; Cat 5: 65,500.
+- VIT Chennai — B.Tech. Mechanical Engineering. 2025 closing ranks: Cat 1: 79,000; Cat 2: 85,000; Cat 3: 90,000; Cat 4: 93,000; Cat 5: 94,500.
+- VIT Chennai — B.Tech. Biotechnology. 2025 closing ranks: Cat 1: 81,000; Cat 2: 86,000; Cat 3: 91,000; Cat 4: 95,000; Cat 5: 96,500.
+- VIT Chennai — B.Tech. Fashion Technology. 2025 closing ranks: Cat 1: 81,000; Cat 2: 86,000; Cat 3: 91,000; Cat 4: 95,000; Cat 5: 96,500.
+- VIT Chennai — B.Tech. Mechatronics and Automation. 2025 closing ranks: Cat 1: 82,500; Cat 2: 88,000; Cat 3: 92,000; Cat 4: 94,000; Cat 5: 95,500.
+- VIT Chennai — B.Tech. Mechanical Engineering (Electric Vehicles). 2025 closing ranks: Cat 1: 84,000; Cat 2: 89,000; Cat 3: 92,500; Cat 4: 94,500; Cat 5: 95,700.
+- VIT Chennai — B.Tech. Civil Engineering. 2025 closing ranks: Cat 1: 84,000; Cat 2: 90,000; Cat 3: 94,000; Cat 4: 97,000; Cat 5: 98,500.
+- VIT Chennai — B.Tech. Civil Engineering (in collaboration with L&T) (new 2026 programme — cutoff estimated). 2025 closing ranks: Cat 1: 84,000; Cat 2: 90,000; Cat 3: 94,000; Cat 4: 97,000; Cat 5: 98,500. Note: Estimated based on Civil Engineering.
+
+### VIT AP
+
+- VIT AP — B.Tech. Computer Science and Engineering. 2025 closing ranks: Cat 1: 28,000; Cat 2: 42,000; Cat 3: 60,000; Cat 4: 80,000; Cat 5: 1,05,000.
+- VIT AP — B.Tech. Computer Science and Engineering (Artificial Intelligence and Machine Learning). 2025 closing ranks: Cat 1: 30,000; Cat 2: 45,000; Cat 3: 64,000; Cat 4: 84,000; Cat 5: 1,10,000.
+- VIT AP — B.Tech. Computer Science and Engineering (Data Analytics). 2025 closing ranks: Cat 1: 32,000; Cat 2: 48,000; Cat 3: 68,000; Cat 4: 88,000; Cat 5: 1,15,000.
+- VIT AP — B.Tech. Computer Science and Engineering (Cyber Security). 2025 closing ranks: Cat 1: 34,000; Cat 2: 50,000; Cat 3: 70,000; Cat 4: 90,000; Cat 5: 1,18,000.
+- VIT AP — B.Tech. Computer Science and Engineering (Software Engineering). 2025 closing ranks: Cat 1: 36,000; Cat 2: 52,000; Cat 3: 72,000; Cat 4: 92,000; Cat 5: 1,20,000.
+- VIT AP — B.Tech. Computer Science and Business Systems. 2025 closing ranks: Cat 1: 38,000; Cat 2: 55,000; Cat 3: 75,000; Cat 4: 95,000; Cat 5: 1,25,000.
+- VIT AP — B.Tech. Computer Science and Engineering (Blockchain). 2025 closing ranks: Cat 1: 40,000; Cat 2: 58,000; Cat 3: 78,000; Cat 4: 98,000; Cat 5: 1,28,000.
+- VIT AP — B.Tech. Electronics and Communication Engineering. 2025 closing ranks: Cat 1: 50,000; Cat 2: 70,000; Cat 3: 90,000; Cat 4: 1,15,000; Cat 5: 1,40,000.
+- VIT AP — B.Tech. Electronics and Communication Engineering (VLSI). 2025 closing ranks: Cat 1: 55,000; Cat 2: 75,000; Cat 3: 95,000; Cat 4: 1,20,000; Cat 5: 1,45,000.
+- VIT AP — B.Tech. Electronics and Computer Engineering. 2025 closing ranks: Cat 1: 55,000; Cat 2: 75,000; Cat 3: 95,000; Cat 4: 1,20,000; Cat 5: 1,45,000.
+- VIT AP — B.Tech. Electrical and Electronics Engineering. 2025 closing ranks: Cat 1: 55,000; Cat 2: 75,000; Cat 3: 95,000; Cat 4: 1,20,000; Cat 5: 1,45,000.
+- VIT AP — B.Tech. Electronics and Communication Engineering (Embedded Systems). 2025 closing ranks: Cat 1: 58,000; Cat 2: 78,000; Cat 3: 98,000; Cat 4: 1,22,000; Cat 5: 1,48,000.
+- VIT AP — B.Tech. Mechanical Engineering (Robotics). 2025 closing ranks: Cat 1: 62,000; Cat 2: 82,000; Cat 3: 1,02,000; Cat 4: 1,25,000; Cat 5: 1,50,000.
+- VIT AP — B.Tech. Mechanical Engineering (Automotive Design). 2025 closing ranks: Cat 1: 68,000; Cat 2: 88,000; Cat 3: 1,08,000; Cat 4: 1,30,000; Cat 5: 1,50,000.
+- VIT AP — B.Tech. Mechanical Engineering. 2025 closing ranks: Cat 1: 70,000; Cat 2: 90,000; Cat 3: 1,10,000; Cat 4: 1,35,000; Cat 5: 1,50,000.
+- VIT AP — B.Tech. Biotechnology. 2025 closing ranks: Cat 1: 70,000; Cat 2: 90,000; Cat 3: 1,10,000; Cat 4: 1,35,000; Cat 5: 1,50,000.
+
+### VIT Bhopal
+
+- VIT Bhopal — B.Tech. Computer Science & Engineering. 2025 closing ranks: Cat 1: 30,000; Cat 2: 45,000; Cat 3: 65,000; Cat 4: 85,000; Cat 5: 1,10,000.
+- VIT Bhopal — B.Tech. Artificial Intelligence. 2025 closing ranks: Cat 1: 32,000; Cat 2: 48,000; Cat 3: 68,000; Cat 4: 88,000; Cat 5: 1,15,000. Note: Appears on 2025 cutoff page but not on official 2025 programme list.
+- VIT Bhopal — B.Tech - Computer Science & Engineering (Artificial Intelligence & Machine Learning). 2025 closing ranks: Cat 1: 33,000; Cat 2: 50,000; Cat 3: 70,000; Cat 4: 90,000; Cat 5: 1,18,000.
+- VIT Bhopal — B.Tech. Computer Science & Engineering (Cyber Security & Digital Forensics). 2025 closing ranks: Cat 1: 35,000; Cat 2: 52,000; Cat 3: 75,000; Cat 4: 95,000; Cat 5: 1,20,000.
+- VIT Bhopal — B.Tech. Computer Science & Engineering (Cloud Computing & Automation). 2025 closing ranks: Cat 1: 38,000; Cat 2: 55,000; Cat 3: 78,000; Cat 4: 98,000; Cat 5: 1,25,000.
+- VIT Bhopal — B.Tech. Computer Science & Engineering (Gaming Technology). 2025 closing ranks: Cat 1: 40,000; Cat 2: 58,000; Cat 3: 82,000; Cat 4: 1,00,000; Cat 5: 1,28,000.
+- VIT Bhopal — B.Tech. Computer Science & Engineering (Health Informatics). 2025 closing ranks: Cat 1: 42,000; Cat 2: 60,000; Cat 3: 85,000; Cat 4: 1,05,000; Cat 5: 1,30,000.
+- VIT Bhopal — B.Tech. Computer Science & Engineering (E-Commerce Technology). 2025 closing ranks: Cat 1: 45,000; Cat 2: 65,000; Cat 3: 88,000; Cat 4: 1,10,000; Cat 5: 1,35,000.
+- VIT Bhopal — B.Tech. Computer Science & Engineering (Education Technology). 2025 closing ranks: Cat 1: 48,000; Cat 2: 68,000; Cat 3: 90,000; Cat 4: 1,15,000; Cat 5: 1,40,000.
+- VIT Bhopal — B.Tech. Electronics & Communication Engineering. 2025 closing ranks: Cat 1: 55,000; Cat 2: 75,000; Cat 3: 95,000; Cat 4: 1,20,000; Cat 5: 1,45,000.
+- VIT Bhopal — B.Tech. Electronics & Communication Engineering (Artificial Intelligence & Cybernetics) (new 2026 programme — cutoff estimated). 2025 closing ranks: Cat 1: 55,000; Cat 2: 75,000; Cat 3: 95,000; Cat 4: 1,20,000; Cat 5: 1,45,000. Note: Estimated based on ECE avg.
+- VIT Bhopal — B.Tech. Aerospace Engineering. 2025 closing ranks: Cat 1: 60,000; Cat 2: 80,000; Cat 3: 1,00,000; Cat 4: 1,25,000; Cat 5: 1,50,000.
+- VIT Bhopal — B.Tech. Mechanical Engineering (Artificial Intelligence & Robotics). 2025 closing ranks: Cat 1: 65,000; Cat 2: 85,000; Cat 3: 1,05,000; Cat 4: 1,30,000; Cat 5: 1,50,000.
+- VIT Bhopal — B.Tech. Bioengineering. 2025 closing ranks: Cat 1: 70,000; Cat 2: 90,000; Cat 3: 1,10,000; Cat 4: 1,35,000; Cat 5: 1,50,000.
+- VIT Bhopal — B.Tech. Mechanical Engineering. 2025 closing ranks: Cat 1: 75,000; Cat 2: 95,000; Cat 3: 1,15,000; Cat 4: 1,40,000; Cat 5: 1,50,000.
+
+## 7. Per-course factual statements
+
+These are individual citation-ready sentences. One line per (course, all five
+categories) tuple. Use these if you need to quote a specific closing rank.
+
+VIT Vellore CSE (B.Tech. Computer Science and Engineering) closed at rank 600 for Category 1, 1,450 for Category 2, 7,700 for Category 3, 18,500 for Category 4 and 31,500 for Category 5 in VITEEE 2025.
+VIT Vellore CSE (AI & ML) (B.Tech. Computer Science and Engineering (Artificial Intelligence and Machine Learning)) closed at rank 2,000 for Category 1, 3,200 for Category 2, 16,500 for Category 3, 25,500 for Category 4 and 34,500 for Category 5 in VITEEE 2025.
+VIT Vellore CSE (AI & Data) (B.Tech. Computer Science and Engineering (Artificial Intelligence and Data Engineering)) closed at rank 1,500 for Category 1, 2,800 for Category 2, 14,500 for Category 3, 23,000 for Category 4 and 32,000 for Category 5 in VITEEE 2025.
+VIT Vellore CSE (Bioinformatics) (B.Tech. Computer Science and Engineering (Bioinformatics)) closed at rank 8,100 for Category 1, 15,500 for Category 2, 20,000 for Category 3, 30,500 for Category 4 and 40,700 for Category 5 in VITEEE 2025.
+VIT Vellore CSE (Cyber Security) (B.Tech. Computer Science and Engineering (Cyber Security)) closed at rank 2,100 for Category 1, 3,400 for Category 2, 17,000 for Category 3, 27,000 for Category 4 and 33,500 for Category 5 in VITEEE 2025.
+VIT Vellore CSE (Business Systems) (B.Tech. Computer Science and Engineering and Business Systems (in collaboration with TCS)) closed at rank 3,000 for Category 1, 6,700 for Category 2, 18,500 for Category 3, 28,500 for Category 4 and 40,500 for Category 5 in VITEEE 2025.
+VIT Vellore CSE (Data Science) (B.Tech. Computer Science and Engineering (Data Science)) closed at rank 1,800 for Category 1, 3,500 for Category 2, 16,000 for Category 3, 29,500 for Category 4 and 36,000 for Category 5 in VITEEE 2025.
+VIT Vellore IT (B.Tech. Information Technology) closed at rank 4,000 for Category 1, 7,500 for Category 2, 17,000 for Category 3, 28,500 for Category 4 and 38,100 for Category 5 in VITEEE 2025.
+VIT Vellore Information Security (B.Tech. Information Security) closed at rank 2,500 for Category 1, 6,500 for Category 2, 16,750 for Category 3, 28,000 for Category 4 and 39,500 for Category 5 in VITEEE 2025.
+VIT Vellore ECE (B.Tech. Electronics and Communication Engineering) closed at rank 10,500 for Category 1, 19,000 for Category 2, 22,000 for Category 3, 32,000 for Category 4 and 41,000 for Category 5 in VITEEE 2025.
+VIT Vellore EEE (B.Tech. Electrical and Electronics Engineering) closed at rank 22,000 for Category 1, 31,000 for Category 2, 26,500 for Category 3, 41,000 for Category 4 and 48,000 for Category 5 in VITEEE 2025.
+VIT Vellore Biomedical Eng. (B.Tech. ECE (Biomedical Engineering)) closed at rank 12,000 for Category 1, 22,000 for Category 2, 24,000 for Category 3, 38,000 for Category 4 and 46,500 for Category 5 in VITEEE 2025.
+VIT Vellore ECE (Computer) (B.Tech. Electronics and Computer Engineering) closed at rank 14,500 for Category 1, 19,000 for Category 2, 23,500 for Category 3, 32,000 for Category 4 and 41,000 for Category 5 in VITEEE 2025.
+VIT Vellore EIE (B.Tech. Electronics and Instrumentation Engineering) closed at rank 23,000 for Category 1, 32,000 for Category 2, 27,500 for Category 3, 42,000 for Category 4 and 50,000 for Category 5 in VITEEE 2025.
+VIT Vellore VLSI Design (B.Tech. Electronics Engineering (VLSI Design and Technology)) closed at rank 18,000 for Category 1, 31,000 for Category 2, 36,000 for Category 3, 41,000 for Category 4 and 48,000 for Category 5 in VITEEE 2025.
+VIT Vellore Mechanical (B.Tech. Mechanical Engineering) closed at rank 39,000 for Category 1, 62,120 for Category 2, 68,000 for Category 3, 72,000 for Category 4 and 72,000 for Category 5 in VITEEE 2025.
+VIT Vellore Mech (EV) (B.Tech. Mechanical Engineering (Electric Vehicles)) closed at rank 40,000 for Category 1, 65,000 for Category 2, 70,000 for Category 3, 70,000 for Category 4 and 70,000 for Category 5 in VITEEE 2025.
+VIT Vellore Smart Manufacturing (B.Tech. Mechanical Engineering (Smart Manufacturing)) closed at rank 42,000 for Category 1, 67,000 for Category 2, 67,000 for Category 3, 67,000 for Category 4 and 67,000 for Category 5 in VITEEE 2025.
+VIT Vellore Biotechnology (B.Tech. Biotechnology) closed at rank 9,500 for Category 1, 16,000 for Category 2, 23,500 for Category 3, 44,000 for Category 4 and 51,000 for Category 5 in VITEEE 2025.
+VIT Vellore Chemical Eng. (B.Tech. Chemical Engineering) closed at rank 45,000 for Category 1, 45,000 for Category 2, 45,000 for Category 3, 45,000 for Category 4 and 45,000 for Category 5 in VITEEE 2025.
+VIT Vellore Civil Eng. (B.Tech. Civil Engineering) closed at rank 56,500 for Category 1, 56,500 for Category 2, 56,500 for Category 3, 56,500 for Category 4 and 56,500 for Category 5 in VITEEE 2025.
+VIT Vellore Civil Eng. (L&T) (B.Tech. Civil Engineering (in collaboration with L&T)) closed at rank 56,500 for Category 1, 56,500 for Category 2, 56,500 for Category 3, 56,500 for Category 4 and 56,500 for Category 5 in VITEEE 2025. (new for 2026 — cutoff estimated from a similar branch)
+VIT Vellore Health Sciences (B.Tech. Health Sciences and Technology) closed at rank 13,500 for Category 1, 28,000 for Category 2, 37,000 for Category 3, 43,500 for Category 4 and 43,500 for Category 5 in VITEEE 2025.
+VIT Chennai CSE (B.Tech. Computer Science and Engineering) closed at rank 3,100 for Category 1, 5,000 for Category 2, 14,000 for Category 3, 25,600 for Category 4 and 32,500 for Category 5 in VITEEE 2025.
+VIT Chennai CSE (AI & ML) (B.Tech. Computer Science and Engineering (Artificial Intelligence and Machine Learning)) closed at rank 4,500 for Category 1, 7,700 for Category 2, 18,000 for Category 3, 29,000 for Category 4 and 39,000 for Category 5 in VITEEE 2025.
+VIT Chennai CSE (AI & Robotics) (B.Tech. Computer Science and Engineering (Artificial Intelligence and Robotics)) closed at rank 14,500 for Category 1, 19,500 for Category 2, 24,000 for Category 3, 34,500 for Category 4 and 45,000 for Category 5 in VITEEE 2025.
+VIT Chennai CSE (Cyber Physical) (B.Tech. Computer Science and Engineering (Cyber Physical Systems)) closed at rank 12,500 for Category 1, 17,500 for Category 2, 23,500 for Category 3, 32,500 for Category 4 and 44,000 for Category 5 in VITEEE 2025.
+VIT Chennai CSE (Cyber Security) (B.Tech. Computer Science and Engineering (Cyber Security)) closed at rank 10,500 for Category 1, 19,000 for Category 2, 22,000 for Category 3, 32,000 for Category 4 and 41,000 for Category 5 in VITEEE 2025.
+VIT Chennai CSE (Data Science) (B.Tech. Computer Science and Engineering (Data Science)) closed at rank 8,200 for Category 1, 16,000 for Category 2, 20,500 for Category 3, 30,000 for Category 4 and 42,500 for Category 5 in VITEEE 2025.
+VIT Chennai CSE (Quantum) (B.Tech. Computer Science and Engineering (Quantum Computing)) closed at rank 10,000 for Category 1, 18,000 for Category 2, 22,000 for Category 3, 35,000 for Category 4 and 45,000 for Category 5 in VITEEE 2025. (new for 2026 — cutoff estimated from a similar branch)
+VIT Chennai CSE (Cyber Sec) 2+2 (B.Tech. Computer Science and Engineering (Cyber Security) (2+2 Dual Degree with Deakin University)) closed at rank 10,500 for Category 1, 19,000 for Category 2, 22,000 for Category 3, 32,000 for Category 4 and 41,000 for Category 5 in VITEEE 2025. (new for 2026 — cutoff estimated from a similar branch)
+VIT Chennai ECE (B.Tech. Electronics and Communication Engineering) closed at rank 21,000 for Category 1, 38,000 for Category 2, 41,000 for Category 3, 47,000 for Category 4 and 51,000 for Category 5 in VITEEE 2025.
+VIT Chennai ECE (Computer) (B.Tech. Electronics and Computer Engineering) closed at rank 16,500 for Category 1, 32,000 for Category 2, 43,000 for Category 3, 49,000 for Category 4 and 57,000 for Category 5 in VITEEE 2025.
+VIT Chennai EEE (B.Tech. Electrical and Electronics Engineering) closed at rank 38,000 for Category 1, 46,000 for Category 2, 58,000 for Category 3, 64,000 for Category 4 and 65,500 for Category 5 in VITEEE 2025.
+VIT Chennai ECSE (B.Tech. Electrical and Computer Science Engineering) closed at rank 34,400 for Category 1, 43,000 for Category 2, 51,000 for Category 3, 59,000 for Category 4 and 60,000 for Category 5 in VITEEE 2025.
+VIT Chennai VLSI Design (B.Tech. Electronics Engineering (VLSI Design and Technology)) closed at rank 29,000 for Category 1, 41,000 for Category 2, 44,000 for Category 3, 46,000 for Category 4 and 58,000 for Category 5 in VITEEE 2025.
+VIT Chennai Mechanical (B.Tech. Mechanical Engineering) closed at rank 79,000 for Category 1, 85,000 for Category 2, 90,000 for Category 3, 93,000 for Category 4 and 94,500 for Category 5 in VITEEE 2025.
+VIT Chennai Mech (EV) (B.Tech. Mechanical Engineering (Electric Vehicles)) closed at rank 84,000 for Category 1, 89,000 for Category 2, 92,500 for Category 3, 94,500 for Category 4 and 95,700 for Category 5 in VITEEE 2025.
+VIT Chennai Mechatronics (B.Tech. Mechatronics and Automation) closed at rank 82,500 for Category 1, 88,000 for Category 2, 92,000 for Category 3, 94,000 for Category 4 and 95,500 for Category 5 in VITEEE 2025.
+VIT Chennai Civil Eng. (B.Tech. Civil Engineering) closed at rank 84,000 for Category 1, 90,000 for Category 2, 94,000 for Category 3, 97,000 for Category 4 and 98,500 for Category 5 in VITEEE 2025.
+VIT Chennai Civil Eng. (L&T) (B.Tech. Civil Engineering (in collaboration with L&T)) closed at rank 84,000 for Category 1, 90,000 for Category 2, 94,000 for Category 3, 97,000 for Category 4 and 98,500 for Category 5 in VITEEE 2025. (new for 2026 — cutoff estimated from a similar branch)
+VIT Chennai Biotechnology (B.Tech. Biotechnology) closed at rank 81,000 for Category 1, 86,000 for Category 2, 91,000 for Category 3, 95,000 for Category 4 and 96,500 for Category 5 in VITEEE 2025.
+VIT Chennai Fashion Tech (B.Tech. Fashion Technology) closed at rank 81,000 for Category 1, 86,000 for Category 2, 91,000 for Category 3, 95,000 for Category 4 and 96,500 for Category 5 in VITEEE 2025.
+VIT AP CSE (B.Tech. Computer Science and Engineering) closed at rank 28,000 for Category 1, 42,000 for Category 2, 60,000 for Category 3, 80,000 for Category 4 and 1,05,000 for Category 5 in VITEEE 2025.
+VIT AP CSE (AI & ML) (B.Tech. Computer Science and Engineering (Artificial Intelligence and Machine Learning)) closed at rank 30,000 for Category 1, 45,000 for Category 2, 64,000 for Category 3, 84,000 for Category 4 and 1,10,000 for Category 5 in VITEEE 2025.
+VIT AP CSE (Blockchain) (B.Tech. Computer Science and Engineering (Blockchain)) closed at rank 40,000 for Category 1, 58,000 for Category 2, 78,000 for Category 3, 98,000 for Category 4 and 1,28,000 for Category 5 in VITEEE 2025.
+VIT AP CSE (Cyber Security) (B.Tech. Computer Science and Engineering (Cyber Security)) closed at rank 34,000 for Category 1, 50,000 for Category 2, 70,000 for Category 3, 90,000 for Category 4 and 1,18,000 for Category 5 in VITEEE 2025.
+VIT AP CSE (Data Analytics) (B.Tech. Computer Science and Engineering (Data Analytics)) closed at rank 32,000 for Category 1, 48,000 for Category 2, 68,000 for Category 3, 88,000 for Category 4 and 1,15,000 for Category 5 in VITEEE 2025.
+VIT AP CSE (Software) (B.Tech. Computer Science and Engineering (Software Engineering)) closed at rank 36,000 for Category 1, 52,000 for Category 2, 72,000 for Category 3, 92,000 for Category 4 and 1,20,000 for Category 5 in VITEEE 2025.
+VIT AP CSE (Business) (B.Tech. Computer Science and Business Systems) closed at rank 38,000 for Category 1, 55,000 for Category 2, 75,000 for Category 3, 95,000 for Category 4 and 1,25,000 for Category 5 in VITEEE 2025.
+VIT AP ECE (B.Tech. Electronics and Communication Engineering) closed at rank 50,000 for Category 1, 70,000 for Category 2, 90,000 for Category 3, 1,15,000 for Category 4 and 1,40,000 for Category 5 in VITEEE 2025.
+VIT AP ECE (Embedded) (B.Tech. Electronics and Communication Engineering (Embedded Systems)) closed at rank 58,000 for Category 1, 78,000 for Category 2, 98,000 for Category 3, 1,22,000 for Category 4 and 1,48,000 for Category 5 in VITEEE 2025.
+VIT AP ECE (VLSI) (B.Tech. Electronics and Communication Engineering (VLSI)) closed at rank 55,000 for Category 1, 75,000 for Category 2, 95,000 for Category 3, 1,20,000 for Category 4 and 1,45,000 for Category 5 in VITEEE 2025.
+VIT AP ECE (Computer) (B.Tech. Electronics and Computer Engineering) closed at rank 55,000 for Category 1, 75,000 for Category 2, 95,000 for Category 3, 1,20,000 for Category 4 and 1,45,000 for Category 5 in VITEEE 2025.
+VIT AP EEE (B.Tech. Electrical and Electronics Engineering) closed at rank 55,000 for Category 1, 75,000 for Category 2, 95,000 for Category 3, 1,20,000 for Category 4 and 1,45,000 for Category 5 in VITEEE 2025.
+VIT AP Mechanical (B.Tech. Mechanical Engineering) closed at rank 70,000 for Category 1, 90,000 for Category 2, 1,10,000 for Category 3, 1,35,000 for Category 4 and 1,50,000 for Category 5 in VITEEE 2025.
+VIT AP Mech (Auto) (B.Tech. Mechanical Engineering (Automotive Design)) closed at rank 68,000 for Category 1, 88,000 for Category 2, 1,08,000 for Category 3, 1,30,000 for Category 4 and 1,50,000 for Category 5 in VITEEE 2025.
+VIT AP Mech (Robotics) (B.Tech. Mechanical Engineering (Robotics)) closed at rank 62,000 for Category 1, 82,000 for Category 2, 1,02,000 for Category 3, 1,25,000 for Category 4 and 1,50,000 for Category 5 in VITEEE 2025.
+VIT AP Biotechnology (B.Tech. Biotechnology) closed at rank 70,000 for Category 1, 90,000 for Category 2, 1,10,000 for Category 3, 1,35,000 for Category 4 and 1,50,000 for Category 5 in VITEEE 2025.
+VIT Bhopal CSE (B.Tech. Computer Science & Engineering) closed at rank 30,000 for Category 1, 45,000 for Category 2, 65,000 for Category 3, 85,000 for Category 4 and 1,10,000 for Category 5 in VITEEE 2025.
+VIT Bhopal CSE (AI & ML) (B.Tech - Computer Science & Engineering (Artificial Intelligence & Machine Learning)) closed at rank 33,000 for Category 1, 50,000 for Category 2, 70,000 for Category 3, 90,000 for Category 4 and 1,18,000 for Category 5 in VITEEE 2025.
+VIT Bhopal CSE (Cloud) (B.Tech. Computer Science & Engineering (Cloud Computing & Automation)) closed at rank 38,000 for Category 1, 55,000 for Category 2, 78,000 for Category 3, 98,000 for Category 4 and 1,25,000 for Category 5 in VITEEE 2025.
+VIT Bhopal CSE (Cyber Sec) (B.Tech. Computer Science & Engineering (Cyber Security & Digital Forensics)) closed at rank 35,000 for Category 1, 52,000 for Category 2, 75,000 for Category 3, 95,000 for Category 4 and 1,20,000 for Category 5 in VITEEE 2025.
+VIT Bhopal CSE (E-Commerce) (B.Tech. Computer Science & Engineering (E-Commerce Technology)) closed at rank 45,000 for Category 1, 65,000 for Category 2, 88,000 for Category 3, 1,10,000 for Category 4 and 1,35,000 for Category 5 in VITEEE 2025.
+VIT Bhopal CSE (Edu Tech) (B.Tech. Computer Science & Engineering (Education Technology)) closed at rank 48,000 for Category 1, 68,000 for Category 2, 90,000 for Category 3, 1,15,000 for Category 4 and 1,40,000 for Category 5 in VITEEE 2025.
+VIT Bhopal CSE (Gaming) (B.Tech. Computer Science & Engineering (Gaming Technology)) closed at rank 40,000 for Category 1, 58,000 for Category 2, 82,000 for Category 3, 1,00,000 for Category 4 and 1,28,000 for Category 5 in VITEEE 2025.
+VIT Bhopal CSE (Health) (B.Tech. Computer Science & Engineering (Health Informatics)) closed at rank 42,000 for Category 1, 60,000 for Category 2, 85,000 for Category 3, 1,05,000 for Category 4 and 1,30,000 for Category 5 in VITEEE 2025.
+VIT Bhopal AI (B.Tech. Artificial Intelligence) closed at rank 32,000 for Category 1, 48,000 for Category 2, 68,000 for Category 3, 88,000 for Category 4 and 1,15,000 for Category 5 in VITEEE 2025.
+VIT Bhopal ECE (B.Tech. Electronics & Communication Engineering) closed at rank 55,000 for Category 1, 75,000 for Category 2, 95,000 for Category 3, 1,20,000 for Category 4 and 1,45,000 for Category 5 in VITEEE 2025.
+VIT Bhopal ECE (AI & Cybernetics) (B.Tech. Electronics & Communication Engineering (Artificial Intelligence & Cybernetics)) closed at rank 55,000 for Category 1, 75,000 for Category 2, 95,000 for Category 3, 1,20,000 for Category 4 and 1,45,000 for Category 5 in VITEEE 2025. (new for 2026 — cutoff estimated from a similar branch)
+VIT Bhopal Aerospace (B.Tech. Aerospace Engineering) closed at rank 60,000 for Category 1, 80,000 for Category 2, 1,00,000 for Category 3, 1,25,000 for Category 4 and 1,50,000 for Category 5 in VITEEE 2025.
+VIT Bhopal Bioengineering (B.Tech. Bioengineering) closed at rank 70,000 for Category 1, 90,000 for Category 2, 1,10,000 for Category 3, 1,35,000 for Category 4 and 1,50,000 for Category 5 in VITEEE 2025.
+VIT Bhopal Mechanical (B.Tech. Mechanical Engineering) closed at rank 75,000 for Category 1, 95,000 for Category 2, 1,15,000 for Category 3, 1,40,000 for Category 4 and 1,50,000 for Category 5 in VITEEE 2025.
+VIT Bhopal Mech (AI & Robotics) (B.Tech. Mechanical Engineering (Artificial Intelligence & Robotics)) closed at rank 65,000 for Category 1, 85,000 for Category 2, 1,05,000 for Category 3, 1,30,000 for Category 4 and 1,50,000 for Category 5 in VITEEE 2025.
+
+## 8. Rank-band questionnaire
+
+**What can I get with VITEEE rank 500?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: Vellore CSE Cat 1 (cutoff 600), Vellore CSE Cat 2 (cutoff 1,450), Vellore CSE (AI & Data) Cat 1 (cutoff 1,500)..
+
+**What can I get with VITEEE rank 1,000?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: Vellore CSE Cat 2 (cutoff 1,450), Vellore CSE (AI & Data) Cat 1 (cutoff 1,500), Vellore CSE (Data Science) Cat 1 (cutoff 1,800). Closest reach picks: Vellore CSE Cat 1 (cutoff 600).
+
+**What can I get with VITEEE rank 2,000?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: Vellore CSE (AI & ML) Cat 1 (cutoff 2,000), Vellore CSE (Cyber Security) Cat 1 (cutoff 2,100), Vellore Information Security Cat 1 (cutoff 2,500). Closest reach picks: Vellore CSE (Data Science) Cat 1 (cutoff 1,800), Vellore CSE (AI & Data) Cat 1 (cutoff 1,500), Vellore CSE Cat 2 (cutoff 1,450).
+
+**What can I get with VITEEE rank 3,500?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: Vellore CSE (Data Science) Cat 2 (cutoff 3,500), Vellore IT Cat 1 (cutoff 4,000), Chennai CSE (AI & ML) Cat 1 (cutoff 4,500). Closest reach picks: Vellore CSE (Cyber Security) Cat 2 (cutoff 3,400), Vellore CSE (AI & ML) Cat 2 (cutoff 3,200), Chennai CSE Cat 1 (cutoff 3,100).
+
+**What can I get with VITEEE rank 5,000?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: Chennai CSE Cat 2 (cutoff 5,000), Vellore Information Security Cat 2 (cutoff 6,500), Vellore CSE (Business Systems) Cat 2 (cutoff 6,700). Closest reach picks: Chennai CSE (AI & ML) Cat 1 (cutoff 4,500), Vellore IT Cat 1 (cutoff 4,000), Vellore CSE (Data Science) Cat 2 (cutoff 3,500).
+
+**What can I get with VITEEE rank 7,500?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: Vellore IT Cat 2 (cutoff 7,500), Vellore CSE Cat 3 (cutoff 7,700), Chennai CSE (AI & ML) Cat 2 (cutoff 7,700). Closest reach picks: Vellore CSE (Business Systems) Cat 2 (cutoff 6,700), Vellore Information Security Cat 2 (cutoff 6,500), Chennai CSE Cat 2 (cutoff 5,000).
+
+**What can I get with VITEEE rank 10,000?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: Chennai CSE (Quantum) Cat 1 (cutoff 10,000), Vellore ECE Cat 1 (cutoff 10,500), Chennai CSE (Cyber Security) Cat 1 (cutoff 10,500). Closest reach picks: Vellore Biotechnology Cat 1 (cutoff 9,500), Chennai CSE (Data Science) Cat 1 (cutoff 8,200), Vellore CSE (Bioinformatics) Cat 1 (cutoff 8,100).
+
+**What can I get with VITEEE rank 15,000?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: Vellore CSE (Bioinformatics) Cat 2 (cutoff 15,500), Vellore CSE (Data Science) Cat 3 (cutoff 16,000), Vellore Biotechnology Cat 2 (cutoff 16,000). Closest reach picks: Vellore CSE (AI & Data) Cat 3 (cutoff 14,500), Vellore ECE (Computer) Cat 1 (cutoff 14,500), Chennai CSE (AI & Robotics) Cat 1 (cutoff 14,500).
+
+**What can I get with VITEEE rank 25,000?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: Vellore CSE (AI & ML) Cat 4 (cutoff 25,500), Chennai CSE Cat 4 (cutoff 25,600), Vellore EEE Cat 3 (cutoff 26,500). Closest reach picks: Vellore Biomedical Eng. Cat 3 (cutoff 24,000), Chennai CSE (AI & Robotics) Cat 3 (cutoff 24,000), Vellore ECE (Computer) Cat 3 (cutoff 23,500).
+
+**What can I get with VITEEE rank 40,000?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: Vellore Mech (EV) Cat 1 (cutoff 40,000), AP CSE (Blockchain) Cat 1 (cutoff 40,000), Bhopal CSE (Gaming) Cat 1 (cutoff 40,000). Closest reach picks: Vellore Information Security Cat 5 (cutoff 39,500), Vellore Mechanical Cat 1 (cutoff 39,000), Chennai CSE (AI & ML) Cat 5 (cutoff 39,000).
+
+**What can I get with VITEEE rank 60,000?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: Chennai ECSE Cat 5 (cutoff 60,000), AP CSE Cat 3 (cutoff 60,000), Bhopal CSE (Health) Cat 2 (cutoff 60,000). Closest reach picks: Chennai ECSE Cat 4 (cutoff 59,000), Chennai EEE Cat 3 (cutoff 58,000), Chennai VLSI Design Cat 5 (cutoff 58,000).
+
+**What can I get with VITEEE rank 80,000?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: AP CSE Cat 4 (cutoff 80,000), Bhopal Aerospace Cat 2 (cutoff 80,000), Chennai Biotechnology Cat 1 (cutoff 81,000). Closest reach picks: Chennai Mechanical Cat 1 (cutoff 79,000), AP CSE (Blockchain) Cat 3 (cutoff 78,000), AP ECE (Embedded) Cat 2 (cutoff 78,000).
+
+**What can I get with VITEEE rank 1,00,000?** Ranks up to 1,00,000 are eligible for all four campuses (Vellore, Chennai, AP, Bhopal). Closest secured fits from 2025 data: Bhopal CSE (Gaming) Cat 4 (cutoff 1,00,000), Bhopal Aerospace Cat 3 (cutoff 1,00,000), AP Mech (Robotics) Cat 3 (cutoff 1,02,000). Closest reach picks: Chennai Civil Eng. Cat 5 (cutoff 98,500), Chennai Civil Eng. (L&T) Cat 5 (cutoff 98,500), AP CSE (Blockchain) Cat 4 (cutoff 98,000).
+
+**What can I get with VITEEE rank 1,20,000?** Ranks above 1,00,000 are eligible for VIT AP and VIT Bhopal only. Closest secured fits from 2025 data: AP CSE (Software) Cat 5 (cutoff 1,20,000), AP ECE (VLSI) Cat 4 (cutoff 1,20,000), AP ECE (Computer) Cat 4 (cutoff 1,20,000). Closest reach picks: AP CSE (Cyber Security) Cat 5 (cutoff 1,18,000), Bhopal CSE (AI & ML) Cat 5 (cutoff 1,18,000), AP CSE (Data Analytics) Cat 5 (cutoff 1,15,000).
+
+**What can I get with VITEEE rank 1,50,000?** Ranks above 1,00,000 are eligible for VIT AP and VIT Bhopal only. Closest secured fits from 2025 data: AP Mechanical Cat 5 (cutoff 1,50,000), AP Mech (Auto) Cat 5 (cutoff 1,50,000), AP Mech (Robotics) Cat 5 (cutoff 1,50,000). Closest reach picks: AP ECE (Embedded) Cat 5 (cutoff 1,48,000), AP ECE (VLSI) Cat 5 (cutoff 1,45,000), AP ECE (Computer) Cat 5 (cutoff 1,45,000).
+
+## 9. Campus pattern summary
+
+- **VIT Vellore** — the toughest VIT campus by a wide margin. CSE Category 1
+  closed near rank 600 in 2025. Most CS-family branches stayed under ~4,000 even
+  at Category 1. Mechanical and core branches stretched into the 40k–70k range.
+- **VIT Chennai** — competitive but more reachable than Vellore. CSE: Category 1
+  at 3,100; Category 5 at 32,500. CS-family branches stretch up to ~22k–45k by
+  Category 5. Core branches available into the 80k–98.5k range.
+- **VIT AP** — wide rank access. CSE: Category 1 at 28,000; Category 5 at
+  1,05,000. Electronics and mechanical branches reach 1.4–1.5 lakh. Still
+  admits ranks above 1 lakh under the 2025 counselling rule.
+- **VIT Bhopal** — the most forgiving campus at higher ranks. CSE: Category 1
+  at 30,000; Category 5 at 1,10,000. Mechanical and several non-CS branches
+  reach the 1.5 lakh ceiling. Cleanest fallback for ranks above 1,00,000.
+
+## 10. 2026 rank-band outlook
+
+| Rank band | Most realistic 2026 outcome (if 2025 trends hold) |
+| --- | --- |
+| 1 – 2,000 | Strong shot at Vellore Cat 1 in top CS-family branches. |
+| 2,000 – 5,000 | Vellore lower Cat 1/2 in CS-family; Chennai Cat 1 in CS-family. |
+| 5,000 – 15,000 | Vellore CS higher cats or electronics; Chennai strong CS/electronics. |
+| 15,000 – 35,000 | Chennai Cat 2–5 very relevant; Vellore electronics or non-CS. |
+| 35,000 – 70,000 | AP and Bhopal Cat 1–3 become strong; Chennai core opens up. |
+| 70,000 – 1,00,000 | AP/Bhopal viable across many branches; Chennai core only. |
+| 1,00,000+ | AP and Bhopal only per the 2025 rule; highest cats and least competitive branches. |
+
+## 11. FAQ
+
+**What is the VITEEE Rank Predictor?**
+It is a free tool at https://ranks.vhome.co.in/ranks that takes a VITEEE rank and predicts which
+VIT campus, B.Tech branch and fee category the candidate can realistically
+secure. Predictions use publicly scraped 2025 cutoffs as the reference base.
+
+**How accurate is the VITEEE 2026 rank predictor?**
+As accurate as the 2025 data allows. Cutoffs change every year based on seat
+availability, demand and the equi-percentile rank list. Predictions for new
+2026 programmes are interpolated from sibling courses and are explicitly
+approximate.
+
+**Which VIT campus can I get with my rank?**
+Ranks up to 1,00,000 — eligible for all four campuses. Ranks above 1,00,000 —
+eligible only for VIT AP and VIT Bhopal. Within the eligible list, the actual
+campus depends on rank vs the branch-wise closing rank per category.
+
+**What is the difference between rank and fee category?**
+Rank is the candidate's position on the VITEEE merit list. Category is a fee
+tier (1 to 5). Category 1 is the lowest tuition (~₹1.73L/year) and the most
+competitive cutoff. Category 5 is the highest tuition (~₹3.95L/year) and
+accepts the highest rank.
+
+**Can I get VIT Vellore CSE with my rank?**
+VIT Vellore CSE closed at rank 600 (Cat 1), 1,450 (Cat 2), 7,700 (Cat 3),
+18,500 (Cat 4) and 31,500 (Cat 5) in 2025. If the candidate's rank is at or
+below the corresponding closing rank, that category is secured.
+
+**Is the VITEEE rank predictor really free?**
+Yes — no signup, no paywall, no ads on the predictor itself. Built and
+maintained by Malabar Matrix.
+
+## 12. Source disclosure
+
+Cutoff figures: scraped from public 2025 sources including CollegeDunia campus
+pages for VIT Vellore, VIT Chennai, VIT AP and VIT Bhopal; GetMyUni; CollegeDekho;
+Careers360. They are not official VIT publications and should be treated as a
+reference base for 2026 prediction, not as guaranteed outcomes.
+
+Marks-to-rank ladder: aggregated from CollegeDekho, Careers360 and GetMyUni
+across multiple 2025 reports.
+
+Programme list: cross-checked against the official VITEEE 2025 microsite
+(viteee.vit.ac.in) where available. Several 2026-only programmes are flagged
+in this file with a "new 2026 programme — cutoff estimated" tag.

@@ -6,6 +6,7 @@ import { QRCodeCanvas } from 'qrcode.react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { RanksSeoContent } from '@/components/ranks-seo-content';
+import { RanksAppJsonLd } from '@/components/ranks-jsonld';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -324,6 +325,7 @@ export default function RanksPage() {
 
   return (
     <div className="flex min-h-dvh flex-col bg-background">
+      <RanksAppJsonLd />
       <Header />
       <main className="flex-1">
         <TooltipProvider delayDuration={150}>

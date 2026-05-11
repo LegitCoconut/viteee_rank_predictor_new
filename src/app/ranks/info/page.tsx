@@ -632,9 +632,26 @@ export default function RanksInfoPage() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 text-xs text-muted-foreground">
-                Compiled 2026-04-23. Treat all 2025 numbers as a base layer for 2026
-                prediction, not as guaranteed outcomes.
+              <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                <span>
+                  Last updated:{' '}
+                  <time dateTime="2026-05-11" className="font-medium text-foreground">
+                    11 May 2026
+                  </time>
+                </span>
+                <span aria-hidden>·</span>
+                <span>Dataset compiled 2026-04-23</span>
+                <span aria-hidden>·</span>
+                <a
+                  href="/llms-full.txt"
+                  className="font-medium text-coral hover:underline"
+                >
+                  Plain-text export
+                </a>
+              </div>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Treat all 2025 numbers as a base layer for 2026 prediction, not as
+                guaranteed outcomes.
               </p>
             </Section>
 

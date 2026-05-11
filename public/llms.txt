@@ -1,0 +1,33 @@
+# VIT Ranks — Free VITEEE 2026 Rank Predictor, College Predictor & Mock Tests
+
+> VIT Ranks is a free, student-built platform for VITEEE 2026 aspirants. It bundles a
+> rank-and-college predictor for VIT Vellore, Chennai, AP and Bhopal, full-length VITEEE
+> mock tests, the public 2025 cutoff dataset, and a marks-to-rank reference ladder. No
+> signup, no paywall. Maintained by Malabar Matrix.
+
+## Primary tools
+
+- [VITEEE Rank & College Predictor](https://ranks.vhome.co.in/ranks): enter a VITEEE rank from 1 to 2,00,000 and see every B.Tech programme, fee category (1–5), and campus you can secure or reach. Supports drag-to-reorder, PDF export and shareable URLs/QR codes.
+- [Free VITEEE Mock Tests](https://ranks.vhome.co.in/mocktest): full-length 2026-pattern mock tests with instant analytics and a live leaderboard.
+
+## Reference data
+
+- [VITEEE 2025 Cutoffs, Marks vs Rank & Counselling Data](https://ranks.vhome.co.in/ranks/info): every public 2025 closing rank per campus, branch and fee category; the equi-percentile marks-to-rank ladder; the counselling eligibility rule; the campus-wise rank-band outlook for 2026.
+- [Full machine-readable export](https://ranks.vhome.co.in/llms-full.txt): the same dataset and FAQ as a single markdown file optimised for LLM ingestion.
+
+## Quick facts (VITEEE 2025)
+
+- 125 questions, 1 mark each, no negative marking.
+- Rank list prepared using equi-percentile normalisation (raw marks do not map 1:1 to ranks).
+- Counselling eligibility: ranks ≤ 1,00,000 are eligible for all four VIT campuses (Vellore, Chennai, AP, Bhopal). Ranks > 1,00,000 are eligible only for VIT AP and VIT Bhopal.
+- VIT publishes 5 fee categories per programme. Category 1 has the lowest tuition and the most competitive closing rank. Category 5 has the highest tuition and accepts the highest rank.
+- Annual B.Tech tuition (2025–26): Group A ₹1,73,000; Group B ₹1,95,000; Bhopal Group B ₹1,98,000.
+
+## Data source disclosure
+
+All cutoff figures are scraped from public 2025 sources (CollegeDunia campus pages, GetMyUni, CollegeDekho, Careers360). They are not official VIT figures. They should be treated as a reference base for prediction, not as guaranteed outcomes for 2026.
+
+## Optional pages
+
+- [Donate](https://ranks.vhome.co.in/donate): the platform is free; contributions help keep it ad-free.
+- [Terms](https://ranks.vhome.co.in/terms): terms of service.

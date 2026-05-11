@@ -15,6 +15,7 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { COURSE_DATA, CAMPUS_SHORT, Campus } from '@/lib/viteee-data';
 
 // SEO copy specifically targeted at the high-impression queries from search
 // console: "viteee rank predictor", "vit college predictor", "vit rank",
@@ -130,10 +131,59 @@ const FAQ: { q: string; a: string }[] = [
   },
 ];
 
+// Programmatic "What can I get with VITEEE rank N?" entries computed off
+// COURSE_DATA so every common rank band has a literal answer in the page HTML
+// (good for both AI retrieval and "People also ask" style snippets).
+const RANK_BANDS = [
+  1000, 2500, 5000, 10000, 20000, 35000, 60000, 90000, 120000,
+];
+
+function topMatches(rank: number, n = 3) {
+  const eligible: Campus[] =
+    rank <= 100000 ? ['vellore', 'chennai', 'ap', 'bhopal'] : ['ap', 'bhopal'];
+  const rows = COURSE_DATA.filter((c) => eligible.includes(c.campus))
+    .flatMap((c) =>
+      c.categories.map((cr, i) => ({
+        course: c,
+        cat: i + 1,
+        cr,
+        secured: rank <= cr,
+        delta: cr - rank,
+      })),
+    )
+    .sort((a, b) => Math.abs(a.delta) - Math.abs(b.delta));
+  return {
+    secured: rows.filter((r) => r.secured).slice(0, n),
+    reach: rows.filter((r) => !r.secured).slice(0, n),
+  };
+}
+
+function rankBandAnswer(rank: number): string {
+  const { secured, reach } = topMatches(rank);
+  const eligibilityNote =
+    rank <= 100000
+      ? 'Ranks up to 1,00,000 are eligible for all four VIT campuses (Vellore, Chennai, AP, Bhopal).'
+      : 'Ranks above 1,00,000 are eligible only for VIT AP and VIT Bhopal per the 2025 counselling rule.';
+  const fmt = (r: { course: { shortName: string; campus: Campus }; cat: number; cr: number }) =>
+    `${CAMPUS_SHORT[r.course.campus]} ${r.course.shortName} Cat ${r.cat} (cutoff ${r.cr.toLocaleString('en-IN')})`;
+  const securedLine = secured.length
+    ? `Closest secured fits from 2025 data: ${secured.map(fmt).join(', ')}.`
+    : 'No Category 1 secures at this rank — try higher fee categories.';
+  const reachLine = reach.length ? ` Reach picks: ${reach.map(fmt).join(', ')}.` : '';
+  return `${eligibilityNote} ${securedLine}${reachLine}`;
+}
+
+const RANK_FAQ = RANK_BANDS.map((rank) => ({
+  q: `What can I get with VITEEE rank ${rank.toLocaleString('en-IN')}?`,
+  a: rankBandAnswer(rank),
+}));
+
+const ALL_FAQ = [...FAQ, ...RANK_FAQ];
+
 const faqJsonLd = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: FAQ.map((item) => ({
+  mainEntity: ALL_FAQ.map((item) => ({
     '@type': 'Question',
     name: item.q,
     acceptedAnswer: { '@type': 'Answer', text: item.a },
@@ -289,6 +339,39 @@ export function RanksSeoContent() {
             </h2>
             <div className="mt-8 space-y-3">
               {FAQ.map((item, i) => (
+                <details
+                  key={i}
+                  className="group rounded-2xl border border-border/40 bg-card/60 p-5 transition-colors hover:border-coral/40 open:border-coral/40"
+                >
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
+                    <h3 className="text-base font-semibold leading-snug tracking-tight md:text-lg">
+                      {item.q}
+                    </h3>
+                    <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border/40 text-coral transition-transform group-open:rotate-45">
+                      <span className="text-xl leading-none">+</span>
+                    </span>
+                  </summary>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">
+                    {item.a}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+
+          {/* Rank-band specific answers — computed from COURSE_DATA so each
+              "What can I get with rank N" query has a literal answer in HTML. */}
+          <div>
+            <Eyebrow icon={Target}>Rank-band specifics</Eyebrow>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+              What can I get with my VITEEE rank?
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm text-muted-foreground md:text-base">
+              Quick reference answers computed off the 2025 dataset. For your exact
+              rank, use the predictor above — these are the most-searched bands.
+            </p>
+            <div className="mt-8 space-y-3">
+              {RANK_FAQ.map((item, i) => (
                 <details
                   key={i}
                   className="group rounded-2xl border border-border/40 bg-card/60 p-5 transition-colors hover:border-coral/40 open:border-coral/40"
