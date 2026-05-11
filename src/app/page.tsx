@@ -14,11 +14,30 @@ import { Button } from '@/components/ui/button';
 import { DonationPopup } from '@/components/donation-popup';
 
 export const metadata: Metadata = {
-  title: "Free VITEEE Mock Tests 2026 | VIT RANKS",
+  title: "Free VITEEE Mock Tests & Rank Predictor 2026 | VIT RANKS",
   description:
-    "Free, full-length VITEEE 2026 mock tests with instant analytics, a live leaderboard, and the complete syllabus. No signup. No paywall. Built by students, for VITEEE aspirants.",
+    "Free VITEEE 2026 mock tests + VIT rank & college predictor. Enter your VITEEE rank to see which VIT campus and branch you can secure across all 5 fee categories. Live leaderboard, full syllabus. No signup, no paywall.",
   keywords: [
-    // Core (highest impression count in search console)
+    // Rank / college predictor (high opportunity per search console)
+    "viteee rank", "vit rank", "vit ranks", "vitee rank",
+    "viteee rank predictor", "viteee rank predictor 2026",
+    "vit rank predictor", "vit rank predictor 2026",
+    "viteee college predictor", "viteee college predictor 2026",
+    "vit college predictor", "vit college predictor 2026",
+    "vitee college predictor", "college predictor viteee",
+    "viteee predictor", "vit predictor",
+    "viteee branch predictor", "vit branch predictor",
+    "vit rank calculator", "viteee rank college predictor",
+    "viteee college predictor free", "vit college predictor free",
+
+    // VITEEE 2025 cutoffs / counselling data
+    "viteee cutoff", "viteee 2025 cutoff", "viteee cutoff 2026",
+    "vit cutoff", "vit category cutoff", "viteee category cutoff",
+    "viteee marks vs rank", "viteee rank vs marks",
+    "vit vellore cutoff", "vit chennai cutoff",
+    "vit ap cutoff", "vit bhopal cutoff",
+
+    // Registration & dates
     "viteee registration", "viteee registration 2026", "viteee registration form",
     "viteee registration last date", "viteee registration last date 2026",
     "viteee 2026", "viteee exam", "viteee exam date", "viteee exam date 2026",
@@ -26,11 +45,14 @@ export const metadata: Metadata = {
 
     // Mock tests (primary platform offering)
     "viteee mock test", "viteee mock tests", "viteee free mock test",
+    "viteee mock test 2026", "vit mock test", "vit mock test 2026",
+    "vit free mock test", "vit ranks mock test",
     "viteee practice test online", "viteee practice test", "viteee sample paper",
-    "viteee question paper",
+    "viteee question paper", "viteee mocks", "viteee mock",
 
     // Previous year papers
-    "viteee pyq", "viteee pyqs", "viteee previous year question paper",
+    "viteee pyq", "viteee pyqs", "vit pyq", "vit pyqs",
+    "viteee previous year question paper",
     "viteee previous year question papers", "viteee pyq chapterwise pdf",
 
     // Syllabus / pattern / marking
@@ -51,14 +73,14 @@ export const metadata: Metadata = {
     "viteee application", "viteee form",
 
     // VIT brand queries
-    "vit", "vit exam", "vit entrance", "vit entrance exam",
+    "vit", "viteee", "vitee", "vit exam", "vit entrance", "vit entrance exam",
     "vit entrance exam 2026", "vit eee", "vit vellore",
     "vit university", "vellore institute of technology",
 
     // NRI / category admissions
     "vit nri", "vit nri admission", "vit nri entrance",
     "vit nri entrance exam", "viteee nri", "vit category 2",
-    "vit foreign students",
+    "vit foreign students", "mpcea viteee", "vit mpcea", "bpcea viteee",
 
     // Admissions / counselling / fees
     "vit admission", "vit admission 2026", "vit b.tech admission",
@@ -76,24 +98,24 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "Free VITEEE Mock Tests 2026 | VIT RANKS",
+    title: "Free VITEEE Mock Tests & Rank Predictor 2026 | VIT RANKS",
     description:
-      "Full-length VITEEE 2026 mock tests, live leaderboard, and syllabus — all free, no signup. Join the #1 VITEEE student community.",
+      "Free VITEEE rank & college predictor + full-length mock tests for VIT Vellore, Chennai, AP & Bhopal. Based on 2025 cutoffs. No signup, no paywall.",
     url: '/',
     images: [
       {
         url: '/hompage.png',
         width: 1200,
         height: 630,
-        alt: 'VIT RANKS - Free VITEEE 2026 Mock Tests',
+        alt: 'VIT RANKS - Free VITEEE 2026 Mock Tests & Rank Predictor',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Free VITEEE Mock Tests 2026",
+    title: "Free VITEEE Mock Tests & Rank Predictor 2026",
     description:
-      "Full-length VITEEE mock tests, live leaderboard, and syllabus — free, no signup.",
+      "VITEEE rank & college predictor + free mock tests for VIT Vellore, Chennai, AP & Bhopal. No signup.",
     images: ['/hompage.png'],
   },
 };

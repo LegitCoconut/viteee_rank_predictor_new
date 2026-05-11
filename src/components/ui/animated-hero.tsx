@@ -161,9 +161,9 @@ function Hero() {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.25 }}
             className="max-w-2xl text-balance text-base md:text-xl leading-relaxed text-white/70"
           >
-            Free, full-length VITEEE mock tests with instant analytics, a live
-            leaderboard, and zero paywalls. Sharpen your score the way toppers
-            do — one honest attempt at a time.
+            Free VITEEE 2026 mock tests, a VIT rank &amp; college predictor, and
+            a live leaderboard — all on one site, no signup, no paywall. Sharpen
+            your score the way toppers do, one honest attempt at a time.
           </motion.p>
 
           <motion.div

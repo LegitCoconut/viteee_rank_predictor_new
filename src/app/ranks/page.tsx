@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { QRCodeCanvas } from 'qrcode.react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import { RanksSeoContent } from '@/components/ranks-seo-content';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -386,7 +387,7 @@ export default function RanksPage() {
                       className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/85 backdrop-blur-md"
                     >
                       <Medal className="h-3.5 w-3.5 text-coral" />
-                      Rank Predictor 2026
+                      VIT Rank &amp; College Predictor 2026
                     </motion.div>
 
                     <motion.h1
@@ -1431,9 +1432,14 @@ export default function RanksPage() {
               </motion.section>
             )}
           </AnimatePresence>
+
+          {/* SEO content — only on the rank/landing step. Keeps the predictor
+              UI clean once a user starts interacting, but gives Google a rich,
+              keyword-targeted body of content on the page that ships in SSR. */}
+          {isHero && <RanksSeoContent />}
         </TooltipProvider>
       </main>
-      {!isHero && <Footer />}
+      <Footer />
     </div>
   );
 }
