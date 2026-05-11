@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1600, initial-scale=1" />
+  <title>VITEEE Rank Predictor — Share Card</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    :root {
+      --ink: #0d0d10;
+      --ink-soft: #3a3a42;
+      --mute: #6a6a72;
+      --line: #d8d5cd;
+      --paper: #f7f5f0;
+      --card: #ffffff;
+      --coral: #ff6b4a;
+      --mint: #4cd1a3;
+      --lavender: #b8a1f0;
+      --sky: #6cb6ff;
+      --plum: #2c1c38;
+    }
+    body {
+      min-height: 100vh;
+      background: #1a1816;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── 1600 × 900 landscape canvas ──────────────────────────────────────── */
+    .card {
+      width: 1600px;
+      height: 900px;
+      background: var(--paper);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 640px;
+      box-shadow: 0 80px 160px -40px rgba(0,0,0,0.6);
+    }
+
+    /* ambient color blooms (like the site's hero) */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(800px 500px at -10% -10%, rgba(255, 107, 74, 0.12), transparent 55%),
+        radial-gradient(700px 500px at 110% 110%, rgba(76, 209, 163, 0.10), transparent 55%),
+        radial-gradient(600px 400px at 60% 0%, rgba(184, 161, 240, 0.07), transparent 60%);
+      pointer-events: none;
+    }
+
+    /* paper grain */
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(13,13,16,0.018) 0 1px, transparent 1px 4px),
+        radial-gradient(circle, rgba(13,13,16,0.02) 1px, transparent 1px);
+      background-size: auto, 22px 22px;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+
+    /* ── LEFT column: editorial typography ─────────────────────────────────── */
+    .left {
+      position: relative;
+      z-index: 2;
+      padding: 56px 64px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 28px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .dots {
+      display: inline-flex;
+      gap: 6px;
+    }
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .dot.coral { background: var(--coral); box-shadow: 0 0 0 3px rgba(255,107,74,0.12); }
+    .dot.mint { background: var(--mint); box-shadow: 0 0 0 3px rgba(76,209,163,0.12); }
+    .dot.lavender { background: var(--lavender); box-shadow: 0 0 0 3px rgba(184,161,240,0.12); }
+
+    .brand-label {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+    }
+
+    .ref {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: var(--mute);
+      padding: 7px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.5);
+    }
+
+    .center {
+      align-self: center;
+      max-width: 740px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      color: var(--mute);
+      text-transform: uppercase;
+    }
+    .eyebrow .dash {
+      width: 36px;
+      height: 1px;
+      background: var(--line);
+    }
+    .eyebrow .swatch {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--coral);
+    }
+
+    h1 {
+      margin: 18px 0 0;
+      font-size: 110px;
+      line-height: 0.9;
+      letter-spacing: -0.035em;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    h1 em {
+      font-family: 'Instrument Serif', 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--coral);
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+    h1 em::after {
+      content: '';
+      position: absolute;
+      left: -2px;
+      right: -2px;
+      bottom: 14px;
+      height: 14px;
+      background: rgba(76,209,163,0.35);
+      z-index: -1;
+      border-radius: 2px;
+    }
+
+    .lede {
+      margin: 24px 0 0;
+      font-size: 20px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 620px;
+    }
+    .lede strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* feature chips */
+    .chips {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 13px 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.55);
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+    .chip .pip {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    .chip.coral .pip { background: var(--coral); }
+    .chip.mint .pip { background: var(--mint); }
+    .chip.lavender .pip { background: var(--lavender); }
+    .chip.sky .pip { background: var(--sky); }
+
+    /* URL pills row */
+    .urls {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .url-pill {
+      flex: 1;
+      padding: 16px 20px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4px 14px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .url-pill::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 18px;
+      bottom: 18px;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+    }
+    .url-pill.predict::before { background: var(--coral); }
+    .url-pill.data::before { background: var(--mint); }
+
+    .url-pill .tag {
+      grid-column: 1 / -1;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      color: var(--mute);
+      text-transform: uppercase;
+    }
+    .url-pill .host {
+      grid-column: 1 / -1;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+
+    /* signoff */
+    .signoff {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--mute);
+    }
+    .signoff strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .signoff .pill {
+      padding: 5px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.5);
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
+
+    /* ── RIGHT column: dark predictor mockup ──────────────────────────────── */
+    .right {
+      position: relative;
+      z-index: 2;
+      background:
+        radial-gradient(680px 480px at 30% 20%, rgba(255,107,74,0.45), transparent 60%),
+        radial-gradient(560px 460px at 90% 90%, rgba(76,209,163,0.38), transparent 60%),
+        radial-gradient(500px 400px at 60% 0%, rgba(184,161,240,0.35), transparent 60%),
+        var(--plum);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 52px 56px;
+    }
+
+    .right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 36px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 36px);
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    .right-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.7);
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .right-head .pill {
+      padding: 5px 11px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(8px);
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* the mockup card */
+    .mock {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      padding: 22px 22px 18px;
+      box-shadow: 0 30px 80px -30px rgba(0,0,0,0.6);
+    }
+
+    .mock-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .mock-head .title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.95);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .traffic { display: inline-flex; gap: 5px; }
+    .traffic span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      opacity: 0.85;
+    }
+    .traffic span:nth-child(1) { background: #ff5f57; }
+    .traffic span:nth-child(2) { background: #febc2e; }
+    .traffic span:nth-child(3) { background: #28c840; }
+
+    .mock-rank {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .mock-rank .lab {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+    }
+    .mock-rank .num {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      line-height: 1;
+    }
+    .mock-rank .num em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--coral);
+      margin-left: 2px;
+    }
+    .mock-rank .badge {
+      margin-left: auto;
+      padding: 4px 10px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      background: rgba(76,209,163,0.18);
+      color: var(--mint);
+      border: 1px solid rgba(76,209,163,0.3);
+      font-weight: 500;
+    }
+
+    /* tiny table */
+    .mock-table {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .mock-row {
+      display: grid;
+      grid-template-columns: 18px 80px 1fr 60px 100px;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 4px;
+      font-size: 13.5px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.92);
+    }
+    .mock-row:last-child { border-bottom: none; }
+    .mock-row .idx {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+    }
+    .mock-row .campus {
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    .mock-row .course {
+      font-weight: 500;
+    }
+    .mock-row .cat {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.85);
+      justify-self: start;
+      letter-spacing: 0.04em;
+    }
+    .mock-row .cat.hot { background: rgba(255,107,74,0.22); border-color: rgba(255,107,74,0.4); color: #ffb6a3; }
+    .mock-row .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      justify-self: end;
+    }
+    .mock-row .status.secured { color: var(--mint); }
+    .mock-row .status.reach { color: #ffb46b; }
+    .status .glyph {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    .status.secured .glyph { background: rgba(76,209,163,0.2); color: var(--mint); }
+    .status.reach .glyph { background: rgba(255,180,107,0.2); color: #ffb46b; }
+
+    /* mini stats below mockup */
+    .mini-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .mini {
+      padding: 16px 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+    }
+    .mini .v {
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .mini .v em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--coral);
+      font-size: 22px;
+    }
+    .mini .v .accent-mint { color: var(--mint); }
+    .mini .v .accent-lav { color: var(--lavender); }
+    .mini .l {
+      margin-top: 8px;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+    }
+
+    /* foot footer in dark column */
+    .right-foot {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: rgba(255,255,255,0.55);
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .right-foot .qr {
+      width: 116px;
+      height: 116px;
+      padding: 8px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 16px 36px -12px rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .right-foot .qr > div {
+      width: 100%;
+      height: 100%;
+    }
+    .right-foot .qr canvas,
+    .right-foot .qr img {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    .right-foot .text {
+      flex: 1;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.65);
+    }
+    .right-foot .text strong {
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+    .right-foot .text .url {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      color: var(--coral);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <!-- ───────────────────────── LEFT (paper) ───────────────────────── -->
+    <div class="left">
+      <div class="row">
+        <div class="brand">
+          <span class="dots">
+            <span class="dot coral"></span>
+            <span class="dot mint"></span>
+            <span class="dot lavender"></span>
+          </span>
+          <span class="brand-label">VITEEE Ranks · Malabar Matrix</span>
+        </div>
+        <span class="ref">2026 · FREE · STUDENT-MADE</span>
+      </div>
+
+      <div class="center">
+        <span class="eyebrow">
+          <span class="dash"></span>
+          <span class="swatch"></span>
+          Free rank predictor
+        </span>
+
+        <h1>
+          Predict your<br />
+          VITEEE rank, <em>free</em>.
+        </h1>
+
+        <p class="lede">
+          Plug in your rank, see every campus and category it lands across
+          <strong>VIT Vellore, Chennai, AP and Bhopal</strong>. Drag-to-reorder,
+          PDF export, shareable QR — all built on public 2025 cutoff data.
+        </p>
+
+        <div class="chips">
+          <span class="chip coral"><span class="pip"></span>Drag-to-reorder</span>
+          <span class="chip mint"><span class="pip"></span>PDF report</span>
+          <span class="chip lavender"><span class="pip"></span>Shareable QR</span>
+          <span class="chip sky"><span class="pip"></span>No signup, no paywall</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="urls">
+          <div class="url-pill predict">
+            <span class="tag">Predict</span>
+            <span class="host">ranks.vhome.co.in/ranks</span>
+          </div>
+          <div class="url-pill data">
+            <span class="tag">The data behind it</span>
+            <span class="host">/ranks/info</span>
+          </div>
+        </div>
+
+        <div class="signoff" style="margin-top: 22px;">
+          <span>A <strong>Malabar Matrix</strong> initiative · No signup, no paywall</span>
+          <span class="pill">malabarmatrix.site</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────────────────────── RIGHT (dark mock) ───────────────────────── -->
+    <div class="right">
+      <div class="right-head">
+        <span class="pill">Live Demo</span>
+        <span>Rank Analysis · 2025 cutoffs</span>
+      </div>
+
+      <div class="mock">
+        <div class="mock-head">
+          <div class="title">
+            <span class="traffic"><span></span><span></span><span></span></span>
+            ranks.vhome.co.in/ranks
+          </div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.12em;">REF · A3B7K9F2</span>
+        </div>
+
+        <div class="mock-rank">
+          <div>
+            <div class="lab">Your rank</div>
+            <div class="num">#5,000</div>
+          </div>
+          <span class="badge">8 secured</span>
+        </div>
+
+        <div class="mock-table">
+          <div class="mock-row">
+            <span class="idx">1</span>
+            <span class="campus">Vellore</span>
+            <span class="course">CSE</span>
+            <span class="cat hot">Cat 2</span>
+            <span class="status secured"><span class="glyph">✓</span>Secured</span>
+          </div>
+          <div class="mock-row">
+            <span class="idx">2</span>
+            <span class="campus">Vellore</span>
+            <span class="course">CSE (AI &amp; ML)</span>
+            <span class="cat hot">Cat 2</span>
+            <span class="status secured"><span class="glyph">✓</span>Secured</span>
+          </div>
+          <div class="mock-row">
+            <span class="idx">3</span>
+            <span class="campus">Chennai</span>
+            <span class="course">CSE</span>
+            <span class="cat">Cat 2</span>
+            <span class="status secured"><span class="glyph">✓</span>Secured</span>
+          </div>
+          <div class="mock-row">
+            <span class="idx">4</span>
+            <span class="campus">Vellore</span>
+            <span class="course">Information Tech</span>
+            <span class="cat">Cat 2</span>
+            <span class="status reach"><span class="glyph">!</span>Reach</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-grid">
+        <div class="mini">
+          <div class="v">70<em>+</em></div>
+          <div class="l">Programmes</div>
+        </div>
+        <div class="mini">
+          <div class="v">4<span class="accent-mint">·</span></div>
+          <div class="l">Campuses</div>
+        </div>
+        <div class="mini">
+          <div class="v">5<span class="accent-lav">·</span></div>
+          <div class="l">Fee categories</div>
+        </div>
+      </div>
+
+      <div class="right-foot">
+        <div class="qr"><div id="qr"></div></div>
+        <span class="text">
+          <strong>Scan to start predicting</strong>
+          <span class="url">ranks.vhome.co.in</span>
+          <div style="margin-top: 8px; font-size: 11px; line-height: 1.5; letter-spacing: 0.06em;">
+            Free, no signup. Drag, reorder, export.
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script>
+    (function () {
+      var holder = document.getElementById('qr');
+      if (!holder || typeof QRCode === 'undefined') {
+        console.error('QR lib missing or holder not found');
+        return;
+      }
+      new QRCode(holder, {
+        text: 'https://ranks.vhome.co.in',
+        width: 240,
+        height: 240,
+        colorDark: '#0d0d10',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    })();
+  </script>
+</body>
+</html>
