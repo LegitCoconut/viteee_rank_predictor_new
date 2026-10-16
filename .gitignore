@@ -49,3 +49,4 @@ qp-cropper/
 docs/email-template/
 
 .agents/
+.idx/
