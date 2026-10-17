@@ -31,8 +31,9 @@ export interface ReportInput {
 }
 
 const SITE_URL = 'https://ranks.vhome.co.in';
+const NEW_SITE_URL = 'https://viteee.malabarmatrix.in';
 const INSTAGRAM_URL = 'https://www.instagram.com/malabar.matrix';
-const STUDIO_URL = 'https://malabarmatrix.site';
+const STUDIO_URL = 'https://malabarmatrix.in';
 const OG_IMAGE_PATH = '/hompage.png';
 
 const formatList = <T extends string>(
@@ -294,6 +295,7 @@ export async function generateReport(data: ReportInput): Promise<void> {
   // Links row — three cells, evenly spaced
   const links: { label: string; value: string; url: string }[] = [
     { label: 'Website', value: 'ranks.vhome.co.in', url: SITE_URL },
+    { label: 'Alternate', value: 'viteee.malabarmatrix.in', url: NEW_SITE_URL}.
     { label: 'Instagram', value: '@malabar.matrix', url: INSTAGRAM_URL },
     { label: 'Studio', value: 'malabarmatrix.site', url: STUDIO_URL },
   ];
