@@ -295,7 +295,7 @@ export async function generateReport(data: ReportInput): Promise<void> {
   // Links row — three cells, evenly spaced
   const links: { label: string; value: string; url: string }[] = [
     { label: 'Website', value: 'ranks.vhome.co.in', url: SITE_URL },
-    { label: 'Alternate', value: 'viteee.malabarmatrix.in', url: NEW_SITE_URL}.
+    { label: 'Alternate', value: 'viteee.malabarmatrix.in', url: NEW_SITE_URL},
     { label: 'Instagram', value: '@malabar.matrix', url: INSTAGRAM_URL },
     { label: 'Studio', value: 'malabarmatrix.site', url: STUDIO_URL },
   ];
