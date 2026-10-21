@@ -353,9 +353,15 @@ function LoadingPanel({ title, detail, progress }: { title: string; detail: stri
   );
 }
 
+const PORTRAITS: Record<string, string> = {
+  'A. P. J. Abdul Kalam': 'https://cdn.britannica.com/56/148856-004-2F59E2D9/APJ-2008.jpg',
+  'Swami Vivekananda': 'https://cafedissensusblog.com/wp-content/uploads/2017/10/swami-vivekananda.jpg?w=640',
+  'Rabindranath Tagore': 'https://www.deccanchronicle.com/h-upload/2024/05/07/1088334-rabindranthtagore.webp',
+  'Mahatma Gandhi': 'https://i.pinimg.com/564x/ab/65/ea/ab65ea3c19f7c5b6c7435e9938e403b3.jpg',
+};
+
 // Attributions are as commonly cited; some are paraphrases of longer passages.
-// image: add a link per person (plain <img>, so any host works).
-const QUOTES: { text: string; by: string; image?: string }[] = [
+const QUOTES = [
   { text: 'You have to dream before your dreams can come true.', by: 'A. P. J. Abdul Kalam' },
   { text: 'If you want to shine like a sun, first burn like a sun.', by: 'A. P. J. Abdul Kalam' },
   { text: 'Arise, awake, and stop not till the goal is reached.', by: 'Swami Vivekananda' },
@@ -371,16 +377,26 @@ function RotatingQuote() {
     return () => clearInterval(id);
   }, []);
   const q = QUOTES[i];
+  const image = PORTRAITS[q.by];
   return (
-    <figure key={i} className="mt-10 min-h-[5.5rem] animate-in fade-in duration-700">
-      <blockquote className="text-balance text-lg font-medium leading-snug">&ldquo;{q.text}&rdquo;</blockquote>
-      <figcaption className="mt-3 flex items-center justify-center gap-2.5 text-sm text-muted-foreground">
-        {q.image && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={q.image} alt="" className="h-9 w-9 rounded-full object-cover" />
-        )}
-        {q.by}
-      </figcaption>
+    <figure
+      key={i}
+      className="mt-10 flex min-h-[7rem] w-full animate-in items-center gap-4 rounded-2xl border border-border bg-card p-4 text-left duration-700 fade-in"
+    >
+      {image && (
+        // Plain <img>: portraits come from several hosts, so no image-domain config is needed.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={image}
+          alt={q.by}
+          referrerPolicy="no-referrer"
+          className="h-20 w-20 shrink-0 rounded-xl bg-secondary object-cover object-top"
+        />
+      )}
+      <div className="min-w-0">
+        <blockquote className="text-balance text-base font-medium leading-snug">&ldquo;{q.text}&rdquo;</blockquote>
+        <figcaption className="mt-2 text-sm text-muted-foreground">{q.by}</figcaption>
+      </div>
     </figure>
   );
 }
