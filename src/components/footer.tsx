@@ -23,19 +23,19 @@ const NAV_LINKS = {
 
 export function Footer() {
   return (
-    <footer className="mt-12 bg-[#0f1630] text-white">
+    <footer className="mt-12 border-t border-border bg-card text-foreground">
       <div className="container mx-auto px-4 pt-16">
         <div>
           <div className="mx-auto grid max-w-3xl grid-cols-2 gap-8 text-center sm:grid-cols-3">
             {Object.entries(NAV_LINKS).map(([group, links]) => (
               <div key={group}>
-                <p className="mb-4 text-sm text-white/50">{group}</p>
+                <p className="mb-4 text-sm text-muted-foreground">{group}</p>
                 <ul className="space-y-3">
                   {links.map((link) => (
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="text-sm text-white/90 transition-colors hover:text-white"
+                        className="text-sm text-foreground/90 transition-colors hover:text-foreground"
                       >
                         {link.label}
                       </Link>
@@ -49,12 +49,12 @@ export function Footer() {
 
         <p
           aria-hidden
-          className="select-none whitespace-nowrap bg-gradient-to-b from-white/90 to-white/0 bg-clip-text pt-16 text-center font-headline text-[11vw] overflow-hidden font-bold leading-none tracking-tighter text-transparent"
+          className="select-none whitespace-nowrap bg-gradient-to-b from-foreground/80 to-foreground/0 bg-clip-text pt-16 text-center font-headline text-[11vw] overflow-hidden font-bold leading-none tracking-tighter text-transparent"
         >
           MalabarMatrix
         </p>
 
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 py-6 text-sm text-white/60 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-border py-6 text-sm text-muted-foreground sm:flex-row">
           <div className="flex items-center gap-3">
             <Image
               src="https://malabarmatrix.in/malabar_matrix.webp"
@@ -66,14 +66,14 @@ export function Footer() {
             <p>&copy; 2026 Malabar Matrix. All rights reserved.</p>
           </div>
           <div className="flex items-center gap-6">
-            <a href="mailto:vitranks@malabarmatrix.in" className="hover:text-white">
+            <a href="mailto:vitranks@malabarmatrix.in" className="hover:text-foreground">
               vitranks@malabarmatrix.in
             </a>
             <a
               href="https://malabarmatrix.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white"
+              className="hover:text-foreground"
             >
               malabarmatrix.in
             </a>
