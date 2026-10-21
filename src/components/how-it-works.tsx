@@ -132,9 +132,7 @@ function StepRow({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-120px" }}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className={`relative grid gap-8 md:grid-cols-2 md:gap-16 ${
-        flip ? "md:[&>*:first-child]:order-2" : ""
-      }`}
+      className="relative grid gap-8 md:grid-cols-2 md:gap-16"
     >
       <div className="pointer-events-none absolute left-6 top-6 z-10 hidden -translate-x-1/2 md:left-1/2 md:block">
         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background shadow-sm">
@@ -144,7 +142,7 @@ function StepRow({
         </div>
       </div>
 
-      <div className={`pl-14 md:pl-0 ${flip ? "md:pl-16 md:text-left" : "md:pr-16 md:text-right"}`}>
+      <div className={`pl-14 md:pl-0 ${flip ? "md:order-2 md:pl-16 md:text-left" : "md:pr-16 md:text-right"}`}>
         <p className="mb-2 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
           Step {step.index} · {step.kicker}
         </p>
@@ -162,7 +160,7 @@ function StepRow({
         </div>
       </div>
 
-      <div className={`pl-14 md:pl-0 ${flip ? "md:pr-16" : "md:pl-16"}`}>
+      <div className={`pl-14 md:pl-0 ${flip ? "md:order-1 md:pr-16" : "md:pl-16"}`}>
         <motion.div
           whileHover={{ y: -6, rotateX: 2, rotateY: flip ? -2 : 2 }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
