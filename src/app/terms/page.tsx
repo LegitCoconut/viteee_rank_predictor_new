@@ -5,16 +5,7 @@ import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import {
-  ShieldCheck,
-  Globe,
-  Mail,
-  BookOpen,
-  Trophy,
-  Lock,
-  Info,
-  HardDrive,
-} from 'lucide-react';
+import { Globe, Mail, BookOpen, Trophy, Lock, Info, HardDrive } from 'lucide-react';
 
 const SECTION_TONES = {
   coral: 'text-coral bg-coral/10 border-coral/20',
@@ -114,15 +105,6 @@ export default function TermsPage() {
           <div className="pointer-events-none absolute inset-0 bg-noise mix-blend-overlay" />
 
           <div ref={heroRef} className="container relative z-10 mx-auto max-w-4xl px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 12, scale: 0.94 }}
-              animate={heroInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-              transition={{ duration: 0.55 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/85 backdrop-blur-md"
-            >
-              <ShieldCheck className="h-3.5 w-3.5 text-coral" />
-              Transparency Matters
-            </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 24 }}

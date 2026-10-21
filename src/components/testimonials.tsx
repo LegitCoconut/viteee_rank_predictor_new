@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Quote, Sparkles } from "lucide-react";
+import { Quote } from 'lucide-react';
 
 type Testimonial = {
   name: string;
@@ -76,16 +76,6 @@ export function Testimonials() {
 
       <div className="container mx-auto px-4">
         <div className="mx-auto mb-16 max-w-3xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur"
-          >
-            <Sparkles className="h-3.5 w-3.5" />
-            What aspirants are saying
-          </motion.div>
 
           <motion.h2
             initial={{ opacity: 0, y: 24 }}

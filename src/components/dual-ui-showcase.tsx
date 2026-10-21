@@ -9,7 +9,7 @@ import {
   useTransform,
   useInView,
 } from "framer-motion";
-import { ArrowRight, Layers, Sparkles, Check } from "lucide-react";
+import { ArrowRight, Sparkles, Check } from 'lucide-react';
 
 type Surface = {
   key: "modern" | "viteee";
@@ -211,15 +211,6 @@ export function DualUIShowcase() {
       <div className="container mx-auto px-4">
         {/* Section header */}
         <div ref={headRef} className="mx-auto mb-16 max-w-3xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={headInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur"
-          >
-            <Layers className="h-3.5 w-3.5" />
-            Pick your interface
-          </motion.div>
 
           <motion.h2
             initial={{ opacity: 0, y: 28 }}

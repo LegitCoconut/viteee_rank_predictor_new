@@ -25,15 +25,6 @@ function Hero() {
       <div className="container mx-auto px-4">
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-7 pb-20 pt-20 text-center md:pb-28 md:pt-28">
           <motion.div {...rise(0)}>
-            <Link
-              href="https://malabarmatrix.site"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              A Malabar Matrix initiative
-              <ChevronRight className="h-3 w-3" />
-            </Link>
           </motion.div>
 
           <motion.h1

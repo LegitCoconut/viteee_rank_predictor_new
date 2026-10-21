@@ -1,19 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import {
-  BarChart3,
-  Building2,
-  CheckCircle2,
-  ChevronRight,
-  Compass,
-  GraduationCap,
-  HelpCircle,
-  Layers,
-  Sparkles,
-  Target,
-  TrendingUp,
-} from 'lucide-react';
+import { BarChart3, CheckCircle2, ChevronRight, GraduationCap, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { COURSE_DATA, CAMPUS_SHORT, Campus } from '@/lib/viteee-data';
 
@@ -201,7 +189,6 @@ export function RanksSeoContent() {
         <div className="container mx-auto max-w-5xl space-y-20 px-4 md:space-y-24">
           {/* About */}
           <div>
-            <Eyebrow icon={Compass}>About this tool</Eyebrow>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
               Free VITEEE 2027 rank &amp;{' '}
               <span className="font-display italic text-coral">college predictor</span>
@@ -225,7 +212,6 @@ export function RanksSeoContent() {
 
           {/* How it works */}
           <div>
-            <Eyebrow icon={Sparkles}>How it works</Eyebrow>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
               Use the VIT rank &amp; branch predictor in four steps
             </h2>
@@ -247,7 +233,6 @@ export function RanksSeoContent() {
 
           {/* Campus quick guide */}
           <div>
-            <Eyebrow icon={Building2}>Campus quick guide</Eyebrow>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
               Which VIT campus can your VITEEE rank get?
             </h2>
@@ -275,7 +260,6 @@ export function RanksSeoContent() {
           {/* Fee categories */}
           <div className="grid gap-8 md:grid-cols-2 md:items-start">
             <div>
-              <Eyebrow icon={Layers}>Fee categories</Eyebrow>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
                 Understanding VIT fee categories
               </h2>
@@ -333,7 +317,6 @@ export function RanksSeoContent() {
 
           {/* FAQ */}
           <div>
-            <Eyebrow icon={HelpCircle}>Frequently asked</Eyebrow>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
               VITEEE 2027 rank predictor - FAQ
             </h2>
@@ -362,7 +345,6 @@ export function RanksSeoContent() {
           {/* Rank-band specific answers - computed from COURSE_DATA so each
               "What can I get with rank N" query has a literal answer in HTML. */}
           <div>
-            <Eyebrow icon={Target}>Rank-band specifics</Eyebrow>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
               What can I get with my VITEEE rank?
             </h2>
@@ -394,7 +376,6 @@ export function RanksSeoContent() {
 
           {/* Internal nav */}
           <div className="rounded-3xl border border-coral/20 bg-gradient-to-br from-coral/10 via-transparent to-mint/10 p-8 md:p-12">
-            <Eyebrow icon={Target}>What&apos;s next</Eyebrow>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
               Explore the rest of VIT Ranks
             </h2>
@@ -436,21 +417,6 @@ export function RanksSeoContent() {
         </div>
       </section>
     </>
-  );
-}
-
-function Eyebrow({
-  icon: Icon,
-  children,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  children: React.ReactNode;
-}) {
-  return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-card/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-      <Icon className="h-3.5 w-3.5 text-coral" />
-      {children}
-    </span>
   );
 }
 

@@ -9,20 +9,7 @@ import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Heart,
-  Users,
-  Sparkles,
-  GraduationCap,
-  ShieldCheck,
-  QrCode,
-  CheckCircle2,
-  Rocket,
-  HandHeart,
-  Coffee,
-  BookOpen,
-  Check,
-} from 'lucide-react';
+import { Users, Sparkles, GraduationCap, ShieldCheck, QrCode, CheckCircle2, Rocket, HandHeart, Coffee, BookOpen, Check } from 'lucide-react';
 
 const UPI_ID = 'mail.adithyanp-2@oksbi';
 const PAYEE_NAME = 'Malabar Matrix';
@@ -261,15 +248,6 @@ export default function DonatePage() {
           <div className="pointer-events-none absolute inset-0 bg-noise mix-blend-overlay" />
 
           <div className="container relative z-10 mx-auto max-w-4xl px-4 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 12, scale: 0.94 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.55 }}
-              className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/85 backdrop-blur-md"
-            >
-              <Heart className="h-3.5 w-3.5 text-coral" />
-              Support a student-run platform
-            </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
@@ -507,10 +485,6 @@ export default function DonatePage() {
               <div className="pointer-events-none absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-gradient-to-br from-mint/15 to-sky/15 blur-3xl" />
 
               <div className="relative z-10 flex flex-1 flex-col items-center text-center">
-                <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-3 py-1 text-[11px] font-medium uppercase tracking-widest text-muted-foreground">
-                  <QrCode className="h-3 w-3" />
-                  Scan with any UPI app
-                </div>
                 <h3 className="mt-4 text-2xl font-semibold tracking-tight">
                   {amount > 0 ? `Pay ₹${amount}` : 'Your QR'}
                 </h3>

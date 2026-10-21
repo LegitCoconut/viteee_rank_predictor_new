@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { timelineEvents } from '@/lib/data/timeline-data';
-import { CalendarCheck, Calendar, Sparkles } from 'lucide-react';
+import { CalendarCheck, Sparkles } from 'lucide-react';
 
 export function ImportantDates() {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -22,16 +22,6 @@ export function ImportantDates() {
 
       <div className="container mx-auto px-4">
         <div className="mb-16 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur"
-          >
-            <Calendar className="h-3.5 w-3.5" />
-            Mark your calendar
-          </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}

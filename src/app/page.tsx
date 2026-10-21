@@ -8,7 +8,7 @@ import { ImportantDates } from '@/components/important-dates';
 import { FeedbackForm } from '@/components/feedback-form';
 import { Testimonials } from '@/components/testimonials';
 import { WebsiteJsonLd, FAQJsonLd } from '@/components/json-ld';
-import { MessageCircle, Heart, ArrowRight } from 'lucide-react';
+import { Heart, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { DonationPopup } from '@/components/donation-popup';
@@ -142,10 +142,6 @@ export default function Home() {
 
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-14 max-w-3xl text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur">
-                <MessageCircle className="h-3.5 w-3.5" />
-                We actually read these
-              </div>
               <h2 className="mt-5 text-4xl md:text-6xl font-semibold tracking-tighter leading-[0.95]">
                 Tell us what&apos;s{' '}
                 <span className="font-display italic gradient-text">missing</span>.
@@ -172,10 +168,6 @@ export default function Home() {
 
                 <div className="relative z-10 flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between">
                   <div>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-coral/30 bg-coral/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-coral">
-                      <Heart className="h-3 w-3" />
-                      Or, support us
-                    </div>
                     <p className="mt-3 text-lg font-semibold tracking-tight md:text-xl">
                       Not in a feedback mood? Buy us a{' '}
                       <span className="font-display italic text-coral">cup of chai</span>{' '}

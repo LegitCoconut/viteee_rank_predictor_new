@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/accordion";
 import { syllabus } from "@/lib/data/syllabus-data";
 import { Button } from "@/components/ui/button";
-import { BookMarked, Download, GraduationCap } from "lucide-react";
+import { BookMarked, Download } from 'lucide-react';
 
 const PDF_BASE = "https://vit.ac.in/sites/default/files/VITEEE-2027";
 const syllabusPdfs: Record<string, string> = {
@@ -33,10 +33,6 @@ export function SyllabusSection() {
     <section className="py-16 md:py-24">
       <div className="container mx-auto px-4">
         <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-            <GraduationCap className="h-3.5 w-3.5" />
-            Complete Syllabus
-          </div>
           <h2 className="text-3xl md:text-5xl font-headline tracking-tighter font-semibold">
             VITEEE Syllabus
           </h2>

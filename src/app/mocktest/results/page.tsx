@@ -459,10 +459,6 @@ export default function MockTestResultPage() {
 
             <div className="relative z-10 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
               <div className="flex-1">
-                <div className="inline-flex items-center gap-2 rounded-full border border-coral/30 bg-coral/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-coral">
-                  <Heart className="h-3 w-3" />
-                  Liked the test?
-                </div>
                 <h3 className="mt-3 text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
                   Keep VIT RANKS free for the{' '}
                   <span className="font-display italic gradient-text">
