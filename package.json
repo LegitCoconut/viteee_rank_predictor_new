@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "flush:redis": "tsx scripts/flush-redis.ts",
     "flush:leaderboard": "tsx scripts/flush-leaderboard.ts",
-    "warm:redis": "tsx scripts/warm-redis.ts"
+    "warm:redis": "tsx scripts/warm-redis.ts",
+    "sync:testimonials": "tsx scripts/sync-testimonials.ts"
   },
   "dependencies": {
     "@genkit-ai/google-genai": "^1.42.0",
