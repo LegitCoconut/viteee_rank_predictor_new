@@ -6,11 +6,6 @@ import { Button } from "@/components/ui/button";
 import { SECTIONS, TOTAL_MINUTES, TOTAL_QUESTIONS } from "@/lib/exam-pattern";
 import Link from "next/link";
 
-const stats = [
-  { value: `${TOTAL_QUESTIONS}`, label: "Questions per paper" },
-  { value: `${TOTAL_MINUTES / 60}h`, label: "Four timed sections" },
-  { value: "Free", label: "No signup, ever" },
-];
 
 function Hero() {
   const reduce = useReducedMotion();
@@ -60,39 +55,25 @@ function Hero() {
 
           {/* Signature: the 2027 paper drawn to scale, one segment per timed section. */}
           <motion.div {...rise(0.26)} className="mt-6 w-full max-w-3xl text-left">
-            <p className="mb-3 text-center text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
-              The 2027 paper, to scale
+            <p className="mb-3 text-center text-sm text-muted-foreground">
+              {TOTAL_QUESTIONS} questions in {TOTAL_MINUTES / 60} hours, in four timed sections
             </p>
-            <ol className="flex gap-1.5" aria-label="Sections of the VITEEE 2027 paper">
-              {SECTIONS.map((s, i) => (
-                <li key={s.key} style={{ flexGrow: s.minutes, flexBasis: 0 }} className="min-w-[4.5rem] sm:min-w-[6.5rem]">
-                  <div
-                    className={`h-2 rounded-full ${i === 0 ? "bg-primary" : "bg-foreground/25"}`}
-                    aria-hidden
-                  />
-                  <p className="mt-2 text-[13px] font-medium leading-tight sm:text-sm">{s.label}</p>
+            <div className="flex gap-1.5" aria-hidden>
+              {SECTIONS.map((s) => (
+                <div key={s.key} style={{ flexGrow: s.minutes, flexBasis: 0 }} className="h-2 rounded-full bg-primary" />
+              ))}
+            </div>
+            <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4" aria-label="Sections of the VITEEE 2027 paper">
+              {SECTIONS.map((s) => (
+                <li key={s.key}>
+                  <p className="text-sm font-medium">{s.label}</p>
                   <p className="text-xs text-muted-foreground">
-                    {s.questions} Qs<br className="sm:hidden" /><span className="hidden sm:inline"> &middot; </span>{s.minutes} min
+                    {s.questions} questions &middot; {s.minutes} min
                   </p>
                 </li>
               ))}
-            </ol>
+            </ul>
           </motion.div>
-
-          <motion.dl
-            {...rise(0.32)}
-            className="mt-4 grid w-full max-w-3xl grid-cols-3 divide-x divide-border rounded-2xl border border-border bg-card"
-          >
-            {stats.map((s) => (
-              <div key={s.label} className="px-3 py-5 text-center">
-                <dt className="sr-only">{s.label}</dt>
-                <dd className="text-3xl font-semibold tracking-tight md:text-4xl">{s.value}</dd>
-                <p className="mt-1 text-xs text-muted-foreground md:text-sm" aria-hidden>
-                  {s.label}
-                </p>
-              </div>
-            ))}
-          </motion.dl>
         </div>
       </div>
     </section>
