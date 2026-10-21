@@ -7,7 +7,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
     title: "Free VITEEE Mock Test 2026 - No Signup Required",
     description:
-        "Take free VITEEE 2026 mock tests online without signup. Practice Physics, Chemistry, Maths & Aptitude with real exam pattern. Get instant results with section-wise analysis. 125 questions, 2.5 hours - exactly like the real VITEEE exam.",
+        "Take free VITEEE 2026 mock tests online without signup. Practice Physics, Chemistry, Maths & Aptitude with real exam pattern. Get instant results with section-wise analysis. 100 questions, 2 hours - exactly like the real VITEEE exam.",
     keywords: [
         // Mock test core
         "viteee mock test", "viteee mock tests", "viteee mock test 2026",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Free VITEEE Mock Test 2026 - No Signup Required | VIT RANKS",
         description:
-            "Practice with free VITEEE mock tests. 125 questions, real exam pattern, instant results. No signup needed.",
+            "Practice with free VITEEE mock tests. 100 questions, real exam pattern, instant results. No signup needed.",
         url: '/mocktest',
         images: [
             {
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     twitter: {
         card: 'summary_large_image',
         title: "Free VITEEE Mock Test 2026 - No Signup Required",
-        description: "Practice with free VITEEE mock tests. 125 questions, real exam pattern, instant results.",
+        description: "Practice with free VITEEE mock tests. 100 questions, real exam pattern, instant results.",
         images: ['/mocktest.png'],
     },
 };

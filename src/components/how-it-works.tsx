@@ -20,8 +20,8 @@ const steps = [
     kicker: "Pick your mode",
     title: "Choose a mock test.",
     body:
-      "Grab a curated paper or spin up a fresh randomised test — MPCEA stream, real VITEEE pattern, 125 questions. No signup, nothing to install.",
-    stat: "Random or curated · 125 Qs",
+      "Grab a curated paper or spin up a fresh randomised test — MPCEA stream, real VITEEE pattern, 100 questions. No signup, nothing to install.",
+    stat: "Random or curated · 100 Qs",
     gradient: "from-coral/40 via-peach/30 to-transparent",
   },
   {
@@ -30,8 +30,8 @@ const steps = [
     kicker: "Practice like it's the real thing",
     title: "Take it under exam conditions.",
     body:
-      "Timed 2h 30m clock, subject-wise navigation, mark-for-review, and a clean interface built to feel like the actual VITEEE CBT. Questions are sourced from free, publicly-available material.",
-    stat: "2.5 hours · 4 subjects",
+      "Timed 2h paper with fixed section timers, subject-wise navigation, mark-for-review, and a clean interface built to feel like the actual VITEEE CBT. Questions are sourced from free, publicly-available material.",
+    stat: "2 hours · 4 subjects",
     gradient: "from-mint/40 via-sky/30 to-transparent",
   },
   {

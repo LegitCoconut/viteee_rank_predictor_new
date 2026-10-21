@@ -135,13 +135,13 @@ function MockTestSetupContent() {
   const instructions = [
     {
       icon: HelpCircle,
-      title: '125 questions, VITEEE-weighted',
+      title: '100 questions, VITEEE-weighted',
       text: 'The question set mirrors the actual VITEEE paper weightage — Physics, Chemistry, Mathematics, Aptitude & English.',
     },
     {
       icon: Clock,
       title: 'Wait for the full load',
-      text: 'Please wait until all 125 questions finish loading and the test is fully created before you start.',
+      text: 'Please wait until all 100 questions finish loading and the test is fully created before you start.',
     },
     {
       icon: User,
@@ -261,7 +261,7 @@ function MockTestSetupContent() {
               className="mx-auto mt-5 max-w-xl text-base text-white/70 md:text-lg"
             >
               Read the house rules, fill in a couple of details, and you&rsquo;re
-              ready to sit down with 125 questions and a 2.5-hour clock.
+              ready to sit down with 100 questions and a 2-hour sectional clock.
             </motion.p>
           </div>
         </section>
@@ -561,7 +561,7 @@ function MockTestSetupContent() {
                         </Button>
                         <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
                           <BookOpen className="h-3 w-3" />
-                          125 questions · 2.5 hours · instant results
+                          100 questions · 2 hours · instant results
                         </p>
                       </div>
                     </form>

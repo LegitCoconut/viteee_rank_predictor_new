@@ -1,5 +1,6 @@
 'use client';
 
+import { TOTAL_QUESTIONS } from '@/lib/exam-pattern';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/header';
@@ -79,8 +80,8 @@ export default function MockTestStartPage() {
           data = shuffleWithinSubjects(data);
         }
 
-        if (data.length < 125) {
-          throw new Error(`Failed to load all questions. Only got ${data.length}/125.`);
+        if (data.length < TOTAL_QUESTIONS) {
+          throw new Error(`Failed to load all questions. Only got ${data.length}/${TOTAL_QUESTIONS}.`);
         }
 
         setLoadingState('preloading');

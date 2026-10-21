@@ -179,8 +179,8 @@ export default function MockTestPage() {
               className="mx-auto mt-10 grid max-w-md grid-cols-3 gap-2 sm:flex sm:max-w-none sm:flex-wrap sm:items-center sm:justify-center sm:gap-4"
             >
               {[
-                { icon: HelpCircle, value: '125', label: 'Questions' },
-                { icon: Clock, value: '2.5h', label: 'Timer' },
+                { icon: HelpCircle, value: '100', label: 'Questions' },
+                { icon: Clock, value: '2h', label: 'Timer' },
                 { icon: Zap, value: '10k+', label: 'Mocks taken' },
               ].map((s) => (
                 <div

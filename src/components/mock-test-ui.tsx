@@ -21,6 +21,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Loader2, Menu, X } from 'lucide-react';
 import type { QuestionWithImage, Answer } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
+import { SECTIONS } from '@/lib/exam-pattern';
 import { Skeleton } from './ui/skeleton';
 
 interface MockTestUIProps {
@@ -93,8 +94,12 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
     );
   };
 
+  const currentSubject = questions[currentQuestionIndex]?.subject ?? 'maths';
+  const sectionDuration = (SECTIONS.find(s => s.key === currentSubject)?.minutes ?? 10) * 60;
+
   const handleQuestionSelect = (index: number) => {
-    if (index !== currentQuestionIndex) {
+    // sections are locked: only the active section's questions can be opened
+    if (index !== currentQuestionIndex && questions[index]?.subject === currentSubject) {
       setIsImageLoading(true);
       setCurrentQuestionIndex(index);
       setAnswers(prev =>
@@ -249,6 +254,17 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
     }
   }, [answers, questions, setupData, router, isSubmitting]);
 
+  // Jump to the next section's first question, or submit after the last one.
+  const advanceSection = useCallback(() => {
+    const next = questions.findIndex(
+      (q, i) => i > currentQuestionIndex && q.subject !== currentSubject
+    );
+    if (next === -1) return void handleSubmit();
+    setIsImageLoading(true);
+    setCurrentQuestionIndex(next);
+    setAnswers(prev => prev.map((a, i) => (i === next ? { ...a, visited: true } : a)));
+  }, [questions, currentQuestionIndex, currentSubject, handleSubmit]);
+
   const currentQuestion = questions[currentQuestionIndex];
   const currentAnswer = answers[currentQuestionIndex];
 
@@ -277,7 +293,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
       {/* Mobile Top Bar */}
       <div className="md:hidden flex items-center justify-between p-2 border-b bg-card shrink-0">
         <div className="text-sm font-bold">
-          <Timer duration={2.5 * 60 * 60} onTimeUp={handleSubmit} isPaused={!isFullscreen} />
+          <Timer key={currentSubject} duration={sectionDuration} onTimeUp={advanceSection} isPaused={!isFullscreen} />
         </div>
         <div className="flex items-center gap-2">
           <AlertDialog>
@@ -371,7 +387,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
             {setupData.predefinedName && (
               <p className="text-xs uppercase tracking-wider text-primary font-medium mb-1">{setupData.predefinedName}</p>
             )}
-            <Timer duration={2.5 * 60 * 60} onTimeUp={handleSubmit} isPaused={!isFullscreen} />
+            <Timer key={currentSubject} duration={sectionDuration} onTimeUp={advanceSection} isPaused={!isFullscreen} />
           </div>
           <div className="p-4 border rounded-lg bg-card flex-1 min-h-0 overflow-hidden">
             <QuestionSidebar

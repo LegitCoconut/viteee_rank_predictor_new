@@ -55,7 +55,7 @@ export function FAQJsonLd() {
         name: 'How many mock tests can I take on VIT RANKS?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'You can take unlimited VITEEE mock tests on VIT RANKS. Choose from curated papers or generate a fresh randomised 125-question test anytime. Every attempt comes with instant analytics and a live leaderboard.',
+          text: 'You can take unlimited VITEEE mock tests on VIT RANKS. Choose from curated papers or generate a fresh randomised 100-question test anytime. Every attempt comes with instant analytics and a live leaderboard.',
         },
       },
       {
@@ -71,7 +71,7 @@ export function FAQJsonLd() {
         name: 'What is the VITEEE 2026 exam pattern?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'VITEEE 2026 consists of 125 questions from Physics (35), Chemistry (35), Mathematics/Biology (35), Aptitude (10), and English (10). The exam duration is 2 hours 30 minutes and is conducted in online CBT mode.',
+          text: 'VITEEE 2026 consists of 100 questions: Mathematics/Biology (40, 50 min), Physics (25, 30 min), Chemistry (25, 30 min), Aptitude (5) and English (5) (10 min together). The exam duration is 2 hours and is conducted in online CBT mode.',
         },
       },
       {

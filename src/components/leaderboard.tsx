@@ -47,7 +47,7 @@ function rankBadge(rank: number) {
 const BOARD_META = {
     random: {
         title: 'Random Tests',
-        description: 'Top scores from randomised 125-question tests.',
+        description: 'Top scores from randomised 100-question tests.',
         icon: Shuffle,
         empty: 'No random test results yet.',
     },
