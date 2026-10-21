@@ -10,31 +10,31 @@ const steps = [
   {
     index: "01",
     icon: Target,
-    kicker: "Pick your mode",
+    kicker: "Pick a paper",
     title: "Choose a mock test.",
     body:
-      "Grab a curated paper or spin up a fresh randomised test - MPCEA stream, real VITEEE pattern, 100 questions. No signup, nothing to install.",
-    stat: "Random or curated · 100 Qs",
+      "Start with a curated paper or a fresh randomised one, both in the real VITEEE pattern. No signup, nothing to install.",
+    stat: "100 questions · random or curated",
     gradient: "from-coral/40 via-peach/30 to-transparent",
   },
   {
     index: "02",
     icon: BookOpenCheck,
-    kicker: "Practice like it's the real thing",
+    kicker: "Sit it like the real exam",
     title: "Take it under exam conditions.",
     body:
-      "Timed 2h paper with fixed section timers, subject-wise navigation, mark-for-review, and a clean interface built to feel like the actual VITEEE CBT. Questions are sourced from free, publicly-available material.",
-    stat: "2 hours · 4 subjects",
+      "Four sections, each on its own clock: Maths 50 minutes, Physics 30, Chemistry 30, Aptitude & English 10. Mark for review, Save & Next and the question palette work like the actual CBT.",
+    stat: "2 hours · 4 timed sections",
     gradient: "from-mint/40 via-sky/30 to-transparent",
   },
   {
     index: "03",
     icon: TrendingUp,
-    kicker: "Find your weak spots",
-    title: "Analyse. Compare. Improve.",
+    kicker: "See where you stand",
+    title: "Review, then predict.",
     body:
-      "Instant per-subject breakdown, question-by-question review, and a live leaderboard that keeps every attempt honest. Come back tomorrow and beat yesterday.",
-    stat: "Live leaderboard · rich analytics",
+      "Get a subject-wise breakdown and review every question. Compare your score on the live leaderboard, then enter your rank in the predictor to see which VIT campus and branch it could get you.",
+    stat: "Analytics · leaderboard · rank predictor",
     gradient: "from-lavender/40 via-coral/20 to-transparent",
   },
 ];
@@ -77,8 +77,8 @@ export function HowItWorks() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="mt-4 text-lg text-muted-foreground"
           >
-            From a rough score estimate to a data-backed college prediction - in
-            the time it takes to pour a cup of chai.
+            Take a full paper, see where you lose marks, then check which colleges
+            your rank can reach.
           </motion.p>
         </div>
 
@@ -105,7 +105,7 @@ export function HowItWorks() {
             transition={{ duration: 0.7 }}
           >
             <Button size="lg" asChild>
-              <Link href="/mocktest">Start your first mock - it&apos;s free</Link>
+              <Link href="/mocktest">Take your first mock, free</Link>
             </Button>
           </motion.div>
         </div>
@@ -139,8 +139,8 @@ function StepRow({
       </div>
 
       <div className={`pl-14 md:pl-0 ${flip ? "md:order-2 md:pl-16 md:text-left" : "md:pr-16 md:text-right"}`}>
-        <p className="mb-2 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-          Step {step.index} · {step.kicker}
+        <p className="mb-2 text-sm font-medium text-coral">
+          Step {Number(step.index)} · {step.kicker}
         </p>
         <h3 className="text-2xl md:text-4xl font-semibold tracking-tight leading-tight">
           {step.title}
@@ -179,7 +179,7 @@ function StepRow({
               </span>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 {step.kicker}
               </p>
               <p className="mt-2 text-xl font-semibold tracking-tight">
