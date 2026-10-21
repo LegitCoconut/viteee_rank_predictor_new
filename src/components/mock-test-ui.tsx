@@ -265,6 +265,9 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
     setAnswers(prev => prev.map((a, i) => (i === next ? { ...a, visited: true } : a)));
   }, [questions, currentQuestionIndex, currentSubject, handleSubmit]);
 
+  const [sectionConfirmOpen, setSectionConfirmOpen] = useState(false);
+  const isLastSection = !questions.some((q, i) => i > currentQuestionIndex && q.subject !== currentSubject);
+
   const currentQuestion = questions[currentQuestionIndex];
   const currentAnswer = answers[currentQuestionIndex];
 
@@ -290,12 +293,33 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
         </div>
       )}
 
+      {/* Inside the fullscreen element so the dialog doesn't drop fullscreen. */}
+      <AlertDialog open={sectionConfirmOpen} onOpenChange={setSectionConfirmOpen}>
+        <AlertDialogContent container={elem.current ?? undefined}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Submit this section?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {isLastSection
+                ? 'This is the last section, so submitting it will end the test and calculate your score.'
+                : 'You cannot return to this section once submitted.'}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={advanceSection}>Submit section</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       {/* Mobile Top Bar */}
       <div className="md:hidden flex items-center justify-between p-2 border-b bg-card shrink-0">
         <div className="text-sm font-bold">
           <Timer key={currentSubject} duration={sectionDuration} onTimeUp={advanceSection} isPaused={!isFullscreen} />
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="secondary" size="sm" onClick={() => setSectionConfirmOpen(true)}>
+            Submit Section
+          </Button>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button variant="destructive" size="sm" disabled={isSubmitting}>
@@ -426,6 +450,9 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
           </Button>
           <Button onClick={handleMarkForReview} variant={currentAnswer?.status === 'marked' ? 'secondary' : 'outline'} className="shrink-0">
             {currentAnswer?.status === 'marked' ? 'Unmark Review' : 'Mark for Review'}
+          </Button>
+          <Button variant="secondary" onClick={() => setSectionConfirmOpen(true)} className="shrink-0">
+            Submit Section
           </Button>
           <AlertDialog>
             <AlertDialogTrigger asChild>

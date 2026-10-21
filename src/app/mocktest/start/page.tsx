@@ -1,16 +1,15 @@
 'use client';
 
-import { TOTAL_QUESTIONS } from '@/lib/exam-pattern';
+import { SECTIONS, TOTAL_QUESTIONS } from '@/lib/exam-pattern';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { Loader2, CheckCircle, Monitor } from 'lucide-react';
+import { CheckCircle, Loader2, Monitor } from 'lucide-react';
 import { MockTestUI } from '@/components/mock-test-ui';
 import { MockTestUIViteee } from '@/components/mock-test-ui-viteee';
 import type { QuestionWithImage } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { AdSlot } from '@/components/ad-slot';
 
 const LG_BREAKPOINT_PX = 1024;
@@ -173,23 +172,10 @@ export default function MockTestStartPage() {
       <Header />
       <main className="flex-1 flex flex-col items-center justify-center container mx-auto py-8 text-center">
         {loadingState === 'fetching' && (
-          <>
-            <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-            <h1 className="text-2xl font-headline font-semibold">Generating Your Mock Test...</h1>
-            <p className="text-muted-foreground">Please wait while we prepare the questions for you.</p>
-          </>
+          <LoadingPanel title="Generating your mock test" detail="Picking questions for the 2027 pattern." progress={null} />
         )}
         {loadingState === 'preloading' && (
-          <div className="w-full max-w-md flex flex-col items-center">
-            <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-            <h1 className="text-2xl font-headline font-semibold">Loading Test Assets...</h1>
-            <p className="text-muted-foreground mb-4">This will ensure a smooth testing experience.</p>
-            <Progress value={preloadProgress} className="w-full" />
-            <p className="text-sm mt-2">{Math.round(preloadProgress)}%</p>
-            <p className="text-xs text-muted-foreground mt-4 text-center max-w-sm">
-              All these services are running on free tier platforms and servers in order to make it ad free and to give a seamless experience. So the test will take some time to get loaded.
-            </p>
-          </div>
+          <LoadingPanel title="Loading your test" detail="Fetching question images so nothing lags mid-test." progress={preloadProgress} />
         )}
         {loadingState === 'ready' && (
           <div className="flex w-full max-w-5xl flex-col items-center gap-6">
@@ -327,5 +313,40 @@ function UIPreviewCard({
         </div>
       </div>
     </button>
+  );
+}
+
+// Four segments, one per timed section, filled in order as progress advances.
+function LoadingPanel({ title, detail, progress }: { title: string; detail: string; progress: number | null }) {
+  const total = SECTIONS.reduce((n, sec) => n + sec.minutes, 0);
+  let start = 0;
+  return (
+    <div className="w-full max-w-md px-4 text-center" role="status" aria-live="polite">
+      <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+      <p className="mt-2 text-muted-foreground">{detail}</p>
+
+      <div className="mt-8 flex gap-1.5" aria-hidden="true">
+        {SECTIONS.map((sec) => {
+          const share = (sec.minutes / total) * 100;
+          const fill = progress === null ? 0 : Math.max(0, Math.min(100, ((progress - start) / share) * 100));
+          start += share;
+          return (
+            <div key={sec.key} style={{ flexGrow: sec.minutes, flexBasis: 0 }} className="h-1.5 overflow-hidden rounded-full bg-secondary">
+              <div
+                className={`h-full rounded-full bg-primary transition-[width] duration-300 ${progress === null ? 'w-full animate-pulse opacity-40' : ''}`}
+                style={progress === null ? undefined : { width: `${fill}%` }}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <p className="mt-3 text-sm tabular-nums text-muted-foreground">
+        {progress === null ? 'Just a moment' : `${Math.round(progress)}%`}
+      </p>
+
+      <p className="mx-auto mt-8 max-w-sm text-xs text-muted-foreground">
+        We run on free servers to stay ad-free, so the first load can take a few seconds.
+      </p>
+    </div>
   );
 }

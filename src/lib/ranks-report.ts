@@ -297,7 +297,7 @@ export async function generateReport(data: ReportInput): Promise<void> {
     { label: 'Website', value: 'ranks.vhome.co.in', url: SITE_URL },
     { label: 'Alternate', value: 'viteee.malabarmatrix.in', url: NEW_SITE_URL},
     { label: 'Instagram', value: '@malabar.matrix', url: INSTAGRAM_URL },
-    { label: 'Studio', value: 'malabarmatrix.site', url: STUDIO_URL },
+    { label: 'Studio', value: 'malabarmatrix.in', url: STUDIO_URL },
   ];
 
   const cellW = (pageW - margin * 2) / links.length;
