@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -22,6 +23,7 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Turnstile } from '@marsidev/react-turnstile';
+import { SECTIONS, TOTAL_QUESTIONS, TOTAL_MINUTES } from '@/lib/exam-pattern';
 import {
   Info,
   User,
@@ -34,6 +36,7 @@ import {
   Sparkles,
   Mail,
   ChevronRight,
+  Laptop,
 } from 'lucide-react';
 import type { PredefinedMockTestSummary } from '@/lib/types';
 import { AdSlot } from '@/components/ad-slot';
@@ -135,13 +138,13 @@ function MockTestSetupContent() {
   const instructions = [
     {
       icon: HelpCircle,
-      title: '125 questions, VITEEE-weighted',
-      text: 'The question set mirrors the actual VITEEE paper weightage — Physics, Chemistry, Mathematics, Aptitude & English.',
+      title: '100 questions, VITEEE-weighted',
+      text: 'The question set mirrors the actual VITEEE paper weightage - Physics, Chemistry, Mathematics, Aptitude & English.',
     },
     {
       icon: Clock,
       title: 'Wait for the full load',
-      text: 'Please wait until all 125 questions finish loading and the test is fully created before you start.',
+      text: 'Please wait until all 100 questions finish loading and the test is fully created before you start.',
     },
     {
       icon: User,
@@ -156,12 +159,12 @@ function MockTestSetupContent() {
     {
       icon: ShieldCheck,
       title: 'One quick human check',
-      text: 'You\u2019ll complete a Cloudflare Turnstile verification to prevent bot abuse — it\u2019s invisible to you most of the time.',
+      text: 'You\u2019ll complete a Cloudflare Turnstile verification to prevent bot abuse - it\u2019s invisible to you most of the time.',
     },
     {
       icon: Server,
       title: 'Free-tier infrastructure',
-      text: 'This platform runs on free-tier servers to stay ad-free. First load may take a few extra seconds — thank you for your patience.',
+      text: 'This platform runs on free-tier servers to stay ad-free. First load may take a few extra seconds - thank you for your patience.',
     },
   ];
 
@@ -261,7 +264,7 @@ function MockTestSetupContent() {
               className="mx-auto mt-5 max-w-xl text-base text-white/70 md:text-lg"
             >
               Read the house rules, fill in a couple of details, and you&rsquo;re
-              ready to sit down with 125 questions and a 2.5-hour clock.
+              ready to sit down with 100 questions and a 2-hour sectional clock.
             </motion.p>
           </div>
         </section>
@@ -278,9 +281,37 @@ function MockTestSetupContent() {
                   Instructions
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Six quick things worth knowing.
+                  What&rsquo;s new for VITEEE 2027, plus six quick things worth knowing.
                 </p>
               </div>
+            </div>
+
+            <div className="mb-5 rounded-2xl border border-coral/30 bg-gradient-to-br from-coral/10 to-peach/10 p-5">
+              <p className="text-sm font-semibold tracking-tight">
+                New pattern for VITEEE 2027
+              </p>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-xs leading-relaxed text-muted-foreground">
+                <li>
+                  <strong className="text-foreground">{TOTAL_QUESTIONS} questions</strong> in{' '}
+                  <strong className="text-foreground">{TOTAL_MINUTES / 60} hours</strong>, split into four sections.
+                </li>
+                <li>
+                  <strong className="text-foreground">Each section has its own timer</strong>, so you can&rsquo;t
+                  carry unused time from one section to the next:
+                  <ul className="mt-1 list-[circle] space-y-0.5 pl-5">
+                    {SECTIONS.map((sec) => (
+                      <li key={sec.key}>
+                        {sec.label}: {sec.questions} questions, {sec.minutes} min
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+                <li>
+                  When a section&rsquo;s time ends, or you press{' '}
+                  <strong className="text-foreground">Submit Section</strong>, you move to the next one and{' '}
+                  <strong className="text-foreground">cannot return</strong> to the previous section.
+                </li>
+              </ul>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
@@ -317,10 +348,10 @@ function MockTestSetupContent() {
                 <span>
                   Broken question, a bug, or a feature idea? Write to{' '}
                   <a
-                    href="mailto:vitranks@malabarmatrix.site"
+                    href="mailto:vitranks@malabarmatrix.in"
                     className="font-medium text-foreground underline underline-offset-4 hover:text-coral"
                   >
-                    vitranks@malabarmatrix.site
+                    vitranks@malabarmatrix.in
                   </a>{' '}
                   or use the{' '}
                   <Link
@@ -329,7 +360,7 @@ function MockTestSetupContent() {
                   >
                     feedback form
                   </Link>
-                  . Built by VIT students, for VITEEE aspirants — please use it
+                  . Built by VIT students, for VITEEE aspirants - please use it
                   responsibly.
                 </span>
               </p>
@@ -347,7 +378,7 @@ function MockTestSetupContent() {
                   Your details
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Just a name and a stream — that&rsquo;s it.
+                  Just a name and a stream - that&rsquo;s it.
                 </p>
               </div>
             </div>
@@ -561,7 +592,7 @@ function MockTestSetupContent() {
                         </Button>
                         <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
                           <BookOpen className="h-3 w-3" />
-                          125 questions · 2.5 hours · instant results
+                          100 questions · 2 hours · instant results
                         </p>
                       </div>
                     </form>
@@ -575,6 +606,7 @@ function MockTestSetupContent() {
           <AdSlot />
         </div>
       </main>
+      <PhoneNotice />
       <Footer />
     </div>
   );
@@ -585,5 +617,48 @@ export default function MockTestSetupPage() {
     <Suspense>
       <MockTestSetupContent />
     </Suspense>
+  );
+}
+
+// Shown once per session when the page opens on a phone (below the md breakpoint).
+function PhoneNotice() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    try {
+      if (window.innerWidth < 768 && !sessionStorage.getItem('phoneNoticeSeen')) setOpen(true);
+    } catch {
+      // sessionStorage unavailable: skip the notice
+    }
+  }, []);
+
+  const close = () => {
+    try {
+      sessionStorage.setItem('phoneNoticeSeen', '1');
+    } catch {
+      // ignore
+    }
+    setOpen(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={(o) => !o && close()}>
+      <DialogContent className="w-[calc(100%-2rem)] max-w-sm rounded-3xl p-6 text-center">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-secondary" aria-hidden="true">
+          <Laptop className="h-6 w-6 text-coral" />
+        </div>
+        <DialogHeader className="items-center text-center sm:text-center">
+          <DialogTitle className="text-xl">Best on a tablet or laptop</DialogTitle>
+          <DialogDescription className="text-sm leading-relaxed">
+            The exam uses a question palette, per-section timers and full-size question images. They are
+            hard to navigate on a phone, so a larger screen gives you a more realistic attempt.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="sm:justify-center">
+          <Button onClick={close} className="w-full">
+            Continue on phone
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

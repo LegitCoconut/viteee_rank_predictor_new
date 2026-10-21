@@ -13,9 +13,9 @@ type CachedQuestion = {
 
 const SUBJECTS: { collection: string; count: number }[] = [
     { collection: 'maths', count: 40 },
-    { collection: 'physics', count: 35 },
-    { collection: 'chemistry', count: 35 },
-    { collection: 'apt_eng', count: 15 },
+    { collection: 'physics', count: 25 },
+    { collection: 'chemistry', count: 25 },
+    { collection: 'apt_eng', count: 10 },
 ];
 
 function cacheKey(collection: string) {

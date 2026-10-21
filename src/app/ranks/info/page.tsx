@@ -102,7 +102,7 @@ const SECTIONS: SectionMeta[] = [
   {
     id: 'heuristics',
     title: 'Rank Band Outlook',
-    blurb: 'What to realistically expect at each rank band for 2026.',
+    blurb: 'What to realistically expect at each rank band for 2027.',
     icon: Target,
     accent: 'from-coral/30 to-mint/30 text-coral',
   },
@@ -144,7 +144,7 @@ const MODEL_NOTES = [
   'Use branch families (CS, Electronics, Mech/Core, Bio/Health), not just branch names.',
   'High confidence when the 2025 row exists; medium when only a label is mapped; low when the row is missing.',
   'Vellore: some core branches lack higher-category rows in the public 2025 dataset.',
-  'Bhopal: official programme names often differ from cutoff-page labels — names are reconciled where possible.',
+  'Bhopal: official programme names often differ from cutoff-page labels - names are reconciled where possible.',
   'A few articles labelled “2025” reuse 2024 numbers (e.g. Vellore CSE Cat 1 = 548 vs 600). Those are excluded.',
   'For ranks above 1,00,000, only AP and Bhopal are admissible per the 2025 counselling rule.',
 ];
@@ -168,8 +168,8 @@ const SOURCES = [
     label: 'VIT Bhopal 2025 cutoffs',
     url: 'https://collegedunia.com/university/59253-vit-bhopal-university-bhopal/viteee-2025-cutoff',
   },
-  { label: 'GetMyUni — Marks vs Rank', url: 'https://www.getmyuni.com/exams/viteee-marks-vs-rank' },
-  { label: 'CollegeDekho — Marks vs Rank (CSE)', url: 'https://www.collegedekho.com/articles/viteee-marks-vs-rank-for-cse/' },
+  { label: 'GetMyUni - Marks vs Rank', url: 'https://www.getmyuni.com/exams/viteee-marks-vs-rank' },
+  { label: 'CollegeDekho - Marks vs Rank (CSE)', url: 'https://www.collegedekho.com/articles/viteee-marks-vs-rank-for-cse/' },
 ];
 
 export default function RanksInfoPage() {
@@ -244,7 +244,7 @@ export default function RanksInfoPage() {
                 className="mt-5 max-w-2xl text-balance text-base text-white/70 md:text-lg"
               >
                 The exam pattern, counselling rule, marks-to-rank ladder and every public
-                campus cutoff we use to power the predictor — laid out section by section.
+                campus cutoff we use to power the predictor - laid out section by section.
               </motion.p>
 
               {/* Unofficial data disclaimer */}
@@ -257,7 +257,7 @@ export default function RanksInfoPage() {
                 <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" />
                 <div>
                   <p className="text-sm font-semibold text-amber-100">
-                    Unofficial data — scraped from public sources
+                    Unofficial data - scraped from public sources
                   </p>
                   <p className="mt-1 text-xs leading-relaxed text-white/70">
                     None of these numbers come from VIT directly. They&apos;re compiled
@@ -265,7 +265,7 @@ export default function RanksInfoPage() {
                     publishes the programme list, the equi-percentile rank rule, and
                     the counselling eligibility, but <strong>not</strong> a clean raw
                     marks-vs-rank table. Use this page to <em>understand</em> where a
-                    rank lands historically — not as an official prediction or
+                    rank lands historically - not as an official prediction or
                     guarantee.
                   </p>
                 </div>
@@ -505,7 +505,7 @@ export default function RanksInfoPage() {
                                   </TooltipTrigger>
                                   <TooltipContent>
                                     <p className="max-w-xs text-xs">
-                                      {course.notes ?? 'New for 2026 — cutoff estimated.'}
+                                      {course.notes ?? 'New for 2026 - cutoff estimated.'}
                                     </p>
                                   </TooltipContent>
                                 </Tooltip>
@@ -555,7 +555,7 @@ export default function RanksInfoPage() {
                   highlights={[
                     'CSE: Cat 1 at 28k; Cat 5 at 1,05,000.',
                     'Electronics/mech branches reach into 1.4–1.5 lakh.',
-                    'Crucial for ranks above 1 lakh — still admits per 2025 rule.',
+                    'Crucial for ranks above 1 lakh - still admits per 2025 rule.',
                   ]}
                 />
                 <PatternCard
@@ -564,7 +564,7 @@ export default function RanksInfoPage() {
                   highlights={[
                     'CSE: Cat 1 at 30k; Cat 5 at 1,10,000.',
                     'Mech and several non-CS branches reach the 1.5 lakh ceiling.',
-                    'Naming differs from official 2025 programme list — read carefully.',
+                    'Naming differs from official 2025 programme list - read carefully.',
                   ]}
                 />
               </div>
@@ -573,7 +573,7 @@ export default function RanksInfoPage() {
             {/* Heuristics */}
             <Section id="heuristics" title="Rank Band Outlook" icon={Target} eyebrow="Section 6">
               <p className="text-sm text-muted-foreground">
-                A practical reading of where each rank band realistically lands if 2026
+                A practical reading of where each rank band realistically lands if 2027
                 trends hold close to 2025. Not official guarantees.
               </p>
               <div className="mt-5 overflow-hidden rounded-2xl border border-border/60 bg-card/60">
@@ -650,7 +650,7 @@ export default function RanksInfoPage() {
                 </a>
               </div>
               <p className="mt-3 text-xs text-muted-foreground">
-                Treat all 2025 numbers as a base layer for 2026 prediction, not as
+                Treat all 2025 numbers as a base layer for 2027 prediction, not as
                 guaranteed outcomes.
               </p>
             </Section>

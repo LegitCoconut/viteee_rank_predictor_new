@@ -10,7 +10,7 @@ const LEADERBOARD_KEY = 'mocktest:leaderboard';
 // out of the visible top 10.
 const LEADERBOARD_STORE_LIMIT = 50;
 
-// VITEEE-style marking the mock test uses — mirrors mock-test-ui.
+// VITEEE-style marking the mock test uses - mirrors mock-test-ui.
 const MARK_CORRECT = 4;
 const MARK_WRONG = -1;
 
@@ -21,7 +21,7 @@ async function pushToLeaderboard(body: any) {
         const total = Number(body.totalQuestions);
         if (!name || !Number.isFinite(score) || !Number.isFinite(total) || total <= 0) return;
 
-        // Older payloads don't carry marks/wrong — derive them from the answers
+        // Older payloads don't carry marks/wrong - derive them from the answers
         // array so the leaderboard stays comparable across schema versions.
         const attempted = Array.isArray(body.answers)
             ? body.answers.filter((a: any) => a?.status === 'answered').length

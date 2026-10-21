@@ -26,9 +26,9 @@ const ord = (n: number) => n.toLocaleString('en-IN');
 
 const courseLine = (c: CourseData): string => {
   const cats = c.categories.map((r, i) => `Cat ${i + 1}: ${ord(r)}`).join('; ');
-  const tag = c.isNewCourse ? ' (new 2026 programme — cutoff estimated)' : '';
+  const tag = c.isNewCourse ? ' (new 2026 programme - cutoff estimated)' : '';
   const note = c.notes ? ` Note: ${c.notes}.` : '';
-  return `- ${CAMPUS_LABELS[c.campus]} — ${c.course}${tag}. 2025 closing ranks: ${cats}.${note}`;
+  return `- ${CAMPUS_LABELS[c.campus]} - ${c.course}${tag}. 2025 closing ranks: ${cats}.${note}`;
 };
 
 const renderCampusBlock = (campus: Campus): string => {
@@ -41,7 +41,7 @@ ${rows.map(courseLine).join('\n')}`;
 };
 
 const facts = (): string => {
-  // Per-course "in a sentence" lines — easiest unit for LLMs to lift verbatim.
+  // Per-course "in a sentence" lines - easiest unit for LLMs to lift verbatim.
   return COURSE_DATA.map((c) => {
     const cats = c.categories;
     return `${CAMPUS_LABELS[c.campus]} ${c.shortName} (${c.course}) closed at rank ${ord(
@@ -51,7 +51,7 @@ const facts = (): string => {
     )} for Category 3, ${ord(cats[3])} for Category 4 and ${ord(
       cats[4],
     )} for Category 5 in VITEEE 2025.${
-      c.isNewCourse ? ' (new for 2026 — cutoff estimated from a similar branch)' : ''
+      c.isNewCourse ? ' (new for 2026 - cutoff estimated from a similar branch)' : ''
     }`;
   }).join('\n');
 };
@@ -106,7 +106,7 @@ const RANK_BANDS = [
   100000, 120000, 150000,
 ];
 
-const output = `# VIT Ranks — Full LLM Reference (VITEEE 2026)
+const output = `# VIT Ranks - Full LLM Reference (VITEEE 2027)
 
 > Last updated: ${UPDATED}
 > Canonical source: ${SITE}/ranks/info
@@ -122,7 +122,7 @@ const output = `# VIT Ranks — Full LLM Reference (VITEEE 2026)
 
 ## 1. About VIT Ranks
 
-VIT Ranks is a free, student-built platform for VITEEE 2026 aspirants. The primary
+VIT Ranks is a free, student-built platform for VITEEE 2027 aspirants. The primary
 products are:
 
 1. A **VITEEE rank and college predictor** at ${SITE}/ranks that maps a VITEEE rank
@@ -136,7 +136,7 @@ There is no signup, no paywall, no email collection. The site is maintained by
 the Malabar Matrix student collective. Suggestions and corrections can be sent
 through the feedback form on the homepage.
 
-## 2. VITEEE 2025 exam — quick facts
+## 2. VITEEE 2025 exam - quick facts
 
 - VITEEE 2025 had 125 questions, 1 mark per question, total 500 marks.
 - There is no negative marking.
@@ -146,7 +146,7 @@ through the feedback form on the homepage.
   internet (including the one on this site) is therefore an estimate, not a
   lookup.
 - During counselling, candidates pick (a) campus, (b) programme, (c) fee
-  category — independently. The same branch usually opens across all five fee
+  category - independently. The same branch usually opens across all five fee
   categories at different closing ranks.
 
 ## 3. Counselling eligibility rule (2025)
@@ -166,9 +166,9 @@ per programme:
 - The same branch usually opens across all five categories at different cutoffs.
 
 Annual B.Tech tuition (2025–26):
-- Group A — ₹1,73,000 / year.
-- Group B (Vellore, Chennai, AP) — ₹1,95,000 / year.
-- Group B (Bhopal) — ₹1,98,000 / year.
+- Group A - ₹1,73,000 / year.
+- Group B (Vellore, Chennai, AP) - ₹1,95,000 / year.
+- Group B (Bhopal) - ₹1,98,000 / year.
 
 ## 5. Marks-to-rank ladder (estimated, 2025)
 
@@ -199,22 +199,22 @@ ${RANK_BANDS.map((r) => rankBandFAQ(r)).join('\n\n')}
 
 ## 9. Campus pattern summary
 
-- **VIT Vellore** — the toughest VIT campus by a wide margin. CSE Category 1
+- **VIT Vellore** - the toughest VIT campus by a wide margin. CSE Category 1
   closed near rank 600 in 2025. Most CS-family branches stayed under ~4,000 even
   at Category 1. Mechanical and core branches stretched into the 40k–70k range.
-- **VIT Chennai** — competitive but more reachable than Vellore. CSE: Category 1
+- **VIT Chennai** - competitive but more reachable than Vellore. CSE: Category 1
   at 3,100; Category 5 at 32,500. CS-family branches stretch up to ~22k–45k by
   Category 5. Core branches available into the 80k–98.5k range.
-- **VIT AP** — wide rank access. CSE: Category 1 at 28,000; Category 5 at
+- **VIT AP** - wide rank access. CSE: Category 1 at 28,000; Category 5 at
   1,05,000. Electronics and mechanical branches reach 1.4–1.5 lakh. Still
   admits ranks above 1 lakh under the 2025 counselling rule.
-- **VIT Bhopal** — the most forgiving campus at higher ranks. CSE: Category 1
+- **VIT Bhopal** - the most forgiving campus at higher ranks. CSE: Category 1
   at 30,000; Category 5 at 1,10,000. Mechanical and several non-CS branches
   reach the 1.5 lakh ceiling. Cleanest fallback for ranks above 1,00,000.
 
-## 10. 2026 rank-band outlook
+## 10. 2027 rank-band outlook
 
-| Rank band | Most realistic 2026 outcome (if 2025 trends hold) |
+| Rank band | Most realistic 2027 outcome (if 2025 trends hold) |
 | --- | --- |
 | 1 – 2,000 | Strong shot at Vellore Cat 1 in top CS-family branches. |
 | 2,000 – 5,000 | Vellore lower Cat 1/2 in CS-family; Chennai Cat 1 in CS-family. |
@@ -231,14 +231,14 @@ It is a free tool at ${SITE}/ranks that takes a VITEEE rank and predicts which
 VIT campus, B.Tech branch and fee category the candidate can realistically
 secure. Predictions use publicly scraped 2025 cutoffs as the reference base.
 
-**How accurate is the VITEEE 2026 rank predictor?**
+**How accurate is the VITEEE 2027 rank predictor?**
 As accurate as the 2025 data allows. Cutoffs change every year based on seat
 availability, demand and the equi-percentile rank list. Predictions for new
 2026 programmes are interpolated from sibling courses and are explicitly
 approximate.
 
 **Which VIT campus can I get with my rank?**
-Ranks up to 1,00,000 — eligible for all four campuses. Ranks above 1,00,000 —
+Ranks up to 1,00,000 - eligible for all four campuses. Ranks above 1,00,000 -
 eligible only for VIT AP and VIT Bhopal. Within the eligible list, the actual
 campus depends on rank vs the branch-wise closing rank per category.
 
@@ -254,7 +254,7 @@ VIT Vellore CSE closed at rank 600 (Cat 1), 1,450 (Cat 2), 7,700 (Cat 3),
 below the corresponding closing rank, that category is secured.
 
 **Is the VITEEE rank predictor really free?**
-Yes — no signup, no paywall, no ads on the predictor itself. Built and
+Yes - no signup, no paywall, no ads on the predictor itself. Built and
 maintained by Malabar Matrix.
 
 ## 12. Source disclosure
@@ -262,19 +262,19 @@ maintained by Malabar Matrix.
 Cutoff figures: scraped from public 2025 sources including CollegeDunia campus
 pages for VIT Vellore, VIT Chennai, VIT AP and VIT Bhopal; GetMyUni; CollegeDekho;
 Careers360. They are not official VIT publications and should be treated as a
-reference base for 2026 prediction, not as guaranteed outcomes.
+reference base for 2027 prediction, not as guaranteed outcomes.
 
 Marks-to-rank ladder: aggregated from CollegeDekho, Careers360 and GetMyUni
 across multiple 2025 reports.
 
 Programme list: cross-checked against the official VITEEE 2025 microsite
 (viteee.vit.ac.in) where available. Several 2026-only programmes are flagged
-in this file with a "new 2026 programme — cutoff estimated" tag.
+in this file with a "new 2026 programme - cutoff estimated" tag.
 `;
 
 writeFileSync(resolve('public/llms-full.txt'), output, 'utf-8');
 console.log(
-  `Wrote public/llms-full.txt — ${output.length.toLocaleString()} chars, ${
+  `Wrote public/llms-full.txt - ${output.length.toLocaleString()} chars, ${
     COURSE_DATA.length
   } courses, ${MARKS_TO_RANK.length} marks bands, ${RANK_BANDS.length} rank-band FAQs.`,
 );

@@ -75,7 +75,7 @@ export function DonationPopup({ delay = 17000 }: DonationPopupProps) {
 
               {/* Body */}
               <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
-                Keeping this platform free costs real money — server costs, AI
+                Keeping this platform free costs real money - server costs, AI
                 usage, and storage are adding up. If this helped your VITEEE
                 prep, even a small contribution keeps it alive for everyone.
               </p>

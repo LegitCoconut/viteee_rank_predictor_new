@@ -8,22 +8,22 @@ import { ImportantDates } from '@/components/important-dates';
 import { FeedbackForm } from '@/components/feedback-form';
 import { Testimonials } from '@/components/testimonials';
 import { WebsiteJsonLd, FAQJsonLd } from '@/components/json-ld';
-import { MessageCircle, Heart, ArrowRight } from 'lucide-react';
+import { Heart, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { DonationPopup } from '@/components/donation-popup';
 
 export const metadata: Metadata = {
-  title: "Free VITEEE Mock Tests & Rank Predictor 2026 | VIT RANKS",
+  title: "Free VITEEE Mock Tests & Rank Predictor 2027 | VIT RANKS",
   description:
-    "Free VITEEE 2026 mock tests + VIT rank & college predictor. Enter your VITEEE rank to see which VIT campus and branch you can secure across all 5 fee categories. Live leaderboard, full syllabus. No signup, no paywall.",
+    "Free VITEEE 2027 mock tests + VIT rank & college predictor. Enter your VITEEE rank to see which VIT campus and branch you can secure across all 5 fee categories. Live leaderboard, full syllabus. No signup, no paywall.",
   keywords: [
     // Rank / college predictor (high opportunity per search console)
     "viteee rank", "vit rank", "vit ranks", "vitee rank",
-    "viteee rank predictor", "viteee rank predictor 2026",
-    "vit rank predictor", "vit rank predictor 2026",
-    "viteee college predictor", "viteee college predictor 2026",
-    "vit college predictor", "vit college predictor 2026",
+    "viteee rank predictor", "viteee rank predictor 2027",
+    "vit rank predictor", "vit rank predictor 2027",
+    "viteee college predictor", "viteee college predictor 2027",
+    "vit college predictor", "vit college predictor 2027",
     "vitee college predictor", "college predictor viteee",
     "viteee predictor", "vit predictor",
     "viteee branch predictor", "vit branch predictor",
@@ -31,21 +31,21 @@ export const metadata: Metadata = {
     "viteee college predictor free", "vit college predictor free",
 
     // VITEEE 2025 cutoffs / counselling data
-    "viteee cutoff", "viteee 2025 cutoff", "viteee cutoff 2026",
+    "viteee cutoff", "viteee 2025 cutoff", "viteee cutoff 2027",
     "vit cutoff", "vit category cutoff", "viteee category cutoff",
     "viteee marks vs rank", "viteee rank vs marks",
     "vit vellore cutoff", "vit chennai cutoff",
     "vit ap cutoff", "vit bhopal cutoff",
 
     // Registration & dates
-    "viteee registration", "viteee registration 2026", "viteee registration form",
-    "viteee registration last date", "viteee registration last date 2026",
-    "viteee 2026", "viteee exam", "viteee exam date", "viteee exam date 2026",
+    "viteee registration", "viteee registration 2027", "viteee registration form",
+    "viteee registration last date", "viteee registration last date 2027",
+    "viteee 2027", "viteee exam", "viteee exam date", "viteee exam date 2027",
     "viteee date", "viteee dates", "vit exam date",
 
     // Mock tests (primary platform offering)
     "viteee mock test", "viteee mock tests", "viteee free mock test",
-    "viteee mock test 2026", "vit mock test", "vit mock test 2026",
+    "viteee mock test 2027", "vit mock test", "vit mock test 2027",
     "vit free mock test", "vit ranks mock test",
     "viteee practice test online", "viteee practice test", "viteee sample paper",
     "viteee question paper", "viteee mocks", "viteee mock",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     "viteee previous year question papers", "viteee pyq chapterwise pdf",
 
     // Syllabus / pattern / marking
-    "viteee syllabus", "viteee syllabus 2026", "viteee exam pattern",
+    "viteee syllabus", "viteee syllabus 2027", "viteee exam pattern",
     "does viteee have negative marking",
 
     // Slot booking / OTBS
@@ -69,12 +69,12 @@ export const metadata: Metadata = {
     "viteee official website", "vit login", "vit registration",
 
     // Admit card / application
-    "viteee admit card", "viteee admit card 2026",
+    "viteee admit card", "viteee admit card 2027",
     "viteee application", "viteee form",
 
     // VIT brand queries
     "vit", "viteee", "vitee", "vit exam", "vit entrance", "vit entrance exam",
-    "vit entrance exam 2026", "vit eee", "vit vellore",
+    "vit entrance exam 2027", "vit eee", "vit vellore",
     "vit university", "vellore institute of technology",
 
     // NRI / category admissions
@@ -83,9 +83,9 @@ export const metadata: Metadata = {
     "vit foreign students", "mpcea viteee", "vit mpcea", "bpcea viteee",
 
     // Admissions / counselling / fees
-    "vit admission", "vit admission 2026", "vit b.tech admission",
-    "vit b.tech", "vit fees", "vit counselling 2026",
-    "viteee counselling", "viteee counselling 2026",
+    "vit admission", "vit admission 2027", "vit b.tech admission",
+    "vit b.tech", "vit fees", "vit counselling 2027",
+    "viteee counselling", "viteee counselling 2027",
 
     // Campus-specific admissions
     "vit vellore admission", "vit chennai admission",
@@ -98,7 +98,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "Free VITEEE Mock Tests & Rank Predictor 2026 | VIT RANKS",
+    title: "Free VITEEE Mock Tests & Rank Predictor 2027 | VIT RANKS",
     description:
       "Free VITEEE rank & college predictor + full-length mock tests for VIT Vellore, Chennai, AP & Bhopal. Based on 2025 cutoffs. No signup, no paywall.",
     url: '/',
@@ -107,13 +107,13 @@ export const metadata: Metadata = {
         url: '/hompage.png',
         width: 1200,
         height: 630,
-        alt: 'VIT RANKS - Free VITEEE 2026 Mock Tests & Rank Predictor',
+        alt: 'VIT RANKS - Free VITEEE 2027 Mock Tests & Rank Predictor',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Free VITEEE Mock Tests & Rank Predictor 2026",
+    title: "Free VITEEE Mock Tests & Rank Predictor 2027",
     description:
       "VITEEE rank & college predictor + free mock tests for VIT Vellore, Chennai, AP & Bhopal. No signup.",
     images: ['/hompage.png'],
@@ -142,17 +142,13 @@ export default function Home() {
 
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-14 max-w-3xl text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur">
-                <MessageCircle className="h-3.5 w-3.5" />
-                We actually read these
-              </div>
               <h2 className="mt-5 text-4xl md:text-6xl font-semibold tracking-tighter leading-[0.95]">
                 Tell us what&apos;s{' '}
                 <span className="font-display italic gradient-text">missing</span>.
               </h2>
               <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
                 Found a broken question? Want a feature? Just want to say hi?
-                Drop it below — we reply.
+                Drop it below - we reply.
               </p>
             </div>
 
@@ -172,10 +168,6 @@ export default function Home() {
 
                 <div className="relative z-10 flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between">
                   <div>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-coral/30 bg-coral/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-coral">
-                      <Heart className="h-3 w-3" />
-                      Or, support us
-                    </div>
                     <p className="mt-3 text-lg font-semibold tracking-tight md:text-xl">
                       Not in a feedback mood? Buy us a{' '}
                       <span className="font-display italic text-coral">cup of chai</span>{' '}

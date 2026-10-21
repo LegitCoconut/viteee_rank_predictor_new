@@ -389,7 +389,7 @@ export default function RanksPage() {
                       className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/85 backdrop-blur-md"
                     >
                       <Medal className="h-3.5 w-3.5 text-coral" />
-                      VIT Rank &amp; College Predictor 2026
+                      VIT Rank &amp; College Predictor 2027
                     </motion.div>
 
                     <motion.h1
@@ -410,7 +410,7 @@ export default function RanksPage() {
                       transition={{ duration: 0.7, delay: 0.2 }}
                       className="mx-auto mt-6 max-w-2xl text-center text-base text-white/70 md:text-lg"
                     >
-                      Built from publicly scraped 2025 cutoff data — not official VIT
+                      Built from publicly scraped 2025 cutoff data - not official VIT
                       figures. Use it to understand where your rank lands, not as a
                       guarantee.
                     </motion.p>
@@ -729,7 +729,7 @@ export default function RanksPage() {
                             <p className="mt-2 text-xs text-muted-foreground">
                               Picking{' '}
                               <span className="font-medium">Cat 2</span> shows Cat 2,
-                              3, 4 and 5 — every category that costs at least that
+                              3, 4 and 5 - every category that costs at least that
                               much.
                             </p>
                           </TooltipContent>
@@ -754,7 +754,7 @@ export default function RanksPage() {
                         </SelectContent>
                       </Select>
                       <p className="text-xs text-muted-foreground">
-                        Includes the picked category and every higher one — Cat 1
+                        Includes the picked category and every higher one - Cat 1
                         returns Cat 1–5.
                       </p>
                     </div>
@@ -1397,14 +1397,14 @@ export default function RanksPage() {
                       <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
                       <div>
                         <p className="text-sm font-medium text-amber-500">
-                          Unofficial data — use as guidance only
+                          Unofficial data - use as guidance only
                         </p>
                         <p className="mt-1 text-xs text-muted-foreground">
                           All cutoffs and rank ladders shown here were scraped from
                           public sources (CollegeDunia, GetMyUni, CollegeDekho,
                           Careers360). VIT does <strong>not</strong> publish a clean
                           marks-vs-rank table, and category cutoffs change every year.
-                          Treat this as a way to understand where your rank lands —
+                          Treat this as a way to understand where your rank lands -
                           not as an official prediction.{' '}
                           <Link
                             href="/ranks/info"
@@ -1435,7 +1435,7 @@ export default function RanksPage() {
             )}
           </AnimatePresence>
 
-          {/* SEO content — only on the rank/landing step. Keeps the predictor
+          {/* SEO content - only on the rank/landing step. Keeps the predictor
               UI clean once a user starts interacting, but gives Google a rich,
               keyword-targeted body of content on the page that ships in SSR. */}
           {isHero && <RanksSeoContent />}

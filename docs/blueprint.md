@@ -6,7 +6,7 @@ maintained by Malabar Matrix.
 ## Core Features
 
 - **Full-length mock tests**: 125 questions, 2.5-hour timer, VITEEE exam
-  pattern. Two modes — randomised paper (`/api/mocktest/questions`) or
+  pattern. Two modes - randomised paper (`/api/mocktest/questions`) or
   curated predefined sets (`/api/mocktest/predefined/:id/questions`).
 - **VITEEE-style marking**: +4 for each correct answer, −1 for each wrong
   answer, 0 for unanswered. Applied across the test UI, results page,
@@ -18,7 +18,7 @@ maintained by Malabar Matrix.
   snapshot to `localStorage.mockTestQuestions[examId]` (id, image URL,
   correct option, subject) alongside the answer log in
   `mockTestResults`. Past attempts stay reopenable question-by-question
-  via `/mocktest/results/detailed?examId=…` — no refetching, no re-take.
+  via `/mocktest/results/detailed?examId=…` - no refetching, no re-take.
 - **Live leaderboard**: Redis-backed top-10 by marks-percentage, deduped
   by student name. Fed by `/api/mocktest/submit` → `/api/mocktest/leaderboard`.
 - **Past Results dashboard**: on-device history with section-wise bars,
@@ -26,14 +26,14 @@ maintained by Malabar Matrix.
 - **Syllabus & exam pattern**: full VITEEE syllabus with downloadable
   PDFs and an illustrated pattern breakdown.
 - **Important dates timeline**: scroll-linked gradient progress rail for
-  VITEEE 2026 milestones.
+  VITEEE 2027 milestones.
 - **Feedback form**: Turnstile-protected form with optional
   update-email subscription (stored in Mongo, used only for product
-  announcements — see terms).
+  announcements - see terms).
 - **No signup, no auth**: the only identifier is the name you enter at
   test setup, stored locally and used purely for the leaderboard.
 
-## Design Language — Playful-Premium
+## Design Language - Playful-Premium
 
 Dark-first, editorial typography, animated gradient mesh, scroll-linked
 parallax. Built for mid-range Android phones first, scales up to
@@ -42,7 +42,7 @@ laptops/tablets.
 ### Palette
 
 CSS custom properties live in [src/app/globals.css](../src/app/globals.css).
-The site is **dark-only** — tokens live on `:root` directly, and
+The site is **dark-only** - tokens live on `:root` directly, and
 [src/app/layout.tsx](../src/app/layout.tsx) hardcodes `className="dark"`
 on `<html>` so Tailwind `dark:` variants and third-party components that
 gate on the `.dark` class still behave.
@@ -64,7 +64,7 @@ progress rails is `linear-gradient(110deg, coral → peach → lavender → mint
 
 | Family | Role | Weights |
 | --- | --- | --- |
-| **Instrument Serif** (italic) | Display — "wow" words, score numerals, numbered kickers | 400 italic |
+| **Instrument Serif** (italic) | Display - "wow" words, score numerals, numbered kickers | 400 italic |
 | **Space Grotesk** | Section headlines (fallback for display) | 300–700 |
 | **Inter** | Body, form, UI chrome | 400–800 |
 
@@ -83,7 +83,7 @@ Framer Motion drives everything interactive:
 - **Scroll-linked progress rails**: `useScroll` + `useTransform` for the
   timeline and "How It Works" vertical line.
 - **3-D tilt cards**: spring-interpolated `rotateX` / `rotateY` on mouse-
-  move — used by campus showcase patterns (reusable).
+  move - used by campus showcase patterns (reusable).
 - **Reveal animations**: `whileInView` with `margin: '-80px'` for section
   entries.
 - **Animated score ring** on results: SVG `strokeDashoffset` bound to a
@@ -95,7 +95,7 @@ Framer Motion drives everything interactive:
 
 ### Components & Patterns
 
-- **Icons**: Lucide React. One-icon-per-intent rule — e.g., `CheckCircle2`
+- **Icons**: Lucide React. One-icon-per-intent rule - e.g., `CheckCircle2`
   for correct, `XCircle` for wrong, `MinusCircle` for unanswered,
   `Trophy` for leaderboard, `HardDrive` for on-device storage.
 - **Cards**: rounded-2xl / rounded-3xl with `border-border/60`, hover-
@@ -110,45 +110,45 @@ Framer Motion drives everything interactive:
 ## Architecture
 
 ### Routes
-- `/` — landing (hero, How it works, important dates, feedback)
-- `/mocktest` — launch screen (curated tests, random, syllabus, pattern,
+- `/` - landing (hero, How it works, important dates, feedback)
+- `/mocktest` - launch screen (curated tests, random, syllabus, pattern,
   past results, leaderboard)
-- `/mocktest/setup` — name / stream / consent gate (Turnstile + optional
+- `/mocktest/setup` - name / stream / consent gate (Turnstile + optional
   email subscribe)
-- `/mocktest/start` — the live test UI (untouched by recent redesigns
+- `/mocktest/start` - the live test UI (untouched by recent redesigns
   to avoid destabilising the exam experience)
-- `/mocktest/results` — score orb, grade, breakdown tiles, subject-wise
+- `/mocktest/results` - score orb, grade, breakdown tiles, subject-wise
   marks bars
-- `/mocktest/results/detailed?examId=<id>` — question-by-question grid
+- `/mocktest/results/detailed?examId=<id>` - question-by-question grid
   (1 / 2 / 3 columns based on viewport), filter chips, verdict rails
-- `/terms` — plain-language terms including the local-storage disclosure
+- `/terms` - plain-language terms including the local-storage disclosure
   and marking scheme
 
 ### Data flow
-- **Mongo** (`test-results` collection) — authoritative attempt log.
-- **Upstash Redis** (`mocktest:leaderboard`) — sorted set keyed by marks-
+- **Mongo** (`test-results` collection) - authoritative attempt log.
+- **Upstash Redis** (`mocktest:leaderboard`) - sorted set keyed by marks-
   percentage, widened to 50-entry headroom to survive name-dedup without
   shrinking below display count. Flush via `npm run flush:leaderboard -- --yes`.
 - **localStorage**:
-  - `mockTestResults[]` — per-attempt summary (answers, marks, sections).
-  - `mockTestQuestions[examId]` — per-attempt question snapshot (id,
+  - `mockTestResults[]` - per-attempt summary (answers, marks, sections).
+  - `mockTestQuestions[examId]` - per-attempt question snapshot (id,
     imageUrl, correct_option, subject). Quota-safe; orphan-pruned on
     `QuotaExceededError`.
-  - `mockTestSubscribed` — flag to hide the subscribe checkbox after
+  - `mockTestSubscribed` - flag to hide the subscribe checkbox after
     first opt-in.
 - **sessionStorage**:
-  - `mockTestSetup` — hand-off from setup → start.
-  - `latestResult` / `latestQuestions` — immediate post-submit redirect
+  - `mockTestSetup` - hand-off from setup → start.
+  - `latestResult` / `latestQuestions` - immediate post-submit redirect
     payload for `/mocktest/results` and `/mocktest/results/detailed`.
 
 ### SEO
 - Route-scoped `Metadata` exports in `layout.tsx` / `page.tsx` /
-  `mocktest/layout.tsx` — keywords curated from real search-console data.
+  `mocktest/layout.tsx` - keywords curated from real search-console data.
 - Structured data via [src/components/json-ld.tsx](../src/components/json-ld.tsx):
   `WebSite`, `Organization`, `FAQPage` (incl. negative-marking Q&A),
   `Course`, `BreadcrumbList`.
 - Analytics: Google Analytics (`G-LKRW6B6ZH0`) + Microsoft Clarity
-  (`wd7k5hym2x`) + Vercel Analytics & Speed Insights — all in
+  (`wd7k5hym2x`) + Vercel Analytics & Speed Insights - all in
   `layout.tsx`.
 
 ## Principles
@@ -158,7 +158,7 @@ Framer Motion drives everything interactive:
 - **On-device by default.** Test history, progress, and detailed review
   live in the browser. We never depend on having read access back to
   our own storage.
-- **Exam-accurate first, pretty second.** The test UI is locked — it
+- **Exam-accurate first, pretty second.** The test UI is locked - it
   mimics the VITEEE CBT interface intentionally. Redesigns apply to
   marketing / setup / results pages only.
 - **Honest marks.** Mock scores use stricter +4/−1 than the real exam so

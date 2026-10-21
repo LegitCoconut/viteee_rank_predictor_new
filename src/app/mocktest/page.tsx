@@ -6,22 +6,9 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { MockTestPattern } from '@/components/mock-test-pattern';
 import { Button } from '@/components/ui/button';
-import {
-  BookOpen,
-  Pencil,
-  FileText,
-  Clock,
-  HelpCircle,
-  Zap,
-  Shuffle,
-  ListChecks,
-  RotateCcw,
-  Sparkles,
-  Trophy,
-} from 'lucide-react';
+import { BookOpen, Pencil, FileText, Clock, HelpCircle, Zap, Shuffle, ListChecks, RotateCcw, Sparkles } from 'lucide-react';
 import type { PredefinedMockTestSummary } from '@/lib/types';
 import { SyllabusSection } from '@/components/syllabus-section';
-import { SyllabusDownloads } from '@/components/syllabus-downloads';
 import { MockTestJsonLd } from '@/components/json-ld';
 
 import Link from 'next/link';
@@ -136,18 +123,6 @@ export default function MockTestPage() {
             style={{ y: yContent, opacity: opacityContent }}
             className="container relative z-10 mx-auto px-4 py-24 pb-32 md:py-0 md:pb-0"
           >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium text-white/85 backdrop-blur-md"
-            >
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-coral opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-coral" />
-              </span>
-              Free · No signup · Instant results
-            </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -168,7 +143,7 @@ export default function MockTestPage() {
               className="mx-auto mt-6 max-w-2xl text-balance text-base leading-relaxed text-white/70 md:text-xl"
             >
               Real exam pattern. Real timer. Instant section-wise analytics.
-              Pull a curated paper or spin up a randomised one — your call.
+              Pull a curated paper or spin up a randomised one - your call.
             </motion.p>
 
             {/* Stats row */}
@@ -179,8 +154,8 @@ export default function MockTestPage() {
               className="mx-auto mt-10 grid max-w-md grid-cols-3 gap-2 sm:flex sm:max-w-none sm:flex-wrap sm:items-center sm:justify-center sm:gap-4"
             >
               {[
-                { icon: HelpCircle, value: '125', label: 'Questions' },
-                { icon: Clock, value: '2.5h', label: 'Timer' },
+                { icon: HelpCircle, value: '100', label: 'Questions' },
+                { icon: Clock, value: '2h', label: 'Timer' },
                 { icon: Zap, value: '10k+', label: 'Mocks taken' },
               ].map((s) => (
                 <div
@@ -299,10 +274,6 @@ export default function MockTestPage() {
           <section id="leaderboard" className="py-12 md:py-20">
             <div className="container mx-auto px-4">
               <div className="text-center mb-8 md:mb-12">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                  <Trophy className="h-3.5 w-3.5" />
-                  Leaderboard
-                </div>
                 <h2 className="text-3xl md:text-5xl font-headline tracking-tighter font-semibold">Top Scorers</h2>
                 <p className="text-sm md:text-lg text-muted-foreground mt-2 md:mt-3 max-w-2xl mx-auto px-2">
                   Beat the best. Your name could be here.
@@ -356,10 +327,6 @@ export default function MockTestPage() {
           {/* Ad #4: after syllabus */}
           <AdSlot />
 
-          <SyllabusDownloads />
-
-          {/* Ad #5: after syllabus download */}
-          <AdSlot />
         </div>
       </main>
       <Footer />

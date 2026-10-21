@@ -2,46 +2,39 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import {
-  Target,
-  BookOpenCheck,
-  TrendingUp,
-  ArrowRight,
-  LayoutGrid,
-  Trophy,
-  Timer,
-} from "lucide-react";
+import { Target, BookOpenCheck, TrendingUp, Timer } from 'lucide-react';
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const steps = [
   {
     index: "01",
     icon: Target,
-    kicker: "Pick your mode",
+    kicker: "Pick a paper",
     title: "Choose a mock test.",
     body:
-      "Grab a curated paper or spin up a fresh randomised test — MPCEA stream, real VITEEE pattern, 125 questions. No signup, nothing to install.",
-    stat: "Random or curated · 125 Qs",
+      "Start with a curated paper or a fresh randomised one, both in the real VITEEE pattern. No signup, nothing to install.",
+    stat: "100 questions · random or curated",
     gradient: "from-coral/40 via-peach/30 to-transparent",
   },
   {
     index: "02",
     icon: BookOpenCheck,
-    kicker: "Practice like it's the real thing",
+    kicker: "Sit it like the real exam",
     title: "Take it under exam conditions.",
     body:
-      "Timed 2h 30m clock, subject-wise navigation, mark-for-review, and a clean interface built to feel like the actual VITEEE CBT. Questions are sourced from free, publicly-available material.",
-    stat: "2.5 hours · 4 subjects",
+      "Four sections, each on its own clock: Maths 50 minutes, Physics 30, Chemistry 30, Aptitude & English 10. Mark for review, Save & Next and the question palette work like the actual CBT.",
+    stat: "2 hours · 4 timed sections",
     gradient: "from-mint/40 via-sky/30 to-transparent",
   },
   {
     index: "03",
     icon: TrendingUp,
-    kicker: "Find your weak spots",
-    title: "Analyse. Compare. Improve.",
+    kicker: "See where you stand",
+    title: "Review, then predict.",
     body:
-      "Instant per-subject breakdown, question-by-question review, and a live leaderboard that keeps every attempt honest. Come back tomorrow and beat yesterday.",
-    stat: "Live leaderboard · rich analytics",
+      "Get a subject-wise breakdown and review every question. Compare your score on the live leaderboard, then enter your rank in the predictor to see which VIT campus and branch it could get you.",
+    stat: "Analytics · leaderboard · rank predictor",
     gradient: "from-lavender/40 via-coral/20 to-transparent",
   },
 ];
@@ -57,7 +50,7 @@ export function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="relative py-24 md:py-32 overflow-hidden"
+      className="relative py-14 md:py-32 overflow-hidden"
     >
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-60 dark:opacity-40">
         <div className="absolute left-[-10%] top-1/3 h-[28rem] w-[28rem] rounded-full bg-coral/10 blur-3xl" />
@@ -65,17 +58,7 @@ export function HowItWorks() {
       </div>
 
       <div className="container mx-auto px-4">
-        <div className="mx-auto mb-20 max-w-3xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur"
-          >
-            <LayoutGrid className="h-3.5 w-3.5" />
-            How it works
-          </motion.div>
+        <div className="mx-auto mb-10 max-w-3xl text-center md:mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -94,8 +77,8 @@ export function HowItWorks() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="mt-4 text-lg text-muted-foreground"
           >
-            From a rough score estimate to a data-backed college prediction — in
-            the time it takes to pour a cup of chai.
+            Take a full paper, see where you lose marks, then check which colleges
+            your rank can reach.
           </motion.p>
         </div>
 
@@ -107,28 +90,23 @@ export function HowItWorks() {
             />
           </div>
 
-          <div className="space-y-16 md:space-y-28">
+          <div className="space-y-12 md:space-y-28">
             {steps.map((step, i) => (
               <StepRow key={step.index} step={step} flip={i % 2 === 1} />
             ))}
           </div>
         </div>
 
-        <div className="mt-20 flex justify-center">
+        <div className="mt-12 flex justify-center md:mt-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7 }}
           >
-            <Link
-              href="/mocktest"
-              className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-medium shadow-sm transition hover:bg-muted"
-            >
-              <Trophy className="h-4 w-4 text-coral" />
-              Start your first mock — it&apos;s free
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            <Button size="lg" asChild>
+              <Link href="/mocktest">Take your first mock, free</Link>
+            </Button>
           </motion.div>
         </div>
       </div>
@@ -150,9 +128,7 @@ function StepRow({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-120px" }}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className={`relative grid gap-8 md:grid-cols-2 md:gap-16 ${
-        flip ? "md:[&>*:first-child]:order-2" : ""
-      }`}
+      className="relative grid gap-8 md:grid-cols-2 md:gap-16"
     >
       <div className="pointer-events-none absolute left-6 top-6 z-10 hidden -translate-x-1/2 md:left-1/2 md:block">
         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background shadow-sm">
@@ -162,9 +138,9 @@ function StepRow({
         </div>
       </div>
 
-      <div className={`pl-14 md:pl-0 ${flip ? "md:pl-16 md:text-left" : "md:pr-16 md:text-right"}`}>
-        <p className="mb-2 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-          Step {step.index} · {step.kicker}
+      <div className={`md:pl-0 ${flip ? "md:order-2 md:pl-16 md:text-left" : "md:pr-16 md:text-right"}`}>
+        <p className="mb-2 text-sm font-medium text-coral">
+          Step {Number(step.index)} · {step.kicker}
         </p>
         <h3 className="text-2xl md:text-4xl font-semibold tracking-tight leading-tight">
           {step.title}
@@ -180,12 +156,12 @@ function StepRow({
         </div>
       </div>
 
-      <div className={`pl-14 md:pl-0 ${flip ? "md:pr-16" : "md:pl-16"}`}>
+      <div className={`md:pl-0 ${flip ? "md:order-1 md:pr-16" : "md:pl-16"}`}>
         <motion.div
           whileHover={{ y: -6, rotateX: 2, rotateY: flip ? -2 : 2 }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
           style={{ transformStyle: "preserve-3d" }}
-          className="group relative aspect-[4/3] overflow-hidden rounded-3xl border border-border bg-card shadow-lg"
+          className="group relative aspect-[16/9] overflow-hidden rounded-3xl md:aspect-[4/3] border border-border bg-card shadow-lg"
         >
           <div
             className={`absolute inset-0 bg-gradient-to-br ${step.gradient}`}
@@ -203,7 +179,7 @@ function StepRow({
               </span>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 {step.kicker}
               </p>
               <p className="mt-2 text-xl font-semibold tracking-tight">

@@ -1,272 +1,81 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
-import { Sparkles, MoveRight, Users, FileText, Clock, ArrowDown, Medal, Compass } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SECTIONS, TOTAL_MINUTES, TOTAL_QUESTIONS } from "@/lib/exam-pattern";
 import Link from "next/link";
 
-const rotatingWords = ["exam-ready", "score", "speed", "confidence"];
 
 function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [titleNumber, setTitleNumber] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
+  const reduce = useReducedMotion();
+  const rise = (delay: number) => ({
+    initial: reduce ? false : { opacity: 0, y: 14 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const, delay },
   });
 
-  const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const yContent = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
-  const opacityContent = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.9, 0]);
-  const scaleContent = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
-
-  const mouseX = useMotionValue(0.5);
-  const mouseY = useMotionValue(0.5);
-  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 });
-  const glowX = useTransform(smoothX, (v) => `${v * 100}%`);
-  const glowY = useTransform(smoothY, (v) => `${v * 100}%`);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setTitleNumber((n) => (n + 1) % rotatingWords.length);
-    }, 2400);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const r = containerRef.current.getBoundingClientRect();
-      mouseX.set((e.clientX - r.left) / r.width);
-      mouseY.set((e.clientY - r.top) / r.height);
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [mouseX, mouseY]);
-
-  const stats = useMemo(
-    () => [
-      { icon: FileText, value: "500", label: "Mock Questions", suffix: "+" },
-      { icon: Clock, value: "2.5", label: "Hours per test", suffix: "h" },
-      { icon: Users, value: "100", label: "% Free forever", suffix: "" },
-    ],
-    []
-  );
-
   return (
-    <section
-      ref={containerRef}
-      className="relative w-full overflow-hidden hero-mesh isolate"
-      style={{ minHeight: "100svh" }}
-    >
-      <motion.div style={{ y: yBg }} className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute -top-40 -left-32 h-[38rem] w-[38rem] rounded-full blur-3xl animate-blob-slow"
-          style={{
-            background:
-              "radial-gradient(circle at center, hsl(var(--coral) / 0.55), transparent 60%)",
-          }}
-        />
-        <div
-          className="absolute top-1/3 -right-40 h-[34rem] w-[34rem] rounded-full blur-3xl animate-blob"
-          style={{
-            background:
-              "radial-gradient(circle at center, hsl(var(--mint) / 0.45), transparent 60%)",
-          }}
-        />
-        <div
-          className="absolute bottom-0 left-1/3 h-[32rem] w-[32rem] rounded-full blur-3xl animate-blob-fast"
-          style={{
-            background:
-              "radial-gradient(circle at center, hsl(var(--lavender) / 0.45), transparent 60%)",
-          }}
-        />
-      </motion.div>
-
-      <div className="absolute inset-0 bg-grid opacity-20 pointer-events-none reveal-mask" />
-
-      <motion.div
-        className="absolute inset-0 pointer-events-none opacity-70"
-        style={{
-          background: useMotionTemplate`radial-gradient(600px circle at ${glowX} ${glowY}, hsl(var(--peach) / 0.18), transparent 55%)`,
-        }}
-      />
-
-      <div className="absolute inset-0 bg-noise pointer-events-none mix-blend-overlay" />
-
-      <motion.div
-        style={{ y: yContent, opacity: opacityContent, scale: scaleContent }}
-        className="relative z-10 container mx-auto px-4"
-      >
-        <div className="flex flex-col items-center justify-center gap-6 py-16 md:gap-8 md:py-24 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            <Link
-              href="https://malabarmatrix.site"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium text-white/85 backdrop-blur-md transition hover:bg-white/10"
-            >
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-coral opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-coral" />
-              </span>
-              A Malabar Matrix Initiative
-              <MoveRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
-            </Link>
+    <section className="hero-mesh relative isolate w-full">
+      <div className="container mx-auto px-4">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-7 pb-14 pt-12 text-center md:pb-28 md:pt-28">
+          <motion.div {...rise(0)}>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-            className="max-w-5xl text-[clamp(2.75rem,8vw,6.5rem)] font-semibold leading-[0.95] tracking-tighter text-white"
+            {...rise(0.06)}
+            className="text-balance text-[clamp(2.5rem,7vw,5.25rem)] font-semibold leading-[1.02] tracking-tight"
           >
-            Build your{" "}
-            <span className="relative inline-flex min-w-[5ch] justify-center align-baseline">
-              {rotatingWords.map((w, i) => (
-                <motion.span
-                  key={w}
-                  className="absolute font-display italic gradient-text whitespace-nowrap"
-                  initial={{ opacity: 0, y: 40, filter: "blur(12px)" }}
-                  animate={
-                    titleNumber === i
-                      ? { opacity: 1, y: 0, filter: "blur(0px)" }
-                      : {
-                          opacity: 0,
-                          y: titleNumber > i ? -40 : 40,
-                          filter: "blur(12px)",
-                        }
-                  }
-                  transition={{ type: "spring", stiffness: 120, damping: 18 }}
-                >
-                  {w}
-                </motion.span>
-              ))}
-              <span className="invisible">{rotatingWords[0]}</span>
-            </span>
-            <br />
-            <span className="text-white/95">for VITEEE 2026.</span>
+            Practice the real{" "}
+            <span className="gradient-text">VITEEE 2027</span> paper.
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.25 }}
-            className="max-w-2xl text-balance text-base md:text-xl leading-relaxed text-white/70"
+            {...rise(0.12)}
+            className="max-w-2xl text-balance text-lg leading-relaxed text-muted-foreground md:text-xl"
           >
-            Free VITEEE 2026 mock tests, a VIT rank &amp; college predictor, and
-            a live leaderboard — all on one site, no signup, no paywall. Sharpen
-            your score the way toppers do, one honest attempt at a time.
+            Full-length mock tests with per-section timers, a VIT rank and
+            college predictor, and a live leaderboard. No signup, no paywall.
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-3"
-          >
-            <Button
-              size="lg"
-              asChild
-              className="shimmer-border group h-12 gap-2 rounded-full bg-white px-7 text-base font-semibold text-plum-deep hover:bg-white/90"
-            >
-              <Link href="/mocktest">
-                Take a mock test
-                <Sparkles className="h-4 w-4 transition-transform group-hover:rotate-12" />
-              </Link>
+          <motion.div {...rise(0.18)} className="flex w-full max-w-xs flex-col items-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
+            <Button size="lg" asChild className="w-full sm:w-auto">
+              <Link href="/mocktest">Take a mock test</Link>
             </Button>
-            <Button
-              size="lg"
-              asChild
-              className="group h-12 gap-2 rounded-full bg-gradient-to-r from-coral to-peach px-7 text-base font-semibold text-plum-deep shadow-lg shadow-coral/25 hover:from-coral hover:to-peach"
-            >
-              <Link href="/ranks">
-                <Medal className="h-4 w-4 transition-transform group-hover:rotate-12" />
-                Predict your rank
-              </Link>
+            <Button size="lg" variant="secondary" asChild className="w-full sm:w-auto">
+              <Link href="/ranks">Predict your rank</Link>
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              asChild
-              className="group h-12 gap-2 rounded-full border-white/20 bg-white/5 px-7 text-base font-medium text-white backdrop-blur-md hover:bg-white/10 hover:text-white"
-            >
+            <Button size="lg" variant="link" asChild className="text-foreground">
               <Link href="/mocktest#leaderboard">
                 View leaderboard
-                <MoveRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <ChevronRight className="h-4 w-4" />
               </Link>
             </Button>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.55 }}
-          >
-            <Link
-              href="/ranks/info"
-              className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/80 backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/10 hover:text-white"
-            >
-              <Compass className="h-4 w-4 text-coral transition-transform group-hover:rotate-12" />
-              Read the data behind the rank predictor
-              <MoveRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut", delay: 0.6 }}
-            className="mt-6 flex flex-wrap items-stretch justify-center gap-3 md:gap-4"
-          >
-            {stats.map((s) => (
-              <div
-                key={s.label}
-                className="glass flex items-center gap-3 rounded-2xl px-5 py-3 text-left"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-coral/30 to-peach/30">
-                  <s.icon className="h-5 w-5 text-white" />
-                </div>
-                <div>
-                  <p className="font-display text-2xl italic leading-none text-white">
-                    {s.value}
-                    <span className="text-coral">{s.suffix}</span>
+          {/* Signature: the 2027 paper drawn to scale, one segment per timed section. */}
+          <motion.div {...rise(0.26)} className="mt-6 w-full max-w-3xl text-left">
+            <p className="mb-3 text-center text-sm text-muted-foreground">
+              {TOTAL_QUESTIONS} questions in {TOTAL_MINUTES / 60} hours, in four timed sections
+            </p>
+            <div className="flex gap-1.5" aria-hidden>
+              {SECTIONS.map((s) => (
+                <div key={s.key} style={{ flexGrow: s.minutes, flexBasis: 0 }} className="h-2 rounded-full bg-primary" />
+              ))}
+            </div>
+            <ul className="mt-4 grid grid-cols-1 divide-y divide-border sm:grid-cols-4 sm:gap-x-4 sm:divide-y-0" aria-label="Sections of the VITEEE 2027 paper">
+              {SECTIONS.map((s) => (
+                <li key={s.key} className="flex items-baseline justify-between gap-3 py-2.5 sm:block sm:py-0">
+                  <p className="text-sm font-medium">{s.label}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {s.questions} questions &middot; {s.minutes} min
                   </p>
-                  <p className="mt-1 text-[11px] uppercase tracking-widest text-white/60">
-                    {s.label}
-                  </p>
-                </div>
-              </div>
-            ))}
+                </li>
+              ))}
+            </ul>
           </motion.div>
         </div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 1 }}
-        className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2"
-      >
-        <div className="flex flex-col items-center gap-2 text-white/50">
-          <span className="text-[10px] uppercase tracking-[0.25em]">Scroll</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <ArrowDown className="h-3.5 w-3.5" />
-          </motion.div>
-        </div>
-      </motion.div>
-
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background" />
+      </div>
     </section>
   );
 }

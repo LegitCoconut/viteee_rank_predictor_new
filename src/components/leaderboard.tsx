@@ -47,7 +47,7 @@ function rankBadge(rank: number) {
 const BOARD_META = {
     random: {
         title: 'Random Tests',
-        description: 'Top scores from randomised 125-question tests.',
+        description: 'Top scores from randomised 100-question tests.',
         icon: Shuffle,
         empty: 'No random test results yet.',
     },
@@ -71,7 +71,7 @@ export function Leaderboard({ mode, initialData }: LeaderboardProps) {
     const Icon = meta.icon;
 
     useEffect(() => {
-        if (initialData !== undefined) return; // data provided by parent — skip fetch
+        if (initialData !== undefined) return; // data provided by parent - skip fetch
         let cancelled = false;
         const url = mode
             ? `/api/mocktest/leaderboard?mode=${mode}`

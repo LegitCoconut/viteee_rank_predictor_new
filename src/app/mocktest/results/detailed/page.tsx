@@ -4,7 +4,6 @@ import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
@@ -13,7 +12,6 @@ import {
   XCircle,
   MinusCircle,
   ChevronLeft,
-  Filter,
   Search,
   RotateCcw,
   FileWarning,
@@ -42,7 +40,7 @@ interface StoredResult {
   predefinedName?: string;
 }
 
-// VITEEE-style marking — mirror of results/page.tsx so the chip stays honest.
+// VITEEE-style marking - mirror of results/page.tsx so the chip stays honest.
 const MARK_CORRECT = 4;
 const MARK_WRONG = -1;
 
@@ -255,110 +253,68 @@ function DetailedResultsPage() {
     <div className="flex min-h-dvh flex-col bg-background">
       <Header />
       <main className="flex-1">
-        {/* Slim premium banner */}
-        <section className="relative isolate overflow-hidden hero-mesh py-14 md:py-20">
-          <div className="pointer-events-none absolute inset-0">
-            <div
-              className="absolute -top-20 left-1/3 h-[22rem] w-[22rem] rounded-full blur-3xl animate-blob-slow"
-              style={{ background: 'radial-gradient(circle, hsl(var(--coral) / 0.4), transparent 60%)' }}
-            />
-            <div
-              className="absolute bottom-0 right-1/4 h-[20rem] w-[20rem] rounded-full blur-3xl animate-blob"
-              style={{ background: 'radial-gradient(circle, hsl(var(--lavender) / 0.35), transparent 60%)' }}
-            />
-          </div>
-          <div className="pointer-events-none absolute inset-0 bg-grid opacity-20 reveal-mask" />
-          <div className="pointer-events-none absolute inset-0 bg-noise mix-blend-overlay" />
-
-          <div className="container relative z-10 mx-auto max-w-7xl px-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              asChild
-              className="mb-4 -ml-2 gap-1 text-white/75 hover:bg-white/10 hover:text-white"
-            >
-              <Link
-                href={
-                  load.source === 'local'
-                    ? '/mocktest#past-results'
-                    : '/mocktest/results'
-                }
-              >
+        <section className="hero-mesh py-10 md:py-14">
+          <div className="container mx-auto max-w-7xl px-4">
+            <Button variant="ghost" size="sm" asChild className="-ml-3 mb-3 gap-1 text-muted-foreground hover:bg-transparent hover:text-foreground">
+              <Link href={load.source === 'local' ? '/mocktest#past-results' : '/mocktest/results'}>
                 <ChevronLeft className="h-4 w-4" />
                 {load.source === 'local' ? 'Back to history' : 'Back to summary'}
               </Link>
             </Button>
 
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
-            >
+            <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-coral">
-                  {title}
-                </p>
-                <h1 className="mt-2 text-[clamp(2rem,5vw,3.75rem)] font-semibold leading-[0.95] tracking-tighter text-white">
-                  Every{' '}
-                  <span className="font-display italic gradient-text">
-                    question
-                  </span>
-                  , reviewed.
+                <p className="text-sm text-muted-foreground">{title}</p>
+                <h1 className="mt-1 text-balance text-3xl font-semibold tracking-tight md:text-5xl">
+                  Every <span className="gradient-text">question</span>, reviewed.
                 </h1>
-                <p className="mt-3 max-w-xl text-sm text-white/70 md:text-base">
-                  Walk through your attempt one more time. Filter what you need.
-                  Notice the patterns.
+                <p className="mt-3 max-w-xl text-sm text-muted-foreground md:text-base">
+                  Walk through your attempt once more. Filter what you need and look for patterns.
                 </p>
               </div>
 
-              <div className="glass inline-flex items-center gap-4 self-start rounded-2xl px-5 py-3 text-left md:self-auto">
-                <div>
-                  <p className="font-display text-3xl italic leading-none text-white">
+              <dl className="grid shrink-0 grid-cols-3 divide-x divide-border self-start rounded-2xl border border-border bg-card md:self-auto">
+                <div className="px-4 py-3">
+                  <dd className="text-2xl font-semibold tabular-nums">
                     {marks}
-                    <span className="text-coral">/{maxMarks}</span>
-                  </p>
-                  <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-white/60">
-                    {result.score}C · {wrongAnswers}W · {pct.toFixed(0)}%
-                  </p>
+                    <span className="text-base text-muted-foreground">/{maxMarks}</span>
+                  </dd>
+                  <dt className="text-xs text-muted-foreground">Marks</dt>
                 </div>
-              </div>
-            </motion.div>
+                <div className="px-4 py-3">
+                  <dd className="text-2xl font-semibold tabular-nums">{result.score}</dd>
+                  <dt className="text-xs text-muted-foreground">Correct</dt>
+                </div>
+                <div className="px-4 py-3">
+                  <dd className="text-2xl font-semibold tabular-nums">{pct.toFixed(0)}%</dd>
+                  <dt className="text-xs text-muted-foreground">Score</dt>
+                </div>
+              </dl>
+            </div>
           </div>
         </section>
 
-        {/* Sticky filter bar */}
-        <div className="sticky top-14 z-30 border-b border-border/60 bg-background/80 backdrop-blur-xl">
+        <div className="glass sticky top-14 z-30 border-x-0 border-t-0">
           <div className="container mx-auto max-w-7xl px-4">
-            <div className="flex flex-wrap items-center gap-2 py-3">
-              <div className="mr-1 flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                <Filter className="h-3.5 w-3.5" />
-                Filter
-              </div>
-              {(['all', 'correct', 'incorrect', 'unanswered'] as FilterKey[]).map(
-                (key) => {
-                  const isActive = filter === key;
-                  const toneClasses =
-                    key === 'correct'
-                      ? 'data-[active=true]:bg-mint/15 data-[active=true]:text-mint data-[active=true]:border-mint/40'
-                      : key === 'incorrect'
-                      ? 'data-[active=true]:bg-coral/15 data-[active=true]:text-coral data-[active=true]:border-coral/40'
-                      : key === 'unanswered'
-                      ? 'data-[active=true]:bg-muted data-[active=true]:text-foreground data-[active=true]:border-border'
-                      : 'data-[active=true]:bg-foreground data-[active=true]:text-background data-[active=true]:border-foreground';
-                  return (
-                    <button
-                      key={key}
-                      data-active={isActive}
-                      onClick={() => setFilter(key)}
-                      className={`inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card px-3.5 text-xs font-semibold tracking-tight capitalize transition-all hover:-translate-y-0.5 ${toneClasses}`}
-                    >
-                      {key}
-                      <span className="text-[10px] opacity-70">({counts[key]})</span>
-                    </button>
-                  );
-                }
-              )}
+            <div role="group" aria-label="Filter questions" className="flex flex-wrap items-center gap-2 py-3">
+              {(['all', 'correct', 'incorrect', 'unanswered'] as FilterKey[]).map((key) => {
+                const isActive = filter === key;
+                return (
+                  <button
+                    key={key}
+                    aria-pressed={isActive}
+                    onClick={() => setFilter(key)}
+                    className={`inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-sm font-medium capitalize transition-colors ${
+                      isActive
+                        ? 'bg-foreground text-background'
+                        : 'bg-secondary text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    {key}
+                    <span className="text-xs tabular-nums opacity-70">{counts[key]}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -369,7 +325,7 @@ function DetailedResultsPage() {
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               {filtered.flatMap((row, i) => {
                 const card = (
-                  <QuestionReviewCard key={row.question._id} row={row} order={i} />
+                  <QuestionReviewCard key={row.question._id} row={row} />
                 );
                 const isAdBoundary = (i + 1) % 6 === 0 && i + 1 < filtered.length;
                 if (!isAdBoundary) return [card];
@@ -400,7 +356,6 @@ function DetailedResultsPage() {
 
 function QuestionReviewCard({
   row,
-  order,
 }: {
   row: {
     index: number;
@@ -408,104 +363,58 @@ function QuestionReviewCard({
     chosen: string | null;
     verdict: 'correct' | 'incorrect' | 'unanswered';
   };
-  order: number;
 }) {
   const { index, question, chosen, verdict } = row;
 
+  // Colour plus icon and label: status never relies on colour alone.
   const style = {
-    correct: {
-      Icon: CheckCircle2,
-      label: 'Correct',
-      ring: 'ring-mint/30',
-      accent: 'text-mint',
-      badge: 'bg-mint/10 text-mint border-mint/30',
-      bar: 'bg-mint',
-    },
-    incorrect: {
-      Icon: XCircle,
-      label: 'Incorrect',
-      ring: 'ring-coral/30',
-      accent: 'text-coral',
-      badge: 'bg-coral/10 text-coral border-coral/30',
-      bar: 'bg-coral',
-    },
-    unanswered: {
-      Icon: MinusCircle,
-      label: 'Not answered',
-      ring: 'ring-border',
-      accent: 'text-muted-foreground',
-      badge: 'bg-muted text-muted-foreground border-border',
-      bar: 'bg-border',
-    },
+    correct: { Icon: CheckCircle2, label: 'Correct', accent: 'text-mint' },
+    incorrect: { Icon: XCircle, label: 'Incorrect', accent: 'text-coral' },
+    unanswered: { Icon: MinusCircle, label: 'Not answered', accent: 'text-muted-foreground' },
   }[verdict];
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, delay: Math.min(order * 0.025, 0.25) }}
-      className={`group relative overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm ring-1 ${style.ring} transition-shadow hover:shadow-md`}
-    >
-      <div className={`absolute inset-y-0 left-0 w-1 ${style.bar}`} />
+    <article className="overflow-hidden rounded-2xl border border-border bg-card p-4 md:p-5">
+      <header className="mb-3 flex items-center justify-between gap-3">
+        <p className="text-sm">
+          <span className="font-semibold tabular-nums">Q{index + 1}</span>
+          <span className="text-muted-foreground"> &middot; {subjectNames[question.subject] || question.subject}</span>
+        </p>
+        <span className={`inline-flex items-center gap-1.5 text-sm font-medium ${style.accent}`}>
+          <style.Icon className="h-4 w-4" aria-hidden="true" />
+          {style.label}
+        </span>
+      </header>
 
-      <div className="p-5 md:p-6">
-        <header className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted font-mono text-xs font-semibold">
-              {index + 1}
-            </span>
-            <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-              {subjectNames[question.subject] || question.subject}
-            </span>
-          </div>
-          <span
-            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold ${style.badge}`}
-          >
-            <style.Icon className="h-3.5 w-3.5" />
-            {style.label}
-          </span>
-        </header>
-
-        {question.imageUrl ? (
-          <div className="relative w-full overflow-hidden rounded-xl border bg-white">
-            <Image
-              src={question.imageUrl}
-              alt={`Question ${index + 1}`}
-              width={800}
-              height={400}
-              className="h-auto w-full"
-              unoptimized
-            />
-          </div>
-        ) : (
-          <div className="rounded-xl border border-dashed border-border bg-muted/30 px-4 py-10 text-center text-xs italic text-muted-foreground">
-            (image unavailable)
-          </div>
-        )}
-
-        <div className="mt-4 grid grid-cols-2 gap-3">
-          <div className="rounded-xl border border-border/60 bg-background/60 px-4 py-3">
-            <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-              Your answer
-            </p>
-            <p
-              className={`mt-1 font-mono text-lg font-semibold uppercase ${
-                chosen === null ? 'text-muted-foreground' : style.accent
-              }`}
-            >
-              {chosen ?? '—'}
-            </p>
-          </div>
-          <div className="rounded-xl border border-border/60 bg-background/60 px-4 py-3">
-            <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-              Correct answer
-            </p>
-            <p className="mt-1 font-mono text-lg font-semibold uppercase text-mint">
-              {question.correct_option}
-            </p>
-          </div>
+      {question.imageUrl ? (
+        <div className="relative w-full overflow-hidden rounded-xl bg-white">
+          <Image
+            src={question.imageUrl}
+            alt={`Question ${index + 1}`}
+            width={800}
+            height={400}
+            className="h-auto w-full"
+            unoptimized
+          />
         </div>
-      </div>
-    </motion.article>
+      ) : (
+        <div className="rounded-xl border border-dashed border-border px-4 py-10 text-center text-sm text-muted-foreground">
+          Image unavailable
+        </div>
+      )}
+
+      <dl className="mt-3 grid grid-cols-2 gap-2">
+        <div className="rounded-xl bg-secondary px-4 py-2.5">
+          <dt className="text-xs text-muted-foreground">Your answer</dt>
+          <dd className={`mt-0.5 text-lg font-semibold uppercase ${chosen === null ? 'text-muted-foreground' : style.accent}`}>
+            {chosen ?? '-'}
+          </dd>
+        </div>
+        <div className="rounded-xl bg-secondary px-4 py-2.5">
+          <dt className="text-xs text-muted-foreground">Correct answer</dt>
+          <dd className="mt-0.5 text-lg font-semibold uppercase text-mint">{question.correct_option}</dd>
+        </div>
+      </dl>
+    </article>
   );
 }

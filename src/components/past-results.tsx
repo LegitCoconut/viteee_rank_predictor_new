@@ -20,7 +20,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from '@/components/ui/button';
-import { History, Trophy, Trash2, FileText, ArrowRight } from 'lucide-react';
+import { History, Trash2, FileText, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Progress } from '@/components/ui/progress';
 
@@ -49,7 +49,7 @@ type StoredResult = {
     predefinedName?: string;
 };
 
-// VITEEE-style marking scheme — mirrors mock-test-ui / results page.
+// VITEEE-style marking scheme - mirrors mock-test-ui / results page.
 const MARK_CORRECT = 4;
 const MARK_WRONG = -1;
 
@@ -95,7 +95,7 @@ export function PastResults() {
                 }
             }
         } catch {
-            // Stale snapshot map — not worth surfacing to the user.
+            // Stale snapshot map - not worth surfacing to the user.
         }
     };
 
@@ -113,10 +113,6 @@ export function PastResults() {
         <section id="past-results" className="py-12 md:py-20">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-8 md:mb-12">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs md:text-sm font-medium mb-3 md:mb-4">
-                        <Trophy className="h-3.5 w-3.5" />
-                        Your Progress
-                    </div>
                     <h2 className="text-2xl sm:text-3xl md:text-5xl font-headline tracking-tighter font-semibold">Past Results</h2>
                     <p className="text-sm md:text-lg text-muted-foreground mt-2 md:mt-3 max-w-2xl mx-auto px-2">
                         Review your previous mock test performances.

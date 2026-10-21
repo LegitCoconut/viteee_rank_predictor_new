@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { connectToDatabase } from "@/lib/db";
+import { verifyTurnstile } from "@/lib/turnstile";
 
 const FormSchema = z.object({
   name: z.string().min(2),
@@ -10,9 +11,6 @@ const FormSchema = z.object({
 });
 
 const MONGODB_DB = process.env.MONGODB_DB!;
-const CLOUDFLARE_TURNSTILE_SECRET_KEY =
-  process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY!;
-
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,22 +19,7 @@ export async function POST(req: NextRequest) {
 
     const { name, email, feedback, token } = validatedData;
 
-    const turnstileResponse = await fetch(
-      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: `secret=${encodeURIComponent(
-          CLOUDFLARE_TURNSTILE_SECRET_KEY
-        )}&response=${encodeURIComponent(token)}`,
-      }
-    );
-
-    const turnstileData = await turnstileResponse.json();
-
-    if (!turnstileData.success) {
+    if (!(await verifyTurnstile(token, "feedback"))) {
       return NextResponse.json(
         { message: "Invalid CAPTCHA token." },
         { status: 400 }

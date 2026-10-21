@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { redis } from '@/lib/redis';
 
 const LEADERBOARD_KEY = 'mocktest:leaderboard';
-// Must match LEADERBOARD_STORE_LIMIT in submit/route.ts — read every member so
+// Must match LEADERBOARD_STORE_LIMIT in submit/route.ts - read every member so
 // per-name dedup can't leave us short of DISPLAY_LIMIT unique students.
 const FETCH_LIMIT = 50;
 const DISPLAY_LIMIT = 10;

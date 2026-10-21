@@ -1,15 +1,15 @@
 'use client';
 
+import { SECTIONS, TOTAL_QUESTIONS } from '@/lib/exam-pattern';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { Loader2, CheckCircle, Monitor } from 'lucide-react';
+import { CheckCircle, Loader2, Monitor } from 'lucide-react';
 import { MockTestUI } from '@/components/mock-test-ui';
 import { MockTestUIViteee } from '@/components/mock-test-ui-viteee';
 import type { QuestionWithImage } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { AdSlot } from '@/components/ad-slot';
 
 const LG_BREAKPOINT_PX = 1024;
@@ -79,8 +79,8 @@ export default function MockTestStartPage() {
           data = shuffleWithinSubjects(data);
         }
 
-        if (data.length < 125) {
-          throw new Error(`Failed to load all questions. Only got ${data.length}/125.`);
+        if (data.length < TOTAL_QUESTIONS) {
+          throw new Error(`Failed to load all questions. Only got ${data.length}/${TOTAL_QUESTIONS}.`);
         }
 
         setLoadingState('preloading');
@@ -133,8 +133,8 @@ export default function MockTestStartPage() {
     return (
       <div className="flex flex-col min-h-dvh">
         <Header />
-        <main className="flex-1 flex items-center justify-center">
-          <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <main className="flex min-h-[calc(100dvh-3.5rem)] items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" aria-label="Loading" />
         </main>
         <Footer />
       </div>
@@ -172,23 +172,10 @@ export default function MockTestStartPage() {
       <Header />
       <main className="flex-1 flex flex-col items-center justify-center container mx-auto py-8 text-center">
         {loadingState === 'fetching' && (
-          <>
-            <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-            <h1 className="text-2xl font-headline font-semibold">Generating Your Mock Test...</h1>
-            <p className="text-muted-foreground">Please wait while we prepare the questions for you.</p>
-          </>
+          <LoadingPanel title="Generating your mock test" detail="Picking questions for the 2027 pattern." progress={null} />
         )}
         {loadingState === 'preloading' && (
-          <div className="w-full max-w-md flex flex-col items-center">
-            <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-            <h1 className="text-2xl font-headline font-semibold">Loading Test Assets...</h1>
-            <p className="text-muted-foreground mb-4">This will ensure a smooth testing experience.</p>
-            <Progress value={preloadProgress} className="w-full" />
-            <p className="text-sm mt-2">{Math.round(preloadProgress)}%</p>
-            <p className="text-xs text-muted-foreground mt-4 text-center max-w-sm">
-              All these services are running on free tier platforms and servers in order to make it ad free and to give a seamless experience. So the test will take some time to get loaded.
-            </p>
-          </div>
+          <LoadingPanel title="Loading your test" detail="Fetching question images so nothing lags mid-test." progress={preloadProgress} />
         )}
         {loadingState === 'ready' && (
           <div className="flex w-full max-w-5xl flex-col items-center gap-6">
@@ -197,7 +184,7 @@ export default function MockTestStartPage() {
               <h1 className="text-3xl font-headline font-semibold">Your test is ready.</h1>
               <p className="mt-2 text-muted-foreground">
                 Pick the interface you want for this test. You can change your
-                mind any time — your last choice is remembered.
+                mind any time - your last choice is remembered.
               </p>
             </div>
 
@@ -211,7 +198,7 @@ export default function MockTestStartPage() {
               />
               <UIPreviewCard
                 title="VITEEE-style"
-                subtitle="Mirrors the official VITEEE CBT interface — sections, palette, Mark-for-Review."
+                subtitle="Mirrors the official VITEEE CBT interface - sections, palette, Mark-for-Review."
                 imageSrc={`${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/images/vit-ui.webp`}
                 selected={examInterface === 'viteee'}
                 onClick={() => pickUI('viteee')}
@@ -326,5 +313,104 @@ function UIPreviewCard({
         </div>
       </div>
     </button>
+  );
+}
+
+// Four segments, one per timed section, filled in order as progress advances.
+function LoadingPanel({ title, detail, progress }: { title: string; detail: string; progress: number | null }) {
+  const total = SECTIONS.reduce((n, sec) => n + sec.minutes, 0);
+  let start = 0;
+  return (
+    <div className="flex min-h-[calc(100dvh-3.5rem)] w-full max-w-md flex-col items-center justify-center px-4 py-10 text-center" role="status" aria-live="polite">
+      <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+      <p className="mt-2 text-muted-foreground">{detail}</p>
+
+      <div className="mt-8 flex w-full gap-1.5" aria-hidden="true">
+        {SECTIONS.map((sec) => {
+          const share = (sec.minutes / total) * 100;
+          const fill = progress === null ? 0 : Math.max(0, Math.min(100, ((progress - start) / share) * 100));
+          start += share;
+          return (
+            <div key={sec.key} style={{ flexGrow: sec.minutes, flexBasis: 0 }} className="h-1.5 overflow-hidden rounded-full bg-secondary">
+              <div
+                className={`h-full rounded-full bg-primary transition-[width] duration-300 ${progress === null ? 'w-full animate-pulse opacity-40' : ''}`}
+                style={progress === null ? undefined : { width: `${fill}%` }}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <p className="mt-3 text-sm tabular-nums text-muted-foreground">
+        {progress === null ? 'Just a moment' : `${Math.round(progress)}%`}
+      </p>
+
+      <RotatingQuote />
+
+      <p className="mx-auto mt-10 max-w-sm text-xs text-muted-foreground">
+        We run on free servers to stay ad-free, so the first load can take a few seconds.
+      </p>
+    </div>
+  );
+}
+
+const PORTRAITS: Record<string, string> = {
+  'A. P. J. Abdul Kalam': 'https://cdn.britannica.com/56/148856-004-2F59E2D9/APJ-2008.jpg',
+  'Swami Vivekananda': 'https://cafedissensusblog.com/wp-content/uploads/2017/10/swami-vivekananda.jpg?w=640',
+  'Rabindranath Tagore': 'https://www.deccanchronicle.com/h-upload/2024/05/07/1088334-rabindranthtagore.webp',
+  'Mahatma Gandhi': 'https://i.pinimg.com/564x/ab/65/ea/ab65ea3c19f7c5b6c7435e9938e403b3.jpg',
+};
+
+// Attributions are as commonly cited; some are paraphrases of longer passages.
+const QUOTES = [
+  { text: 'You have to dream before your dreams can come true.', by: 'A. P. J. Abdul Kalam' },
+  { text: 'If you want to shine like a sun, first burn like a sun.', by: 'A. P. J. Abdul Kalam' },
+  { text: 'Arise, awake, and stop not till the goal is reached.', by: 'Swami Vivekananda' },
+  { text: 'You can\u2019t cross the sea merely by standing and staring at the water.', by: 'Rabindranath Tagore' },
+  { text: 'The future depends on what you do today.', by: 'Mahatma Gandhi' },
+];
+
+// Shuffled once per page load (not per mount) so the quote doesn't reset when the loading step changes.
+let shuffledQuotes: typeof QUOTES | null = null;
+function getShuffledQuotes() {
+  if (!shuffledQuotes) {
+    shuffledQuotes = [...QUOTES];
+    for (let k = shuffledQuotes.length - 1; k > 0; k--) {
+      const j = Math.floor(Math.random() * (k + 1));
+      [shuffledQuotes[k], shuffledQuotes[j]] = [shuffledQuotes[j], shuffledQuotes[k]];
+    }
+  }
+  return shuffledQuotes;
+}
+
+function RotatingQuote() {
+  const [i, setI] = useState(0);
+  const quotes = getShuffledQuotes();
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const id = setInterval(() => setI((n) => (n + 1) % quotes.length), 6000);
+    return () => clearInterval(id);
+  }, [quotes.length]);
+  const q = quotes[i];
+  const image = PORTRAITS[q.by];
+  return (
+    <figure
+      key={i}
+      className="mt-10 flex min-h-[7rem] w-full animate-in items-center gap-4 rounded-2xl border border-border bg-card p-4 text-left duration-700 fade-in"
+    >
+      {image && (
+        // Plain <img>: portraits come from several hosts, so no image-domain config is needed.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={image}
+          alt={q.by}
+          referrerPolicy="no-referrer"
+          className="h-20 w-20 shrink-0 rounded-xl bg-secondary object-cover object-top"
+        />
+      )}
+      <div className="min-w-0">
+        <blockquote className="text-balance text-base font-medium leading-snug">&ldquo;{q.text}&rdquo;</blockquote>
+        <figcaption className="mt-2 text-sm text-muted-foreground">{q.by}</figcaption>
+      </div>
+    </figure>
   );
 }

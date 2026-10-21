@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { SECTIONS } from "@/lib/exam-pattern";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -155,12 +156,13 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
   const goToIndex = useCallback(
     (idx: number) => {
       if (idx < 0 || idx >= questions.length) return;
+      if (questions[idx].subject !== currentSubject) return; // sections are locked
       setCurrentQuestionIndex(idx);
       setAnswers((prev) =>
         prev.map((ans, i) => (i === idx ? { ...ans, visited: true } : ans))
       );
     },
-    [questions.length]
+    [questions, currentSubject]
   );
 
   const handleSaveAndNext = () => {
@@ -315,6 +317,18 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
     }
   }, [answers, questions, setupData, router, isSubmitting]);
 
+  // Move to the next section present in the paper, or submit after the last one.
+  const advanceSection = useCallback(() => {
+    const next = SUBJECT_ORDER.slice(SUBJECT_ORDER.indexOf(currentSubject as typeof SUBJECT_ORDER[number]) + 1)
+      .map((s) => subjectToFirstIndex[s])
+      .find((i) => i !== undefined);
+    if (next === undefined) return void handleSubmit();
+    setCurrentQuestionIndex(next);
+    setAnswers((prev) => prev.map((a, i) => (i === next ? { ...a, visited: true } : a)));
+  }, [currentSubject, subjectToFirstIndex, handleSubmit]);
+
+  const [sectionConfirmOpen, setSectionConfirmOpen] = useState(false);
+
   return (
     <div
       ref={elem}
@@ -400,8 +414,9 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
             <span className="text-gray-700">Time Left :</span>
             <span className="font-mono text-gray-900">
               <Timer
-                duration={2.5 * 60 * 60}
-                onTimeUp={handleSubmit}
+                key={currentSubject}
+                duration={(SECTIONS.find((s) => s.key === currentSubject)?.minutes ?? 10) * 60}
+                onTimeUp={advanceSection}
                 isPaused={!isFullscreen}
               />
             </span>
@@ -423,10 +438,7 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
             return (
               <button
                 key={subj}
-                onClick={() => {
-                  const idx = subjectToFirstIndex[subj];
-                  if (idx !== undefined) goToIndex(idx);
-                }}
+                disabled={!active}
                 className={`flex items-center gap-1.5 whitespace-nowrap px-4 py-1.5 text-[11px] font-bold uppercase tracking-wide ${active
                   ? "border border-b-0 border-[#2d89ef] bg-white text-[#2d89ef]"
                   : "border border-transparent bg-[#eef4fb] text-[#2d89ef] hover:bg-[#e2ecf6]"
@@ -446,7 +458,36 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
         <button className="ml-1 text-gray-400 hover:text-gray-600">
           <ChevronRight className="h-4 w-4" />
         </button>
+        <button
+          onClick={() => setSectionConfirmOpen(true)}
+          className="ml-2 whitespace-nowrap rounded-sm bg-[#2d89ef] px-3 py-1 text-[11px] font-bold uppercase text-white hover:bg-[#1f6fc9]"
+        >
+          Submit Section
+        </button>
       </div>
+
+      {/* Rendered inside the fullscreen element; window.confirm would exit fullscreen. */}
+      <AlertDialog open={sectionConfirmOpen} onOpenChange={setSectionConfirmOpen}>
+        <AlertDialogContent
+          container={elem.current ?? undefined}
+          className="border-gray-300 bg-white text-gray-900"
+        >
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-gray-900">Submit this section?</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-600">
+              You cannot return to this section once submitted.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-gray-300 bg-white text-gray-800 hover:bg-gray-50">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={advanceSection} className="bg-[#2d89ef] text-white hover:bg-[#1f6fc9]">
+              Submit Section
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* Main layout: question area + right sidebar */}
       <div className="flex min-h-0 flex-1">
@@ -748,7 +789,7 @@ function QuestionPalette({
   currentSubject: string;
   onSelect: (idx: number) => void;
 }) {
-  // Show numbers for the current subject's block only — matches VITEEE UX
+  // Show numbers for the current subject's block only - matches VITEEE UX
   // where each section has its own palette.
   const items = questions
     .map((q, idx) => ({ q, idx }))
@@ -830,7 +871,7 @@ function InstructionsContent() {
     <div className="space-y-4 text-sm text-gray-700">
       <div className="font-semibold text-gray-900">General Instructions:</div>
       <ol className="list-decimal space-y-2 pl-5">
-        <li>Total duration of examination is 150 minutes.</li>
+        <li>Total duration of examination is 120 minutes. Each section has a fixed time limit (Mathematics 50, Physics 30, Chemistry 30, Aptitude &amp; English 10 minutes); when a section's time ends you move to the next section and cannot return.</li>
         <li>
           The clock will be set at the server. The countdown timer in the top
           right corner of the screen will display the remaining time available
@@ -838,7 +879,7 @@ function InstructionsContent() {
           examination will end by itself.
         </li>
         <li>This is a implementation of the actual VITEEE CBT UI to give you a feel of the actual test.</li>
-        <li>For any kind of issues with the platform, contact us thorugh the feedback form or via our email vitranks@malabarmatrix.site</li>
+        <li>For any kind of issues with the platform, contact us thorugh the feedback form or via our email vitranks@malabarmatrix.in</li>
         <li>The Question Palette on the right shows the status of each question:</li>
       </ol>
       <ul className="space-y-2 pl-2 text-xs">
