@@ -18,7 +18,7 @@ function Hero() {
   return (
     <section className="hero-mesh relative isolate w-full">
       <div className="container mx-auto px-4">
-        <div className="mx-auto flex max-w-4xl flex-col items-center gap-7 pb-20 pt-20 text-center md:pb-28 md:pt-28">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-7 pb-14 pt-12 text-center md:pb-28 md:pt-28">
           <motion.div {...rise(0)}>
           </motion.div>
 
@@ -38,11 +38,11 @@ function Hero() {
             college predictor, and a live leaderboard. No signup, no paywall.
           </motion.p>
 
-          <motion.div {...rise(0.18)} className="flex flex-col items-center gap-3 sm:flex-row">
-            <Button size="lg" asChild>
+          <motion.div {...rise(0.18)} className="flex w-full max-w-xs flex-col items-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
+            <Button size="lg" asChild className="w-full sm:w-auto">
               <Link href="/mocktest">Take a mock test</Link>
             </Button>
-            <Button size="lg" variant="secondary" asChild>
+            <Button size="lg" variant="secondary" asChild className="w-full sm:w-auto">
               <Link href="/ranks">Predict your rank</Link>
             </Button>
             <Button size="lg" variant="link" asChild className="text-foreground">
@@ -63,9 +63,9 @@ function Hero() {
                 <div key={s.key} style={{ flexGrow: s.minutes, flexBasis: 0 }} className="h-2 rounded-full bg-primary" />
               ))}
             </div>
-            <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4" aria-label="Sections of the VITEEE 2027 paper">
+            <ul className="mt-4 grid grid-cols-1 divide-y divide-border sm:grid-cols-4 sm:gap-x-4 sm:divide-y-0" aria-label="Sections of the VITEEE 2027 paper">
               {SECTIONS.map((s) => (
-                <li key={s.key}>
+                <li key={s.key} className="flex items-baseline justify-between gap-3 py-2.5 sm:block sm:py-0">
                   <p className="text-sm font-medium">{s.label}</p>
                   <p className="text-xs text-muted-foreground">
                     {s.questions} questions &middot; {s.minutes} min

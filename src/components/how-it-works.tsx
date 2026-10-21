@@ -50,7 +50,7 @@ export function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="relative py-24 md:py-32 overflow-hidden"
+      className="relative py-14 md:py-32 overflow-hidden"
     >
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-60 dark:opacity-40">
         <div className="absolute left-[-10%] top-1/3 h-[28rem] w-[28rem] rounded-full bg-coral/10 blur-3xl" />
@@ -58,7 +58,7 @@ export function HowItWorks() {
       </div>
 
       <div className="container mx-auto px-4">
-        <div className="mx-auto mb-20 max-w-3xl text-center">
+        <div className="mx-auto mb-10 max-w-3xl text-center md:mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -90,14 +90,14 @@ export function HowItWorks() {
             />
           </div>
 
-          <div className="space-y-16 md:space-y-28">
+          <div className="space-y-12 md:space-y-28">
             {steps.map((step, i) => (
               <StepRow key={step.index} step={step} flip={i % 2 === 1} />
             ))}
           </div>
         </div>
 
-        <div className="mt-20 flex justify-center">
+        <div className="mt-12 flex justify-center md:mt-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -138,7 +138,7 @@ function StepRow({
         </div>
       </div>
 
-      <div className={`pl-14 md:pl-0 ${flip ? "md:order-2 md:pl-16 md:text-left" : "md:pr-16 md:text-right"}`}>
+      <div className={`md:pl-0 ${flip ? "md:order-2 md:pl-16 md:text-left" : "md:pr-16 md:text-right"}`}>
         <p className="mb-2 text-sm font-medium text-coral">
           Step {Number(step.index)} · {step.kicker}
         </p>
@@ -156,12 +156,12 @@ function StepRow({
         </div>
       </div>
 
-      <div className={`pl-14 md:pl-0 ${flip ? "md:order-1 md:pr-16" : "md:pl-16"}`}>
+      <div className={`md:pl-0 ${flip ? "md:order-1 md:pr-16" : "md:pl-16"}`}>
         <motion.div
           whileHover={{ y: -6, rotateX: 2, rotateY: flip ? -2 : 2 }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
           style={{ transformStyle: "preserve-3d" }}
-          className="group relative aspect-[4/3] overflow-hidden rounded-3xl border border-border bg-card shadow-lg"
+          className="group relative aspect-[16/9] overflow-hidden rounded-3xl md:aspect-[4/3] border border-border bg-card shadow-lg"
         >
           <div
             className={`absolute inset-0 bg-gradient-to-br ${step.gradient}`}
