@@ -369,14 +369,28 @@ const QUOTES = [
   { text: 'The future depends on what you do today.', by: 'Mahatma Gandhi' },
 ];
 
+// Shuffled once per page load (not per mount) so the quote doesn't reset when the loading step changes.
+let shuffledQuotes: typeof QUOTES | null = null;
+function getShuffledQuotes() {
+  if (!shuffledQuotes) {
+    shuffledQuotes = [...QUOTES];
+    for (let k = shuffledQuotes.length - 1; k > 0; k--) {
+      const j = Math.floor(Math.random() * (k + 1));
+      [shuffledQuotes[k], shuffledQuotes[j]] = [shuffledQuotes[j], shuffledQuotes[k]];
+    }
+  }
+  return shuffledQuotes;
+}
+
 function RotatingQuote() {
   const [i, setI] = useState(0);
+  const quotes = getShuffledQuotes();
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const id = setInterval(() => setI((n) => (n + 1) % QUOTES.length), 6000);
+    const id = setInterval(() => setI((n) => (n + 1) % quotes.length), 6000);
     return () => clearInterval(id);
-  }, []);
-  const q = QUOTES[i];
+  }, [quotes.length]);
+  const q = quotes[i];
   const image = PORTRAITS[q.by];
   return (
     <figure
