@@ -10,16 +10,7 @@ import { motion } from 'framer-motion';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -45,6 +36,7 @@ import {
   Sparkles,
   Mail,
   ChevronRight,
+  Laptop,
 } from 'lucide-react';
 import type { PredefinedMockTestSummary } from '@/lib/types';
 import { AdSlot } from '@/components/ad-slot';
@@ -176,18 +168,7 @@ function MockTestSetupContent() {
     },
   ];
 
-  // Phones are below the md breakpoint; tablets and laptops start straight away.
-  const [phoneWarningFor, setPhoneWarningFor] = useState<z.infer<typeof FormSchema> | null>(null);
-
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    if (window.innerWidth < 768) {
-      setPhoneWarningFor(data);
-      return;
-    }
-    startTest(data);
-  }
-
-  async function startTest(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsSubmitting(true);
 
     fetch('/api/analytics/mocktest-count', {
@@ -625,29 +606,7 @@ function MockTestSetupContent() {
           <AdSlot />
         </div>
       </main>
-      <AlertDialog open={phoneWarningFor !== null} onOpenChange={(open) => !open && setPhoneWarningFor(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Better on a tablet or laptop</AlertDialogTitle>
-            <AlertDialogDescription>
-              The exam has a question palette, per-section timers and full-size question images, which are hard
-              to navigate on a phone screen. For a realistic attempt, use a tablet or laptop.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Go back</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => {
-                const data = phoneWarningFor;
-                setPhoneWarningFor(null);
-                if (data) startTest(data);
-              }}
-            >
-              Continue on phone
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <PhoneNotice />
       <Footer />
     </div>
   );
@@ -658,5 +617,48 @@ export default function MockTestSetupPage() {
     <Suspense>
       <MockTestSetupContent />
     </Suspense>
+  );
+}
+
+// Shown once per session when the page opens on a phone (below the md breakpoint).
+function PhoneNotice() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    try {
+      if (window.innerWidth < 768 && !sessionStorage.getItem('phoneNoticeSeen')) setOpen(true);
+    } catch {
+      // sessionStorage unavailable: skip the notice
+    }
+  }, []);
+
+  const close = () => {
+    try {
+      sessionStorage.setItem('phoneNoticeSeen', '1');
+    } catch {
+      // ignore
+    }
+    setOpen(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={(o) => !o && close()}>
+      <DialogContent className="w-[calc(100%-2rem)] max-w-sm rounded-3xl p-6 text-center">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-secondary" aria-hidden="true">
+          <Laptop className="h-6 w-6 text-coral" />
+        </div>
+        <DialogHeader className="items-center text-center sm:text-center">
+          <DialogTitle className="text-xl">Best on a tablet or laptop</DialogTitle>
+          <DialogDescription className="text-sm leading-relaxed">
+            The exam uses a question palette, per-section timers and full-size question images. They are
+            hard to navigate on a phone, so a larger screen gives you a more realistic attempt.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="sm:justify-center">
+          <Button onClick={close} className="w-full">
+            Continue on phone
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
