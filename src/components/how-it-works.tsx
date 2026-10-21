@@ -2,8 +2,9 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Target, BookOpenCheck, TrendingUp, ArrowRight, Trophy, Timer } from 'lucide-react';
+import { Target, BookOpenCheck, TrendingUp, Timer } from 'lucide-react';
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const steps = [
   {
@@ -103,14 +104,9 @@ export function HowItWorks() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7 }}
           >
-            <Link
-              href="/mocktest"
-              className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-medium shadow-sm transition hover:bg-muted"
-            >
-              <Trophy className="h-4 w-4 text-coral" />
-              Start your first mock - it&apos;s free
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            <Button size="lg" asChild>
+              <Link href="/mocktest">Start your first mock - it&apos;s free</Link>
+            </Button>
           </motion.div>
         </div>
       </div>

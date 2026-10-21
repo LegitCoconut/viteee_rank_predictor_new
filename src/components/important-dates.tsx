@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { timelineEvents } from '@/lib/data/timeline-data';
-import { CalendarCheck, Sparkles } from 'lucide-react';
+import { CalendarCheck } from 'lucide-react';
 
 export function ImportantDates() {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -108,11 +108,9 @@ export function ImportantDates() {
           transition={{ duration: 0.6 }}
           className="mt-16 flex justify-center"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-2 text-sm text-muted-foreground shadow-sm backdrop-blur">
-            <Sparkles className="h-3.5 w-3.5 text-coral" />
-            Dates are indicative - refer to the official VIT portal for the
-            final word.
-          </div>
+          <p className="max-w-md text-center text-sm text-muted-foreground">
+            Dates are indicative. Refer to the official VIT portal for the final word.
+          </p>
         </motion.div>
       </div>
     </section>
