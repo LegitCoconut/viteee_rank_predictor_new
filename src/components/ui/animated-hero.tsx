@@ -152,7 +152,7 @@ function Hero() {
               <span className="invisible">{rotatingWords[0]}</span>
             </span>
             <br />
-            <span className="text-white/95">for VITEEE 2026.</span>
+            <span className="text-white/95">for VITEEE 2027.</span>
           </motion.h1>
 
           <motion.p
@@ -161,8 +161,8 @@ function Hero() {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.25 }}
             className="max-w-2xl text-balance text-base md:text-xl leading-relaxed text-white/70"
           >
-            Free VITEEE 2026 mock tests, a VIT rank &amp; college predictor, and
-            a live leaderboard — all on one site, no signup, no paywall. Sharpen
+            Free VITEEE 2027 mock tests, a VIT rank &amp; college predictor, and
+            a live leaderboard - all on one site, no signup, no paywall. Sharpen
             your score the way toppers do, one honest attempt at a time.
           </motion.p>
 

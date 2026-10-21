@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [
+      { protocol: 'https', hostname: 'malabarmatrix.in', pathname: '/**' },
       {
         protocol: 'https',
         hostname: 'placehold.co',

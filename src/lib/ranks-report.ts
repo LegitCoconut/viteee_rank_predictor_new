@@ -128,7 +128,7 @@ export async function generateReport(data: ReportInput): Promise<void> {
     align: 'center',
   });
 
-  // "Recreate this report" button under the QR — clickable link
+  // "Recreate this report" button under the QR - clickable link
   if (data.shareUrl) {
     const btnW = qrSize;
     const btnH = 7.5;
@@ -242,7 +242,7 @@ export async function generateReport(data: ReportInput): Promise<void> {
     doc.text('No matches for the selected preferences.', margin, y + 8);
   }
 
-  // Credits block — og image + clickable links. Lives right after the table,
+  // Credits block - og image + clickable links. Lives right after the table,
   // and gets its own page if it would collide with the page footer.
   const lastY =
     (doc as unknown as { lastAutoTable?: { finalY?: number } }).lastAutoTable
@@ -273,13 +273,13 @@ export async function generateReport(data: ReportInput): Promise<void> {
   doc.setFontSize(8.5);
   doc.setTextColor(120, 120, 130);
   doc.text(
-    'Free mock tests, syllabus, and rank tools — no signup, no paywall.',
+    'Free mock tests, syllabus, and rank tools - no signup, no paywall.',
     margin,
     cy,
   );
   cy += 6;
 
-  // OG image — centered
+  // OG image - centered
   if (ogImage) {
     const imgX = (pageW - imgW) / 2;
     try {
@@ -292,7 +292,7 @@ export async function generateReport(data: ReportInput): Promise<void> {
     cy += imgH + 8;
   }
 
-  // Links row — three cells, evenly spaced
+  // Links row - three cells, evenly spaced
   const links: { label: string; value: string; url: string }[] = [
     { label: 'Website', value: 'ranks.vhome.co.in', url: SITE_URL },
     { label: 'Alternate', value: 'viteee.malabarmatrix.in', url: NEW_SITE_URL},
@@ -336,7 +336,7 @@ export async function generateReport(data: ReportInput): Promise<void> {
     doc.setFontSize(7.5);
     doc.setTextColor(150, 150, 160);
     doc.text(
-      'Unofficial — scraped public data, not from VIT. For understanding only.',
+      'Unofficial - scraped public data, not from VIT. For understanding only.',
       margin,
       pageH - 7,
     );

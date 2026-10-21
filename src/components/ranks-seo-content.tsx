@@ -27,7 +27,7 @@ const STEPS = [
     n: '01',
     title: 'Enter your VITEEE rank',
     body:
-      'Type the rank you received (or expect to receive) on the VITEEE 2026 scorecard. Valid ranks range from 1 to 2,00,000.',
+      'Type the rank you received (or expect to receive) on the VITEEE 2027 scorecard. Valid ranks range from 1 to 2,00,000.',
   },
   {
     n: '02',
@@ -39,7 +39,7 @@ const STEPS = [
     n: '03',
     title: 'Set your preferences',
     body:
-      'Filter by branch family (CS, Electronics, Mechanical, Core), minimum fee category (1 to 5), and the VIT campuses you actually care about — Vellore, Chennai, AP or Bhopal.',
+      'Filter by branch family (CS, Electronics, Mechanical, Core), minimum fee category (1 to 5), and the VIT campuses you actually care about - Vellore, Chennai, AP or Bhopal.',
   },
   {
     n: '04',
@@ -95,10 +95,10 @@ const CAMPUSES = [
 const FAQ: { q: string; a: string }[] = [
   {
     q: 'What is the VITEEE Rank Predictor?',
-    a: 'It is a free tool that takes your VITEEE rank and predicts which VIT campus (Vellore, Chennai, AP, Bhopal), B.Tech branch, and fee category you can realistically secure. The predictions use publicly scraped 2025 cutoff data as the reference base — not official VIT figures.',
+    a: 'It is a free tool that takes your VITEEE rank and predicts which VIT campus (Vellore, Chennai, AP, Bhopal), B.Tech branch, and fee category you can realistically secure. The predictions use publicly scraped 2025 cutoff data as the reference base - not official VIT figures.',
   },
   {
-    q: 'How accurate is the VITEEE 2026 rank predictor?',
+    q: 'How accurate is the VITEEE 2027 rank predictor?',
     a: 'It is as accurate as the 2025 data allows. Cutoffs change every year based on seat availability, demand and the equi-percentile rank list, so treat every prediction as an informed estimate. Cutoffs we mark with a "New" badge are interpolated from sibling courses and are explicitly approximate.',
   },
   {
@@ -107,14 +107,14 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'What is the difference between VIT rank and fee category?',
-    a: 'Rank is your position on the VITEEE merit list. Category is a fee tier (1 to 5) — Category 1 is the lowest tuition (about Rs.1.73L per year) and Category 5 is the highest (about Rs.3.95L per year). The same branch usually opens across all five categories at different closing ranks. Lower-numbered categories are more competitive because they cost less.',
+    a: 'Rank is your position on the VITEEE merit list. Category is a fee tier (1 to 5) - Category 1 is the lowest tuition (about Rs.1.73L per year) and Category 5 is the highest (about Rs.3.95L per year). The same branch usually opens across all five categories at different closing ranks. Lower-numbered categories are more competitive because they cost less.',
   },
   {
     q: 'How are VITEEE ranks generated?',
-    a: 'VITEEE 2025 used equi-percentile normalisation — every raw mark is converted to a percentile, and the rank list is built from those percentiles. As a result, two students with the same raw score can land on different ranks depending on the session they wrote, so any marks-to-rank table on the internet (including ours) is an estimate.',
+    a: 'VITEEE 2025 used equi-percentile normalisation - every raw mark is converted to a percentile, and the rank list is built from those percentiles. As a result, two students with the same raw score can land on different ranks depending on the session they wrote, so any marks-to-rank table on the internet (including ours) is an estimate.',
   },
   {
-    q: 'When are the official VIT 2026 cutoffs released?',
+    q: 'When are the official VIT 2027 cutoffs released?',
     a: 'Official campus-wise cutoffs are published by VIT after counselling rounds complete. Until then, this predictor uses the most recent (2025) closing ranks as the reference base. We update the dataset whenever VIT publishes new programme lists or revised cutoffs.',
   },
   {
@@ -123,11 +123,11 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Is this VIT rank predictor really free?',
-    a: 'Yes — no signup, no paywall, no ads on the predictor itself. It is built and maintained by students at Malabar Matrix for VITEEE aspirants. The same goes for the VITEEE mock tests on the site.',
+    a: 'Yes - no signup, no paywall, no ads on the predictor itself. It is built and maintained by students at Malabar Matrix for VITEEE aspirants. The same goes for the VITEEE mock tests on the site.',
   },
   {
     q: 'Can I share my counselling list with someone?',
-    a: 'Every change you make — rank, filters, even custom row order — is encoded into the URL. Copy the link or download the PDF: both contain a QR code that regenerates the exact same view when scanned. Useful for sharing with parents, mentors or seniors.',
+    a: 'Every change you make - rank, filters, even custom row order - is encoded into the URL. Copy the link or download the PDF: both contain a QR code that regenerates the exact same view when scanned. Useful for sharing with parents, mentors or seniors.',
   },
 ];
 
@@ -168,7 +168,7 @@ function rankBandAnswer(rank: number): string {
     `${CAMPUS_SHORT[r.course.campus]} ${r.course.shortName} Cat ${r.cat} (cutoff ${r.cr.toLocaleString('en-IN')})`;
   const securedLine = secured.length
     ? `Closest secured fits from 2025 data: ${secured.map(fmt).join(', ')}.`
-    : 'No Category 1 secures at this rank — try higher fee categories.';
+    : 'No Category 1 secures at this rank - try higher fee categories.';
   const reachLine = reach.length ? ` Reach picks: ${reach.map(fmt).join(', ')}.` : '';
   return `${eligibilityNote} ${securedLine}${reachLine}`;
 }
@@ -203,16 +203,16 @@ export function RanksSeoContent() {
           <div>
             <Eyebrow icon={Compass}>About this tool</Eyebrow>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
-              Free VITEEE 2026 rank &amp;{' '}
+              Free VITEEE 2027 rank &amp;{' '}
               <span className="font-display italic text-coral">college predictor</span>
             </h2>
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
               VIT Ranks is a free <strong className="text-foreground">VITEEE rank predictor</strong>{' '}
-              and <strong className="text-foreground">VIT college predictor</strong> for 2026
+              and <strong className="text-foreground">VIT college predictor</strong> for 2027
               admissions. Enter the rank you received on your VITEEE scorecard and the tool maps
               it to every B.Tech programme, fee category and campus you can realistically secure
               across <strong className="text-foreground">VIT Vellore, VIT Chennai, VIT AP</strong>{' '}
-              and <strong className="text-foreground">VIT Bhopal</strong> — based on publicly
+              and <strong className="text-foreground">VIT Bhopal</strong> - based on publicly
               available 2025 closing ranks.
             </p>
             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
@@ -252,7 +252,7 @@ export function RanksSeoContent() {
               Which VIT campus can your VITEEE rank get?
             </h2>
             <p className="mt-4 max-w-3xl text-base text-muted-foreground">
-              All four VIT campuses admit B.Tech students through VITEEE 2026, but the cutoff
+              All four VIT campuses admit B.Tech students through VITEEE 2027, but the cutoff
               ranges differ sharply. Ranks up to 1,00,000 are eligible for all four campuses;
               above that, only VIT AP and VIT Bhopal admit students. Here is the 2025 snapshot.
             </p>
@@ -282,21 +282,21 @@ export function RanksSeoContent() {
               <p className="mt-5 text-base leading-relaxed text-muted-foreground">
                 VIT&apos;s &ldquo;category&rdquo; is a <strong className="text-foreground">fee
                 tier</strong>, not a reservation slot. Every branch opens across five categories
-                with the same syllabus and degree — the only thing that changes is the annual
+                with the same syllabus and degree - the only thing that changes is the annual
                 tuition and the closing rank.
               </p>
               <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-mint" />
                   <span>
-                    <strong className="text-foreground">Category 1</strong> — lowest tuition
+                    <strong className="text-foreground">Category 1</strong> - lowest tuition
                     (~₹1.73L/year), most competitive cutoffs.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-mint" />
                   <span>
-                    <strong className="text-foreground">Category 5</strong> — highest tuition
+                    <strong className="text-foreground">Category 5</strong> - highest tuition
                     (~₹3.95L/year), highest accepted ranks.
                   </span>
                 </li>
@@ -335,7 +335,7 @@ export function RanksSeoContent() {
           <div>
             <Eyebrow icon={HelpCircle}>Frequently asked</Eyebrow>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
-              VITEEE 2026 rank predictor — FAQ
+              VITEEE 2027 rank predictor - FAQ
             </h2>
             <div className="mt-8 space-y-3">
               {FAQ.map((item, i) => (
@@ -359,7 +359,7 @@ export function RanksSeoContent() {
             </div>
           </div>
 
-          {/* Rank-band specific answers — computed from COURSE_DATA so each
+          {/* Rank-band specific answers - computed from COURSE_DATA so each
               "What can I get with rank N" query has a literal answer in HTML. */}
           <div>
             <Eyebrow icon={Target}>Rank-band specifics</Eyebrow>
@@ -368,7 +368,7 @@ export function RanksSeoContent() {
             </h2>
             <p className="mt-3 max-w-2xl text-sm text-muted-foreground md:text-base">
               Quick reference answers computed off the 2025 dataset. For your exact
-              rank, use the predictor above — these are the most-searched bands.
+              rank, use the predictor above - these are the most-searched bands.
             </p>
             <div className="mt-8 space-y-3">
               {RANK_FAQ.map((item, i) => (
@@ -407,14 +407,14 @@ export function RanksSeoContent() {
                 href="/ranks/info"
                 icon={BarChart3}
                 title="The data behind it"
-                body="Full 2025 cutoff tables, marks-to-rank ladder, counselling eligibility and exam pattern — laid out section by section."
+                body="Full 2025 cutoff tables, marks-to-rank ladder, counselling eligibility and exam pattern - laid out section by section."
                 cta="Read the data"
               />
               <NavCard
                 href="/mocktest"
                 icon={GraduationCap}
                 title="Free VITEEE mock tests"
-                body="Full-length 2026-pattern mock tests with instant analytics and a live leaderboard. No signup."
+                body="Full-length 2027-pattern mock tests with instant analytics and a live leaderboard. No signup."
                 cta="Take a mock"
               />
               <NavCard

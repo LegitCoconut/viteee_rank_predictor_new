@@ -42,7 +42,7 @@ interface StoredResult {
   predefinedName?: string;
 }
 
-// VITEEE-style marking — mirror of results/page.tsx so the chip stays honest.
+// VITEEE-style marking - mirror of results/page.tsx so the chip stays honest.
 const MARK_CORRECT = 4;
 const MARK_WRONG = -1;
 
@@ -493,7 +493,7 @@ function QuestionReviewCard({
                 chosen === null ? 'text-muted-foreground' : style.accent
               }`}
             >
-              {chosen ?? '—'}
+              {chosen ?? '-'}
             </p>
           </div>
           <div className="rounded-xl border border-border/60 bg-background/60 px-4 py-3">

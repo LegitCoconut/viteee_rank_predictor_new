@@ -7,7 +7,7 @@ A comprehensive platform designed by students for students to prepare for the VI
 -   **Rank Predictor**: Estimate your potential rank and eligible colleges based on your expected score.
 -   **Mock Tests**: Take full-length, timed mock tests that simulate the actual VITEEE exam pattern.
 -   **Detailed Analytics**: Track your performance with detailed subject-wise analysis and score history.
--   **Syllabus & Pattern**: Access the complete syllabus and exam pattern for VITEEE 2026.
+-   **Syllabus & Pattern**: Access the complete syllabus and exam pattern for VITEEE 2027.
 -   **Mobile Optimized**: Fully responsive design ensuring a seamless experience on all devices.
 -   **No Signup Required**: Instant access to mock tests without the hassle of registration.
 
@@ -57,12 +57,10 @@ Upon submission, the user's answers are compared against the correct options sto
     MONGODB_DB=your_database_name
     UPSTASH_REDIS_REST_URL=your_redis_url
     UPSTASH_REDIS_REST_TOKEN=your_redis_token
-    R2_ACCOUNT_ID=your_r2_account_id
-    R2_ACCESS_KEY_ID=your_r2_access_key
-    R2_SECRET_ACCESS_KEY=your_r2_secret_key
-    R2_BUCKET_NAME=your_bucket_name
-    NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY=your_turnstile_key
-    TURNSTILE_SECRET_KEY=your_turnstile_secret
+    NEXT_PUBLIC_R2_PUBLIC_URL=your_r2_public_url
+    NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY=your_turnstile_site_key
+    CLOUDFLARE_TURNSTILE_SECRET_KEY=your_turnstile_secret
+    TURNSTILE_HOSTNAMES=yourdomain.com,www.yourdomain.com
     ```
 4.  Run the development server:
     ```bash

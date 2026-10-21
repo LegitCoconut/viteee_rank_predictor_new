@@ -106,7 +106,7 @@ export function Testimonials() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground"
           >
-            Straight from the feedback inbox — unedited and (mostly)
+            Straight from the feedback inbox - unedited and (mostly)
             nicer to us than we deserve.
           </motion.p>
         </div>

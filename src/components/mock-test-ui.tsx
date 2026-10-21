@@ -210,7 +210,7 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
         try {
           writeSnapshots(currentMap);
         } catch (quotaErr) {
-          // Likely QuotaExceededError — drop snapshots whose examId is no
+          // Likely QuotaExceededError - drop snapshots whose examId is no
           // longer in mockTestResults (orphans), then retry once.
           const liveIds = new Set<string>(
             (pastResults as Array<{ examId?: string }>)

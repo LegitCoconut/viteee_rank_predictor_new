@@ -51,7 +51,7 @@ export function RanksAppJsonLd() {
         },
         creator: { '@id': `${SITE}#org` },
         about: [
-          'VITEEE 2026',
+          'VITEEE 2027',
           'VITEEE rank predictor',
           'VIT college predictor',
           'VIT Vellore admission',
@@ -84,7 +84,7 @@ export function RanksInfoJsonLd() {
   // quote individual programmes, with one CourseInstance per fee category.
   const courseEntries = COURSE_DATA.map((c) => ({
     '@type': 'Course',
-    name: `${c.course} — ${CAMPUS_LABELS[c.campus]}`,
+    name: `${c.course} - ${CAMPUS_LABELS[c.campus]}`,
     description: `${c.course} at ${CAMPUS_LABELS[c.campus]}. 2025 closing ranks across five VIT fee categories: Cat 1 ${c.categories[0]}, Cat 2 ${c.categories[1]}, Cat 3 ${c.categories[2]}, Cat 4 ${c.categories[3]}, Cat 5 ${c.categories[4]}.`,
     provider: {
       '@type': 'CollegeOrUniversity',

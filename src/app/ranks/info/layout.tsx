@@ -4,11 +4,11 @@ import { RanksInfoJsonLd } from '@/components/ranks-jsonld';
 export const metadata: Metadata = {
   title: 'VITEEE 2025 Cutoffs, Marks vs Rank & Counselling Data',
   description:
-    'Complete VITEEE 2025 cutoff data — campus-wise Category 1 to 5 closing ranks for every B.Tech programme at VIT Vellore, Chennai, AP and Bhopal. Marks-to-rank ladder, counselling eligibility rule, exam pattern, and 2026 rank-band outlook.',
+    'Complete VITEEE 2025 cutoff data - campus-wise Category 1 to 5 closing ranks for every B.Tech programme at VIT Vellore, Chennai, AP and Bhopal. Marks-to-rank ladder, counselling eligibility rule, exam pattern, and 2027 rank-band outlook.',
   keywords: [
     // Cutoff / data
-    'viteee cutoff', 'viteee 2025 cutoff', 'viteee cutoff 2026',
-    'vit cutoff', 'vit cutoff 2025', 'vit cutoff 2026',
+    'viteee cutoff', 'viteee 2025 cutoff', 'viteee cutoff 2027',
+    'vit cutoff', 'vit cutoff 2025', 'vit cutoff 2027',
     'viteee category cutoff', 'vit category cutoff',
     'vit vellore cutoff', 'vit chennai cutoff',
     'vit ap cutoff', 'vit bhopal cutoff',
@@ -48,14 +48,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'VITEEE 2025 Cutoffs, Marks vs Rank & Counselling Data',
     description:
-      'Campus-wise VITEEE 2025 cutoffs, marks-to-rank ladder, counselling eligibility, and 2026 rank-band outlook — the public data behind the predictor.',
+      'Campus-wise VITEEE 2025 cutoffs, marks-to-rank ladder, counselling eligibility, and 2027 rank-band outlook - the public data behind the predictor.',
     url: '/ranks/info',
     images: [
       {
         url: '/hompage.png',
         width: 1200,
         height: 630,
-        alt: 'VITEEE 2025 Cutoffs & Marks vs Rank — VIT RANKS',
+        alt: 'VITEEE 2025 Cutoffs & Marks vs Rank - VIT RANKS',
       },
     ],
   },

@@ -20,7 +20,7 @@ const steps = [
     kicker: "Pick your mode",
     title: "Choose a mock test.",
     body:
-      "Grab a curated paper or spin up a fresh randomised test — MPCEA stream, real VITEEE pattern, 100 questions. No signup, nothing to install.",
+      "Grab a curated paper or spin up a fresh randomised test - MPCEA stream, real VITEEE pattern, 100 questions. No signup, nothing to install.",
     stat: "Random or curated · 100 Qs",
     gradient: "from-coral/40 via-peach/30 to-transparent",
   },
@@ -94,7 +94,7 @@ export function HowItWorks() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="mt-4 text-lg text-muted-foreground"
           >
-            From a rough score estimate to a data-backed college prediction — in
+            From a rough score estimate to a data-backed college prediction - in
             the time it takes to pour a cup of chai.
           </motion.p>
         </div>
@@ -126,7 +126,7 @@ export function HowItWorks() {
               className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-medium shadow-sm transition hover:bg-muted"
             >
               <Trophy className="h-4 w-4 text-coral" />
-              Start your first mock — it&apos;s free
+              Start your first mock - it&apos;s free
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </motion.div>

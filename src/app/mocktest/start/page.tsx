@@ -198,7 +198,7 @@ export default function MockTestStartPage() {
               <h1 className="text-3xl font-headline font-semibold">Your test is ready.</h1>
               <p className="mt-2 text-muted-foreground">
                 Pick the interface you want for this test. You can change your
-                mind any time — your last choice is remembered.
+                mind any time - your last choice is remembered.
               </p>
             </div>
 
@@ -212,7 +212,7 @@ export default function MockTestStartPage() {
               />
               <UIPreviewCard
                 title="VITEEE-style"
-                subtitle="Mirrors the official VITEEE CBT interface — sections, palette, Mark-for-Review."
+                subtitle="Mirrors the official VITEEE CBT interface - sections, palette, Mark-for-Review."
                 imageSrc={`${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/images/vit-ui.webp`}
                 selected={examInterface === 'viteee'}
                 onClick={() => pickUI('viteee')}

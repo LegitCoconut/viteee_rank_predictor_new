@@ -49,7 +49,7 @@ type StoredResult = {
     predefinedName?: string;
 };
 
-// VITEEE-style marking scheme — mirrors mock-test-ui / results page.
+// VITEEE-style marking scheme - mirrors mock-test-ui / results page.
 const MARK_CORRECT = 4;
 const MARK_WRONG = -1;
 
@@ -95,7 +95,7 @@ export function PastResults() {
                 }
             }
         } catch {
-            // Stale snapshot map — not worth surfacing to the user.
+            // Stale snapshot map - not worth surfacing to the user.
         }
     };
 

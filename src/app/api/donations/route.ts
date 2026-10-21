@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { connectToDatabase } from '@/lib/db';
+import { verifyTurnstile } from '@/lib/turnstile';
 
 const DonationSchema = z.object({
   name: z.string().min(2).max(80),
@@ -10,26 +11,13 @@ const DonationSchema = z.object({
 });
 
 const MONGODB_DB = process.env.MONGODB_DB!;
-const CLOUDFLARE_TURNSTILE_SECRET_KEY =
-  process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY!;
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { name, email, amount, token } = DonationSchema.parse(body);
 
-    const verify = await fetch(
-      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `secret=${encodeURIComponent(
-          CLOUDFLARE_TURNSTILE_SECRET_KEY,
-        )}&response=${encodeURIComponent(token)}`,
-      },
-    );
-    const verifyData = await verify.json();
-    if (!verifyData.success) {
+    if (!(await verifyTurnstile(token, 'donation'))) {
       return NextResponse.json(
         { message: 'Invalid CAPTCHA token.' },
         { status: 400 },
@@ -46,7 +34,7 @@ export async function POST(req: NextRequest) {
       amount,
       currency: 'INR',
       status: 'claimed',
-      // Thank-you mail delivery tracking — flipped by qp-cropper script.
+      // Thank-you mail delivery tracking - flipped by qp-cropper script.
       mailSent: false,
       mailSentAt: null,
       createdAt: new Date(),
@@ -54,7 +42,7 @@ export async function POST(req: NextRequest) {
     const result = await collection.insertOne(doc);
 
     return NextResponse.json(
-      { message: 'Thanks — your donation record has been saved.', id: result.insertedId },
+      { message: 'Thanks - your donation record has been saved.', id: result.insertedId },
       { status: 201 },
     );
   } catch (error) {

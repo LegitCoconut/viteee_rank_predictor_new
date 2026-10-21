@@ -28,10 +28,10 @@ const surfaces: Surface[] = [
     eyebrow: "Default",
     title: "Modern",
     subtitle:
-      "Our own clean, dark take on the CBT — built for a laptop, a phone, whatever's in front of you.",
+      "Our own clean, dark take on the CBT - built for a laptop, a phone, whatever's in front of you.",
     imageSrc: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/images/ui-vitranks.webp`,
     imageAlt:
-      "VIT Ranks modern exam UI — dark theme, A/B/C/D buttons, per-subject palette",
+      "VIT Ranks modern exam UI - dark theme, A/B/C/D buttons, per-subject palette",
     features: [
       "Works on laptop, tablet, and phone",
       "Minimal chrome, maximum reading space",
@@ -47,7 +47,7 @@ const surfaces: Surface[] = [
       "Mirrors the official VITEEE CBT interface so you walk into test day with muscle memory already in place.",
     imageSrc: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/images/vit-ui.webp`,
     imageAlt:
-      "VITEEE-style CBT UI — section tabs, numbered palette, Save & Next",
+      "VITEEE-style CBT UI - section tabs, numbered palette, Save & Next",
     features: [
       "Section + subject tabs",
       "Mark for Review & Next, Clear Response, Save & Next",
@@ -240,7 +240,7 @@ export function DualUIShowcase() {
           >
             Practice in our modern interface, or switch to the VITEEE-faithful
             CBT for a realistic rehearsal. Same questions, same clock, same
-            scoring &mdash; you just pick the skin.
+            scoring - you just pick the skin.
           </motion.p>
         </div>
 
@@ -268,7 +268,7 @@ export function DualUIShowcase() {
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
           <p className="text-xs text-muted-foreground">
-            Your choice is remembered &mdash; pick once and it&rsquo;s the
+            Your choice is remembered - pick once and it&rsquo;s the
             default next time.
           </p>
         </motion.div>

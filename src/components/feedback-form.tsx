@@ -141,6 +141,7 @@ export function FeedbackForm() {
                     siteKey={
                       process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
                     }
+                    options={{ action: "feedback" }}
                     onSuccess={(token) => {
                       field.onChange(token);
                     }}

@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 
-// Block list shared across every UA — we never want /api or the live mocktest
+// Block list shared across every UA - we never want /api or the live mocktest
 // runtime page indexed, regardless of crawler.
 const DISALLOW = ['/api/', '/mocktest/start']
 
@@ -28,7 +28,7 @@ const AI_BOTS = [
     'Google-Extended',
     // Apple Intelligence
     'Applebot-Extended',
-    // Common Crawl — feeds virtually every open-source LLM training set
+    // Common Crawl - feeds virtually every open-source LLM training set
     'CCBot',
     // Meta AI
     'meta-externalagent',

@@ -290,7 +290,7 @@ export default function DonatePage() {
               className="mx-auto mt-6 max-w-2xl text-base text-white/70 md:text-lg"
             >
               VIT RANKS is free, ad-free, and always will be. If it helped you
-              study — and you can spare the price of a cup of chai — it keeps
+              study - and you can spare the price of a cup of chai - it keeps
               our servers humming and the next feature shipping.
             </motion.p>
 
@@ -359,7 +359,7 @@ export default function DonatePage() {
               </motion.div>
 
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <WhyCard index={0} icon={GraduationCap} title="Built by students" body="We know what the grind actually feels like — because we're in it." tone="coral" />
+                <WhyCard index={0} icon={GraduationCap} title="Built by students" body="We know what the grind actually feels like - because we're in it." tone="coral" />
                 <WhyCard index={1} icon={Users} title="Free, forever" body="No signup, no paywall, no upsell. The mock tests stay free." tone="mint" />
                 <WhyCard index={2} icon={ShieldCheck} title="No data games" body="Your attempts stay on your device. We never sell or trade data." tone="sky" />
                 <WhyCard index={3} icon={Rocket} title="More on the way" body="Next up: JEE, NEET, CUET tools. Your support accelerates us." tone="lavender" />
@@ -516,7 +516,7 @@ export default function DonatePage() {
                 </h3>
                 <p className="mt-1 text-xs text-muted-foreground">
                   {amount > 0
-                    ? 'GPay · PhonePe · Paytm · BHIM — any UPI app'
+                    ? 'GPay · PhonePe · Paytm · BHIM - any UPI app'
                     : 'Enter an amount above to reveal the QR code'}
                 </p>
 
@@ -653,6 +653,7 @@ export default function DonatePage() {
                         <div className="flex justify-center">
                           <Turnstile
                             siteKey={process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!}
+                            options={{ action: 'donation' }}
                             onSuccess={(t) => setToken(t)}
                           />
                         </div>
@@ -689,7 +690,7 @@ export default function DonatePage() {
                             <p className="mt-1 text-xs text-muted-foreground">
                               Your &#8377;{amount} donation is logged. We&rsquo;ll
                               reach out on {email.trim().toLowerCase()} if we need
-                              to verify anything. Seriously — thank you.
+                              to verify anything. Seriously - thank you.
                             </p>
                           </div>
                         </div>
@@ -705,7 +706,7 @@ export default function DonatePage() {
           <div className="mt-12 rounded-2xl border border-dashed border-border/60 bg-muted/10 p-6 text-center">
             <p className="text-sm text-muted-foreground">
               Can&rsquo;t donate right now? Totally fine. Share VIT RANKS with a
-              friend preparing for VITEEE — that helps us just as much.
+              friend preparing for VITEEE - that helps us just as much.
             </p>
           </div>
         </section>

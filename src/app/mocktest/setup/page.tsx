@@ -22,6 +22,7 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Turnstile } from '@marsidev/react-turnstile';
+import { SECTIONS, TOTAL_QUESTIONS, TOTAL_MINUTES } from '@/lib/exam-pattern';
 import {
   Info,
   User,
@@ -136,7 +137,7 @@ function MockTestSetupContent() {
     {
       icon: HelpCircle,
       title: '100 questions, VITEEE-weighted',
-      text: 'The question set mirrors the actual VITEEE paper weightage — Physics, Chemistry, Mathematics, Aptitude & English.',
+      text: 'The question set mirrors the actual VITEEE paper weightage - Physics, Chemistry, Mathematics, Aptitude & English.',
     },
     {
       icon: Clock,
@@ -156,12 +157,12 @@ function MockTestSetupContent() {
     {
       icon: ShieldCheck,
       title: 'One quick human check',
-      text: 'You\u2019ll complete a Cloudflare Turnstile verification to prevent bot abuse — it\u2019s invisible to you most of the time.',
+      text: 'You\u2019ll complete a Cloudflare Turnstile verification to prevent bot abuse - it\u2019s invisible to you most of the time.',
     },
     {
       icon: Server,
       title: 'Free-tier infrastructure',
-      text: 'This platform runs on free-tier servers to stay ad-free. First load may take a few extra seconds — thank you for your patience.',
+      text: 'This platform runs on free-tier servers to stay ad-free. First load may take a few extra seconds - thank you for your patience.',
     },
   ];
 
@@ -278,9 +279,37 @@ function MockTestSetupContent() {
                   Instructions
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Six quick things worth knowing.
+                  What&rsquo;s new for VITEEE 2027, plus six quick things worth knowing.
                 </p>
               </div>
+            </div>
+
+            <div className="mb-5 rounded-2xl border border-coral/30 bg-gradient-to-br from-coral/10 to-peach/10 p-5">
+              <p className="text-sm font-semibold tracking-tight">
+                New pattern for VITEEE 2027
+              </p>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-xs leading-relaxed text-muted-foreground">
+                <li>
+                  <strong className="text-foreground">{TOTAL_QUESTIONS} questions</strong> in{' '}
+                  <strong className="text-foreground">{TOTAL_MINUTES / 60} hours</strong>, split into four sections.
+                </li>
+                <li>
+                  <strong className="text-foreground">Each section has its own timer</strong>, so you can&rsquo;t
+                  carry unused time from one section to the next:
+                  <ul className="mt-1 list-[circle] space-y-0.5 pl-5">
+                    {SECTIONS.map((sec) => (
+                      <li key={sec.key}>
+                        {sec.label}: {sec.questions} questions, {sec.minutes} min
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+                <li>
+                  When a section&rsquo;s time ends, or you press{' '}
+                  <strong className="text-foreground">Submit Section</strong>, you move to the next one and{' '}
+                  <strong className="text-foreground">cannot return</strong> to the previous section.
+                </li>
+              </ul>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
@@ -317,10 +346,10 @@ function MockTestSetupContent() {
                 <span>
                   Broken question, a bug, or a feature idea? Write to{' '}
                   <a
-                    href="mailto:vitranks@malabarmatrix.site"
+                    href="mailto:vitranks@malabarmatrix.in"
                     className="font-medium text-foreground underline underline-offset-4 hover:text-coral"
                   >
-                    vitranks@malabarmatrix.site
+                    vitranks@malabarmatrix.in
                   </a>{' '}
                   or use the{' '}
                   <Link
@@ -329,7 +358,7 @@ function MockTestSetupContent() {
                   >
                     feedback form
                   </Link>
-                  . Built by VIT students, for VITEEE aspirants — please use it
+                  . Built by VIT students, for VITEEE aspirants - please use it
                   responsibly.
                 </span>
               </p>
@@ -347,7 +376,7 @@ function MockTestSetupContent() {
                   Your details
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Just a name and a stream — that&rsquo;s it.
+                  Just a name and a stream - that&rsquo;s it.
                 </p>
               </div>
             </div>

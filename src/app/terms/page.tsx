@@ -167,11 +167,11 @@ export default function TermsPage() {
                 prepare with confidence. For any queries, feedback, or concerns,
                 you can reach us at{' '}
                 <a
-                  href="mailto:vitranks@malabarmatrix.site"
+                  href="mailto:vitranks@malabarmatrix.in"
                   className="inline-flex items-center gap-1 text-coral underline underline-offset-4 transition-colors hover:text-coral/80"
                 >
                   <Mail className="h-3.5 w-3.5" />
-                  vitranks@malabarmatrix.site
+                  vitranks@malabarmatrix.in
                 </a>
                 .
               </p>
@@ -183,7 +183,7 @@ export default function TermsPage() {
                 <span className="font-medium text-foreground">
                   free and publicly available material on the internet
                 </span>{' '}
-                — including sample papers, previous-year question sets, and open
+                - including sample papers, previous-year question sets, and open
                 educational resources. We do not claim ownership of the
                 underlying question content. If you are a rights holder and
                 believe any content should be removed, please email us and we
@@ -201,7 +201,7 @@ export default function TermsPage() {
                 >
                   leaderboard
                 </Link>
-                . Please avoid entering sensitive information — you can use a
+                . Please avoid entering sensitive information - you can use a
                 nickname or initials if you prefer.
               </p>
             </Section>
@@ -224,7 +224,7 @@ export default function TermsPage() {
                 <span className="font-medium text-foreground">
                   entirely on your device
                 </span>{' '}
-                — we don&rsquo;t read it from our servers. Clearing your browser
+                - we don&rsquo;t read it from our servers. Clearing your browser
                 cache, switching devices, or using incognito mode will wipe your
                 local test history and you&rsquo;ll no longer be able to reopen
                 those attempts. You can also remove individual attempts (or all
@@ -243,15 +243,15 @@ export default function TermsPage() {
                 <span className="font-medium text-foreground">
                   only for promotional emails
                 </span>{' '}
-                from VIT RANKS — such as exam reminders, new mock tests, and
+                from VIT RANKS - such as exam reminders, new mock tests, and
                 platform announcements. We do not sell, rent, or share your
                 email with third parties. You can request removal at any time by
                 emailing{' '}
                 <a
-                  href="mailto:vitranks@malabarmatrix.site"
+                  href="mailto:vitranks@malabarmatrix.in"
                   className="text-lavender underline underline-offset-4 transition-colors hover:text-lavender/80"
                 >
-                  vitranks@malabarmatrix.site
+                  vitranks@malabarmatrix.in
                 </a>
                 .
               </p>
@@ -280,10 +280,10 @@ export default function TermsPage() {
               By using this platform, you agree to the terms outlined above.
               Questions? Write to us at{' '}
               <a
-                href="mailto:vitranks@malabarmatrix.site"
+                href="mailto:vitranks@malabarmatrix.in"
                 className="text-coral underline underline-offset-4 transition-colors hover:text-coral/80"
               >
-                vitranks@malabarmatrix.site
+                vitranks@malabarmatrix.in
               </a>
               .
             </p>

@@ -8,21 +8,21 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 export const metadata: Metadata = {
   metadataBase: new URL('https://ranks.vhome.co.in'),
   title: {
-    default: 'Free VITEEE Mock Tests 2026 | VIT RANKS',
+    default: 'Free VITEEE Mock Tests 2027 | VIT RANKS',
     template: '%s | VIT RANKS',
   },
   description:
-    'Free, full-length VITEEE 2026 mock tests with instant analytics, a live leaderboard, and the complete syllabus. No signup. No paywall. Built by students, for VITEEE aspirants.',
+    'Free, full-length VITEEE 2027 mock tests with instant analytics, a live leaderboard, and the complete syllabus. No signup. No paywall. Built by students, for VITEEE aspirants.',
   keywords: [
     // Registration & dates (highest volume)
-    'viteee registration', 'viteee registration 2026', 'viteee registration form',
-    'viteee registration last date', 'viteee registration last date 2026',
+    'viteee registration', 'viteee registration 2027', 'viteee registration form',
+    'viteee registration last date', 'viteee registration last date 2027',
     'viteee application', 'viteee form', 'viteee exam date',
-    'viteee exam date 2026', 'viteee date', 'viteee dates',
+    'viteee exam date 2027', 'viteee date', 'viteee dates',
     'vit exam date', 'vit exam registration',
 
     // Mock tests & practice
-    'viteee mock test', 'viteee mock tests', 'viteee mock test 2026',
+    'viteee mock test', 'viteee mock tests', 'viteee mock test 2027',
     'viteee free mock test', 'viteee practice test', 'viteee online practice test free',
     'viteee sample paper', 'viteee model paper', 'viteee question paper',
     'viteee test series', 'viteee exam simulator',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     'viteee previous year question papers', 'viteee pyq chapterwise pdf',
 
     // Syllabus & pattern
-    'viteee syllabus', 'viteee syllabus 2026', 'viteee exam pattern',
+    'viteee syllabus', 'viteee syllabus 2027', 'viteee exam pattern',
     'vit syllabus', 'does viteee have negative marking',
 
     // Slot booking & OTBS
@@ -47,11 +47,11 @@ export const metadata: Metadata = {
     'vit official website', 'vit.ac.in', 'vit ac in',
 
     // Admit card & results
-    'viteee admit card', 'viteee admit card 2026',
+    'viteee admit card', 'viteee admit card 2027',
 
     // Exam & institute
-    'viteee 2026', 'viteee exam', 'vit exam', 'vit entrance exam',
-    'vit entrance', 'vit entrance exam 2026', 'vit eee', 'vit',
+    'viteee 2027', 'viteee exam', 'vit exam', 'vit entrance exam',
+    'vit entrance', 'vit entrance exam 2027', 'vit eee', 'vit',
     'vitmee', 'vitmee mca', 'vitree',
     'vit vellore', 'vit university', 'vit college', 'vit form',
     'vellore institute of technology', 'vellore institute of technology vellore',
@@ -65,16 +65,16 @@ export const metadata: Metadata = {
     'vit category 1', 'vit category 2', 'vit c2',
 
     // Admissions / fees / counselling
-    'vit admission', 'vit admission 2026', 'vit b.tech admission',
+    'vit admission', 'vit admission 2027', 'vit b.tech admission',
     'vit b.tech', 'vit fees', 'vit b.tech fees',
-    'vit counselling', 'vit counselling 2026', 'viteee counselling',
-    'viteee counselling 2026', 'vit hostel', 'vit scholarship',
+    'vit counselling', 'vit counselling 2027', 'viteee counselling',
+    'viteee counselling 2027', 'vit hostel', 'vit scholarship',
 
     // Campus-specific admissions
     'vit vellore admission', 'vit chennai admission',
     'vit bhopal admission', 'vit ap admission',
-    'vit vellore admission 2026', 'vit chennai admission 2026',
-    'vit bhopal admission 2026', 'vit ap admission 2026',
+    'vit vellore admission 2027', 'vit chennai admission 2027',
+    'vit bhopal admission 2027', 'vit ap admission 2027',
   ],
   authors: [{ name: 'VIT RANKS' }],
   creator: 'VIT RANKS',
@@ -86,23 +86,23 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_IN',
     siteName: 'VIT RANKS',
-    title: 'Free VITEEE Mock Tests 2026 | VIT RANKS',
+    title: 'Free VITEEE Mock Tests 2027 | VIT RANKS',
     description:
-      'Full-length VITEEE 2026 mock tests with instant analytics, a live leaderboard, and the complete syllabus. Free, no signup.',
+      'Full-length VITEEE 2027 mock tests with instant analytics, a live leaderboard, and the complete syllabus. Free, no signup.',
     images: [
       {
         url: '/hompage.png',
         width: 1200,
         height: 630,
-        alt: 'VIT RANKS - Free VITEEE 2026 Mock Tests',
+        alt: 'VIT RANKS - Free VITEEE 2027 Mock Tests',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Free VITEEE Mock Tests 2026 | VIT RANKS',
+    title: 'Free VITEEE Mock Tests 2027 | VIT RANKS',
     description:
-      'Full-length VITEEE 2026 mock tests, live leaderboard, and syllabus. Free, no signup.',
+      'Full-length VITEEE 2027 mock tests, live leaderboard, and syllabus. Free, no signup.',
     images: ['/hompage.png'],
   },
   robots: {

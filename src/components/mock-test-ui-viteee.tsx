@@ -327,6 +327,8 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
     setAnswers((prev) => prev.map((a, i) => (i === next ? { ...a, visited: true } : a)));
   }, [currentSubject, subjectToFirstIndex, handleSubmit]);
 
+  const [sectionConfirmOpen, setSectionConfirmOpen] = useState(false);
+
   return (
     <div
       ref={elem}
@@ -457,14 +459,35 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
           <ChevronRight className="h-4 w-4" />
         </button>
         <button
-          onClick={() => {
-            if (window.confirm("Submit this section? You cannot return to it.")) advanceSection();
-          }}
+          onClick={() => setSectionConfirmOpen(true)}
           className="ml-2 whitespace-nowrap rounded-sm bg-[#2d89ef] px-3 py-1 text-[11px] font-bold uppercase text-white hover:bg-[#1f6fc9]"
         >
           Submit Section
         </button>
       </div>
+
+      {/* Rendered inside the fullscreen element; window.confirm would exit fullscreen. */}
+      <AlertDialog open={sectionConfirmOpen} onOpenChange={setSectionConfirmOpen}>
+        <AlertDialogContent
+          container={elem.current ?? undefined}
+          className="border-gray-300 bg-white text-gray-900"
+        >
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-gray-900">Submit this section?</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-600">
+              You cannot return to this section once submitted.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-gray-300 bg-white text-gray-800 hover:bg-gray-50">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={advanceSection} className="bg-[#2d89ef] text-white hover:bg-[#1f6fc9]">
+              Submit Section
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* Main layout: question area + right sidebar */}
       <div className="flex min-h-0 flex-1">
@@ -766,7 +789,7 @@ function QuestionPalette({
   currentSubject: string;
   onSelect: (idx: number) => void;
 }) {
-  // Show numbers for the current subject's block only — matches VITEEE UX
+  // Show numbers for the current subject's block only - matches VITEEE UX
   // where each section has its own palette.
   const items = questions
     .map((q, idx) => ({ q, idx }))
@@ -856,7 +879,7 @@ function InstructionsContent() {
           examination will end by itself.
         </li>
         <li>This is a implementation of the actual VITEEE CBT UI to give you a feel of the actual test.</li>
-        <li>For any kind of issues with the platform, contact us thorugh the feedback form or via our email vitranks@malabarmatrix.site</li>
+        <li>For any kind of issues with the platform, contact us thorugh the feedback form or via our email vitranks@malabarmatrix.in</li>
         <li>The Question Palette on the right shows the status of each question:</li>
       </ol>
       <ul className="space-y-2 pl-2 text-xs">

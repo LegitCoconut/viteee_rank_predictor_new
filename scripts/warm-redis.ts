@@ -35,7 +35,7 @@ async function main() {
         await mongo.connect();
         const db = mongo.db(mongoDb);
 
-        console.log('— Subject pools —');
+        console.log('- Subject pools -');
         for (const name of SUBJECT_COLLECTIONS) {
             const docs = await db
                 .collection(name)
@@ -52,7 +52,7 @@ async function main() {
             console.log(`  Cached ${pool.length} questions for "${name}"`);
         }
 
-        console.log('— Predefined mock tests —');
+        console.log('- Predefined mock tests -');
 
         // Seed the 5 slots + global stats doc if missing. Idempotent: $setOnInsert
         // means an already-active test is left alone.

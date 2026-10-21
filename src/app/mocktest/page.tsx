@@ -21,7 +21,6 @@ import {
 } from 'lucide-react';
 import type { PredefinedMockTestSummary } from '@/lib/types';
 import { SyllabusSection } from '@/components/syllabus-section';
-import { SyllabusDownloads } from '@/components/syllabus-downloads';
 import { MockTestJsonLd } from '@/components/json-ld';
 
 import Link from 'next/link';
@@ -168,7 +167,7 @@ export default function MockTestPage() {
               className="mx-auto mt-6 max-w-2xl text-balance text-base leading-relaxed text-white/70 md:text-xl"
             >
               Real exam pattern. Real timer. Instant section-wise analytics.
-              Pull a curated paper or spin up a randomised one — your call.
+              Pull a curated paper or spin up a randomised one - your call.
             </motion.p>
 
             {/* Stats row */}
@@ -356,10 +355,6 @@ export default function MockTestPage() {
           {/* Ad #4: after syllabus */}
           <AdSlot />
 
-          <SyllabusDownloads />
-
-          {/* Ad #5: after syllabus download */}
-          <AdSlot />
         </div>
       </main>
       <Footer />

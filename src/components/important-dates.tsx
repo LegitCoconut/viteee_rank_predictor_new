@@ -41,7 +41,7 @@ export function ImportantDates() {
           >
             The{' '}
             <span className="font-display italic gradient-text">road</span>
-            <br /> to VITEEE 2026.
+            <br /> to VITEEE 2027.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -50,7 +50,7 @@ export function ImportantDates() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground"
           >
-            Every deadline that matters — in one living timeline. Miss nothing.
+            Every deadline that matters - in one living timeline. Miss nothing.
           </motion.p>
         </div>
 
@@ -120,7 +120,7 @@ export function ImportantDates() {
         >
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-2 text-sm text-muted-foreground shadow-sm backdrop-blur">
             <Sparkles className="h-3.5 w-3.5 text-coral" />
-            Dates are indicative — refer to the official VIT portal for the
+            Dates are indicative - refer to the official VIT portal for the
             final word.
           </div>
         </motion.div>

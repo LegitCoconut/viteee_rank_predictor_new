@@ -777,7 +777,7 @@ export function getCoursesInRankRange(
   }> = [];
 
   // Reachable means the user is within `reachWindow` ranks of, or better than, the cutoff.
-  //   rank <= closingRank                 -> secured (always include — no upper bound)
+  //   rank <= closingRank                 -> secured (always include - no upper bound)
   //   closingRank < rank <= closingRank+W -> reach
   //   rank > closingRank + reachWindow    -> out of reach (skip)
   const reachThreshold = Math.max(1, rank - reachWindow);

@@ -471,7 +471,7 @@ export default function MockTestResultPage() {
                   student.
                 </h3>
                 <p className="mt-3 max-w-xl text-sm text-muted-foreground md:text-base">
-                  No ads, no paywall, no signup — we&rsquo;ve kept it that way
+                  No ads, no paywall, no signup - we&rsquo;ve kept it that way
                   on purpose. If this attempt helped you, the price of a cup
                   of chai goes a long way on a student budget.
                 </p>
