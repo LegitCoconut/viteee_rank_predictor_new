@@ -325,7 +325,7 @@ function LoadingPanel({ title, detail, progress }: { title: string; detail: stri
       <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
       <p className="mt-2 text-muted-foreground">{detail}</p>
 
-      <div className="mt-8 flex gap-1.5" aria-hidden="true">
+      <div className="mt-8 flex w-full gap-1.5" aria-hidden="true">
         {SECTIONS.map((sec) => {
           const share = (sec.minutes / total) * 100;
           const fill = progress === null ? 0 : Math.max(0, Math.min(100, ((progress - start) / share) * 100));
@@ -354,7 +354,8 @@ function LoadingPanel({ title, detail, progress }: { title: string; detail: stri
 }
 
 // Attributions are as commonly cited; some are paraphrases of longer passages.
-const QUOTES = [
+// image: add a link per person (plain <img>, so any host works).
+const QUOTES: { text: string; by: string; image?: string }[] = [
   { text: 'You have to dream before your dreams can come true.', by: 'A. P. J. Abdul Kalam' },
   { text: 'If you want to shine like a sun, first burn like a sun.', by: 'A. P. J. Abdul Kalam' },
   { text: 'Arise, awake, and stop not till the goal is reached.', by: 'Swami Vivekananda' },
@@ -373,7 +374,13 @@ function RotatingQuote() {
   return (
     <figure key={i} className="mt-10 min-h-[5.5rem] animate-in fade-in duration-700">
       <blockquote className="text-balance text-lg font-medium leading-snug">&ldquo;{q.text}&rdquo;</blockquote>
-      <figcaption className="mt-2 text-sm text-muted-foreground">{q.by}</figcaption>
+      <figcaption className="mt-3 flex items-center justify-center gap-2.5 text-sm text-muted-foreground">
+        {q.image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={q.image} alt="" className="h-9 w-9 rounded-full object-cover" />
+        )}
+        {q.by}
+      </figcaption>
     </figure>
   );
 }
