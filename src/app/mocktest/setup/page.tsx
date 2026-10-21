@@ -11,6 +11,16 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import {
   Form,
   FormControl,
   FormField,
@@ -166,7 +176,18 @@ function MockTestSetupContent() {
     },
   ];
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  // Phones are below the md breakpoint; tablets and laptops start straight away.
+  const [phoneWarningFor, setPhoneWarningFor] = useState<z.infer<typeof FormSchema> | null>(null);
+
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    if (window.innerWidth < 768) {
+      setPhoneWarningFor(data);
+      return;
+    }
+    startTest(data);
+  }
+
+  async function startTest(data: z.infer<typeof FormSchema>) {
     setIsSubmitting(true);
 
     fetch('/api/analytics/mocktest-count', {
@@ -604,6 +625,29 @@ function MockTestSetupContent() {
           <AdSlot />
         </div>
       </main>
+      <AlertDialog open={phoneWarningFor !== null} onOpenChange={(open) => !open && setPhoneWarningFor(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Better on a tablet or laptop</AlertDialogTitle>
+            <AlertDialogDescription>
+              The exam has a question palette, per-section timers and full-size question images, which are hard
+              to navigate on a phone screen. For a realistic attempt, use a tablet or laptop.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Go back</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                const data = phoneWarningFor;
+                setPhoneWarningFor(null);
+                if (data) startTest(data);
+              }}
+            >
+              Continue on phone
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <Footer />
     </div>
   );
