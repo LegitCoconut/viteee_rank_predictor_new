@@ -133,8 +133,8 @@ export default function MockTestStartPage() {
     return (
       <div className="flex flex-col min-h-dvh">
         <Header />
-        <main className="flex-1 flex items-center justify-center">
-          <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <main className="flex min-h-[calc(100dvh-3.5rem)] items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" aria-label="Loading" />
         </main>
         <Footer />
       </div>
@@ -321,7 +321,7 @@ function LoadingPanel({ title, detail, progress }: { title: string; detail: stri
   const total = SECTIONS.reduce((n, sec) => n + sec.minutes, 0);
   let start = 0;
   return (
-    <div className="w-full max-w-md px-4 text-center" role="status" aria-live="polite">
+    <div className="flex min-h-[calc(100dvh-3.5rem)] w-full max-w-md flex-col items-center justify-center px-4 py-10 text-center" role="status" aria-live="polite">
       <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
       <p className="mt-2 text-muted-foreground">{detail}</p>
 
@@ -344,9 +344,36 @@ function LoadingPanel({ title, detail, progress }: { title: string; detail: stri
         {progress === null ? 'Just a moment' : `${Math.round(progress)}%`}
       </p>
 
-      <p className="mx-auto mt-8 max-w-sm text-xs text-muted-foreground">
+      <RotatingQuote />
+
+      <p className="mx-auto mt-10 max-w-sm text-xs text-muted-foreground">
         We run on free servers to stay ad-free, so the first load can take a few seconds.
       </p>
     </div>
+  );
+}
+
+// Attributions are as commonly cited; some are paraphrases of longer passages.
+const QUOTES = [
+  { text: 'You have to dream before your dreams can come true.', by: 'A. P. J. Abdul Kalam' },
+  { text: 'If you want to shine like a sun, first burn like a sun.', by: 'A. P. J. Abdul Kalam' },
+  { text: 'Arise, awake, and stop not till the goal is reached.', by: 'Swami Vivekananda' },
+  { text: 'You can\u2019t cross the sea merely by standing and staring at the water.', by: 'Rabindranath Tagore' },
+  { text: 'The future depends on what you do today.', by: 'Mahatma Gandhi' },
+];
+
+function RotatingQuote() {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const id = setInterval(() => setI((n) => (n + 1) % QUOTES.length), 6000);
+    return () => clearInterval(id);
+  }, []);
+  const q = QUOTES[i];
+  return (
+    <figure key={i} className="mt-10 min-h-[5.5rem] animate-in fade-in duration-700">
+      <blockquote className="text-balance text-lg font-medium leading-snug">&ldquo;{q.text}&rdquo;</blockquote>
+      <figcaption className="mt-2 text-sm text-muted-foreground">{q.by}</figcaption>
+    </figure>
   );
 }
