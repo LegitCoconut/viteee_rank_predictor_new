@@ -171,23 +171,19 @@ function MockTestSetupContent() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsSubmitting(true);
 
+    // One verified request: counts the test start and, if opted in, saves the subscriber.
     fetch('/api/analytics/mocktest-count', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: data.token,
+        ...(data.subscribe && data.subscribeEmail
+          ? { subscriber: { email: data.subscribeEmail, name: data.name, source: 'mocktest-setup' } }
+          : {}),
+      }),
     }).catch(console.error);
 
     if (data.subscribe && data.subscribeEmail) {
-      fetch('/api/subscribers', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: data.subscribeEmail,
-          name: data.name,
-          source: 'mocktest-setup',
-        }),
-      }).catch(() => {
-        /* silent */
-      });
       try {
         localStorage.setItem('mockTestSubscribed', 'true');
       } catch {
@@ -556,6 +552,7 @@ function MockTestSetupContent() {
                             <FormItem>
                               <FormControl>
                                 <Turnstile
+                                  options={{ action: 'mocktest-setup' }}
                                   siteKey={
                                     process.env
                                       .NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!

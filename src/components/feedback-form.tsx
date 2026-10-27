@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { Turnstile } from "@marsidev/react-turnstile";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -38,6 +38,7 @@ export function FeedbackForm() {
     process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY
   );
 
+  const turnstileRef = useRef<TurnstileInstance>(null);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -80,6 +81,9 @@ export function FeedbackForm() {
         variant: "destructive",
       });
     } finally {
+      // Tokens are single-use: clear the spent one and get a fresh challenge.
+      form.setValue("token", "");
+      turnstileRef.current?.reset();
       setIsSubmitting(false);
     }
   }
@@ -138,6 +142,7 @@ export function FeedbackForm() {
               <FormItem className="w-full md:w-auto flex justify-center">
                 <FormControl>
                   <Turnstile
+                    ref={turnstileRef}
                     siteKey={
                       process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!
                     }
