@@ -44,7 +44,7 @@ function Section({
       {/* Decorative number */}
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-3 right-5 select-none font-mono text-[5rem] font-bold leading-none text-foreground/[0.04] transition-all duration-500 group-hover:text-foreground/[0.07]"
+        className="pointer-events-none absolute bottom-3 right-5 select-none font-mono text-[5rem] font-bold leading-none text-foreground/4 transition-all duration-500 group-hover:text-foreground/[0.07]"
       >
         {num}
       </div>
@@ -52,7 +52,7 @@ function Section({
       <div className="relative flex items-start gap-4">
         {/* Icon */}
         <div
-          className={`mt-0.5 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border ${SECTION_TONES[tone]}`}
+          className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${SECTION_TONES[tone]}`}
         >
           <Icon className="h-5 w-5" />
         </div>
@@ -87,14 +87,14 @@ export default function TermsPage() {
         <section className="hero-mesh relative isolate overflow-hidden py-20 md:py-28">
           <div className="pointer-events-none absolute inset-0">
             <div
-              className="animate-blob-slow absolute -top-24 left-1/4 h-[30rem] w-[30rem] rounded-full blur-3xl"
+              className="animate-blob-slow absolute -top-24 left-1/4 h-120 w-120 rounded-full blur-3xl"
               style={{
                 background:
                   'radial-gradient(circle, hsl(var(--coral) / 0.4), transparent 60%)',
               }}
             />
             <div
-              className="animate-blob absolute bottom-0 right-1/3 h-[24rem] w-[24rem] rounded-full blur-3xl"
+              className="animate-blob absolute bottom-0 right-1/3 h-96 w-[24rem] rounded-full blur-3xl"
               style={{
                 background:
                   'radial-gradient(circle, hsl(var(--lavender) / 0.28), transparent 60%)',

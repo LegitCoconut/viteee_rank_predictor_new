@@ -89,7 +89,7 @@ export function Leaderboard({ mode, initialData }: LeaderboardProps) {
     }, [mode, initialData]);
 
     return (
-        <Card className="border-border/50 shadow-sm h-full flex flex-col">
+        <Card className="border-border/50 shadow-xs h-full flex flex-col">
             <CardHeader className="border-b border-border/50 py-4">
                 <div className="flex items-center gap-2">
                     <Icon className="h-4 w-4 text-primary" />

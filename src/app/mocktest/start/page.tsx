@@ -287,7 +287,7 @@ function UIPreviewCard({
           : 'border-border/70 hover:border-coral/50 hover:shadow-md'
       }`}
     >
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-border/60 bg-background">
+      <div className="relative aspect-16/10 w-full overflow-hidden rounded-xl border border-border/60 bg-background">
         <img
           src={imageSrc}
           alt={`${title} exam UI preview`}
@@ -296,7 +296,7 @@ function UIPreviewCard({
           decoding="async"
         />
         {selected && (
-          <div className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-coral px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-plum-deep shadow">
+          <div className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-coral px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-plum-deep shadow-sm">
             <CheckCircle className="h-3 w-3" /> Selected
           </div>
         )}
@@ -395,7 +395,7 @@ function RotatingQuote() {
   return (
     <figure
       key={i}
-      className="mt-10 flex min-h-[7rem] w-full animate-in items-center gap-4 rounded-2xl border border-border bg-card p-4 text-left duration-700 fade-in"
+      className="mt-10 flex min-h-28 w-full animate-in items-center gap-4 rounded-2xl border border-border bg-card p-4 text-left duration-700 fade-in"
     >
       {image && (
         // Plain <img>: portraits come from several hosts, so no image-domain config is needed.

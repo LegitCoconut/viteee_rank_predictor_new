@@ -39,7 +39,7 @@ export function MockTestPattern() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
-          <Card className="overflow-hidden border-border/50 shadow-sm">
+          <Card className="overflow-hidden border-border/50 shadow-xs">
             <CardHeader className="bg-primary/5 border-b border-border/50 pb-4">
               <CardTitle className="text-center text-xl font-semibold">MPCEA Stream</CardTitle>
               <p className="text-center text-sm text-muted-foreground">Mathematics Group</p>
@@ -78,7 +78,7 @@ export function MockTestPattern() {
             </CardContent>
           </Card>
 
-          <Card className="overflow-hidden border-border/50 shadow-sm">
+          <Card className="overflow-hidden border-border/50 shadow-xs">
             <CardHeader className="bg-primary/5 border-b border-border/50 pb-4">
               <CardTitle className="text-center text-xl font-semibold">BPCEA Stream</CardTitle>
               <p className="text-center text-sm text-muted-foreground">Biology Group</p>
@@ -119,7 +119,7 @@ export function MockTestPattern() {
         </div>
 
         <div className="mt-6 md:mt-10 flex justify-center px-2">
-          <div className="inline-flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-card border border-border/50 shadow-sm">
+          <div className="inline-flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-card border border-border/50 shadow-xs">
             <div className="flex items-center justify-center h-9 w-9 sm:h-10 sm:w-10 rounded-lg bg-primary/10 shrink-0">
               <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
             </div>

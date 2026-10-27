@@ -49,7 +49,7 @@ export function Footer() {
 
         <p
           aria-hidden
-          className="select-none whitespace-nowrap bg-gradient-to-b from-foreground/80 to-foreground/0 bg-clip-text pt-16 text-center font-headline text-[11vw] overflow-hidden font-bold leading-none tracking-tighter text-transparent"
+          className="select-none whitespace-nowrap bg-linear-to-b from-foreground/80 to-foreground/0 bg-clip-text pt-16 text-center font-headline text-[11vw] overflow-hidden font-bold leading-none tracking-tighter text-transparent"
         >
           MalabarMatrix
         </p>

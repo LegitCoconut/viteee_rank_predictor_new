@@ -41,7 +41,7 @@ export function DualUIShowcase() {
         <div className="mx-auto grid max-w-5xl gap-4 md:grid-cols-2 md:gap-6">
           {surfaces.map((s) => (
             <article key={s.key} className="overflow-hidden rounded-2xl border border-border bg-card">
-              <div className="aspect-[16/9] overflow-hidden border-b md:aspect-[16/10] border-border bg-background">
+              <div className="aspect-video overflow-hidden border-b md:aspect-16/10 border-border bg-background">
                 <img
                   src={s.imageSrc}
                   alt={s.imageAlt}

@@ -56,7 +56,7 @@ export function MultiSelect<T extends string>({
           type="button"
           disabled={disabled}
           className={cn(
-            'flex h-11 w-full items-center justify-between gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+            'flex h-11 w-full items-center justify-between gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
             className,
           )}
           aria-expanded={open}
@@ -108,7 +108,7 @@ export function MultiSelect<T extends string>({
         </button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[var(--radix-popover-trigger-width)] p-1"
+        className="w-(--radix-popover-trigger-width) p-1"
         align="start"
         sideOffset={4}
       >

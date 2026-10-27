@@ -1,9 +1,217 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, "Segoe UI", sans-serif;
+@plugin 'tailwindcss-animate';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-body:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif;
+  --font-headline:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, sans-serif;
+  --font-display:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, sans-serif;
+  --font-code: monospace;
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --color-plum: hsl(var(--plum));
+  --color-plum-deep: hsl(var(--plum-deep));
+  --color-coral: hsl(var(--coral));
+  --color-peach: hsl(var(--peach));
+  --color-mint: hsl(var(--mint));
+  --color-sky: hsl(var(--sky));
+  --color-lavender: hsl(var(--lavender));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility font-display {
+  /* Display text: same family, tighter tracking. No serif italic. */
+  font-style: normal !important;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+}
+
+@utility gradient-text {
+  /* One accent colour, applied flat. */
+  color: hsl(var(--coral));
+}
+
+@utility hero-mesh {
+  /* Hero surface: flat, with one faint light from above. */
+  background-color: hsl(var(--background));
+  background-image: radial-gradient(
+    60rem 28rem at 50% -8%,
+    hsl(var(--coral) / 0.1),
+    transparent 70%
+  );
+}
+
+@utility bg-grid {
+  /* Decorative layers from the old theme are retired. */
+  background-image: none;
+  animation: none;
+  opacity: 0;
+}
+
+@utility bg-grid-fine {
+  background-image: none;
+  animation: none;
+  opacity: 0;
+}
+
+@utility bg-noise {
+  background-image: none;
+  animation: none;
+  opacity: 0;
+}
+
+@utility animate-blob {
+  background-image: none;
+  animation: none;
+  opacity: 0;
+}
+
+@utility animate-blob-slow {
+  background-image: none;
+  animation: none;
+  opacity: 0;
+}
+
+@utility animate-blob-fast {
+  background-image: none;
+  animation: none;
+  opacity: 0;
+}
+
+@utility shimmer-border {
+  /* Animated borders become a plain hairline. */
+  position: relative;
+}
+
+@utility shimmer-border-hover {
+  position: relative;
+}
+
+@utility reveal-mask {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+
+@utility glass {
+  /* Floating functional layer only (header, popovers). Content stays opaque. */
+  background: hsl(var(--card) / 0.72);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid hsl(0 0% 100% / 0.08);
+
+  @media (prefers-reduced-transparency: reduce) {
+    background: hsl(var(--card));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@layer utilities {
+  body {
+    font-family:
+      -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, 'Segoe UI',
+      sans-serif;
+  }
 }
 
 @layer base {
@@ -73,61 +281,6 @@ body {
   ::selection {
     background: hsl(var(--coral) / 0.35);
     color: hsl(var(--foreground));
-  }
-}
-
-@layer utilities {
-  /* Display text: same family, tighter tracking. No serif italic. */
-  .font-display {
-    font-style: normal !important;
-    letter-spacing: -0.03em;
-    font-weight: 600;
-  }
-
-  /* One accent colour, applied flat. */
-  .gradient-text {
-    color: hsl(var(--coral));
-  }
-
-  /* Hero surface: flat, with one faint light from above. */
-  .hero-mesh {
-    background-color: hsl(var(--background));
-    background-image: radial-gradient(60rem 28rem at 50% -8%, hsl(var(--coral) / 0.10), transparent 70%);
-  }
-
-  /* Decorative layers from the old theme are retired. */
-  .bg-grid,
-  .bg-grid-fine,
-  .bg-noise,
-  .animate-blob,
-  .animate-blob-slow,
-  .animate-blob-fast {
-    background-image: none;
-    animation: none;
-    opacity: 0;
-  }
-
-  /* Animated borders become a plain hairline. */
-  .shimmer-border,
-  .shimmer-border-hover {
-    position: relative;
-  }
-
-  .reveal-mask {
-    -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
-            mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
-  }
-
-  /* Floating functional layer only (header, popovers). Content stays opaque. */
-  .glass {
-    background: hsl(var(--card) / 0.72);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid hsl(0 0% 100% / 0.08);
-  }
-
-  @media (prefers-reduced-transparency: reduce) {
-    .glass { background: hsl(var(--card)); backdrop-filter: none; -webkit-backdrop-filter: none; }
   }
 }
 

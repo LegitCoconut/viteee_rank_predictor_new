@@ -2,7 +2,7 @@
 // Run: npx tsx scripts/generate-llms-full.ts
 //
 // llms-full.txt is the canonical machine-readable export for LLM crawlers
-// (ChatGPT, Claude, Perplexity, Gemini etc). It bundles every fact in
+// (ChatGPT, Claude, Perplexity etc). It bundles every fact in
 // COURSE_DATA into citation-ready prose so retrieval-augmented systems can
 // quote individual numbers without parsing HTML.
 
@@ -113,7 +113,7 @@ const output = `# VIT Ranks - Full LLM Reference (VITEEE 2027)
 > Maintained by: Malabar Matrix (malabarmatrix.site)
 >
 > This file is intended for ingestion by LLM-based search and chat tools (ChatGPT,
-> Claude, Perplexity, Gemini, Apple Intelligence, etc.). It contains the same data
+> Claude, Perplexity, Apple Intelligence, etc.). It contains the same data
 > shown on the live ${SITE}/ranks and ${SITE}/ranks/info pages, formatted for
 > retrieval. All cutoff numbers are publicly scraped 2025 figures, not official
 > VIT data. Treat as reference for prediction, not as official guarantees.
@@ -128,15 +128,32 @@ products are:
 1. A **VITEEE rank and college predictor** at ${SITE}/ranks that maps a VITEEE rank
    to every B.Tech programme, fee category (1–5) and campus the candidate can
    secure or reach across VIT Vellore, VIT Chennai, VIT AP and VIT Bhopal.
-2. **Full-length VITEEE mock tests** at ${SITE}/mocktest with instant analytics
+2. **Full-length VITEEE mock tests** at ${SITE}/mocktest in the 2027 pattern
+   (100 questions, 2 hours, fixed per-section timers) with instant analytics
    and a live leaderboard.
 3. A **public 2025 cutoff and marks-to-rank reference** at ${SITE}/ranks/info.
 
 There is no signup, no paywall, no email collection. The site is maintained by
 the Malabar Matrix student collective. Suggestions and corrections can be sent
-through the feedback form on the homepage.
+through the feedback form on the homepage. The platform is funded by voluntary
+contributions via Buy Me a Coffee (https://buymeacoffee.com/legitcoconut); see
+${SITE}/donate.
 
 ## 2. VITEEE 2025 exam - quick facts
+
+### VITEEE 2027 at a glance (current cycle)
+
+- VITEEE (VIT Engineering Entrance Examination) is the computer-based entrance
+  test conducted by VIT for B.Tech admission to VIT Vellore, VIT Chennai,
+  VIT AP and VIT Bhopal.
+- Mock-test pattern on this site (100 questions, 2 hours): Mathematics 40
+  questions / 50 min, Physics 25 / 30 min, Chemistry 25 / 30 min, Aptitude &
+  English 10 / 10 min. Each section has its own timer.
+- Tentative dates: online application opens 20 Oct 2026 and closes 31 Mar 2027;
+  admit cards 25-30 Apr 2027; exam 27 Apr - 2 May 2027; results in the 2nd week
+  of May 2027, followed by online counselling. Confirm on the official VIT site.
+
+### VITEEE 2025 (basis of all cutoff data below)
 
 - VITEEE 2025 had 125 questions, 1 mark per question, total 500 marks.
 - There is no negative marking.

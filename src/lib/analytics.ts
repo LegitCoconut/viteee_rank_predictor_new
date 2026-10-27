@@ -2,7 +2,7 @@ import { connectToDatabase } from "@/lib/db";
 
 const MONGODB_DB = process.env.MONGODB_DB!;
 
-export async function updateDayWiseAnalytics(metric: 'syllabus-download' | 'ai-usage' | 'mocktest-start') {
+export async function updateDayWiseAnalytics(metric: 'syllabus-download' | 'mocktest-start') {
     try {
         const client = await connectToDatabase();
         const db = client.db(MONGODB_DB);

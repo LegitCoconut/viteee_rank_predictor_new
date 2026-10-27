@@ -332,11 +332,11 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
   return (
     <div
       ref={elem}
-      className="viteee-ui relative flex h-[100dvh] w-full flex-col overflow-hidden bg-white text-[#222]"
+      className="viteee-ui relative flex h-dvh w-full flex-col overflow-hidden bg-white text-[#222]"
       style={{ fontFamily: 'Verdana, "DejaVu Sans", Tahoma, Geneva, sans-serif' }}
     >
       {!isFullscreen && (
-        <div className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-white/95 p-4 text-center backdrop-blur-sm">
+        <div className="absolute inset-0 z-100 flex flex-col items-center justify-center bg-white/95 p-4 text-center backdrop-blur-xs">
           <div className="max-w-md space-y-4">
             <h2 className="text-2xl font-bold text-gray-900">Test Paused</h2>
             <p className="text-gray-600">
@@ -553,13 +553,13 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
           <div className="flex shrink-0 items-center gap-2 border-t border-gray-300 bg-[#f5f5f5] px-3 py-2">
             <button
               onClick={handleMarkAndNext}
-              className="rounded-sm border border-gray-400 bg-white px-3 py-1.5 text-[12px] font-semibold text-gray-800 shadow-sm hover:bg-gray-50"
+              className="rounded-sm border border-gray-400 bg-white px-3 py-1.5 text-[12px] font-semibold text-gray-800 shadow-xs hover:bg-gray-50"
             >
               {currentAnswer?.status === "marked" ? "Unmark & Next" : "Mark for Review & Next"}
             </button>
             <button
               onClick={handleClearResponse}
-              className="rounded-sm border border-gray-400 bg-white px-3 py-1.5 text-[12px] font-semibold text-gray-800 shadow-sm hover:bg-gray-50"
+              className="rounded-sm border border-gray-400 bg-white px-3 py-1.5 text-[12px] font-semibold text-gray-800 shadow-xs hover:bg-gray-50"
             >
               Clear Response
             </button>
@@ -568,7 +568,7 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
                 <AlertDialogTrigger asChild>
                   <button
                     disabled={isSubmitting}
-                    className="rounded-sm border border-red-700 bg-red-600 px-3 py-1.5 text-[12px] font-semibold text-white shadow-sm hover:bg-red-700 disabled:opacity-60"
+                    className="rounded-sm border border-red-700 bg-red-600 px-3 py-1.5 text-[12px] font-semibold text-white shadow-xs hover:bg-red-700 disabled:opacity-60"
                   >
                     {isSubmitting ? (
                       <span className="inline-flex items-center gap-1.5">
@@ -605,7 +605,7 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
               </AlertDialog>
               <button
                 onClick={handleSaveAndNext}
-                className="rounded-sm border border-[#2d89ef] bg-[#2d89ef] px-5 py-1.5 text-[12px] font-semibold text-white shadow-sm hover:bg-[#1d6cc0]"
+                className="rounded-sm border border-[#2d89ef] bg-[#2d89ef] px-5 py-1.5 text-[12px] font-semibold text-white shadow-xs hover:bg-[#1d6cc0]"
               >
                 Save &amp; Next
               </button>
@@ -688,7 +688,7 @@ function LegendGrid({
 }: {
   stats: { notVisited: number; notAnswered: number; answered: number; marked: number; answeredMarked: number };
 }) {
-  const items: Array<{ chip: JSX.Element; label: string; count: number }> = [
+  const items: Array<{ chip: React.JSX.Element; label: string; count: number }> = [
     {
       chip: (
         <span className="flex h-6 w-6 items-center justify-center bg-[#ccc] text-[11px] font-bold text-gray-800">
@@ -720,7 +720,7 @@ function LegendGrid({
     },
   ];
   return (
-    <div className="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-x-2 gap-y-2 border-b border-gray-300 bg-white px-3 py-3 text-[11px]">
+    <div className="grid grid-cols-[auto_1fr_auto_1fr] items-center gap-x-2 gap-y-2 border-b border-gray-300 bg-white px-3 py-3 text-[11px]">
       {items.map((it, i) => (
         <div key={i} className="contents">
           {it.chip}

@@ -37,7 +37,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.genkit/*
 .env*
 
 # firebase
@@ -50,3 +49,10 @@ docs/email-template/
 
 .agents/
 .idx/
+# reels (generated video, tools, models)
+reels/tools/
+reels/out/
+reels/node_modules/
+reels/.frames/
+
+reels/.venv/

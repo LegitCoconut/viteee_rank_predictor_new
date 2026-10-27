@@ -103,15 +103,15 @@ export default function MockTestPage() {
           {/* Parallax blobs */}
           <motion.div style={{ y: yBg }} className="pointer-events-none absolute inset-0">
             <div
-              className="absolute -top-32 -left-24 h-[32rem] w-[32rem] rounded-full blur-3xl animate-blob-slow"
+              className="absolute -top-32 -left-24 h-128 w-lg rounded-full blur-3xl animate-blob-slow"
               style={{ background: 'radial-gradient(circle, hsl(var(--coral) / 0.55), transparent 60%)' }}
             />
             <div
-              className="absolute bottom-0 -right-32 h-[30rem] w-[30rem] rounded-full blur-3xl animate-blob"
+              className="absolute bottom-0 -right-32 h-120 w-120 rounded-full blur-3xl animate-blob"
               style={{ background: 'radial-gradient(circle, hsl(var(--mint) / 0.4), transparent 60%)' }}
             />
             <div
-              className="absolute top-1/2 left-1/3 h-[28rem] w-[28rem] rounded-full blur-3xl animate-blob-fast"
+              className="absolute top-1/2 left-1/3 h-112 w-md rounded-full blur-3xl animate-blob-fast"
               style={{ background: 'radial-gradient(circle, hsl(var(--lavender) / 0.4), transparent 60%)' }}
             />
           </motion.div>
@@ -162,7 +162,7 @@ export default function MockTestPage() {
                   key={s.label}
                   className="glass flex flex-col items-center gap-1 rounded-2xl px-3 py-3 text-center sm:flex-row sm:gap-3 sm:px-5 sm:text-left"
                 >
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-coral/30 to-peach/30 sm:h-10 sm:w-10">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-linear-to-br from-coral/30 to-peach/30 sm:h-10 sm:w-10">
                     <s.icon className="h-4 w-4 text-white sm:h-5 sm:w-5" />
                   </div>
                   <div>
@@ -258,7 +258,7 @@ export default function MockTestPage() {
           </motion.div>
 
           {/* Fade into next section */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-background" />
         </section>
 
         {/* Ad #1: after hero */}
@@ -285,7 +285,7 @@ export default function MockTestPage() {
                   onClick={() => setMobileTab('random')}
                   className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
                     mobileTab === 'random'
-                      ? 'bg-background shadow text-foreground'
+                      ? 'bg-background shadow-sm text-foreground'
                       : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
@@ -295,7 +295,7 @@ export default function MockTestPage() {
                   onClick={() => setMobileTab('predefined')}
                   className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
                     mobileTab === 'predefined'
-                      ? 'bg-background shadow text-foreground'
+                      ? 'bg-background shadow-sm text-foreground'
                       : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >

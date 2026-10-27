@@ -119,7 +119,7 @@ export function PastResults() {
                     </p>
                 </div>
 
-                <Card className="max-w-4xl mx-auto border-border/50 shadow-sm">
+                <Card className="max-w-4xl mx-auto border-border/50 shadow-xs">
                     <CardHeader className="border-b border-border/50">
                         <div className="flex items-start justify-between gap-3">
                             <div className="min-w-0">

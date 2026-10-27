@@ -136,7 +136,7 @@ export default function Home() {
 
         <section id="feedback" className="relative overflow-hidden py-24 md:py-32">
           <div className="pointer-events-none absolute inset-0 -z-10">
-            <div className="absolute left-1/2 top-0 h-[28rem] w-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-br from-coral/10 via-peach/10 to-mint/10 blur-3xl" />
+            <div className="absolute left-1/2 top-0 h-112 w-3xl -translate-x-1/2 rounded-full bg-linear-to-br from-coral/10 via-peach/10 to-mint/10 blur-3xl" />
             <div className="absolute inset-0 bg-grid-fine opacity-[0.15]" />
           </div>
 
@@ -180,7 +180,7 @@ export default function Home() {
                   <Button
                     asChild
                     size="lg"
-                    className="shimmer-border group h-11 shrink-0 gap-2 rounded-full bg-gradient-to-r from-coral to-peach px-6 text-sm font-semibold text-plum-deep shadow-lg shadow-coral/25 hover:from-coral hover:to-peach"
+                    className="shimmer-border group h-11 shrink-0 gap-2 rounded-full bg-linear-to-r from-coral to-peach px-6 text-sm font-semibold text-plum-deep shadow-lg shadow-coral/25 hover:from-coral hover:to-peach"
                   >
                     <Link href="/donate">
                       <Heart className="h-4 w-4 transition-transform group-hover:scale-110" />

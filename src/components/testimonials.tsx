@@ -22,7 +22,7 @@ export function Testimonials() {
           </p>
         </div>
 
-        <div className="mx-auto max-w-6xl columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
+        <div className="mx-auto max-w-6xl columns-1 gap-4 sm:columns-2 lg:columns-3 *:mb-4">
           {testimonials.map((t) => (
             <figure
               key={`${t.name}-${t.quote}`}

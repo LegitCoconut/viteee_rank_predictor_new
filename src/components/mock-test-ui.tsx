@@ -276,11 +276,11 @@ export function MockTestUI({ questions, setupData }: MockTestUIProps) {
   }, [currentQuestionIndex]);
 
   return (
-    <div ref={elem} className="w-full h-[100dvh] bg-background flex flex-col overflow-hidden relative">
+    <div ref={elem} className="w-full h-dvh bg-background flex flex-col overflow-hidden relative">
 
       {/* Fullscreen Enforcement Overlay */}
       {!isFullscreen && (
-        <div className="absolute inset-0 z-[100] bg-background/95 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center">
+        <div className="absolute inset-0 z-100 bg-background/95 backdrop-blur-xs flex flex-col items-center justify-center p-4 text-center">
           <div className="max-w-md space-y-4">
             <h2 className="text-2xl font-bold">Test Paused</h2>
             <p className="text-muted-foreground">

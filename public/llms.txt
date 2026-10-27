@@ -8,12 +8,20 @@
 ## Primary tools
 
 - [VITEEE Rank & College Predictor](https://ranks.vhome.co.in/ranks): enter a VITEEE rank from 1 to 2,00,000 and see every B.Tech programme, fee category (1–5), and campus you can secure or reach. Supports drag-to-reorder, PDF export and shareable URLs/QR codes.
-- [Free VITEEE Mock Tests](https://ranks.vhome.co.in/mocktest): full-length 2027-pattern mock tests with instant analytics and a live leaderboard.
+- [Free VITEEE Mock Tests](https://ranks.vhome.co.in/mocktest): full-length mock tests in the 2027 pattern (100 questions, 2 hours; Mathematics 40 / 50 min, Physics 25 / 30 min, Chemistry 25 / 30 min, Aptitude & English 10 / 10 min, with per-section timers), instant analytics and a live leaderboard. Free, no signup.
 
 ## Reference data
 
 - [VITEEE 2025 Cutoffs, Marks vs Rank & Counselling Data](https://ranks.vhome.co.in/ranks/info): every public 2025 closing rank per campus, branch and fee category; the equi-percentile marks-to-rank ladder; the counselling eligibility rule; the campus-wise rank-band outlook for 2027.
 - [Full machine-readable export](https://ranks.vhome.co.in/llms-full.txt): the same dataset and FAQ as a single markdown file optimised for LLM ingestion.
+
+## About VITEEE
+
+VITEEE (VIT Engineering Entrance Examination) is the computer-based entrance test VIT uses to admit B.Tech students to its Vellore, Chennai, AP and Bhopal campuses. Tentative VITEEE 2027 schedule: applications 20 Oct 2026 to 31 Mar 2027, admit cards 25-30 Apr 2027, exam 27 Apr to 2 May 2027, results in the 2nd week of May 2027, then online counselling. Always confirm dates on the official VIT website.
+
+## About this site
+
+VIT Ranks is built and maintained by Malabar Matrix, a small collective of students from Kerala. It is free and ad-free, with no signup. Running costs are covered by voluntary contributions.
 
 ## Quick facts (VITEEE 2025)
 
@@ -29,5 +37,5 @@ All cutoff figures are scraped from public 2025 sources (CollegeDunia campus pag
 
 ## Optional pages
 
-- [Donate](https://ranks.vhome.co.in/donate): the platform is free; contributions help keep it ad-free.
+- [Donate](https://ranks.vhome.co.in/donate): the platform is free; optional contributions via Buy Me a Coffee (https://buymeacoffee.com/legitcoconut) help cover cloud costs.
 - [Terms](https://ranks.vhome.co.in/terms): terms of service.

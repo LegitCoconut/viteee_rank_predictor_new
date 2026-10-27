@@ -187,13 +187,13 @@ export default function RanksInfoPage() {
           <section className="relative isolate overflow-hidden hero-mesh py-16 md:py-20">
             <div className="pointer-events-none absolute inset-0">
               <div
-                className="absolute -top-24 -left-16 h-[28rem] w-[28rem] rounded-full blur-3xl animate-blob-slow"
+                className="absolute -top-24 -left-16 h-112 w-md rounded-full blur-3xl animate-blob-slow"
                 style={{
                   background: 'radial-gradient(circle, hsl(var(--coral) / 0.5), transparent 60%)',
                 }}
               />
               <div
-                className="absolute bottom-0 -right-24 h-[26rem] w-[26rem] rounded-full blur-3xl animate-blob"
+                className="absolute bottom-0 -right-24 h-104 w-104 rounded-full blur-3xl animate-blob"
                 style={{
                   background: 'radial-gradient(circle, hsl(var(--mint) / 0.4), transparent 60%)',
                 }}
@@ -286,7 +286,7 @@ export default function RanksInfoPage() {
                     <div className="relative z-10">
                       <div
                         className={cn(
-                          'flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br',
+                          'flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br',
                           s.accent,
                         )}
                       >
@@ -459,7 +459,7 @@ export default function RanksInfoPage() {
                     className={cn(
                       'flex-1 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition-colors',
                       campusTab === c
-                        ? 'bg-coral text-plum-deep shadow-sm'
+                        ? 'bg-coral text-plum-deep shadow-xs'
                         : 'text-muted-foreground hover:text-foreground',
                     )}
                   >
@@ -655,7 +655,7 @@ export default function RanksInfoPage() {
               </p>
             </Section>
 
-            <div className="rounded-2xl border border-coral/20 bg-gradient-to-br from-coral/10 via-transparent to-mint/10 p-6 text-center md:p-10">
+            <div className="rounded-2xl border border-coral/20 bg-linear-to-br from-coral/10 via-transparent to-mint/10 p-6 text-center md:p-10">
               <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">
                 Ready to predict your rank?
               </h3>
@@ -665,7 +665,7 @@ export default function RanksInfoPage() {
               <Button
                 asChild
                 size="lg"
-                className="mt-5 h-11 gap-2 rounded-full bg-gradient-to-r from-coral to-peach px-6 text-base font-semibold text-plum-deep shadow-lg shadow-coral/25 hover:from-coral hover:to-peach"
+                className="mt-5 h-11 gap-2 rounded-full bg-linear-to-r from-coral to-peach px-6 text-base font-semibold text-plum-deep shadow-lg shadow-coral/25 hover:from-coral hover:to-peach"
               >
                 <Link href="/ranks">
                   Open the predictor
@@ -697,7 +697,7 @@ function Section({
   return (
     <section id={id} className="scroll-mt-24">
       <div className="mb-6 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-coral/20 to-peach/20">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-coral/20 to-peach/20">
           <Icon className="h-5 w-5 text-coral" />
         </div>
         <div>

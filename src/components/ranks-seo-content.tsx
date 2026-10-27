@@ -375,7 +375,7 @@ export function RanksSeoContent() {
           </div>
 
           {/* Internal nav */}
-          <div className="rounded-3xl border border-coral/20 bg-gradient-to-br from-coral/10 via-transparent to-mint/10 p-8 md:p-12">
+          <div className="rounded-3xl border border-coral/20 bg-linear-to-br from-coral/10 via-transparent to-mint/10 p-8 md:p-12">
             <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
               Explore the rest of VIT Ranks
             </h2>
@@ -493,7 +493,7 @@ function NavCard({
       href={href}
       className="group block rounded-2xl border border-border/40 bg-background/60 p-5 transition-all hover:-translate-y-0.5 hover:border-coral/40 hover:shadow-lg hover:shadow-coral/10"
     >
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-coral/20 to-peach/20">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-coral/20 to-peach/20">
         <Icon className="h-5 w-5 text-coral" />
       </div>
       <h3 className="mt-4 text-base font-semibold tracking-tight">{title}</h3>

@@ -17,7 +17,7 @@ export function ImportantDates() {
     <section id="important-dates" className="relative overflow-hidden py-24 md:py-32">
       {/* Backdrop */}
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-72 w-[48rem] -translate-x-1/2 rounded-full bg-coral/5 blur-3xl" />
+        <div className="absolute left-1/2 top-0 h-72 w-3xl -translate-x-1/2 rounded-full bg-coral/5 blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4">
@@ -52,7 +52,7 @@ export function ImportantDates() {
           <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-border">
             <motion.div
               style={{ scaleY: lineScaleY, transformOrigin: 'top' }}
-              className="h-full w-full bg-gradient-to-b from-coral via-peach to-mint"
+              className="h-full w-full bg-linear-to-b from-coral via-peach to-mint"
             />
           </div>
 
@@ -80,10 +80,10 @@ export function ImportantDates() {
                   transition={{ duration: 0.5, delay: index * 0.05 }}
                   className="relative pl-14"
                 >
-                  <div className="absolute left-0 top-2 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background shadow-sm">
+                  <div className="absolute left-0 top-2 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background shadow-xs">
                     <CalendarCheck className="h-4 w-4 text-coral" />
                   </div>
-                  <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+                  <div className="rounded-2xl border border-border bg-card p-4 shadow-xs">
                     <p className="text-xs font-semibold uppercase tracking-wider text-coral">
                       {event.date}
                     </p>
@@ -143,7 +143,7 @@ function TimelineRow({
         transition={{ duration: 0.5, delay: 0.1 + index * 0.05, type: 'spring' }}
         className="relative z-10"
       >
-        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-coral to-peach shadow-lg shadow-coral/25 ring-4 ring-background">
+        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-linear-to-br from-coral to-peach shadow-lg shadow-coral/25 ring-4 ring-background">
           <CalendarCheck className="h-4 w-4 text-white" />
         </div>
       </motion.div>
@@ -172,7 +172,7 @@ function TimelineCard({
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.6, delay: 0.15 + index * 0.05 }}
       whileHover={{ y: -4 }}
-      className="group relative w-full max-w-xs overflow-hidden rounded-2xl border border-border/70 bg-card p-5 shadow-sm transition-shadow hover:shadow-lg"
+      className="group relative w-full max-w-xs overflow-hidden rounded-2xl border border-border/70 bg-card p-5 shadow-xs transition-shadow hover:shadow-lg"
     >
       <div className="pointer-events-none absolute -right-4 -top-4 h-24 w-24 rounded-full bg-coral/10 blur-2xl opacity-0 transition-opacity group-hover:opacity-100" />
       <p className="text-xs font-semibold uppercase tracking-wider text-coral">

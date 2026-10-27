@@ -53,8 +53,8 @@ export function HowItWorks() {
       className="relative py-14 md:py-32 overflow-hidden"
     >
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-60 dark:opacity-40">
-        <div className="absolute left-[-10%] top-1/3 h-[28rem] w-[28rem] rounded-full bg-coral/10 blur-3xl" />
-        <div className="absolute right-[-10%] top-2/3 h-[26rem] w-[26rem] rounded-full bg-mint/10 blur-3xl" />
+        <div className="absolute left-[-10%] top-1/3 h-112 w-md rounded-full bg-coral/10 blur-3xl" />
+        <div className="absolute right-[-10%] top-2/3 h-104 w-104 rounded-full bg-mint/10 blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4">
@@ -86,7 +86,7 @@ export function HowItWorks() {
           <div className="pointer-events-none absolute left-6 top-0 bottom-0 hidden w-px bg-border md:left-1/2 md:block">
             <motion.div
               style={{ scaleY: lineScaleY, transformOrigin: "top" }}
-              className="h-full w-full bg-gradient-to-b from-coral via-peach to-mint"
+              className="h-full w-full bg-linear-to-b from-coral via-peach to-mint"
             />
           </div>
 
@@ -131,7 +131,7 @@ function StepRow({
       className="relative grid gap-8 md:grid-cols-2 md:gap-16"
     >
       <div className="pointer-events-none absolute left-6 top-6 z-10 hidden -translate-x-1/2 md:left-1/2 md:block">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background shadow-sm">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background shadow-xs">
           <span className="font-display text-base italic text-coral">
             {step.index}
           </span>
@@ -161,17 +161,17 @@ function StepRow({
           whileHover={{ y: -6, rotateX: 2, rotateY: flip ? -2 : 2 }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
           style={{ transformStyle: "preserve-3d" }}
-          className="group relative aspect-[16/9] overflow-hidden rounded-3xl md:aspect-[4/3] border border-border bg-card shadow-lg"
+          className="group relative aspect-video overflow-hidden rounded-3xl md:aspect-4/3 border border-border bg-card shadow-lg"
         >
           <div
-            className={`absolute inset-0 bg-gradient-to-br ${step.gradient}`}
+            className={`absolute inset-0 bg-linear-to-br ${step.gradient}`}
           />
           <div className="absolute inset-0 bg-grid-fine opacity-40" />
           <div className="absolute inset-0 bg-noise mix-blend-overlay" />
 
           <div className="relative z-10 flex h-full flex-col justify-between p-6 md:p-8">
             <div className="flex items-center justify-between">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-background/80 shadow-sm backdrop-blur">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-background/80 shadow-xs backdrop-blur-sm">
                 <Icon className="h-5 w-5" />
               </div>
               <span className="font-display text-5xl italic text-foreground/15">

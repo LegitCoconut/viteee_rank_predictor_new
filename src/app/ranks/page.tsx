@@ -333,7 +333,7 @@ export default function RanksPage() {
           <div
             ref={qrContainerRef}
             aria-hidden
-            className="pointer-events-none fixed -left-[9999px] -top-[9999px] opacity-0"
+            className="pointer-events-none fixed left-[-9999px] top-[-9999px] opacity-0"
           >
             <QRCodeCanvas value={shareUrl} size={400} level="M" includeMargin />
           </div>
@@ -351,7 +351,7 @@ export default function RanksPage() {
               <div
                 className={cn(
                   'absolute -top-24 -left-16 rounded-full blur-3xl animate-blob-slow',
-                  isHero ? 'h-[32rem] w-[32rem]' : 'h-72 w-72',
+                  isHero ? 'h-128 w-lg' : 'h-72 w-72',
                 )}
                 style={{
                   background:
@@ -361,7 +361,7 @@ export default function RanksPage() {
               <div
                 className={cn(
                   'absolute bottom-0 -right-24 rounded-full blur-3xl animate-blob',
-                  isHero ? 'h-[30rem] w-[30rem]' : 'h-64 w-64',
+                  isHero ? 'h-120 w-120' : 'h-64 w-64',
                 )}
                 style={{
                   background:
@@ -422,7 +422,7 @@ export default function RanksPage() {
                       className="mx-auto mt-10 max-w-md"
                     >
                       <div className="relative">
-                        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-coral/20 to-mint/20 blur-2xl" />
+                        <div className="absolute inset-0 rounded-3xl bg-linear-to-r from-coral/20 to-mint/20 blur-2xl" />
                         <div className="relative rounded-3xl border border-white/20 bg-white/10 p-6 backdrop-blur-xl">
                           <Label htmlFor="rank-input" className="text-sm font-medium text-white/90">
                             Enter your VITEEE Rank
@@ -469,7 +469,7 @@ export default function RanksPage() {
                           key={stat.label}
                           className="glass flex min-w-0 flex-1 items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-3 backdrop-blur-md sm:gap-3 sm:px-5"
                         >
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-coral/30 to-peach/30 sm:h-10 sm:w-10">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-coral/30 to-peach/30 sm:h-10 sm:w-10">
                             <stat.icon className="h-4 w-4 text-white sm:h-5 sm:w-5" />
                           </div>
                           <div className="min-w-0">
@@ -620,7 +620,7 @@ export default function RanksPage() {
                   >
                     <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-coral/15 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                     <div className="relative z-10">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-coral/20 to-peach/20">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-coral/20 to-peach/20">
                         <BarChart3 className="h-6 w-6 text-coral" />
                       </div>
                       <h3 className="mt-4 text-lg font-semibold tracking-tight">
@@ -643,7 +643,7 @@ export default function RanksPage() {
                   >
                     <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-mint/15 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                     <div className="relative z-10">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-mint/20 to-sky/20">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-mint/20 to-sky/20">
                         <Building2 className="h-6 w-6 text-mint" />
                       </div>
                       <h3 className="mt-4 text-lg font-semibold tracking-tight">
@@ -779,7 +779,7 @@ export default function RanksPage() {
 
                     <Button
                       onClick={() => setStep('results')}
-                      className="h-11 w-full gap-2 rounded-xl bg-gradient-to-r from-coral to-peach text-base font-semibold text-plum-deep shadow-lg shadow-coral/25 hover:from-coral hover:to-peach"
+                      className="h-11 w-full gap-2 rounded-xl bg-linear-to-r from-coral to-peach text-base font-semibold text-plum-deep shadow-lg shadow-coral/25 hover:from-coral hover:to-peach"
                     >
                       Generate Results
                       <ArrowRight className="h-4 w-4" />
@@ -801,13 +801,13 @@ export default function RanksPage() {
               >
                 {/* Action toggle + active filters */}
                 <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                  <div className="inline-flex w-fit rounded-xl border border-border/60 bg-card/60 p-1 backdrop-blur">
+                  <div className="inline-flex w-fit rounded-xl border border-border/60 bg-card/60 p-1 backdrop-blur-sm">
                     <button
                       onClick={() => setActionType('analysis')}
                       className={cn(
                         'inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors',
                         actionType === 'analysis'
-                          ? 'bg-coral text-plum-deep shadow-sm'
+                          ? 'bg-coral text-plum-deep shadow-xs'
                           : 'text-muted-foreground hover:text-foreground',
                       )}
                     >
@@ -819,7 +819,7 @@ export default function RanksPage() {
                       className={cn(
                         'inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors',
                         actionType === 'counselling'
-                          ? 'bg-mint text-plum-deep shadow-sm'
+                          ? 'bg-mint text-plum-deep shadow-xs'
                           : 'text-muted-foreground hover:text-foreground',
                       )}
                     >
@@ -1151,7 +1151,7 @@ export default function RanksPage() {
                           size="sm"
                           onClick={handleDownload}
                           disabled={orderedRows.length === 0}
-                          className="h-9 flex-1 gap-1.5 bg-gradient-to-r from-coral to-peach text-xs font-semibold text-plum-deep shadow-md shadow-coral/20 hover:from-coral hover:to-peach sm:flex-initial"
+                          className="h-9 flex-1 gap-1.5 bg-linear-to-r from-coral to-peach text-xs font-semibold text-plum-deep shadow-md shadow-coral/20 hover:from-coral hover:to-peach sm:flex-initial"
                         >
                           <Download className="h-3.5 w-3.5" />
                           Download PDF
@@ -1225,7 +1225,7 @@ export default function RanksPage() {
                                   }}
                                   className={cn(
                                     'cursor-move border-border/30 transition-colors',
-                                    isOver && 'bg-coral/10 outline outline-1 outline-coral/40',
+                                    isOver && 'bg-coral/10 outline-solid outline-1 outline-coral/40',
                                   )}
                                 >
                                   <TableCell className="text-center font-mono text-sm text-muted-foreground">

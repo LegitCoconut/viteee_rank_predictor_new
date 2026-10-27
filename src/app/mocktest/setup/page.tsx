@@ -47,13 +47,13 @@ const FormSchema = z
       message: 'Name must be at least 2 characters.',
     }),
     stream: z.enum(['MPCEA', 'BPCEA'], {
-      required_error: 'You need to select a stream.',
+      message: 'You need to select a stream.',
     }),
     agree: z.boolean().refine((val) => val === true, {
       message: 'You must agree to the instructions to continue.',
     }),
-    subscribe: z.boolean().optional().default(false),
-    subscribeEmail: z.string().optional().default(''),
+    subscribe: z.boolean(),
+    subscribeEmail: z.string(),
     token: z.string().min(1, { message: 'Please verify you are human.' }),
   })
   .superRefine((data, ctx) => {
@@ -214,11 +214,11 @@ function MockTestSetupContent() {
         <section className="relative isolate overflow-hidden hero-mesh py-20 md:py-28">
           <div className="pointer-events-none absolute inset-0">
             <div
-              className="absolute -top-24 left-1/4 h-[28rem] w-[28rem] rounded-full blur-3xl animate-blob-slow"
+              className="absolute -top-24 left-1/4 h-112 w-md rounded-full blur-3xl animate-blob-slow"
               style={{ background: 'radial-gradient(circle, hsl(var(--coral) / 0.5), transparent 60%)' }}
             />
             <div
-              className="absolute bottom-0 right-1/4 h-[26rem] w-[26rem] rounded-full blur-3xl animate-blob"
+              className="absolute bottom-0 right-1/4 h-104 w-104 rounded-full blur-3xl animate-blob"
               style={{ background: 'radial-gradient(circle, hsl(var(--mint) / 0.4), transparent 60%)' }}
             />
           </div>
@@ -273,7 +273,7 @@ function MockTestSetupContent() {
           {/* Instructions */}
           <section>
             <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-coral/20 to-peach/20">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-coral/20 to-peach/20">
                 <Info className="h-5 w-5 text-coral" />
               </div>
               <div>
@@ -286,7 +286,7 @@ function MockTestSetupContent() {
               </div>
             </div>
 
-            <div className="mb-5 rounded-2xl border border-coral/30 bg-gradient-to-br from-coral/10 to-peach/10 p-5">
+            <div className="mb-5 rounded-2xl border border-coral/30 bg-linear-to-br from-coral/10 to-peach/10 p-5">
               <p className="text-sm font-semibold tracking-tight">
                 New pattern for VITEEE 2027
               </p>
@@ -324,9 +324,9 @@ function MockTestSetupContent() {
                   transition={{ duration: 0.5, delay: index * 0.04 }}
                   className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-4 transition-shadow hover:shadow-md"
                 >
-                  <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br from-coral/10 to-peach/10 opacity-0 blur-2xl transition-opacity group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-linear-to-br from-coral/10 to-peach/10 opacity-0 blur-2xl transition-opacity group-hover:opacity-100" />
                   <div className="flex items-start gap-3">
-                    <div className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-muted">
+                    <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted">
                       <item.icon className="h-4 w-4 text-coral" />
                     </div>
                     <div className="min-w-0">
@@ -344,7 +344,7 @@ function MockTestSetupContent() {
 
             <div className="mt-5 rounded-2xl border border-border/60 bg-muted/30 p-5 text-sm text-muted-foreground">
               <p className="flex items-start gap-2">
-                <Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-coral" />
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-coral" />
                 <span>
                   Broken question, a bug, or a feature idea? Write to{' '}
                   <a
@@ -370,7 +370,7 @@ function MockTestSetupContent() {
           {/* Your Details */}
           <section>
             <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-mint/20 to-sky/20">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-mint/20 to-sky/20">
                 <User className="h-5 w-5 text-mint" />
               </div>
               <div>
@@ -427,14 +427,14 @@ function MockTestSetupContent() {
                                 className="grid grid-cols-1 gap-3 pt-1 sm:grid-cols-2"
                               >
                                 <FormItem className="flex items-center space-x-0 space-y-0">
-                                  <label className="group/option flex w-full cursor-pointer items-center gap-3 rounded-2xl border border-border/70 p-4 transition-all hover:border-coral/50 hover:bg-coral/5 has-[[data-state=checked]]:border-coral has-[[data-state=checked]]:bg-coral/10 has-[[data-state=checked]]:shadow-sm">
+                                  <label className="group/option flex w-full cursor-pointer items-center gap-3 rounded-2xl border border-border/70 p-4 transition-all hover:border-coral/50 hover:bg-coral/5 has-data-[state=checked]:border-coral has-data-[state=checked]:bg-coral/10 has-data-[state=checked]:shadow-xs">
                                     <FormControl>
                                       <RadioGroupItem value="MPCEA" />
                                     </FormControl>
                                     <div>
                                       <p className="flex items-center gap-2 text-sm font-semibold tracking-tight">
                                         MPCEA
-                                        <Sparkles className="h-3 w-3 text-coral opacity-0 transition-opacity group-has-[[data-state=checked]]/option:opacity-100" />
+                                        <Sparkles className="h-3 w-3 text-coral opacity-0 transition-opacity group-has-data-[state=checked]/option:opacity-100" />
                                       </p>
                                       <p className="text-xs text-muted-foreground">
                                         Maths, Physics, Chemistry, English,
@@ -572,7 +572,7 @@ function MockTestSetupContent() {
                         <Button
                           type="submit"
                           size="lg"
-                          className="shimmer-border group h-12 w-full gap-2 rounded-full bg-gradient-to-r from-coral to-peach px-8 text-base font-semibold text-plum-deep shadow-lg shadow-coral/20 hover:from-coral hover:to-peach sm:w-auto"
+                          className="shimmer-border group h-12 w-full gap-2 rounded-full bg-linear-to-r from-coral to-peach px-8 text-base font-semibold text-plum-deep shadow-lg shadow-coral/20 hover:from-coral hover:to-peach sm:w-auto"
                           disabled={
                             !modeValidated ||
                             isSubmitting ||
