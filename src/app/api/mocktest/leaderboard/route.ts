@@ -1,69 +1,19 @@
 import { NextResponse } from 'next/server';
-import { redis } from '@/lib/redis';
-
-const LEADERBOARD_KEY = 'mocktest:leaderboard';
-// Must match LEADERBOARD_STORE_LIMIT in submit/route.ts - read every member so
-// per-name dedup can't leave us short of DISPLAY_LIMIT unique students.
-const FETCH_LIMIT = 50;
-const DISPLAY_LIMIT = 10;
-
-function filterEntries(members: string[], isRandom: boolean): any[] {
-    const seen = new Set<string>();
-    const entries: any[] = [];
-    for (const m of members) {
-        try {
-            const parsed = typeof m === 'string' ? JSON.parse(m) : m;
-            const label: string = parsed?.testLabel ?? '';
-            const matchesMode = isRandom ? label === 'Random Test' : label !== 'Random Test';
-            if (!matchesMode) continue;
-            const name = parsed?.name ? String(parsed.name).trim().toLowerCase() : '';
-            if (!name || seen.has(name)) continue;
-            seen.add(name);
-            entries.push(parsed);
-            if (entries.length >= DISPLAY_LIMIT) break;
-        } catch {
-            // skip unparseable members
-        }
-    }
-    return entries;
-}
+import { getLeaderboard } from '@/lib/leaderboard';
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
+
     const split = searchParams.get('split') === 'true';
 
     try {
-        const members = (await redis.zrange<string[]>(LEADERBOARD_KEY, 0, FETCH_LIMIT - 1, { rev: true })) ?? [];
-
         if (split) {
-            return NextResponse.json({
-                random: filterEntries(members, true),
-                predefined: filterEntries(members, false),
-            });
+            const [random, predefined] = await Promise.all([getLeaderboard('random'), getLeaderboard('predefined')]);
+            return NextResponse.json({ random, predefined });
         }
-
-        // legacy single-mode path
-        const mode = searchParams.get('mode');
-        const seen = new Set<string>();
-        const entries: any[] = [];
-        for (const m of members) {
-            try {
-                const parsed = typeof m === 'string' ? JSON.parse(m) : m;
-                const label: string = parsed?.testLabel ?? '';
-                if (mode === 'random' && label !== 'Random Test') continue;
-                if (mode === 'predefined' && label === 'Random Test') continue;
-                const name = parsed?.name ? String(parsed.name).trim().toLowerCase() : '';
-                if (!name || seen.has(name)) continue;
-                seen.add(name);
-                entries.push(parsed);
-                if (entries.length >= DISPLAY_LIMIT) break;
-            } catch {}
-        }
-        return NextResponse.json(entries);
+        return NextResponse.json(await getLeaderboard(searchParams.get('mode') === 'predefined' ? 'predefined' : 'random'));
     } catch (error) {
         console.error('Failed to read leaderboard:', error);
-        return split
-            ? NextResponse.json({ random: [], predefined: [] }, { status: 200 })
-            : NextResponse.json([], { status: 200 });
+        return NextResponse.json(split ? { random: [], predefined: [] } : []);
     }
 }

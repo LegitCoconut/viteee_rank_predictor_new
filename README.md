@@ -39,7 +39,7 @@ Many questions contain images (diagrams, equations). To ensure high performance 
     -   This strategy significantly reduces bandwidth costs and improves load times for users.
 
 ### 4. Result Processing
-Upon submission, the user's answers are compared against the correct options stored in the database. The score is calculated instantly, and the result is saved to the `test-results` collection in MongoDB for analytics.
+Upon submission, the user's answers are compared against the correct options stored in the database. The score is calculated instantly in the browser and shown on the results page; only a trimmed entry (name, marks, test label) goes to the Redis leaderboard. Full results are not stored in the database.
 
 ## 📦 Installation
 

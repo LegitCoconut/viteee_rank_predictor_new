@@ -1,7 +1,8 @@
 import 'dotenv/config';
 import { Redis } from '@upstash/redis';
 
-const LEADERBOARD_KEY = 'mocktest:leaderboard';
+// Current boards (lb:*) plus the pre-2027 single board.
+const LEGACY_KEY = 'mocktest:leaderboard';
 
 async function main() {
     if (!process.argv.includes('--yes')) {
@@ -20,14 +21,17 @@ async function main() {
 
     const redis = new Redis({ url, token });
 
-    const sizeBefore = await redis.zcard(LEADERBOARD_KEY);
     console.log(`Connected to ${url}`);
-    console.log(`Leaderboard entries before flush: ${sizeBefore}`);
+    const keys = [LEGACY_KEY];
+    let cursor: string | number = 0;
+    do {
+        const [next, found]: [string | number, string[]] = await redis.scan(cursor, { match: 'lb:*', count: 100 });
+        keys.push(...found);
+        cursor = next;
+    } while (String(cursor) !== '0');
 
-    await redis.del(LEADERBOARD_KEY);
-
-    const sizeAfter = await redis.zcard(LEADERBOARD_KEY);
-    console.log(`Leaderboard entries after flush:  ${sizeAfter}`);
+    const deleted = await redis.del(...keys);
+    console.log(`Deleted ${deleted} of ${keys.length} leaderboard keys: ${keys.join(', ')}`);
     console.log('Done.');
 }
 

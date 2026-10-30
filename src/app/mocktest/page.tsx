@@ -22,6 +22,7 @@ export default function MockTestPage() {
   const contentRef = useRef<HTMLDivElement>(null);
   const patternRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const leaderboardRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -49,17 +50,30 @@ export default function MockTestPage() {
     })();
   }, []);
 
+  // Fetch the leaderboards only once the section is about to scroll into view.
   useEffect(() => {
-    (async () => {
+    const load = async () => {
       try {
         const res = await fetch('/api/mocktest/leaderboard?split=true');
         if (!res.ok) throw new Error('failed');
-        const data = await res.json();
-        setLeaderboardData(data);
+        setLeaderboardData(await res.json());
       } catch {
         setLeaderboardData({ random: [], predefined: [] });
       }
-    })();
+    };
+    const el = leaderboardRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return void load();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          observer.disconnect();
+          load();
+        }
+      },
+      { rootMargin: '300px' },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -271,7 +285,7 @@ export default function MockTestPage() {
           <AdSlot />
 
           {/* Split leaderboard */}
-          <section id="leaderboard" className="py-12 md:py-20">
+          <section id="leaderboard" ref={leaderboardRef} className="py-12 md:py-20">
             <div className="container mx-auto px-4">
               <div className="text-center mb-8 md:mb-12">
                 <h2 className="text-3xl md:text-5xl font-headline tracking-tighter font-semibold">Top Scorers</h2>
@@ -305,10 +319,10 @@ export default function MockTestPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
                 <div className={mobileTab === 'random' ? 'block' : 'hidden md:block'}>
-                  <Leaderboard mode="random" initialData={leaderboardData?.random} />
+                  <Leaderboard mode="random" entries={leaderboardData?.random ?? null} />
                 </div>
                 <div className={mobileTab === 'predefined' ? 'block' : 'hidden md:block'}>
-                  <Leaderboard mode="predefined" initialData={leaderboardData?.predefined} />
+                  <Leaderboard mode="predefined" entries={leaderboardData?.predefined ?? null} />
                 </div>
               </div>
             </div>

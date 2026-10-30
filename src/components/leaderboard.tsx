@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Trophy, Crown, Medal, Shuffle, ListChecks } from 'lucide-react';
+import { Crown, Medal, Shuffle, ListChecks } from 'lucide-react';
 
 interface Entry {
     examId: string;
@@ -17,8 +16,8 @@ interface Entry {
 }
 
 interface LeaderboardProps {
-    mode?: 'random' | 'predefined';
-    initialData?: Entry[];
+    mode: 'random' | 'predefined';
+    entries: Entry[] | null; // null while the parent is still loading
 }
 
 const MARK_CORRECT = 4;
@@ -47,46 +46,21 @@ function rankBadge(rank: number) {
 const BOARD_META = {
     random: {
         title: 'Random Tests',
-        description: 'Top scores from randomised 100-question tests.',
+        description: 'All-time top 10 from randomised 100-question tests.',
         icon: Shuffle,
         empty: 'No random test results yet.',
     },
     predefined: {
         title: 'Mock Tests',
-        description: 'Top scores across all curated mock tests.',
+        description: 'Today\u2019s top 10 across curated mock tests. Resets daily at midnight IST.',
         icon: ListChecks,
         empty: 'No mock test results yet.',
     },
-    all: {
-        title: 'Top 10 Scorers',
-        description: 'The top ten scores across all tests.',
-        icon: Trophy,
-        empty: 'No results yet. Be the first to submit a test!',
-    },
 };
 
-export function Leaderboard({ mode, initialData }: LeaderboardProps) {
-    const [entries, setEntries] = useState<Entry[] | null>(initialData ?? null);
-    const meta = BOARD_META[mode ?? 'all'];
+export function Leaderboard({ mode, entries }: LeaderboardProps) {
+    const meta = BOARD_META[mode];
     const Icon = meta.icon;
-
-    useEffect(() => {
-        if (initialData !== undefined) return; // data provided by parent - skip fetch
-        let cancelled = false;
-        const url = mode
-            ? `/api/mocktest/leaderboard?mode=${mode}`
-            : '/api/mocktest/leaderboard';
-        (async () => {
-            try {
-                const res = await fetch(url, { cache: 'no-store' });
-                const data: Entry[] = await res.json();
-                if (!cancelled) setEntries(data);
-            } catch {
-                if (!cancelled) setEntries([]);
-            }
-        })();
-        return () => { cancelled = true; };
-    }, [mode, initialData]);
 
     return (
         <Card className="border-border/50 shadow-xs h-full flex flex-col">
