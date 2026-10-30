@@ -328,6 +328,8 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
   }, [currentSubject, subjectToFirstIndex, handleSubmit]);
 
   const [sectionConfirmOpen, setSectionConfirmOpen] = useState(false);
+  const isLastSection = SUBJECT_ORDER.slice(SUBJECT_ORDER.indexOf(currentSubject as typeof SUBJECT_ORDER[number]) + 1)
+    .every((s) => subjectToFirstIndex[s] === undefined);
 
   return (
     <div
@@ -475,7 +477,9 @@ export function MockTestUIViteee({ questions, setupData }: MockTestUIViteeeProps
           <AlertDialogHeader>
             <AlertDialogTitle className="text-gray-900">Submit this section?</AlertDialogTitle>
             <AlertDialogDescription className="text-gray-600">
-              You cannot return to this section once submitted.
+              {isLastSection
+                ? "This is the last section, so submitting it will end the test and calculate your score."
+                : "You cannot return to this section once submitted."}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -4,9 +4,12 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 const STORAGE_KEY = 'donation_popup_last_shown';
+// Never interrupt a test in progress or its setup.
+const BLOCKED_PATHS = ['/mocktest/start', '/mocktest/setup'];
 const THROTTLE_MS = 12 * 60 * 60 * 1000; // 12 hours
 
 interface DonationPopupProps {
@@ -15,14 +18,17 @@ interface DonationPopupProps {
 
 export function DonationPopup({ delay = 17000 }: DonationPopupProps) {
   const [visible, setVisible] = useState(false);
+  const pathname = usePathname();
+  const blocked = BLOCKED_PATHS.some((p) => pathname.startsWith(p));
 
   useEffect(() => {
+    if (blocked) return;
     const last = localStorage.getItem(STORAGE_KEY);
     if (last && Date.now() - Number(last) < THROTTLE_MS) return;
 
     const timer = setTimeout(() => setVisible(true), delay);
     return () => clearTimeout(timer);
-  }, [delay]);
+  }, [delay, blocked]);
 
   function dismiss() {
     localStorage.setItem(STORAGE_KEY, String(Date.now()));
@@ -31,7 +37,7 @@ export function DonationPopup({ delay = 17000 }: DonationPopupProps) {
 
   return (
     <AnimatePresence>
-      {visible && (
+      {visible && !blocked && (
         <>
           {/* Backdrop */}
           <motion.div

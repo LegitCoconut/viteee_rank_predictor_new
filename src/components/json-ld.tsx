@@ -1,3 +1,5 @@
+import { HOME_FAQ } from '@/lib/home-faq';
+
 export function WebsiteJsonLd() {
   const websiteSchema = {
     '@context': 'https://schema.org',
@@ -41,56 +43,11 @@ export function FAQJsonLd() {
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'What is VITEEE 2027?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'VITEEE (VIT Engineering Entrance Exam) 2027 is the entrance examination conducted by Vellore Institute of Technology for admission to B.Tech programs across its campuses in Vellore, Chennai, AP, and Bhopal.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'How many mock tests can I take on VIT RANKS?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'You can take unlimited VITEEE mock tests on VIT RANKS. Choose from curated papers or generate a fresh randomised 100-question test anytime. Every attempt comes with instant analytics and a live leaderboard.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Are the VITEEE mock tests on VIT RANKS free?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Yes, all VITEEE mock tests on VIT RANKS are completely free and require no signup. You can take unlimited practice tests covering Physics, Chemistry, Mathematics, and Aptitude.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'What is the VITEEE 2027 exam pattern?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'VITEEE 2027 consists of 100 questions: Mathematics/Biology (40, 50 min), Physics (25, 30 min), Chemistry (25, 30 min), Aptitude (5) and English (5) (10 min together). The exam duration is 2 hours and is conducted in online CBT mode.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Does VITEEE have negative marking?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'The official VITEEE does not have negative marking - each correct answer awards +1 with no penalty for wrong answers. However, VIT RANKS mock tests use a stricter +4/-1/0 marking scheme (+4 for each correct answer, -1 for each wrong answer, 0 for unanswered) so students practise attempt discipline and build exam temperament similar to JEE-style papers.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'What is the VITEEE 2027 syllabus?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'The VITEEE 2027 syllabus covers Physics, Chemistry, Mathematics (or Biology), English, and Aptitude. The syllabus is based on the 11th and 12th standard curriculum. You can view and download the complete syllabus on VIT RANKS.',
-        },
-      },
-    ],
+    mainEntity: HOME_FAQ.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
   };
 
   return (

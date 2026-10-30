@@ -7,6 +7,7 @@ import { DualUIShowcase } from '@/components/dual-ui-showcase';
 import { ImportantDates } from '@/components/important-dates';
 import { FeedbackForm } from '@/components/feedback-form';
 import { Testimonials } from '@/components/testimonials';
+import { HomeFaq } from '@/components/home-faq';
 import { WebsiteJsonLd, FAQJsonLd } from '@/components/json-ld';
 import { Heart, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -133,6 +134,7 @@ export default function Home() {
         <DualUIShowcase />
         <ImportantDates />
         <Testimonials />
+        <HomeFaq />
 
         <section id="feedback" className="relative overflow-hidden py-24 md:py-32">
           <div className="pointer-events-none absolute inset-0 -z-10">
