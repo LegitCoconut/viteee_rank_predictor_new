@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/db';
 import { redis } from '@/lib/redis';
+import { SECTIONS } from '@/lib/exam-pattern';
 
 const MONGODB_DB = process.env.MONGODB_DB!;
 const R2_PUBLIC_URL = process.env.NEXT_PUBLIC_R2_PUBLIC_URL;
@@ -12,13 +13,20 @@ type PredefinedQuestion = {
     subject: string;
 };
 
-const SUBJECT_ORDER = ['maths', 'physics', 'chemistry', 'apt_eng'];
-
-function orderBySubject<T extends { subject: string }>(arr: T[]): T[] {
-    const rank = new Map(SUBJECT_ORDER.map((s, i) => [s, i]));
-    return arr
-        .slice()
-        .sort((a, b) => (rank.get(a.subject) ?? 99) - (rank.get(b.subject) ?? 99));
+// The stored papers are older 125-question sets. Serve a random 100-question cut with the 2027 per-section
+// counts (SECTIONS), kept in paper order within each section and ordered by section.
+function cutToPattern<T extends { subject: string }>(arr: T[]): T[] {
+    return SECTIONS.flatMap(({ key, questions }) => {
+        const inSection = arr.filter(q => q.subject === key);
+        const keep = new Set<number>();
+        const idx = inSection.map((_, i) => i);
+        for (let i = 0; i < Math.min(questions, idx.length); i++) {
+            const j = i + Math.floor(Math.random() * (idx.length - i));
+            [idx[i], idx[j]] = [idx[j], idx[i]];
+            keep.add(idx[i]);
+        }
+        return inSection.filter((_, i) => keep.has(i));
+    });
 }
 
 async function loadQuestionsFromMongo(id: number): Promise<PredefinedQuestion[]> {
@@ -121,7 +129,7 @@ export async function GET(
             }
         }
 
-        const ordered = orderBySubject(pool);
+        const ordered = cutToPattern(pool);
         const response = ordered.map(q => ({
             _id: q._id,
             image_id: q.image_id,
