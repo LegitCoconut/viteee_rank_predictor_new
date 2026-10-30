@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
-import { TOTAL_QUESTIONS } from '@/lib/exam-pattern';
 import { submitToLeaderboard } from '@/lib/leaderboard';
 
-// VITEEE 2027 marking (400 marks for 100 questions) - mirrors the test UIs.
+// Largest paper served: the predefined mock tests in Mongo are still the older 125-question sets (random tests are 100).
+// Marks are +4/-1 per question, so maxMarks = total * 4 and the board ranks by percentage.
+const MAX_QUESTIONS = 125;
 const MARK_CORRECT = 4;
 const MARK_WRONG = -1;
 
@@ -17,7 +18,7 @@ export async function POST(request: Request) {
         const valid =
             name &&
             Number.isInteger(score) && Number.isInteger(wrong) && Number.isInteger(total) &&
-            score >= 0 && wrong >= 0 && total > 0 && total <= TOTAL_QUESTIONS &&
+            score >= 0 && wrong >= 0 && total > 0 && total <= MAX_QUESTIONS &&
             score + wrong <= total;
         if (!valid) {
             return NextResponse.json({ message: 'Invalid result' }, { status: 400 });
