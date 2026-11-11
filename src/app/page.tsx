@@ -7,6 +7,7 @@ import { DualUIShowcase } from '@/components/dual-ui-showcase';
 import { ImportantDates } from '@/components/important-dates';
 import { FeedbackForm } from '@/components/feedback-form';
 import { Testimonials } from '@/components/testimonials';
+import { RedditCommunities } from '@/components/reddit-communities';
 import { HomeFaq } from '@/components/home-faq';
 import { WebsiteJsonLd, FAQJsonLd } from '@/components/json-ld';
 import { Heart, ArrowRight } from 'lucide-react';
@@ -133,6 +134,7 @@ export default function Home() {
         <HowItWorks />
         <DualUIShowcase />
         <ImportantDates />
+        <RedditCommunities />
         <Testimonials />
         <HomeFaq />
 
