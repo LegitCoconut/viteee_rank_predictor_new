@@ -44,7 +44,7 @@ export function SyllabusSection() {
         <div className="max-w-4xl mx-auto">
           <Accordion type="single" collapsible className="w-full space-y-3">
             {syllabus.map((subject) => (
-              <AccordionItem key={subject.subject} value={subject.subject} className="relative border rounded-lg px-4 data-[state=open]:bg-muted/20">
+              <AccordionItem key={subject.subject} value={subject.subject} className="relative rounded-2xl border border-border/60 bg-card px-4">
                 <AccordionTrigger className="text-lg font-semibold hover:no-underline py-4">
                   <div className="flex items-center gap-3">
                     <div className="flex items-center justify-center h-9 w-9 rounded-lg bg-primary/10">

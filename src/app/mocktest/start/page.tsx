@@ -4,6 +4,7 @@ import { SECTIONS, TOTAL_QUESTIONS } from '@/lib/exam-pattern';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/header';
+import { Sky } from '@/components/ui/animated-hero';
 import { Footer } from '@/components/footer';
 import { CheckCircle, Loader2, Monitor } from 'lucide-react';
 import { MockTestUI } from '@/components/mock-test-ui';
@@ -131,7 +132,8 @@ export default function MockTestStartPage() {
 
   if (!setupData) {
     return (
-      <div className="flex flex-col min-h-dvh">
+      <div className="sky-page relative isolate flex min-h-dvh flex-col">
+        <Sky />
         <Header />
         <main className="flex min-h-[calc(100dvh-3.5rem)] items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin text-primary" aria-label="Loading" />
@@ -168,7 +170,8 @@ export default function MockTestStartPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-dvh">
+    <div className="sky-page relative isolate flex min-h-dvh flex-col">
+      <Sky />
       <Header />
       <main className="flex-1 flex flex-col items-center justify-center container mx-auto py-8 text-center">
         {loadingState === 'fetching' && (

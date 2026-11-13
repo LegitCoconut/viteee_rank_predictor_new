@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Header } from '@/components/header';
+import { Sky } from '@/components/ui/animated-hero';
 import { Footer } from '@/components/footer';
 
 const BMC_URL = 'https://buymeacoffee.com/legitcoconut';
@@ -19,7 +20,8 @@ const PRINCIPLES = [
 
 export default function DonatePage() {
   return (
-    <div className="flex min-h-dvh flex-col bg-background">
+    <div className="sky-page relative isolate flex min-h-dvh flex-col">
+      <Sky />
       <Header />
       <main className="flex-1">
         <section className="hero-mesh py-14 md:py-20">

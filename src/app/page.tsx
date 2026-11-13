@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { Hero } from '@/components/ui/animated-hero';
+import { Hero, Sky } from '@/components/ui/animated-hero';
 import { HowItWorks } from '@/components/how-it-works';
 import { DualUIShowcase } from '@/components/dual-ui-showcase';
 import { ImportantDates } from '@/components/important-dates';
@@ -9,6 +9,7 @@ import { FeedbackForm } from '@/components/feedback-form';
 import { Testimonials } from '@/components/testimonials';
 import { RedditCommunities } from '@/components/reddit-communities';
 import { HomeFaq } from '@/components/home-faq';
+import { HomeInsights } from '@/components/home-insights';
 import { WebsiteJsonLd, FAQJsonLd } from '@/components/json-ld';
 import { Heart, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -124,7 +125,8 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="flex min-h-dvh flex-col bg-background">
+    <div className="sky-page relative isolate flex min-h-dvh flex-col">
+      <Sky hero />
       <WebsiteJsonLd />
       <FAQJsonLd />
       <DonationPopup />
@@ -136,6 +138,7 @@ export default function Home() {
         <ImportantDates />
         <RedditCommunities />
         <Testimonials />
+        <HomeInsights />
         <HomeFaq />
 
         <section id="feedback" className="relative overflow-hidden py-24 md:py-32">

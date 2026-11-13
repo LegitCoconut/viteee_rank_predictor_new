@@ -305,7 +305,79 @@
   66%      { transform: translate(-24px, 20px) scale(0.94); }
 }
 
+/* Homepage sky: fixed gradient with stars, clouds and paper planes behind the whole page. */
+.sky {
+  background: linear-gradient(180deg, #0a3bd0 0%, #0c45e0 30%, #0d55ec 50%, #5a50de 75%, #8f4dd0 100%);
+}
+/* First screen only: the reference sky, blue with a narrow violet-to-orchid band low down.
+   It scrolls away so body text below never sits on the pink. */
+.sky-hero {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 100svh;
+  background: linear-gradient(180deg, #0a3bd0 0%, #0c45e0 28%, #0d55ec 50%, #2f57e0 60%, #6257dc 66%, #a166d8 72%, #d67fd0 80%, #c66dd0 88%, #9a55d2 100%);
+  -webkit-mask-image: linear-gradient(#000 84%, transparent);
+  mask-image: linear-gradient(#000 84%, transparent);
+}
+/* Theme tokens retuned so the dark-theme sections read on the sky. */
+.sky-page {
+  --background: 238 50% 10%;
+  --card: 238 60% 14%;
+  --popover: 238 60% 14%;
+  --secondary: 236 50% 22%;
+  --muted: 236 50% 22%;
+  --muted-foreground: 225 100% 95%;
+  --border: 234 55% 52%;
+  --input: 234 45% 38%;
+  /* @theme resolves --color-* at :root, so they must be re-derived here to pick up the values above. */
+  --color-background: hsl(var(--background));
+  --color-card: hsl(var(--card));
+  --color-popover: hsl(var(--popover));
+  --color-secondary: hsl(var(--secondary));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  color: hsl(var(--foreground));
+}
+.sky-page .hero-mesh { background: none; }
+.sky-page .bg-card { background-color: hsl(var(--card) / 0.72); }
+/* Coral is unreadable on the blue, so accents go warm yellow here. */
+.sky-page :is(.gradient-text, .text-coral) { color: hsl(42 100% 80%); }
+.sky-page main :is(h2, h3, p) { text-shadow: 0 1px 10px rgb(23 37 150 / 0.45); }
+.sky-stars {
+  background-image:
+    radial-gradient(circle at 85% 5%, #e6efff 0 2px, rgb(141 180 255 / 0.4) 3px, transparent 10px),
+    radial-gradient(circle at 71% 12%, #e6efff 0 1.2px, rgb(141 180 255 / 0.4) 2.2px, transparent 6.8px),
+    radial-gradient(circle at 11% 19%, #e6efff 0 1.2px, rgb(141 180 255 / 0.4) 2.2px, transparent 6.8px),
+    radial-gradient(circle at 31% 29%, #e6efff 0 0.8px, rgb(141 180 255 / 0.4) 1.8px, transparent 5.2px),
+    radial-gradient(circle at 36% 42%, #e6efff 0 1.2px, rgb(141 180 255 / 0.4) 2.2px, transparent 6.8px),
+    radial-gradient(circle at 63% 42%, #e6efff 0 1.2px, rgb(141 180 255 / 0.4) 2.2px, transparent 6.8px),
+    radial-gradient(circle at 88% 59%, #e6efff 0 1.2px, rgb(141 180 255 / 0.4) 2.2px, transparent 6.8px),
+    radial-gradient(circle at 52% 8%, #e6efff 0 0.8px, rgb(141 180 255 / 0.4) 1.8px, transparent 5.2px);
+  animation: sky-twinkle 4s ease-in-out infinite alternate;
+}
+.sky-cloud {
+  position: absolute;
+  width: min(var(--w, 26rem), 62vw);
+  aspect-ratio: 4 / 3;
+  /* CC0 renders from opengameart.org/content/clouds-with-transparency, recoloured. */
+  background: var(--img) center / contain no-repeat;
+  opacity: var(--o, 1);
+  animation: sky-drift var(--d, 24s) ease-in-out infinite alternate;
+}
+@keyframes sky-twinkle {
+  from { opacity: 0.35; }
+  to   { opacity: 1; }
+}
+@keyframes sky-drift {
+  from { transform: translate(-2rem, 0); }
+  to   { transform: translate(2.5rem, -0.75rem); }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .sky-stars,
+  .sky-cloud,
   .animate-blob,
   .animate-blob-slow,
   .animate-blob-fast,

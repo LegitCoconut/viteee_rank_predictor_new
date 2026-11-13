@@ -87,7 +87,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'How accurate is the VITEEE 2027 rank predictor?',
-    a: 'It is as accurate as the 2025 data allows. Cutoffs change every year based on seat availability, demand and the equi-percentile rank list, so treat every prediction as an informed estimate. Cutoffs we mark with a "New" badge are interpolated from sibling courses and are explicitly approximate.',
+    a: 'It is as accurate as the 2025 and 2026 data allows - collected from the internet using AI, so take it with a pinch of salt. Cutoffs change every year based on seat availability, demand and the equi-percentile rank list, so treat every prediction as an informed estimate. Cutoffs we mark with a "New" badge are interpolated from sibling courses and are explicitly approximate.',
   },
   {
     q: 'Which VIT campus can I get with my VITEEE rank?',
@@ -185,7 +185,7 @@ export function RanksSeoContent() {
           tags as raw script content. */}
       <script type="application/ld+json">{faqJsonLd}</script>
 
-      <section className="border-t border-border/40 bg-background py-20 md:py-28">
+      <section className="py-20 md:py-28">
         <div className="container mx-auto max-w-5xl space-y-20 px-4 md:space-y-24">
           {/* About */}
           <div>
@@ -411,8 +411,9 @@ export function RanksSeoContent() {
           {/* Closing disclaimer */}
           <p className="text-center text-xs text-muted-foreground">
             VIT Ranks is an independent, student-built tool. We are not affiliated with Vellore
-            Institute of Technology. All cutoff data shown here was scraped from public sources
-            and is provided for informational use only.
+            Institute of Technology. All cutoff data shown here was collected from public web
+            sources using AI (2025 and 2026) and is provided for informational use only.
+            Take it with a pinch of salt.
           </p>
         </div>
       </section>

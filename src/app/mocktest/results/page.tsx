@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/header';
+import { Sky } from '@/components/ui/animated-hero';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -61,7 +62,8 @@ export default function MockTestResultPage() {
 
   if (!result) {
     return (
-      <div className="flex min-h-dvh flex-col">
+      <div className="sky-page relative isolate flex min-h-dvh flex-col">
+        <Sky />
         <Header />
         <main className="flex flex-1 items-center justify-center">
           <p className="text-muted-foreground">Loading results&hellip;</p>
@@ -114,7 +116,8 @@ export default function MockTestResultPage() {
   ];
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background">
+    <div className="sky-page relative isolate flex min-h-dvh flex-col">
+      <Sky />
       <DonationPopup delay={500} />
       <Header />
       <main className="flex-1">

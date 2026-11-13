@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'VITEEE Rank Predictor & VIT College Predictor 2027',
   description:
-    'Free VITEEE rank predictor & VIT college predictor. Enter your VITEEE rank to see which campus (VIT Vellore, Chennai, AP, Bhopal) and B.Tech branch you can secure across all 5 fee categories. Drag-to-reorder, PDF export, shareable QR. Based on 2025 cutoff data.',
+    'Free VITEEE rank predictor & VIT college predictor: enter your rank to see which VIT Vellore, Chennai, AP or Bhopal B.Tech branch you can get. No signup.',
   keywords: [
     // Primary intent (highest impressions in search console)
     'viteee rank predictor', 'viteee rank predictor 2027',
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'VITEEE Rank Predictor & VIT College Predictor 2027',
     description:
-      'Predict which VIT campus and branch your VITEEE rank can secure. Free, no signup. Drag-to-reorder, PDF export, QR share.',
+      'Predict which VIT campus and branch your VITEEE rank can secure, across all 5 fee categories. Free, no signup. Drag-to-reorder, PDF export, QR share.',
     url: '/ranks',
     images: [
       {
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'VITEEE Rank & College Predictor 2027',
     description:
-      'Free VITEEE rank & college predictor for VIT Vellore, Chennai, AP, Bhopal. Based on 2025 cutoffs.',
+      'Free VITEEE rank & college predictor for VIT Vellore, Chennai, AP, Bhopal. Built from 2025 and 2026 cutoff data. No signup.',
     images: ['/hompage.png'],
   },
 };
