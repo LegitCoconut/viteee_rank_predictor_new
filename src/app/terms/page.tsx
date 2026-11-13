@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 import { Header } from '@/components/header';
+import { Sky } from '@/components/ui/animated-hero';
 import { Footer } from '@/components/footer';
 import { Globe, Mail, BookOpen, Trophy, Lock, Info, HardDrive } from 'lucide-react';
 
@@ -80,7 +81,8 @@ export default function TermsPage() {
   const heroInView = useInView(heroRef, { once: true });
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background">
+    <div className="sky-page relative isolate flex min-h-dvh flex-col">
+      <Sky />
       <Header />
       <main className="flex-1">
         {/* Hero */}

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QRCodeCanvas } from 'qrcode.react';
 import { Header } from '@/components/header';
+import { Sky } from '@/components/ui/animated-hero';
 import { Footer } from '@/components/footer';
 import { RanksSeoContent } from '@/components/ranks-seo-content';
 import { RanksAppJsonLd } from '@/components/ranks-jsonld';
@@ -35,7 +36,6 @@ import { Badge } from '@/components/ui/badge';
 import { MultiSelect, MultiSelectOption } from '@/components/ui/multi-select';
 import {
   TrendingUp,
-  GraduationCap,
   Award,
   AlertCircle,
   CheckCircle2,
@@ -45,7 +45,7 @@ import {
   BarChart3,
   Building2,
   ChevronLeft,
-  Sparkles,
+  Send,
   Medal,
   Download,
   GripVertical,
@@ -205,6 +205,9 @@ export default function RanksPage() {
   const marksInfo = isValidRank ? getMarksFromRank(rankNum) : null;
   const stepIdx = STEP_ORDER.indexOf(step);
   const isHero = step === 'rank';
+  const launch = () => {
+    if (isValidRank) setStep('action');
+  };
 
   const [showAllAnalysisCourses, setShowAllAnalysisCourses] = useState(false);
   const [showAllCounsellingRows, setShowAllCounsellingRows] = useState(false);
@@ -324,7 +327,8 @@ export default function RanksPage() {
   const hasCustomOrder = customOrder !== null && customOrder.length > 0;
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background">
+    <div className="sky-page relative isolate flex min-h-dvh flex-col">
+      <Sky />
       <RanksAppJsonLd />
       <Header />
       <main className="flex-1">
@@ -382,16 +386,6 @@ export default function RanksPage() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.35 }}
                   >
-                    <motion.div
-                      initial={{ opacity: 0, y: 12, scale: 0.94 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ duration: 0.55 }}
-                      className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/85 backdrop-blur-md"
-                    >
-                      <Medal className="h-3.5 w-3.5 text-coral" />
-                      VIT Rank &amp; College Predictor 2027
-                    </motion.div>
-
                     <motion.h1
                       initial={{ opacity: 0, y: 24 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -408,80 +402,45 @@ export default function RanksPage() {
                       initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.7, delay: 0.2 }}
-                      className="mx-auto mt-6 max-w-2xl text-center text-base text-white/70 md:text-lg"
+                      className="mx-auto mt-6 max-w-2xl text-center text-base text-white/90 md:text-lg"
                     >
-                      Built from publicly scraped 2025 cutoff data - not official VIT
-                      figures. Use it to understand where your rank lands, not as a
-                      guarantee.
+                      Free VITEEE rank predictor and VIT college predictor for Vellore,
+                      Chennai, AP and Bhopal. Built from 2025 and 2026 cutoff data
+                      collected from the internet using AI - not official VIT figures.
+                      Take it with a pinch of salt.
                     </motion.p>
 
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.3 }}
-                      className="mx-auto mt-10 max-w-md"
+                      className="mx-auto mt-10 max-w-xl"
                     >
-                      <div className="relative">
-                        <div className="absolute inset-0 rounded-3xl bg-linear-to-r from-coral/20 to-mint/20 blur-2xl" />
-                        <div className="relative rounded-3xl border border-white/20 bg-white/10 p-6 backdrop-blur-xl">
-                          <Label htmlFor="rank-input" className="text-sm font-medium text-white/90">
-                            Enter your VITEEE Rank
-                          </Label>
-                          <Input
-                            id="rank-input"
-                            type="number"
-                            inputMode="numeric"
-                            placeholder="e.g. 5000"
-                            value={rank}
-                            onChange={(e) => setRank(e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' && isValidRank) setStep('action');
-                            }}
-                            className="mt-3 h-12 border-white/20 bg-white/5 text-lg text-white placeholder:text-white/40"
-                          />
-                          <p className="mt-2 text-xs text-white/50">
-                            Enter a number between 1 and 2,00,000
-                          </p>
-                          <Button
-                            onClick={() => isValidRank && setStep('action')}
-                            disabled={!isValidRank}
-                            className="shimmer-border group mt-4 h-12 w-full gap-2 rounded-full bg-white px-6 text-base font-semibold text-plum-deep hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-60"
-                          >
-                            <Sparkles className="h-4 w-4 text-coral transition-transform group-hover:rotate-12" />
-                            Start Analysis
-                          </Button>
-                        </div>
-                      </div>
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.5 }}
-                      className="mx-auto mt-10 flex w-fit max-w-full items-stretch justify-center gap-2 sm:gap-3"
-                    >
-                      {[
-                        { icon: GraduationCap, value: '70+', label: 'Courses' },
-                        { icon: Building2, value: '4', label: 'Campuses' },
-                        { icon: TrendingUp, value: '2025', label: 'Cutoff Data' },
-                      ].map((stat) => (
-                        <div
-                          key={stat.label}
-                          className="glass flex min-w-0 flex-1 items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-3 backdrop-blur-md sm:gap-3 sm:px-5"
+                      <div className="flex items-center gap-2 rounded-full border border-white/40 bg-white/15 p-1.5 pl-6 shadow-2xl shadow-[#0a1a6b]/40 backdrop-blur-md focus-within:border-white/80">
+                        <Input
+                          id="rank-input"
+                          type="text"
+                          inputMode="numeric"
+                          autoComplete="off"
+                          aria-label="Your VITEEE rank"
+                          placeholder="Enter your VITEEE rank"
+                          value={rank}
+                          onChange={(e) => setRank(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') launch();
+                          }}
+                          className="h-11 min-w-0 flex-1 border-0 bg-transparent px-0 text-lg text-white shadow-none outline-none placeholder:text-white/70 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        />
+                        <Button
+                          onClick={launch}
+                          disabled={!isValidRank}
+                          className="group h-11 shrink-0 gap-2 rounded-full bg-[#fdeef6] px-5 text-base font-semibold text-[#181121] hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
                         >
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-coral/30 to-peach/30 sm:h-10 sm:w-10">
-                            <stat.icon className="h-4 w-4 text-white sm:h-5 sm:w-5" />
-                          </div>
-                          <div className="min-w-0">
-                            <p className="font-display text-xl italic leading-none text-white sm:text-2xl">
-                              {stat.value}
-                            </p>
-                            <p className="mt-1 truncate text-[10px] uppercase tracking-widest text-white/60 sm:text-[11px]">
-                              {stat.label}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
+                          <span className="hidden sm:inline">Start Analysis</span>
+                          <span className="sm:hidden">Start</span>
+                          <Send aria-hidden className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </motion.div>
 
                     <motion.div
@@ -1400,12 +1359,13 @@ export default function RanksPage() {
                           Unofficial data - use as guidance only
                         </p>
                         <p className="mt-1 text-xs text-muted-foreground">
-                          All cutoffs and rank ladders shown here were scraped from
-                          public sources (CollegeDunia, GetMyUni, CollegeDekho,
-                          Careers360). VIT does <strong>not</strong> publish a clean
+                          All cutoffs and rank ladders shown here were collected from
+                          public web sources (CollegeDunia, GetMyUni, CollegeDekho,
+                          Careers360) using AI, covering 2025 and 2026, so errors are
+                          possible. VIT does <strong>not</strong> publish a clean
                           marks-vs-rank table, and category cutoffs change every year.
-                          Treat this as a way to understand where your rank lands -
-                          not as an official prediction.{' '}
+                          Take it with a pinch of salt - it is a way to understand
+                          where your rank lands, not an official prediction.{' '}
                           <Link
                             href="/ranks/info"
                             className="font-medium text-coral underline-offset-2 hover:underline"
@@ -1424,7 +1384,7 @@ export default function RanksPage() {
                         <p className="text-sm font-medium">About new 2026 courses</p>
                         <p className="mt-1 text-xs text-muted-foreground">
                           Some courses listed are new for 2026 and don&apos;t have
-                          2025 cutoff data. Their cutoffs are estimated based on
+                          earlier cutoff data. Their cutoffs are estimated based on
                           similar courses, so treat those rows as approximate.
                         </p>
                       </div>

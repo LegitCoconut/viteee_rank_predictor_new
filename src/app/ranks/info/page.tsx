@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Header } from '@/components/header';
+import { Sky } from '@/components/ui/animated-hero';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -179,7 +180,8 @@ export default function RanksInfoPage() {
     COURSE_DATA.filter((co) => co.campus === c);
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background">
+    <div className="sky-page relative isolate flex min-h-dvh flex-col">
+      <Sky />
       <Header />
       <main className="flex-1">
         <TooltipProvider delayDuration={150}>
@@ -257,11 +259,11 @@ export default function RanksInfoPage() {
                 <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" />
                 <div>
                   <p className="text-sm font-semibold text-amber-100">
-                    Unofficial data - scraped from public sources
+                    Unofficial data - collected from the web using AI (2025 and 2026)
                   </p>
                   <p className="mt-1 text-xs leading-relaxed text-white/70">
                     None of these numbers come from VIT directly. They&apos;re compiled
-                    from CollegeDunia, GetMyUni, CollegeDekho and Careers360. VIT
+                    with AI from CollegeDunia, GetMyUni, CollegeDekho and Careers360. VIT
                     publishes the programme list, the equi-percentile rank rule, and
                     the counselling eligibility, but <strong>not</strong> a clean raw
                     marks-vs-rank table. Use this page to <em>understand</em> where a

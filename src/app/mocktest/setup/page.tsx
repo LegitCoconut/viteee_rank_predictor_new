@@ -8,6 +8,7 @@ import { z } from 'zod';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Header } from '@/components/header';
+import { Sky } from '@/components/ui/animated-hero';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -203,7 +204,8 @@ function MockTestSetupContent() {
   }
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background">
+    <div className="sky-page relative isolate flex min-h-dvh flex-col">
+      <Sky />
       <Header />
       <main className="flex-1">
         {/* Banner */}

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Header } from '@/components/header';
+import { Sky } from '@/components/ui/animated-hero';
 import { Footer } from '@/components/footer';
 import { MockTestPattern } from '@/components/mock-test-pattern';
 import { Button } from '@/components/ui/button';
@@ -104,7 +105,8 @@ export default function MockTestPage() {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background">
+    <div className="sky-page relative isolate flex min-h-dvh flex-col">
+      <Sky />
       <MockTestJsonLd />
       <DonationPopup />
       <Header />
@@ -270,9 +272,6 @@ export default function MockTestPage() {
               </div>
             </motion.div>
           </motion.div>
-
-          {/* Fade into next section */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-background" />
         </section>
 
         {/* Ad #1: after hero */}

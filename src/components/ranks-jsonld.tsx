@@ -39,6 +39,8 @@ export function RanksAppJsonLd() {
         '@id': `${SITE}/ranks#app`,
         name: 'VITEEE Rank & College Predictor',
         url: `${SITE}/ranks`,
+        description:
+          'Free VITEEE rank predictor and VIT college predictor. Enter a VITEEE rank to see which B.Tech programmes, fee categories (1 to 5) and campuses (Vellore, Chennai, AP, Bhopal) you can secure. Built from 2025 and 2026 cutoff data collected from the internet using AI; not official VIT data.',
         applicationCategory: 'EducationalApplication',
         operatingSystem: 'Any (web)',
         browserRequirements: 'Requires JavaScript. Modern browser.',

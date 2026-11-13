@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Header } from '@/components/header';
+import { Sky } from '@/components/ui/animated-hero';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import {
@@ -54,7 +55,8 @@ export default function DetailedResultsPageWrapper() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-dvh flex-col">
+        <div className="sky-page relative isolate flex min-h-dvh flex-col">
+          <Sky />
           <Header />
           <main className="flex flex-1 items-center justify-center">
             <p className="text-muted-foreground">Loading detailed results&hellip;</p>
@@ -165,7 +167,8 @@ function DetailedResultsPage() {
 
   if (load.status === 'loading') {
     return (
-      <div className="flex min-h-dvh flex-col">
+      <div className="sky-page relative isolate flex min-h-dvh flex-col">
+        <Sky />
         <Header />
         <main className="flex flex-1 items-center justify-center">
           <p className="text-muted-foreground">Loading detailed results&hellip;</p>
@@ -178,7 +181,8 @@ function DetailedResultsPage() {
   if (load.status === 'not-found' || load.status === 'missing-snapshot') {
     const isLegacy = load.status === 'missing-snapshot';
     return (
-      <div className="flex min-h-dvh flex-col bg-background">
+      <div className="sky-page relative isolate flex min-h-dvh flex-col">
+        <Sky />
         <Header />
         <main className="flex-1">
           <section className="container mx-auto max-w-2xl px-4 py-24 text-center">
@@ -250,7 +254,8 @@ function DetailedResultsPage() {
   const pct = maxMarks ? (marks / maxMarks) * 100 : 0;
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background">
+    <div className="sky-page relative isolate flex min-h-dvh flex-col">
+      <Sky />
       <Header />
       <main className="flex-1">
         <section className="hero-mesh py-10 md:py-14">
