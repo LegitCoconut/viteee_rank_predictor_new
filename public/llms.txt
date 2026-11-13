@@ -10,6 +10,12 @@
 - [VITEEE Rank & College Predictor](https://ranks.vhome.co.in/ranks): enter a VITEEE rank from 1 to 2,00,000 and see every B.Tech programme, fee category (1–5), and campus you can secure or reach. Supports drag-to-reorder, PDF export and shareable URLs/QR codes.
 - [Free VITEEE Mock Tests](https://ranks.vhome.co.in/mocktest): full-length mock tests in the 2027 pattern (100 questions, 2 hours; Mathematics 40 / 50 min, Physics 25 / 30 min, Chemistry 25 / 30 min, Aptitude & English 10 / 10 min, with per-section timers), instant analytics and a live leaderboard. Free, no signup.
 
+## Write-ups
+
+- [VITEEE write-ups and guides](https://ranks.vhome.co.in/writeups): plain-English guides on VITEEE 2027 dates, eligibility, exam pattern, negative marking, fees and counselling rules, each with an FAQ.
+- [VITEEE 2027: The Complete Student's Guide](https://ranks.vhome.co.in/writeups/viteee-2027-complete-students-guide): the full guide with key dates, eligibility, exam pattern and marking (+4 / -1, 400 marks), fee, counselling rules, mistakes to avoid and a FAQ.
+- [All write-ups, full text](https://ranks.vhome.co.in/writeups/llms.txt): every write-up as one markdown file, updated automatically as new ones are published.
+
 ## Reference data
 
 - [VITEEE 2025 Cutoffs, Marks vs Rank & Counselling Data](https://ranks.vhome.co.in/ranks/info): every public 2025 closing rank per campus, branch and fee category; the equi-percentile marks-to-rank ladder; the counselling eligibility rule; the campus-wise rank-band outlook for 2027.
@@ -33,7 +39,7 @@ VIT Ranks is built and maintained by Malabar Matrix, a small collective of stude
 
 ## Data source disclosure
 
-All cutoff figures are scraped from public 2025 sources (CollegeDunia campus pages, GetMyUni, CollegeDekho, Careers360). They are not official VIT figures. They should be treated as a reference base for prediction, not as guaranteed outcomes for 2027.
+All cutoff figures were collected from public web sources (CollegeDunia campus pages, GetMyUni, CollegeDekho, Careers360) using AI, covering 2025 and 2026. They are not official VIT figures and should be taken with a pinch of salt. They should be treated as a reference base for prediction, not as guaranteed outcomes for 2027.
 
 ## Optional pages
 

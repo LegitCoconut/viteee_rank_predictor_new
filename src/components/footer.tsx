@@ -12,6 +12,7 @@ const NAV_LINKS = {
     { label: 'Exam UI preview', href: '/#exam-ui' },
     { label: 'Important dates', href: '/#important-dates' },
     { label: 'Past results', href: '/#past-results' },
+    { label: 'Write-ups', href: '/writeups' },
   ],
   Company: [
     { label: 'Terms & Conditions', href: '/terms' },

@@ -1,17 +1,23 @@
 import { MetadataRoute } from 'next'
+import { getWriteups } from '@/lib/writeups'
 
 // W3C-Datetime without fractional seconds. Google's sitemap parser has been
 // known to reject lastmod values that include milliseconds (e.g. ...35.941Z),
 // so we strip the millisecond portion before emitting.
-const lastModified = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')
+const iso = (d: Date) => d.toISOString().replace(/\.\d{3}Z$/, 'Z')
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://ranks.vhome.co.in'
+    const now = iso(new Date())
+    const writeups = getWriteups()
+    // A write-up's lastmod is its own date, not the build time, so crawlers can trust it.
+    const newest = writeups.find(w => w.date)?.date
 
     const routes: Array<{
         path: string
         changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']
         priority: number
+        lastModified?: string
     }> = [
         { path: '/',              changeFrequency: 'weekly',  priority: 1.0 },
         { path: '/mocktest',      changeFrequency: 'weekly',  priority: 0.9 },
@@ -19,13 +25,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { path: '/ranks/info',    changeFrequency: 'monthly', priority: 0.7 },
         { path: '/mocktest/setup',changeFrequency: 'monthly', priority: 0.7 },
         { path: '/mocktest/results', changeFrequency: 'monthly', priority: 0.5 },
+        { path: '/writeups',      changeFrequency: 'weekly',  priority: 0.8, lastModified: newest ? iso(newest) : now },
+        ...writeups.map(w => ({ path: `/writeups/${w.slug}`, changeFrequency: 'monthly' as const, priority: 0.7, lastModified: w.date ? iso(w.date) : now })),
         { path: '/donate',        changeFrequency: 'monthly', priority: 0.4 },
         { path: '/terms',         changeFrequency: 'yearly',  priority: 0.3 },
     ]
 
     return routes.map(route => ({
         url: `${baseUrl}${route.path}`,
-        lastModified,
+        lastModified: route.lastModified ?? now,
         changeFrequency: route.changeFrequency,
         priority: route.priority,
     }))

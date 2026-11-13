@@ -1,15 +1,14 @@
 import { MetadataRoute } from 'next'
 
-// Block list shared across every UA - we never want /api or the live mocktest
-// runtime page indexed, regardless of crawler.
-const DISALLOW = ['/api/', '/mocktest/start']
+// Block list shared across every UA - only the API routes are off limits.
+// All /mocktest pages, including /mocktest/start, are crawlable.
+const DISALLOW = ['/api/']
 
 // Explicit allows for AI / LLM crawlers. Several of these (GPTBot, ClaudeBot,
 // PerplexityBot, Google-Extended) check for their own named UA and back off
 // when absent, so listing them by name materially improves indexing odds in
 // ChatGPT, Claude, Perplexity, Gemini, Apple Intelligence and CCBot-fed
-// datasets. We allow them site-wide except the same /api and live-mocktest
-// pages that no UA should crawl.
+// datasets. We allow them site-wide except /api, which no UA should crawl.
 const AI_BOTS = [
     // OpenAI / ChatGPT
     'GPTBot',

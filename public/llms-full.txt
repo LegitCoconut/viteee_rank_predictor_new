@@ -12,6 +12,11 @@
 
 ---
 
+> Write-ups (guides on VITEEE 2027 dates, eligibility, pattern, marking and counselling, with FAQs): https://ranks.vhome.co.in/writeups
+> All write-ups in full text, auto-updated: https://ranks.vhome.co.in/writeups/llms.txt
+
+---
+
 ## 1. About VIT Ranks
 
 VIT Ranks is a free, student-built platform for VITEEE 2027 aspirants. The primary

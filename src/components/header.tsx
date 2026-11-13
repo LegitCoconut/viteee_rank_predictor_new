@@ -25,6 +25,9 @@ export function Header() {
           <Button variant="ghost" size="sm" asChild className={navLink}>
             <Link href="/mocktest#leaderboard">Leaderboard</Link>
           </Button>
+          <Button variant="ghost" size="sm" asChild className={navLink}>
+            <Link href="/writeups">Write-ups</Link>
+          </Button>
           <Button size="sm" asChild className="ml-1 h-8 gap-1.5 px-4 text-xs">
             <Link href="/donate">
               <Heart className="h-3.5 w-3.5" />
