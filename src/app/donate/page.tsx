@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Header } from '@/components/header';
 import { Sky } from '@/components/ui/animated-hero';
@@ -17,6 +18,13 @@ const PRINCIPLES = [
   { title: 'No data games', body: 'Your attempts stay on your device. We never sell or trade data.' },
   { title: 'More on the way', body: 'Next up: JEE, NEET and CUET tools. Your support speeds us up.' },
 ];
+
+export const metadata: Metadata = {
+  title: 'Donate: Keep VITEEE Mock Tests Free',
+  description:
+    'VIT RANKS is free and ad-free. If it helped your VITEEE prep, a small donation keeps the servers running and the mock tests free for everyone.',
+  alternates: { canonical: '/donate' },
+};
 
 export default function DonatePage() {
   return (
