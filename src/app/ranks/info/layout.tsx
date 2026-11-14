@@ -4,7 +4,7 @@ import { RanksInfoJsonLd } from '@/components/ranks-jsonld';
 export const metadata: Metadata = {
   title: 'VITEEE 2025 Cutoffs, Marks vs Rank & Counselling Data',
   description:
-    'Complete VITEEE 2025 cutoff data - campus-wise Category 1 to 5 closing ranks for every B.Tech programme at VIT Vellore, Chennai, AP and Bhopal. Marks-to-rank ladder, counselling eligibility rule, exam pattern, and 2027 rank-band outlook.',
+    'VITEEE 2025 cutoffs: Category 1 to 5 closing ranks for every B.Tech programme at VIT Vellore, Chennai, AP and Bhopal, plus the marks-to-rank ladder.',
   keywords: [
     // Cutoff / data
     'viteee cutoff', 'viteee 2025 cutoff', 'viteee cutoff 2027',

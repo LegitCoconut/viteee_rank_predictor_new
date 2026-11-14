@@ -8,9 +8,9 @@ import { WriteupFaq, faqSchema } from '@/components/writeup-faq';
 import { getWriteups, type Faq } from '@/lib/writeups';
 
 const SITE = 'https://ranks.vhome.co.in';
-const TITLE = 'VITEEE Write-ups & Guides: Dates, Eligibility, Pattern';
+const TITLE = 'VITEEE Write-ups & Guides: Dates, Eligibility';
 const DESCRIPTION =
-  'Plain-English VITEEE 2027 guides: dates, eligibility, exam pattern, negative marking, counselling rules and mistakes to avoid, checked against the official site.';
+  'Plain-English VITEEE 2027 guides: dates, eligibility, exam pattern, negative marking and counselling rules, checked against the official site.';
 
 export const metadata: Metadata = {
   title: TITLE,

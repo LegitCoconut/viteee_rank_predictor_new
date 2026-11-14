@@ -5,7 +5,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
     title: "Free VITEEE Mock Test 2027 - No Signup Required",
     description:
-        "Take free VITEEE 2027 mock tests online without signup. Practice Physics, Chemistry, Maths & Aptitude with real exam pattern. Get instant results with section-wise analysis. 100 questions, 2 hours - exactly like the real VITEEE exam.",
+        "Take free VITEEE 2027 mock tests online, no signup. 100 questions in 2 hours with per-section timers, instant section-wise analysis and a live leaderboard.",
     keywords: [
         // Mock test core
         "viteee mock test", "viteee mock tests", "viteee mock test 2027",

@@ -19,7 +19,7 @@ import { DonationPopup } from '@/components/donation-popup';
 export const metadata: Metadata = {
   title: "Free VITEEE Mock Tests & Rank Predictor 2027 | VIT RANKS",
   description:
-    "Free VITEEE 2027 mock tests + VIT rank & college predictor. Enter your VITEEE rank to see which VIT campus and branch you can secure across all 5 fee categories. Live leaderboard, full syllabus. No signup, no paywall.",
+    "Free VITEEE 2027 mock tests plus a VIT rank & college predictor: enter your rank to see which campus and branch you can get. Live leaderboard, no signup.",
   keywords: [
     // Rank / college predictor (high opportunity per search console)
     "viteee rank", "vit rank", "vit ranks", "vitee rank",
