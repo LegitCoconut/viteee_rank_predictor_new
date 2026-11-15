@@ -3,8 +3,10 @@ import Image from 'next/image';
 import { Header } from '@/components/header';
 import { Sky } from '@/components/ui/animated-hero';
 import { Footer } from '@/components/footer';
+import { CopyUpi } from '@/components/copy-upi';
 
 const BMC_URL = 'https://buymeacoffee.com/legitcoconut';
+const UPI_ID = 'legitcoconut@slc';
 
 const TIERS = [
   { amount: 99, title: 'A cup of chai', body: 'Keeps one free-tier server alive for a day.' },
@@ -48,6 +50,7 @@ export default function DonatePage() {
         </section>
 
         <section id="donate-form" className="container mx-auto max-w-5xl scroll-mt-20 px-4">
+          <div className="grid gap-4 md:grid-cols-2">
           <div className="flex flex-col items-center rounded-2xl border border-border bg-card p-6 text-center md:p-10">
             <Image src="/bmc/bmc-logo-yellow.png" alt="" width={72} height={72} className="rounded-2xl" />
             <h2 className="mt-5 text-2xl font-semibold tracking-tight">Buy us a coffee</h2>
@@ -64,6 +67,15 @@ export default function DonatePage() {
               <Image src="/bmc/bmc-button.png" alt="Buy me a coffee" width={240} height={67} priority />
             </a>
             <p className="mt-4 text-xs text-muted-foreground">Opens buymeacoffee.com/legitcoconut in a new tab.</p>
+          </div>
+          <div className="flex flex-col items-center rounded-2xl border border-border bg-card p-6 text-center md:p-10">
+            <span className="grid size-[72px] place-items-center rounded-2xl bg-white/15 text-2xl font-semibold" aria-hidden>&#8377;</span>
+            <h2 className="mt-5 text-2xl font-semibold tracking-tight">Pay with UPI</h2>
+            <p className="mt-2 max-w-md text-sm text-muted-foreground">
+              Send any amount from any UPI app. Copy the id below, or on a phone tap the link to open your app.
+            </p>
+            <CopyUpi id={UPI_ID} />
+          </div>
           </div>
         </section>
 

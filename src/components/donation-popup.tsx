@@ -3,13 +3,13 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
-import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 const STORAGE_KEY = 'donation_popup_last_shown';
-// Never interrupt a test in progress or its setup.
-const BLOCKED_PATHS = ['/mocktest/start', '/mocktest/setup'];
+// Never interrupt a test in progress or its setup, and never nag on the donate page itself.
+const BLOCKED_PATHS = ['/mocktest/start', '/mocktest/setup', '/donate'];
 const THROTTLE_MS = 12 * 60 * 60 * 1000; // 12 hours
 
 interface DonationPopupProps {
@@ -81,28 +81,15 @@ export function DonationPopup({ delay = 17000 }: DonationPopupProps) {
                 <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
                   Our cloud credits are running low. Keeping this platform free
                   costs real money - server costs and storage. If this helped
-                  your VITEEE prep, buy us a coffee and keep it running for
-                  everyone.
+                  your VITEEE prep, please support us on our donate page and keep
+                  it running for everyone.
                 </p>
 
                 {/* Actions */}
                 <div className="flex items-center justify-between gap-3">
-                  <a
-                    href="https://buymeacoffee.com/legitcoconut"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={dismiss}
-                    aria-label="Buy Malabar Matrix a coffee on Buy Me a Coffee"
-                    className="shrink-0 rounded-lg transition-transform hover:scale-[1.03] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    <Image
-                      src="/bmc/bmc-button.png"
-                      alt="Buy me a coffee"
-                      width={218}
-                      height={61}
-                      className="h-11 w-auto"
-                    />
-                  </a>
+                  <Button asChild className="shrink-0 bg-[#fdeef6] text-[#181121] hover:bg-white" onClick={dismiss}>
+                    <Link href="/donate">Support us</Link>
+                  </Button>
                   <Button
                     variant="ghost"
                     size="sm"
