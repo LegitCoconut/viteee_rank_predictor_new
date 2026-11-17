@@ -6,6 +6,7 @@ import { X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { PreferredSourceButton } from '@/components/preferred-source';
 
 const STORAGE_KEY = 'donation_popup_last_shown';
 // Never interrupt a test in progress or its setup, and never nag on the donate page itself.
@@ -18,6 +19,7 @@ interface DonationPopupProps {
 
 export function DonationPopup({ delay = 17000 }: DonationPopupProps) {
   const [visible, setVisible] = useState(false);
+  const [step, setStep] = useState<'ask' | 'wait'>('ask'); // 'wait' is the second popup, after "Maybe later"
   const pathname = usePathname();
   const blocked = BLOCKED_PATHS.some((p) => pathname.startsWith(p));
 
@@ -33,6 +35,11 @@ export function DonationPopup({ delay = 17000 }: DonationPopupProps) {
   function dismiss() {
     localStorage.setItem(STORAGE_KEY, String(Date.now()));
     setVisible(false);
+  }
+
+  function later() {
+    localStorage.setItem(STORAGE_KEY, String(Date.now()));
+    setStep('wait');
   }
 
   return (
@@ -72,33 +79,51 @@ export function DonationPopup({ delay = 17000 }: DonationPopupProps) {
                   <X className="h-4 w-4" />
                 </button>
 
-                {/* Heading */}
-                <h2 className="mb-2 pr-6 text-lg font-semibold text-foreground">
-                  We&rsquo;re running out of cloud resources
-                </h2>
+                {step === 'ask' ? (
+                  <>
+                  {/* Heading */}
+                  <h2 className="mb-2 pr-6 text-lg font-semibold text-foreground">
+                    We&rsquo;re running out of cloud resources
+                  </h2>
 
-                {/* Body */}
-                <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
-                  Our cloud credits are running low. Keeping this platform free
-                  costs real money - server costs and storage. If this helped
-                  your VITEEE prep, please support us on our donate page and keep
-                  it running for everyone.
-                </p>
+                  {/* Body */}
+                  <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
+                    Our cloud credits are running low. Keeping this platform free
+                    costs real money - server costs and storage. If this helped
+                    your VITEEE prep, please support us on our donate page and keep
+                    it running for everyone.
+                  </p>
 
-                {/* Actions */}
-                <div className="flex items-center justify-between gap-3">
-                  <Button asChild className="shrink-0 bg-[#fdeef6] text-[#181121] hover:bg-white" onClick={dismiss}>
-                    <Link href="/donate">Support us</Link>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={dismiss}
-                    className="text-muted-foreground"
-                  >
-                    Maybe later
-                  </Button>
-                </div>
+                  {/* Actions */}
+                  <div className="flex items-center justify-between gap-3">
+                    <Button asChild className="shrink-0 bg-[#fdeef6] text-[#181121] hover:bg-white" onClick={dismiss}>
+                      <Link href="/donate">Support us</Link>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={later}
+                      className="text-muted-foreground"
+                    >
+                      Maybe later
+                    </Button>
+                  </div>
+                  </>
+                ) : (
+                  <div className="text-center">
+                    <h2 className="mb-2 text-xl font-semibold text-foreground">Wait, wait, wait!</h2>
+                    <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
+                      If you can&rsquo;t donate right now, you can still help. Recommend VIT Ranks to other students who are
+                      preparing, and add us as a preferred source on Google.
+                    </p>
+                    <div className="flex justify-center">
+                      <PreferredSourceButton />
+                    </div>
+                    <Button variant="ghost" size="sm" onClick={dismiss} className="mt-4 text-muted-foreground">
+                      Close
+                    </Button>
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>

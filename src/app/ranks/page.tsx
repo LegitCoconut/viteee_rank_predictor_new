@@ -71,6 +71,7 @@ import {
 } from '@/lib/viteee-data';
 import { buildRanksQuery, parseRanksQuery, RanksAction } from '@/lib/ranks-url';
 import type { ReportRow } from '@/lib/ranks-report';
+import { PreferredSource } from '@/components/preferred-source';
 
 type Step = 'rank' | 'action' | 'preferences' | 'results';
 
@@ -1399,6 +1400,7 @@ export default function RanksPage() {
               UI clean once a user starts interacting, but gives Google a rich,
               keyword-targeted body of content on the page that ships in SSR. */}
           {isHero && <RanksSeoContent />}
+          <PreferredSource />
         </TooltipProvider>
       </main>
       <Footer />

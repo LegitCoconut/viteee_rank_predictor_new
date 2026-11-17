@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { DonationPopup } from '@/components/donation-popup';
 import { AdSlot } from '@/components/ad-slot';
+import { PreferredSource } from '@/components/preferred-source';
 import { ArrowRight } from 'lucide-react';
 
 // VITEEE-style marking scheme applied on the results page.
@@ -246,6 +247,7 @@ export default function MockTestResultPage() {
           </div>
         </section>
 
+        <PreferredSource />
         <AdSlot />
       </main>
       <Footer />

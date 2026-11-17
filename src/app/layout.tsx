@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ClarityInit } from "@/components/clarity";
+import { PreferredSourceStore } from "@/components/preferred-source";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ranks.vhome.co.in'),
@@ -162,6 +163,8 @@ export default function RootLayout({
             })(window, document, "clarity", "script", "wd7k5hym2x");
           `}
         </Script>
+        <PreferredSourceStore />
+        <Script src="https://news.google.com/swg/js/v1/publisher.js" strategy="afterInteractive" />
         {children}
         <Toaster />
         <Analytics />

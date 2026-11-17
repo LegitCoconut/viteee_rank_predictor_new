@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Header } from '@/components/header';
 import { Sky } from '@/components/ui/animated-hero';
 import { Footer } from '@/components/footer';
+import { PreferredSource } from '@/components/preferred-source';
 import { CopyUpi, UpiQr } from '@/components/copy-upi';
 
 const BMC_URL = 'https://buymeacoffee.com/legitcoconut';
@@ -120,6 +121,7 @@ export default function DonatePage() {
             </dl>
           </div>
         </section>
+        <PreferredSource />
       </main>
       <Footer />
     </div>
